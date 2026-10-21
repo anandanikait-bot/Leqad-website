@@ -27,6 +27,8 @@ interface LessonPanelProps {
   onToggleHighlight: () => void;
   isCompact?: boolean;
   resetKey: number;
+  showAllSteps: boolean;
+  onToggleSteps: () => void;
 }
 
 export const LessonPanel: React.FC<LessonPanelProps> = ({
@@ -43,12 +45,16 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   onToggleHighlight,
   isCompact = false,
   resetKey,
+  showAllSteps,
+  onToggleSteps,
 }) => {
   const [revealedHints, setRevealedHints] = useState<number>(0);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [showWhy, setShowWhy] = useState<boolean>(false);
 
   // Reset hints whenever step changes, demo completes, or explicit resetKey changes (Fix #8)
   useEffect(() => {
+    setHelpOpen(false);
     setRevealedHints(0);
     setShowWhy(false);
   }, [step.id, isDemoComplete, resetKey]);
@@ -107,9 +113,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               <span className="font-mono text-[10px] uppercase tracking-wider text-[#B74B21] font-semibold">
                 Interactive Walkthrough
               </span>
-              <h3 className="text-xl font-bold text-[#0E2943] tracking-tight leading-snug">
+              <h2 className="text-xl font-bold text-[#0E2943] tracking-tight leading-snug">
                 You've completed the interactive walkthrough.
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
                 You've explored the Your First Sketch walkthrough. The demonstration introduced reference planes, sketches, dimensions, and the relationship between 2D profiles and later 3D features.
               </p>
@@ -190,6 +196,10 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
       {/* Panel Body Content */}
       <div className={`p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4 ${isCompact ? 'text-xs' : 'text-sm'}`}>
         <div className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[#55616B]">
+            <button type="button" onClick={onToggleSteps} aria-expanded={showAllSteps} aria-controls="leqad-all-steps" className="underline underline-offset-4">{showAllSteps ? 'Hide steps' : 'All steps'}</button>
+            <button type="button" onClick={onRestart} className="inline-flex items-center gap-1 hover:text-[#0E2943]"><RotateCcw className="h-3 w-3" />Restart</button>
+          </div>
           {/* Category Eyebrow */}
           <div className="flex items-center justify-between">
             <span className="font-mono text-[10px] uppercase tracking-wider text-[#55616B]">
@@ -199,9 +209,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
           </div>
 
           {/* Step Title */}
-          <h3 className="text-lg font-semibold text-[#0E2943] tracking-tight leading-snug">
+          <h2 className="text-lg font-semibold text-[#0E2943] tracking-tight leading-snug">
             {step.title}
-          </h3>
+          </h2>
 
           {/* Main Instruction */}
           <p className="text-[#55616B] leading-relaxed text-[13px] sm:text-sm">
@@ -236,7 +246,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
           </div>
 
           {/* Progressive Hints Section */}
-          <div className="space-y-2 pt-1">
+          <details open={helpOpen} onToggle={event => setHelpOpen(event.currentTarget.open)} className="space-y-3 pt-1">
+            <summary className="cursor-pointer text-xs font-medium text-[#55616B] focus-visible:outline-2 focus-visible:outline-[#0E2943]">Need help?</summary>
+            <div className="space-y-3">
             <div className="flex items-center justify-between">
               <button
                 onClick={handleRevealNextHint}
@@ -293,7 +305,8 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 </p>
               </div>
             )}
-          </div>
+            </div>
+          </details>
         </div>
 
         <div className="flex items-center justify-between gap-3 border-t border-[#D9DDD9] pt-3">

@@ -150,7 +150,7 @@ const HWF_CSS = `
 /* The artwork gets its own space after the links and back-to-top control.
    Do not paint it behind interactive footer content. */
 .hwf-art { position: relative; width: 100%; height: var(--hwf-art-height); overflow: hidden; isolation: isolate; }
-.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; }
+.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); }
 .hwf-top {
   position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2.3vw, 24px); padding: clamp(18px, 2.7vw, 30px) clamp(20px, 3.4vw, 44px) clamp(18px, 2.6vw, 30px);
@@ -224,7 +224,8 @@ export default function HalftoneWordmarkFooter({
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const motionMedia = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let reduced = motionMedia.matches
     let w = 0
     let h = 0
     let dpr = 1
@@ -260,7 +261,12 @@ export default function HalftoneWordmarkFooter({
       m.font = face
       const word = o.wordmark || " "
       // Fit both width and height so even descenders stay inside the strip.
-      const fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
+      let fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
+      m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+      // Fit the actual ascenders + descenders, rather than assuming font metrics.
+      const measured = m.measureText(word)
+      const measuredHeight = measured.actualBoundingBoxAscent + measured.actualBoundingBoxDescent
+      if (measuredHeight > 0) fit *= Math.min(1, (h * 0.90) / measuredHeight)
       m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
       const box = m.measureText(word)
       const cap = box.actualBoundingBoxAscent || fit * 0.72
@@ -385,7 +391,9 @@ export default function HalftoneWordmarkFooter({
         ctx.globalCompositeOperation = "source-over"
       }
       // Sleep once everything is home and nothing is pushing.
-      awake = moving || ringAge < 900 || px > -1e4
+      // Stop requesting frames once pointer-driven dots settle; the next
+      // pointer move, tap, or observer callback wakes the animation again.
+      awake = !reduced && (moving || ringAge < 900)
     }
 
     const loop = (now: number) => {
@@ -404,7 +412,7 @@ export default function HalftoneWordmarkFooter({
       return [e.clientX - b.left, e.clientY - b.top]
     }
     const onMove = (e: PointerEv) => {
-      if (!opts.current.interactive) return
+      if (!opts.current.interactive || reduced) return
       const p = toLocal(e)
       px = p[0]
       py = p[1]
@@ -423,6 +431,18 @@ export default function HalftoneWordmarkFooter({
       wake()
     }
 
+    const onMotionChange = () => {
+      reduced = motionMedia.matches
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      px = -1e5
+      py = -1e5
+      ring = { x: 0, y: 0, t: -1 }
+      layout()
+      draw(performance.now())
+      if (!reduced) wake()
+    }
+    motionMedia.addEventListener("change", onMotionChange)
     layout()
     draw(performance.now())
     wake()
@@ -465,6 +485,7 @@ export default function HalftoneWordmarkFooter({
 
     return () => {
       alive = false
+      motionMedia.removeEventListener("change", onMotionChange)
       cancelAnimationFrame(raf)
       ro.disconnect()
       io.disconnect()
@@ -495,7 +516,7 @@ export default function HalftoneWordmarkFooter({
     >
       <style>{HWF_CSS}</style>
       <span className="hwf-sr">{wordmark}</span>
-      <div className="hwf-top">
+      {(label || meta || columns.length > 0) && <div className="hwf-top">
         <div className="hwf-brand">
           <strong>{label}</strong>
           <span>{meta}</span>
@@ -512,14 +533,14 @@ export default function HalftoneWordmarkFooter({
             </ul>
           </nav>
         ))}
-      </div>
-      <div className="hwf-rule">
+      </div>}
+      {backToTop && <div className="hwf-rule">
         {backToTop ? (
           <button type="button" className="hwf-up" onClick={toTop}>
             Back to top ↑
           </button>
         ) : null}
-      </div>
+      </div>}
       <div className="hwf-art" ref={artRef} aria-hidden="true">
         <canvas ref={canvasRef} />
       </div>

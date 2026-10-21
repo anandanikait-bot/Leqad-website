@@ -12,9 +12,9 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   size = 'md',
 }) => {
   const sizeMap = {
-    sm: { symbol: 'w-6 h-6', text: 'text-lg', badge: 'text-[9px]' },
-    md: { symbol: 'w-8 h-8', text: 'text-xl', badge: 'text-[10px]' },
-    lg: { symbol: 'w-10 h-10', text: 'text-2xl', badge: 'text-[11px]' },
+    sm: { symbol: 'w-6 h-6', text: 'text-lg' },
+    md: { symbol: 'w-8 h-8', text: 'text-xl' },
+    lg: { symbol: 'w-10 h-10', text: 'text-2xl' },
   };
 
   const currentSize = sizeMap[size];
@@ -46,9 +46,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           <span className={`font-semibold tracking-tight text-[#0E2943] ${currentSize.text} leading-none`}>
             Leqad
           </span>
-          <span className={`font-mono text-[#55616B] font-medium tracking-wider uppercase ${currentSize.badge}`}>
-            CAD
-          </span>
+
         </div>
       )}
     </div>

@@ -49,8 +49,10 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
 
     let animId = 0;
     let isRunning = false;
-    let isVisible = true;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let inViewport = true;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let prefersReducedMotion = media.matches;
+    const isVisible = () => inViewport && !document.hidden;
 
     let width = 0;
     let height = 0;
@@ -63,10 +65,8 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       height = parent.clientHeight;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
+      startAnimation();
     };
-
-    resize();
-    window.addEventListener('resize', resize);
 
     // 3D Geometry definition (40 mm x 30 mm base, 22 mm extruded height)
     const scale = 4.4;
@@ -77,7 +77,7 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
     let lastTime = performance.now();
 
     const render = (now: number) => {
-      if (!isVisible) {
+      if (!isVisible()) {
         isRunning = false;
         return;
       }
@@ -87,14 +87,16 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
 
       // Smooth progress animation (lerp)
       const diff = targetProgressRef.current - animProgressRef.current;
-      animProgressRef.current += diff * Math.min(dt * 8, 0.25);
+      if (prefersReducedMotion) animProgressRef.current = targetProgressRef.current;
+      else animProgressRef.current += diff * Math.min(dt * 8, 0.25);
 
       // Inertia & slow idle rotation
       if (!isPointerDownRef.current) {
         if (!prefersReducedMotion) {
           rotYRef.current += 0.20 * dt;
         }
-        // Apply velocity decay
+        // Apply velocity decay only when motion is allowed.
+        if (prefersReducedMotion) { velXRef.current = 0; velYRef.current = 0; }
         rotXRef.current += velXRef.current;
         rotYRef.current += velYRef.current;
         velXRef.current *= 0.92;
@@ -343,12 +345,13 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
 
       ctx.restore();
 
-      // Continue animating
-      animId = requestAnimationFrame(render);
+      // Reduced-motion artwork draws on changes, then sleeps.
+      if (!prefersReducedMotion) animId = requestAnimationFrame(render);
+      else isRunning = false;
     };
 
     const startAnimation = () => {
-      if (!isRunning && isVisible) {
+      if (!isRunning && isVisible()) {
         isRunning = true;
         lastTime = performance.now();
         animId = requestAnimationFrame(render);
@@ -362,8 +365,8 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
 
     // Observe visibility to save CPU when offscreen
     const observer = new IntersectionObserver(([entry]) => {
-      isVisible = entry.isIntersecting;
-      if (isVisible) {
+      inViewport = entry.isIntersecting;
+      if (isVisible()) {
         startAnimation();
       } else {
         stopAnimation();
@@ -375,21 +378,32 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
     }
 
     const handleVisibilityChange = () => {
-      isVisible = document.visibilityState === 'visible';
-      if (isVisible) {
+      if (isVisible()) {
         startAnimation();
       } else {
         stopAnimation();
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
-
+    const onMotionChange = () => {
+      prefersReducedMotion = media.matches;
+      stopAnimation();
+      startAnimation();
+    };
+    media.addEventListener('change', onMotionChange);
+    const container = containerRef.current;
+    const redrawEvents = ['pointermove', 'pointerup', 'click'];
+    redrawEvents.forEach(event => container?.addEventListener(event, startAnimation));
+    window.addEventListener('resize', resize);
+    resize();
     startAnimation();
 
     return () => {
       stopAnimation();
       window.removeEventListener('resize', resize);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      media.removeEventListener('change', onMotionChange);
+      redrawEvents.forEach(event => container?.removeEventListener(event, startAnimation));
       observer.disconnect();
     };
   }, []);
