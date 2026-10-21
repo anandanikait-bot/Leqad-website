@@ -10,7 +10,19 @@ test('landing contains only the intended navigation and hero CTA', async ({ page
   await expect(page.locator('footer nav')).toHaveCount(0);
   await expect(page.getByText('Prepare an Inquiry', { exact: false })).toHaveCount(0);
   await expect(page.getByText('Back to top', { exact: false })).toHaveCount(0);
-  await expect(page.locator('footer canvas')).toHaveCount(1);
+  await expect(page.locator('footer')).toHaveCount(0);
+  await expect(page.locator('main').getByRole('link', { name: 'Learn About Leqad' })).toHaveAttribute('href', '/about');
+});
+
+test('only Demo, About and Partners have the halftone Leqad footer', async ({ page }) => {
+  for (const path of ['/demo', '/about', '/partners']) {
+    await page.goto(path);
+    await expect(page.locator('footer canvas')).toHaveCount(1);
+    await expect(page.locator('footer').getByText('Leqad CAD', { exact: true })).toBeVisible();
+    await expect(page.locator('footer').getByText('© 2026 · In-workflow CAD education')).toBeVisible();
+  }
+  await page.goto('/');
+  await expect(page.locator('footer')).toHaveCount(0);
 });
 
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
@@ -120,13 +132,17 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       await page.goto(route);
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-      const canvas = page.locator('footer canvas');
-      await canvas.scrollIntoViewIfNeeded();
-      const box = await canvas.boundingBox();
-      expect(box!.width).toBeLessThanOrEqual(width);
-      expect(box!.height).toBeGreaterThanOrEqual(220);
-      expect(box!.height).toBeLessThanOrEqual(310);
-      expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toContain('70%');
+      if (route === '/') {
+        await expect(page.locator('footer')).toHaveCount(0);
+      } else {
+        const canvas = page.locator('footer canvas');
+        await canvas.scrollIntoViewIfNeeded();
+        const box = await canvas.boundingBox();
+        expect(box!.width).toBeLessThanOrEqual(width);
+        expect(box!.height).toBeGreaterThanOrEqual(220);
+        expect(box!.height).toBeLessThanOrEqual(310);
+        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toContain('70%');
+      }
       if (route === '/demo' && width < 1024) {
         const panel = await page.getByText('Leqad Teaching Panel', { exact: true }).boundingBox();
         const workspace = await page.locator('[data-lenis-prevent]').first().boundingBox();
@@ -164,7 +180,7 @@ test('reduced-motion artwork settles without an endless animation loop', async (
 test('desktop halftone lettering has space above its ascenders', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
+  await page.goto('/about');
   await page.evaluate(() => document.fonts.ready);
   const canvas = page.locator('footer canvas');
   await canvas.scrollIntoViewIfNeeded();
@@ -188,7 +204,7 @@ test('footer animation also stops when reduced motion is enabled at runtime', as
       return original.apply(this, args);
     };
   });
-  await page.goto('/');
+  await page.goto('/about');
   const canvas = page.locator('footer canvas');
   await canvas.scrollIntoViewIfNeeded();
   await page.locator('footer .hwf-art').hover();
