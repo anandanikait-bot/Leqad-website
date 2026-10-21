@@ -21,9 +21,9 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
         </p>
         <button
           onClick={onOpenContact}
-          className="text-[#B74B21] hover:text-[#e9762b] font-semibold transition-colors cursor-pointer whitespace-nowrap text-xs"
+          className="text-[#B74B21] hover:text-[#e9762b] font-semibold transition-colors cursor-pointer whitespace-nowrap text-xs focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B74B21]"
         >
-          Partnership Inquiries →
+          Prepare an Inquiry →
         </button>
       </div>
 
@@ -40,7 +40,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
         }}
         columns={[
           {
-            title: "Product",
+            title: "Explore",
             links: [
               { label: "Home", href: "#/" },
               { label: "Interactive Demo", href: "#/demo" },
@@ -48,23 +48,25 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
             ],
           },
           {
-            title: "Curriculum",
+            title: "Learn",
             links: [
-              { label: "Parametric Intent", href: "#/demo" },
-              { label: "Constraint Logic", href: "#/demo" },
-              { label: "Watertight Profiles", href: "#/demo" },
+              { label: "Your First Sketch", href: "#/demo" },
+              { label: "How It Works", href: "#/about" },
+              { label: "Product Roadmap", href: "#/about" },
             ],
           },
           {
-            title: "Collaboration",
+            title: "Connect",
             links: [
-              { label: "Platform Alignment", href: "#/partners" },
-              { label: "Educational Pilots", href: "#/partners" },
-              { label: "Start Conversation", href: "#/partners" },
+              { label: "For Partners", href: "#/partners" },
+              { label: "Collaboration Opportunities", href: "#/partners" },
+              { label: "GitHub Project", href: "https://github.com/anandanikait-bot/Leqad-website" },
             ],
           },
         ]}
-        height="380px"
+        grain={0.25}
+        dotGap={7}
+        height="360px"
         backToTop={true}
       />
     </footer>

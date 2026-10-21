@@ -37,7 +37,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <button
             onClick={() => handleNavClick('home')}
-            className={`transition-colors cursor-pointer ${
+            className={`transition-colors cursor-pointer rounded-md px-1 py-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] ${
               currentPage === 'home'
                 ? 'text-[#0E2943] font-semibold'
                 : 'text-[#55616B] hover:text-[#0E2943]'
@@ -48,7 +48,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
           <button
             onClick={() => handleNavClick('demo')}
-            className={`transition-colors cursor-pointer flex items-center gap-1.5 ${
+            className={`transition-colors cursor-pointer rounded-md px-1 py-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] flex items-center gap-1.5 ${
               currentPage === 'demo'
                 ? 'text-[#B74B21] font-semibold'
                 : 'text-[#55616B] hover:text-[#0E2943]'
@@ -62,7 +62,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
           <button
             onClick={() => handleNavClick('about')}
-            className={`transition-colors cursor-pointer ${
+            className={`transition-colors cursor-pointer rounded-md px-1 py-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] ${
               currentPage === 'about'
                 ? 'text-[#0E2943] font-semibold'
                 : 'text-[#55616B] hover:text-[#0E2943]'
@@ -73,7 +73,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
           <button
             onClick={() => handleNavClick('partners')}
-            className={`transition-colors cursor-pointer ${
+            className={`transition-colors cursor-pointer rounded-md px-1 py-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] ${
               currentPage === 'partners'
                 ? 'text-[#0E2943] font-semibold'
                 : 'text-[#55616B] hover:text-[#0E2943]'

@@ -31,7 +31,7 @@ export const CurrentProductAndVision: React.FC = () => {
                   Guided Foundations Extension
                 </h3>
                 <p className="text-sm text-[#55616B] leading-relaxed">
-                  A functional browser extension teaching foundational CAD inside Onshape documents through structured instruction.
+                  A functional browser extension teaching foundational CAD inside browser-based CAD environments through structured instruction.
                 </p>
               </div>
 

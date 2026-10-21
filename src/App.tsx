@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { PageRoute } from './types';
 import { SiteHeader } from './components/layout/SiteHeader';
 import { SiteFooter } from './components/layout/SiteFooter';
@@ -19,7 +19,21 @@ export default function App() {
   const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
   const [contactTopic, setContactTopic] = useState<string>('Technical Alignment');
 
-  // Synchronize hash routing so users can refresh or bookmark #/, #/demo, #/about, #/partners
+  const transitionTimeoutRef = useRef<number | null>(null);
+
+  const triggerPageTransition = useCallback(() => {
+    if (transitionTimeoutRef.current) {
+      window.clearTimeout(transitionTimeoutRef.current);
+    }
+    setIsTransitioning(true);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    transitionTimeoutRef.current = window.setTimeout(() => {
+      setIsTransitioning(false);
+      transitionTimeoutRef.current = null;
+    }, 200);
+  }, []);
+
+  // Synchronize hash routing so users can refresh, bookmark, or use browser Back/Forward
   useEffect(() => {
     const syncRouteFromHash = () => {
       const rawHash = window.location.hash.replace(/^#\/?/, '');
@@ -34,9 +48,7 @@ export default function App() {
 
       setCurrentPage((prev) => {
         if (prev !== target) {
-          setIsTransitioning(true);
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-          setTimeout(() => setIsTransitioning(false), 200);
+          triggerPageTransition();
         }
         return target;
       });
@@ -44,8 +56,13 @@ export default function App() {
 
     syncRouteFromHash();
     window.addEventListener('hashchange', syncRouteFromHash);
-    return () => window.removeEventListener('hashchange', syncRouteFromHash);
-  }, []);
+    return () => {
+      window.removeEventListener('hashchange', syncRouteFromHash);
+      if (transitionTimeoutRef.current) {
+        window.clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, [triggerPageTransition]);
 
   const handleNavigate = (page: PageRoute) => {
     if (page === currentPage) {
@@ -53,11 +70,9 @@ export default function App() {
       return;
     }
 
-    setIsTransitioning(true);
+    triggerPageTransition();
     setCurrentPage(page);
     window.location.hash = page === 'home' ? '/' : `/${page}`;
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    setTimeout(() => setIsTransitioning(false), 200);
   };
 
   const handleOpenContact = (topic?: string) => {
@@ -78,7 +93,7 @@ export default function App() {
       >
         {/* 1. Landing Page (#/): The focused InkOrbit Hero visual centerpiece */}
         {currentPage === 'home' && (
-          <div className="flex flex-col justify-center min-h-[calc(100vh-16rem)]">
+          <div className="flex flex-col justify-center">
             <Hero onNavigate={handleNavigate} />
           </div>
         )}

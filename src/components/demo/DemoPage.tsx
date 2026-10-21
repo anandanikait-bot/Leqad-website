@@ -1,6 +1,5 @@
 import React from 'react';
 import { DemoWorkbench } from './DemoWorkbench';
-import { BrandLogo } from '../shared/BrandLogo';
 import { PageRoute } from '../../types';
 import { 
   ArrowLeft, 
@@ -8,8 +7,7 @@ import {
   Eye, 
   Keyboard, 
   Info,
-  ShieldCheck,
-  ExternalLink
+  ShieldAlert
 } from 'lucide-react';
 
 interface DemoPageProps {
@@ -21,12 +19,12 @@ export const DemoPage: React.FC<DemoPageProps> = ({ onNavigate }) => {
     <div className="min-h-screen bg-[#FAF8F4] flex flex-col animate-fadeIn">
       {/* Dedicated App-like Top Workspace Bar */}
       <div className="bg-white border-b border-[#D9DDD9] sticky top-16 z-30 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-          {/* Left: Back to Home + Context */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3">
+          {/* Left: Back to Home + Workspace title */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => onNavigate('home')}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0E2943] hover:text-[#B74B21] px-2.5 py-1.5 rounded-md hover:bg-[#FAF8F4] border border-[#D9DDD9] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0E2943] hover:text-[#B74B21] px-2.5 py-1.5 rounded-md hover:bg-[#FAF8F4] border border-[#D9DDD9] transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
               title="Return to Leqad home"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-[#B74B21]" />
@@ -41,25 +39,25 @@ export const DemoPage: React.FC<DemoPageProps> = ({ onNavigate }) => {
                 CAD Learning Workspace
               </span>
               <span className="hidden md:inline font-mono text-[11px] text-[#55616B]">
-                · Lesson 01: Your First Sketch (8 Steps)
+                · Lesson 01: Your First Sketch
               </span>
             </div>
           </div>
 
-          {/* Right: Simulated Illustration Indicator */}
+          {/* Right: Platform-Neutral Simulated Illustration Indicator */}
           <div className="flex items-center gap-2">
             <div className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#55616B] bg-[#FAF8F4] px-2.5 py-1 rounded border border-[#D9DDD9]">
-              <Info className="w-3.5 h-3.5 text-[#B74B21]" />
-              <span>Simulated Illustration · Not connected to live Onshape</span>
+              <Info className="w-3.5 h-3.5 text-[#B74B21] flex-shrink-0" />
+              <span>Simulated illustration · Not connected to a live CAD environment</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Learning Workspace Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+      {/* Main Learning Workspace (Primary Focus) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-1 w-full space-y-4">
         {/* Core Interactive Workbench (Simulated CAD Canvas on left + Leqad Teaching Panel on right) */}
-        <div className="bg-white rounded-2xl border border-[#D9DDD9] shadow-sm p-3 sm:p-5">
+        <div className="bg-white rounded-2xl border border-[#D9DDD9] shadow-sm p-3 sm:p-4 lg:p-5">
           <DemoWorkbench
             initialStepIndex={0}
             isHeroPreview={false}
@@ -67,48 +65,37 @@ export const DemoPage: React.FC<DemoPageProps> = ({ onNavigate }) => {
           />
         </div>
 
-        {/* Technical Guidance & Keyboard Control Strip */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          <div className="bg-white p-4 rounded-xl border border-[#D9DDD9] space-y-1.5">
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0E2943] font-semibold">
-              <Eye className="w-4 h-4 text-[#B74B21]" />
-              <span>Spatial "Show Me" Highlighting</span>
-            </div>
-            <p className="text-xs text-[#55616B] leading-relaxed">
-              Clicking "Show me" highlights the recognized tool in the CAD ribbon with a gentle pulse to guide your visual attention.
-            </p>
+        {/* Compact Software Status & Keyboard Controls Strip */}
+        <div className="bg-white px-4 py-3 rounded-xl border border-[#D9DDD9] flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-4 text-[#55616B] font-mono text-[11px]">
+            <span className="flex items-center gap-1.5 text-[#0E2943] font-semibold">
+              <Keyboard className="w-3.5 h-3.5 text-[#B74B21]" />
+              <span>Shortcuts:</span>
+            </span>
+            <span><strong className="text-[#0E2943]">→ / N</strong> Next Step</span>
+            <span><strong className="text-[#0E2943]">← / P</strong> Previous Step</span>
+            <span><strong className="text-[#0E2943]">R</strong> Reset Demo</span>
           </div>
 
-          <div className="bg-white p-4 rounded-xl border border-[#D9DDD9] space-y-1.5">
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0E2943] font-semibold">
-              <HelpCircle className="w-4 h-4 text-[#B74B21]" />
-              <span>Progressive 3-Tier Hints</span>
-            </div>
-            <p className="text-xs text-[#55616B] leading-relaxed">
-              Hints unfold sequentially: conceptual positioning, exact CAD clicks, and keyboard shortcuts, preserving self-directed learning.
-            </p>
-          </div>
-
-          <div className="bg-white p-4 rounded-xl border border-[#D9DDD9] space-y-1.5">
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0E2943] font-semibold">
-              <Keyboard className="w-4 h-4 text-[#B74B21]" />
-              <span>Keyboard Navigation</span>
-            </div>
-            <p className="text-xs text-[#55616B] leading-relaxed font-mono">
-              <span className="font-semibold text-[#0E2943]">→ / N</span> Next &bull; <span className="font-semibold text-[#0E2943]">← / P</span> Prev &bull; <span className="font-semibold text-[#0E2943]">R</span> Reset
-            </p>
+          <div className="flex items-center gap-3 font-mono text-[11px] text-[#55616B]">
+            <span className="flex items-center gap-1 text-[#0E2943]">
+              <Eye className="w-3 h-3 text-[#B74B21]" />
+              <span>"Show me" highlights tools in ribbon</span>
+            </span>
+            <span className="hidden sm:inline text-[#D9DDD9]">|</span>
+            <span className="hidden sm:inline">Tiered hints reveal progressively</span>
           </div>
         </div>
 
-        {/* Contextual Footer Info */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#55616B] py-4 border-t border-[#D9DDD9] gap-3">
+        {/* Contextual Link */}
+        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#55616B] py-2 gap-2">
           <p>
-            Questions on institutional deployment or curriculum integration?{' '}
+            Interested in deploying Leqad in coursework or learning labs?{' '}
             <button
               onClick={() => onNavigate('partners')}
-              className="text-[#B74B21] font-medium hover:underline inline-flex items-center gap-1 cursor-pointer"
+              className="text-[#B74B21] font-medium hover:underline inline-flex items-center gap-1 cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B74B21]"
             >
-              <span>Explore Partner Program</span>
+              <span>Explore Partnership Program</span>
               <ArrowLeft className="w-3 h-3 rotate-180" />
             </button>
           </p>
@@ -117,7 +104,7 @@ export const DemoPage: React.FC<DemoPageProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('about')}
             className="text-[#55616B] hover:text-[#0E2943] hover:underline cursor-pointer"
           >
-            Read about Leqad's vision & roadmap →
+            Read about Leqad's architecture & vision →
           </button>
         </div>
       </div>

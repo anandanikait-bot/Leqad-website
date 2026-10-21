@@ -94,7 +94,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         <div className="flex items-center gap-1.5 truncate">
           <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
           <span className="font-semibold text-[#0E2943]">Simulated CAD Workspace:</span>
-          <span className="truncate">Interactive illustration · Not a live Onshape session</span>
+          <span className="truncate">Interactive illustration · Not connected to a live CAD environment</span>
         </div>
         <div className="hidden sm:flex items-center gap-2 flex-shrink-0 text-[10px]">
           <span className="bg-[#E2E8F0] px-2 py-0.5 rounded text-[#0E2943]">40 mm × 30 mm Base</span>

@@ -14,24 +14,13 @@ export const SonarHeroGrid: React.FC = () => {
     let animId = 0;
     let width = 0;
     let height = 0;
+    let isAnimating = true;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    const resize = () => {
-      const parent = canvas.parentElement;
-      if (!parent) return;
-      width = parent.clientWidth;
-      height = parent.clientHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-    };
-
-    resize();
-    window.addEventListener('resize', resize);
 
     const startTime = performance.now();
     const duration = 2800; // Single subtle introductory wave (2.8s)
 
-    const render = (now: number) => {
+    const drawGrid = (now: number) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
 
@@ -85,11 +74,35 @@ export const SonarHeroGrid: React.FC = () => {
 
       // Continue animating only during the single intro wave, then settle to save CPU
       if (!prefersReducedMotion && elapsed < duration) {
-        animId = requestAnimationFrame(render);
+        animId = requestAnimationFrame(drawGrid);
+      } else {
+        isAnimating = false;
       }
     };
 
-    render(performance.now());
+    const resize = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      width = parent.clientWidth;
+      height = parent.clientHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+
+      // If animation already settled or reduced motion is active, redraw the static state immediately
+      if (!isAnimating || prefersReducedMotion) {
+        drawGrid(startTime + duration + 1);
+      }
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    if (!prefersReducedMotion) {
+      animId = requestAnimationFrame(drawGrid);
+    } else {
+      isAnimating = false;
+      drawGrid(startTime + duration + 1);
+    }
 
     return () => {
       cancelAnimationFrame(animId);

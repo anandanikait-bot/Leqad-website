@@ -34,7 +34,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         </h1>
 
         <p className="text-lg sm:text-xl text-[#55616B] leading-relaxed">
-          Leqad is developing an in-workflow learning layer that helps beginners build modeling confidence directly inside browser-based CAD, starting with Onshape.
+          Leqad is developing an in-workflow learning layer that helps beginners build modeling confidence directly inside browser-based CAD, designed for modern CAD workflows.
         </p>
 
         <div className="pt-2 flex items-center gap-4">
@@ -44,7 +44,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             onClick={() => onOpenContact('Partnership Inquiry')}
             icon={<ArrowRight className="w-4 h-4" />}
           >
-            Start a Conversation
+            Prepare an Inquiry
           </Button>
         </div>
       </div>
@@ -236,7 +236,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             onClick={() => onOpenContact('General Partnership')}
             icon={<ArrowRight className="w-4 h-4" />}
           >
-            Start a Conversation
+            Prepare an Inquiry
           </Button>
         </div>
       </div>

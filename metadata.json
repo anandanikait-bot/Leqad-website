@@ -1,6 +1,6 @@
 {
   "name": "Leqad — Learn CAD by Building",
-  "description": "Leqad brings guided lessons and contextual help into your CAD workflow, helping beginners learn the tools and understand the decisions behind their designs. Starting with Onshape.",
+  "description": "Leqad brings guided lessons and contextual help into your CAD workflow, helping beginners learn the tools and understand the decisions behind their designs. Designed for modern CAD workflows.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
