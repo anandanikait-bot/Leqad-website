@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LESSON_STEPS } from '../../lib/lesson-data';
 import { SimulatedCADCanvas } from './SimulatedCADCanvas';
 import { LessonPanel } from './LessonPanel';
-import { DEMO_VERIFICATION_DISCLAIMER } from '../../lib/constants';
 import { RotateCcw, CheckCircle2, Check, List } from 'lucide-react';
 import { SketchDemoStatus } from '../../types';
 
@@ -259,13 +258,10 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             step={currentStep}
             currentStepIndex={currentStepIndex}
             totalSteps={totalSteps}
-            completedDemoActionIds={completedDemoActionIds}
-            visitedStepIds={visitedStepIds}
             isDemoComplete={isWalkthroughComplete}
             onNext={handleNext}
             onPrev={handlePrev}
             onRestart={handleRestart}
-            onJumpToStep={handleJumpToStep}
             onFinishDemo={handleFinishDemo}
             onSimulateAction={handleTriggerAction}
             isHighlightingControl={highlightedTargetId !== null}
@@ -276,13 +272,6 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
         </div>
       </div>
 
-      {/* Bottom Mandatory Disclaimer Notice */}
-      <div className="flex items-center justify-between text-[11px] text-[#55616B] font-mono px-1">
-        <span>{DEMO_VERIFICATION_DISCLAIMER}</span>
-        {enableKeyboardShortcuts && (
-          <span className="hidden sm:inline text-[#55616B]/80">Use ← / → or N / P keys to navigate</span>
-        )}
-      </div>
     </div>
   );
 };
