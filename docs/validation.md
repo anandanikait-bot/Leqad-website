@@ -32,3 +32,13 @@ No unresolved review findings are intentionally deferred.
 ## Hosting limitation
 
 Local production routing is verified. **AI Studio production routing remains unverified:** this environment's outbound proxy rejected access to `leqada.ai.studio` with a tunnel 403. This result does not establish the hosting platform's capabilities. [Hosting documentation](hosting.md) gives the build/start contract and exact post-deployment checks. No deployment or merge was performed. Deployment remains a separate reviewed action.
+
+## GitHub handoff
+
+The completed branch was successfully pushed through the existing Git HTTPS proxy. Creating the PR with `gh pr create` failed at `https://api.github.com/graphql` with `Forbidden`; no PR was created. Git read/write access and GitHub API access are separate capabilities. No new token was requested.
+
+The [prepared PR description](pull-request.md) contains test results, screenshots and hosting limitations. [Compare the branch and create the PR](https://github.com/anandanikait-bot/Leqad-website/compare/main...feat/minimal-cleanup-routing-seo?expand=1). Once API access is available, the exact command from the repository is:
+
+```sh
+gh pr create --repo anandanikait-bot/Leqad-website --base main --head feat/minimal-cleanup-routing-seo --title "Simplify Leqad and add clean, prerendered routes" --body-file docs/pull-request.md
+```
