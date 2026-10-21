@@ -120,6 +120,7 @@ Message: ${message.trim() || '[No message entered]'}
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0E2943]/60 backdrop-blur-xs animate-fadeIn"
+      data-lenis-prevent
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"

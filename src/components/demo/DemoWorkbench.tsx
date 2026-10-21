@@ -181,36 +181,6 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
 
   return (
     <div className="w-full flex flex-col gap-3">
-      {/* Current step first; full navigation is available on demand. */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#D9DDD9] bg-[#FAF8F4] px-3 py-2.5 sm:px-4">
-        <div className="min-w-0">
-          <p className="text-xs font-semibold text-[#0E2943]">Your first sketch</p>
-          <p className="text-xs text-[#55616B]">
-            Step {currentStepIndex + 1} of {totalSteps} · {currentStep.title}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setShowAllSteps(value => !value)}
-            aria-expanded={showAllSteps}
-            aria-controls="leqad-all-steps"
-            className="inline-flex items-center gap-1.5 rounded-md border border-[#D9DDD9] bg-white px-3 py-2 text-xs font-medium text-[#0E2943] hover:border-[#0E2943]/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
-          >
-            <List className="h-3.5 w-3.5" />
-            {showAllSteps ? 'Hide steps' : 'All steps'}
-          </button>
-          <button
-            type="button"
-            onClick={handleRestart}
-            aria-label="Restart walkthrough"
-            className="inline-flex items-center gap-1.5 rounded-md border border-[#D9DDD9] bg-white px-3 py-2 text-xs font-medium text-[#55616B] hover:text-[#0E2943] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
-          >
-            <RotateCcw className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Restart</span>
-          </button>
-        </div>
-      </div>
       {showAllSteps && (
         <nav id="leqad-all-steps" aria-label="Walkthrough steps" className="flex flex-wrap gap-2 rounded-lg border border-[#D9DDD9] bg-white p-3">
           {LESSON_STEPS.map((step, index) => {
@@ -270,6 +240,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             onToggleHighlight={handleToggleHighlight}
             isCompact={isHeroPreview}
             resetKey={resetKey}
+            showAllSteps={showAllSteps}
+            onToggleSteps={() => setShowAllSteps(value => !value)}
           />
         </div>
       </div>

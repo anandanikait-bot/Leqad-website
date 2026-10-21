@@ -1,29 +1,21 @@
 import React from 'react';
-import { PageRoute } from '../../types';
 import { SectionHeading } from '../shared/SectionHeading';
 import { ProductPreview } from '../home/ProductPreview';
 import { HowItWorks } from '../home/HowItWorks';
 import { CurrentProductAndVision } from '../home/CurrentProductAndVision';
-import { Button } from '../shared/Button';
+import { ButtonLink } from '../shared/Button';
 import { ArrowRight, Compass, Sparkles, Layers, ShieldCheck, CheckCircle2, MessageSquare } from 'lucide-react';
 
 interface AboutPageProps {
-  onNavigate: (page: PageRoute) => void;
   onOpenContact: (topic?: string) => void;
 }
 
-export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenContact }) => {
+export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
   return (
     <div className="py-10 sm:py-16 space-y-16 animate-fadeIn">
       {/* 1. What is Leqad? Clear explanation in plain English */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-5">
-          <div className="inline-flex items-center gap-2">
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#B74B21] bg-[#B74B21]/10 px-3 py-1 rounded-sm border border-[#B74B21]/20">
-              About Leqad
-            </span>
-          </div>
-
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#0E2943] leading-tight">
             Learn CAD by building, <br className="hidden sm:inline" />
             not just watching.
@@ -39,21 +31,21 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenContact 
           </div>
 
           <div className="pt-2 flex flex-wrap items-center gap-4">
-            <Button
+            <ButtonLink
               variant="rust"
               size="md"
-              onClick={() => onNavigate('demo')}
+              to="/demo"
               icon={<ArrowRight className="w-4 h-4" />}
             >
               Explore Interactive Demo
-            </Button>
-            <Button
+            </ButtonLink>
+            <ButtonLink
               variant="outline"
               size="md"
-              onClick={() => onNavigate('partners')}
+              to="/partners"
             >
               For Partners & Educators
-            </Button>
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -67,7 +59,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenContact 
             description="Leqad sits directly beside your 3D canvas, highlighting recognized tools and providing context as you work."
           />
         </div>
-        <ProductPreview onNavigate={onNavigate} />
+        <ProductPreview />
       </section>
 
       {/* 3. How It Works: Guided lessons, contextual hints, learning by doing */}
@@ -95,14 +87,14 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenContact 
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
-              <Button
+              <ButtonLink
                 variant="rust"
                 size="md"
-                onClick={() => onNavigate('partners')}
+                to="/partners"
                 icon={<ArrowRight className="w-4 h-4" />}
               >
                 View Partnership Overview
-              </Button>
+              </ButtonLink>
               <button
                 type="button"
                 onClick={() => onOpenContact('Educational Collaboration')}
@@ -126,14 +118,14 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenContact 
               Try the interactive CAD learning demonstration right in your browser with zero setup.
             </p>
           </div>
-          <Button
+          <ButtonLink
             variant="rust"
             size="lg"
-            onClick={() => onNavigate('demo')}
+            to="/demo"
             icon={<ArrowRight className="w-4 h-4" />}
           >
             Launch Interactive Demo
-          </Button>
+          </ButtonLink>
         </div>
       </div>
     </div>

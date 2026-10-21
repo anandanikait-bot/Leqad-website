@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '../shared/Button';
+import { ButtonLink } from '../shared/Button';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { PageRoute } from '../../types';
 import { CadArtwork3D } from './CadArtwork3D';
 import { SonarHeroGrid } from './SonarHeroGrid';
-
-interface HeroProps {
-  onNavigate: (page: PageRoute) => void;
-}
 
 const CYCLING_PHRASES = [
   'building, not just watching.',
@@ -15,7 +11,7 @@ const CYCLING_PHRASES = [
   'understanding every step.',
 ];
 
-export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+export const Hero: React.FC = () => {
   const [phraseIndex, setPhraseIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
@@ -52,13 +48,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Side — Content (col-span-6 on lg screens: 50% width) */}
         <div className="lg:col-span-6 space-y-6">
-          {/* Eyebrow: INTERACTIVE CAD LEARNING */}
-          <div className="inline-flex items-center gap-2">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#B74B21] bg-[#B74B21]/10 px-3 py-1 rounded-sm border border-[#B74B21]/20">
-              INTERACTIVE CAD LEARNING
-            </span>
-          </div>
-
           {/* Main Headline with Cycling Serif Phrase */}
           <div className="space-y-1">
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#0E2943] leading-[1.12]">
@@ -85,32 +74,25 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-            <Button
+            <ButtonLink
               variant="rust"
               size="lg"
-              onClick={() => onNavigate('demo')}
+              to="/demo"
               icon={<ArrowRight className="w-4 h-4" />}
             >
               Explore Interactive Demo
-            </Button>
+            </ButtonLink>
 
-            <button
-              type="button"
-              onClick={() => onNavigate('about')}
+            <Link
+              to="/about"
               className="text-sm font-medium text-[#55616B] hover:text-[#0E2943] py-2.5 px-4 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#D9DDD9] bg-white hover:bg-[#F5EFE7]/50 shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
             >
               <span>Learn About Leqad</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#55616B]" />
-            </button>
+            </Link>
           </div>
 
-          {/* Status Line */}
-          <div className="pt-1">
-            <p className="font-mono text-xs text-[#55616B]/80 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#55616B]/60" />
-              <span>Early-stage extension prototype · Independent project</span>
-            </p>
-          </div>
+
         </div>
 
         {/* Right Side — Interactive 3D Artwork (col-span-6 on lg screens: 50% width) */}

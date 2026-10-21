@@ -85,19 +85,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
   return (
-    <div className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
-      {/* Disclaimer / Prototype Banner (Fix #12) */}
-      <div className="bg-[#FAF8F4] px-3 py-1.5 border-b border-[#D9DDD9] flex items-center justify-between text-[11px] font-mono text-[#55616B]">
-        <div className="flex items-center gap-1.5 truncate">
-          <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
-          <span className="font-semibold text-[#0E2943]">Simulated CAD Workspace:</span>
-          <span className="truncate">Interactive illustration · Not connected to a live CAD environment</span>
-        </div>
-        <div className="hidden sm:flex items-center gap-2 flex-shrink-0 text-[10px]">
-          <span className="bg-[#E2E8F0] px-2 py-0.5 rounded text-[#0E2943]">40 mm × 30 mm Base</span>
-        </div>
-      </div>
-
+    <div data-lenis-prevent className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
       {/* CAD Application Ribbon Toolbar */}
       <div className="h-11 bg-white border-b border-[#D9DDD9] px-3 flex items-center justify-between text-xs text-[#0E2943] z-20">
         {/* Left CAD Toolbar */}

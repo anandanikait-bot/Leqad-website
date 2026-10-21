@@ -150,7 +150,7 @@ const HWF_CSS = `
 /* The artwork gets its own space after the links and back-to-top control.
    Do not paint it behind interactive footer content. */
 .hwf-art { position: relative; width: 100%; height: var(--hwf-art-height); overflow: hidden; isolation: isolate; }
-.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; }
+.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); }
 .hwf-top {
   position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2.3vw, 24px); padding: clamp(18px, 2.7vw, 30px) clamp(20px, 3.4vw, 44px) clamp(18px, 2.6vw, 30px);
@@ -385,7 +385,7 @@ export default function HalftoneWordmarkFooter({
         ctx.globalCompositeOperation = "source-over"
       }
       // Sleep once everything is home and nothing is pushing.
-      awake = moving || ringAge < 900 || px > -1e4
+      awake = !reduced && (moving || ringAge < 900 || px > -1e4)
     }
 
     const loop = (now: number) => {
@@ -404,7 +404,7 @@ export default function HalftoneWordmarkFooter({
       return [e.clientX - b.left, e.clientY - b.top]
     }
     const onMove = (e: PointerEv) => {
-      if (!opts.current.interactive) return
+      if (!opts.current.interactive || reduced) return
       const p = toLocal(e)
       px = p[0]
       py = p[1]
@@ -495,7 +495,7 @@ export default function HalftoneWordmarkFooter({
     >
       <style>{HWF_CSS}</style>
       <span className="hwf-sr">{wordmark}</span>
-      <div className="hwf-top">
+      {(label || meta || columns.length > 0) && <div className="hwf-top">
         <div className="hwf-brand">
           <strong>{label}</strong>
           <span>{meta}</span>
@@ -512,14 +512,14 @@ export default function HalftoneWordmarkFooter({
             </ul>
           </nav>
         ))}
-      </div>
-      <div className="hwf-rule">
+      </div>}
+      {backToTop && <div className="hwf-rule">
         {backToTop ? (
           <button type="button" className="hwf-up" onClick={toTop}>
             Back to top ↑
           </button>
         ) : null}
-      </div>
+      </div>}
       <div className="hwf-art" ref={artRef} aria-hidden="true">
         <canvas ref={canvasRef} />
       </div>
