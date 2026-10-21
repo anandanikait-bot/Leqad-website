@@ -21,7 +21,7 @@ export const CurrentPrototype: React.FC<CurrentPrototypeProps> = ({ onNavigate }
   const features = [
     {
       title: 'Your First Sketch',
-      description: 'An eight-step beginner learning flow teaching reference plane selection, sketch tools, dimensions, hole placement, and constraint verification.',
+      description: 'An eight-step beginner learning flow teaching reference plane selection, sketch tools, parametric dimensions, and constraint verification.',
       icon: <Layers className="w-5 h-5 text-[#B74B21]" />,
       tag: '8 Interactive Steps',
     },

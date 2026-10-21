@@ -21,7 +21,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ onNavigate }) =>
             </div>
             <div className="h-4 w-[1px] bg-[#D9DDD9] mx-1" />
             <span className="font-mono text-[#0E2943] font-semibold text-[11px]">
-              Onshape CAD Session — Document: First_Mounting_Plate
+              Onshape CAD Session — Document: Your_First_Sketch
             </span>
           </div>
 

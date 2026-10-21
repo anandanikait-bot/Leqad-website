@@ -14,7 +14,7 @@ export interface LessonStep {
   recognizedControlId: string;
   recognizedControlLabel: string;
   isComplete: boolean;
-  geometryState: 'empty' | 'plane_selected' | 'oriented_normal' | 'rectangle_drawn' | 'rectangle_dimensioned' | 'circle_added' | 'hole_dimensioned' | 'fully_constrained' | 'sketch_accepted';
+  geometryState: 'plane_selected' | 'oriented_normal' | 'rectangle_tool_active' | 'rectangle_drawn' | 'width_dimensioned' | 'height_dimensioned' | 'fully_constrained' | 'sketch_accepted';
 }
 
 export type ViewOrientation = 'iso' | 'top' | 'front' | 'right';

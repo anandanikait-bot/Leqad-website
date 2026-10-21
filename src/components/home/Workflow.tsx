@@ -143,7 +143,7 @@ export const Workflow: React.FC = () => {
                     Create a 2D Parametric Base Plate
                   </h4>
                   <p className="text-xs text-[#55616B] leading-relaxed">
-                    Establish a 80mm × 50mm rectangular sketch on the Top Plane with a centered mounting hole. Must achieve 0 degrees of freedom before extrusion.
+                    Establish a 40mm × 30mm rectangular sketch on the Top Plane anchored to the coordinate origin. Must achieve 0 degrees of freedom before extrusion.
                   </p>
                   <div className="flex items-center gap-2 pt-2 border-t border-[#D9DDD9] text-[11px] font-mono text-[#55616B]">
                     <span>Reference Plane: <strong>Top (XZ)</strong></span>
