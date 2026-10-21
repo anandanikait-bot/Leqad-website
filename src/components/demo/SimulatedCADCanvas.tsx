@@ -87,7 +87,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   return (
     <div data-lenis-prevent className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
       {/* CAD Application Ribbon Toolbar */}
-      <div className="h-11 bg-white border-b border-[#D9DDD9] px-3 flex items-center justify-between text-xs text-[#0E2943] z-20">
+      <div role="toolbar" aria-label="CAD tools" className="min-h-11 bg-white border-b border-[#D9DDD9] px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-xs text-[#0E2943] z-20">
         {/* Left CAD Toolbar */}
         <div className="flex items-center gap-1 overflow-x-auto py-1">
           {/* Sketch tool (Step 3: Start Sketch) */}
@@ -217,8 +217,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         </div>
 
         {/* Right Info: Coordinate Readout */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="font-mono text-[11px] text-[#55616B] flex items-center gap-1.5 sm:gap-2 bg-[#F5EFE7] px-2 sm:px-2.5 py-1 rounded border border-[#D9DDD9] shadow-2xs">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="font-mono whitespace-nowrap text-[11px] text-[#55616B] flex items-center gap-1.5 sm:gap-2 bg-[#F5EFE7] px-2 sm:px-2.5 py-1 rounded border border-[#D9DDD9] shadow-2xs">
             <span>
               X: <strong className="text-[#0E2943]">{cursorPos.x >= 0 ? `+${cursorPos.x.toFixed(1)}` : cursorPos.x.toFixed(1)}</strong>
             </span>

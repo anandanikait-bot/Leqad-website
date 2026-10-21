@@ -224,7 +224,8 @@ export default function HalftoneWordmarkFooter({
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const motionMedia = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let reduced = motionMedia.matches
     let w = 0
     let h = 0
     let dpr = 1
@@ -260,7 +261,12 @@ export default function HalftoneWordmarkFooter({
       m.font = face
       const word = o.wordmark || " "
       // Fit both width and height so even descenders stay inside the strip.
-      const fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
+      let fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
+      m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+      // Fit the actual ascenders + descenders, rather than assuming font metrics.
+      const measured = m.measureText(word)
+      const measuredHeight = measured.actualBoundingBoxAscent + measured.actualBoundingBoxDescent
+      if (measuredHeight > 0) fit *= Math.min(1, (h * 0.90) / measuredHeight)
       m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
       const box = m.measureText(word)
       const cap = box.actualBoundingBoxAscent || fit * 0.72
@@ -423,6 +429,18 @@ export default function HalftoneWordmarkFooter({
       wake()
     }
 
+    const onMotionChange = () => {
+      reduced = motionMedia.matches
+      if (raf) cancelAnimationFrame(raf)
+      raf = 0
+      px = -1e5
+      py = -1e5
+      ring = { x: 0, y: 0, t: -1 }
+      layout()
+      draw(performance.now())
+      if (!reduced) wake()
+    }
+    motionMedia.addEventListener("change", onMotionChange)
     layout()
     draw(performance.now())
     wake()
@@ -465,6 +483,7 @@ export default function HalftoneWordmarkFooter({
 
     return () => {
       alive = false
+      motionMedia.removeEventListener("change", onMotionChange)
       cancelAnimationFrame(raf)
       ro.disconnect()
       io.disconnect()

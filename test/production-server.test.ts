@@ -26,6 +26,10 @@ test('production serves route-specific HTML, canonical redirects, and real missi
     const redirect = await fetch(`${origin}/demo/?source=test`, { redirect: 'manual' });
     assert.equal(redirect.status, 308);
     assert.equal(redirect.headers.get('location'), '/demo?source=test');
+    const alias = await fetch(`${origin}/demo/index.html?source=alias`, { redirect: 'manual' });
+    assert.equal(alias.status, 308);
+    assert.equal(alias.headers.get('location'), '/demo?source=alias');
+    assert.equal((await fetch(`${origin}/404.html`)).status, 404);
     for (const path of ['/missing', '/assets/missing.js']) assert.equal((await fetch(origin + path)).status, 404);
     assert.equal((await fetch(`${origin}/assets/app.js`)).status, 200);
     assert.equal((await fetch(`${origin}/demo`, { method: 'HEAD' })).status, 200);

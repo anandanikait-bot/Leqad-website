@@ -1,6 +1,6 @@
 # Leqad Cleanup Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Deliver the approved minimal Leqad cleanup with clean URLs, crawlable pages and intact lesson behavior.
 **Architecture:** React Router owns browser navigation. Vite builds the client and a small prerender entry; generated HTML is hydrated. An explicit Express production server serves the known prerendered routes with meaningful 404 responses. A single Lenis lifecycle owns smooth scrolling.
@@ -23,21 +23,21 @@
 ### Task 1: Routing and crawlable build
 **Files:** src/App.tsx, src/main.tsx, src/lib/routes.ts, src/lib/seo.ts, src/entry-server.tsx, scripts/prerender.ts, server.mjs, package.json, public/robots.txt, public/sitemap.xml, test/routing-and-seo.test.ts, test/production-server.test.ts.
 **Interfaces:** route definitions expose pathname, PageRoute and metadata. renderPage(pathname) returns HTML. Production server reads dist route HTML.
-- [ ] Add behavioral regression tests for legacy destinations, unique SEO and production deep links/404s; run to observe missing behavior.
-- [ ] Install router, Lenis and browser test tooling; implement route navigation, hydration, per-route head generation and static prerendering.
-- [ ] Serve exact route documents through a tested production server; verify no-JS content and correct status codes.
-- [ ] Run unit tests, build and TypeScript; commit the routing/build change.
+- [x] Add behavioral regression tests for legacy destinations, unique SEO and production deep links/404s; run to observe missing behavior.
+- [x] Install router, Lenis and browser test tooling; implement route navigation, hydration, per-route head generation and static prerendering.
+- [x] Serve exact route documents through a tested production server; verify no-JS content and correct status codes.
+- [x] Run unit tests, build and TypeScript; commit the routing/build change.
 
 ### Task 2: Focused UI and scrolling
 **Files:** header/footer, hero, About/ProductPreview, DemoPage/DemoWorkbench/LessonPanel/SimulatedCADCanvas, halftone footer, shared Button, ScrollManager, artwork/CSS; test/browser/website.spec.ts.
 **Interfaces:** all navigational actions are Link/NavLink; lesson callbacks remain intact; ScrollManager uses pathname and excludes data-lenis-prevent nodes.
-- [ ] Add browser assertions for removals, closed help, progression, static About and navigation; observe expected failures.
-- [ ] Apply screenshot removals and canvas mask, static preview, accessible links and single managed Lenis lifecycle.
-- [ ] Verify lesson completion/restart, optional hints/highlighting, clean refreshes, history and reduced motion.
-- [ ] Verify all routes at each requested width without overflow; capture desktop/mobile screenshots and commit.
+- [x] Add browser assertions for removals, closed help, progression, static About and navigation; observe expected failures.
+- [x] Apply screenshot removals and canvas mask, static preview, accessible links and single managed Lenis lifecycle.
+- [x] Verify lesson completion/restart, optional hints/highlighting, clean refreshes, history and reduced motion.
+- [x] Verify all routes at each requested width without overflow; capture desktop/mobile screenshots and commit.
 
 ### Task 3: Review and delivery
 **Files:** docs/hosting.md, docs/validation.md, test screenshots and PR body.
-- [ ] Run final full checks and obtain a fresh whole-branch review; address material findings with regression coverage.
-- [ ] Record actual results and exact AI Studio post-deployment checks; retry production/GitHub access only after a meaningful configuration change.
+- [x] Run final full checks and obtain a fresh whole-branch review; address material findings with regression coverage.
+- [x] Record actual results and exact AI Studio post-deployment checks; retry production/GitHub access only after a meaningful configuration change.
 - [ ] Commit reviewable artifacts, push only the feature branch and open a PR if authorized access works; never deploy or merge.

@@ -23,6 +23,7 @@ test('each public route has unique crawlable metadata and an absolute canonical'
     assert.match(head, /<title[^>]*>.+<\/title>/);
     assert.ok(head.includes(`href="https://leqada.ai.studio${route.path === '/' ? '/' : route.path}"`));
     assert.match(head, /property="og:url"/);
+    assert.ok(head.includes('property="og:image" content="https://leqada.ai.studio/assets/cad-lesson-preview.png"'));
     assert.match(head, /name="twitter:title"/);
     assert.match(head, /application\/ld\+json/);
     titles.add(route.title);

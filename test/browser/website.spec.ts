@@ -160,3 +160,63 @@ test('reduced-motion artwork settles without an endless animation loop', async (
   expect(after - before).toBeLessThanOrEqual(1);
   await context.close();
 });
+
+test('desktop halftone lettering has space above its ascenders', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  const canvas = page.locator('footer canvas');
+  await canvas.scrollIntoViewIfNeeded();
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const inkAtTop = await canvas.evaluate(element => {
+    const canvas = element as HTMLCanvasElement;
+    const pixels = canvas.getContext('2d')!.getImageData(0, 0, canvas.width, 3).data;
+    let count = 0;
+    for (let i = 0; i < pixels.length; i += 4) if (pixels[i] > 150 && pixels[i + 1] > 150) count++;
+    return count;
+  });
+  expect(inkAtTop).toBe(0);
+});
+
+test('footer animation also stops when reduced motion is enabled at runtime', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.addInitScript(() => {
+    const original = CanvasRenderingContext2D.prototype.fillRect;
+    CanvasRenderingContext2D.prototype.fillRect = function (...args) {
+      if (this.canvas.closest('footer')) this.canvas.dataset.frames = String(Number(this.canvas.dataset.frames || 0) + 1);
+      return original.apply(this, args);
+    };
+  });
+  await page.goto('/');
+  const canvas = page.locator('footer canvas');
+  await canvas.scrollIntoViewIfNeeded();
+  await page.locator('footer .hwf-art').hover();
+  await expect(canvas).toHaveAttribute('data-frames', /\d+/);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForTimeout(100);
+  const before = Number(await canvas.getAttribute('data-frames'));
+  await page.waitForTimeout(250);
+  expect(Number(await canvas.getAttribute('data-frames')) - before).toBeLessThanOrEqual(1);
+});
+
+test('mobile navigation and native touch scrolling remain usable', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 375, height: 900 }, isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4173/');
+  await page.getByRole('button', { name: 'Open navigation menu', exact: true }).tap();
+  await expect(page.getByRole('button', { name: 'Close navigation menu', exact: true })).toHaveAttribute('aria-expanded', 'true');
+  await page.getByRole('navigation', { name: 'Mobile navigation', exact: true }).getByRole('link', { name: 'About', exact: true }).tap();
+  await expect(page).toHaveURL(/\/about$/);
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation', exact: true })).toHaveCount(0);
+  const client = await context.newCDPSession(page);
+  // Chromium's synthetic gesture omits touchMove here; send the real touch sequence.
+  await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 180, y: 650 }] });
+  for (let y = 630; y >= 250; y -= 20) {
+    await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 180, y }] });
+    await page.waitForTimeout(16);
+  }
+  await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+  await context.close();
+});

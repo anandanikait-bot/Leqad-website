@@ -12,14 +12,16 @@ export function renderHead(pathname: string): string {
   const title = route?.title ?? 'Page not found — Leqad';
   const description = route?.description ?? 'The requested Leqad page could not be found.';
   const canonical = `${SITE_ORIGIN}${route?.path ?? '/'}`;
+  const image = `${SITE_ORIGIN}/assets/cad-lesson-preview.png`;
+  const imageAlt = 'Leqad CAD lesson preview with a reference plane and contextual teaching panel.';
   const tags = [
     `<title data-route-head>${escapeHtml(title)}</title>`,
     `<meta data-route-head name="description" content="${escapeHtml(description)}">`,
     `<meta data-route-head name="robots" content="${route ? 'index,follow' : 'noindex,follow'}">`,
     ...(route ? [`<link data-route-head rel="canonical" href="${canonical}">`] : []),
-    ...Object.entries({ 'og:type': 'website', 'og:site_name': 'Leqad', 'og:title': title, 'og:description': description, 'og:url': canonical })
+    ...Object.entries({ 'og:type': 'website', 'og:site_name': 'Leqad', 'og:title': title, 'og:description': description, 'og:url': canonical, 'og:image': image, 'og:image:alt': imageAlt, 'og:image:width': '1182', 'og:image:height': '520' })
       .map(([property, content]) => `<meta data-route-head property="${property}" content="${escapeHtml(content)}">`),
-    ...Object.entries({ 'twitter:card': 'summary', 'twitter:title': title, 'twitter:description': description })
+    ...Object.entries({ 'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': image, 'twitter:image:alt': imageAlt })
       .map(([name, content]) => `<meta data-route-head name="${name}" content="${escapeHtml(content)}">`),
   ];
   if (route) {

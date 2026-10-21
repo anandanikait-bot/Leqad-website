@@ -10,6 +10,11 @@ export function createApp(distDir = resolve(dirname(fileURLToPath(import.meta.ur
   app.disable('x-powered-by');
   app.use((request, response, next) => {
     if (request.method !== 'GET' && request.method !== 'HEAD') return next();
+    const alias = Object.entries(routes).find(([, file]) => request.path === `/${file}`);
+    if (alias) {
+      const query = request.originalUrl.slice(request.path.length);
+      return response.redirect(308, alias[0] + query);
+    }
     const clean = request.path.replace(/\/+$/, '') || '/';
     if (!Object.hasOwn(routes, clean)) return next();
     if (request.path !== clean) {
@@ -19,7 +24,11 @@ export function createApp(distDir = resolve(dirname(fileURLToPath(import.meta.ur
     response.set('Cache-Control', 'no-cache');
     return response.sendFile(resolve(root, routes[clean]));
   });
-  app.use(express.static(root, { index: false, redirect: false }));
+  app.use((request, response, next) => {
+    // Generated HTML must pass through canonical route handling, including 404.html.
+    if (/\.html$/i.test(request.path)) return next();
+    return express.static(root, { index: false, redirect: false })(request, response, next);
+  });
   app.use((_request, response) => response.status(404).sendFile(resolve(root, '404.html')));
   return app;
 }
