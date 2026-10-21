@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #0E2943;
+  --color-brand-ivory: #F5EFE7;
+  --color-brand-rust: #B74B21;
+  --color-brand-rust-hover: #9c3f1b;
+  --color-near-white: #FAF8F4;
+  --color-surface: #FFFFFF;
+  --color-muted-border: #D9DDD9;
+  --color-secondary-text: #55616B;
+  --color-cad-workspace: #EDF1F3;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #FAF8F4;
+  color: #0E2943;
+  overflow-x: hidden;
+}
+
+/* Custom crisp technical scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5EFE7;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9DDD9;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #55616B;
+}
+
+/* Subtle CAD grid pattern */
+.bg-cad-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(14, 41, 67, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 41, 67, 0.05) 1px, transparent 1px);
+}
+
+.bg-cad-grid-dense {
+  background-size: 12px 12px;
+  background-image: 
+    linear-gradient(to right, rgba(14, 41, 67, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 41, 67, 0.035) 1px, transparent 1px);
+}

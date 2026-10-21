@@ -1,0 +1,826 @@
+# LEQAD — Website Design & Implementation Specification
+
+**Project:** Leqad Public Website  
+**Repository:** https://github.com/anandanikait-bot/leqad  
+**Purpose:** Product introduction, interactive walkthrough, educator interest, and partnership conversations.  
+**Design standard:** Production-quality presentation comparable in polish to leading software startups, while staying faithful to Leqad's current development stage.
+
+## 1. Product context
+
+Leqad is building an interactive CAD education platform, beginning with Onshape.
+
+The long-term goal is to teach people 3D modeling inside their actual design workflow through adaptive instruction, progressively stronger guidance, and evidence-based feedback.
+
+The learner remains responsible for the design. Leqad is not intended to automatically create everything on their behalf.
+
+The initial niche is:
+
+- Students learning CAD for the first time.
+- High-school robotics teams and makers.
+- Beginners designing useful 3D-printable parts.
+- Educators teaching practical parametric CAD.
+
+The broader opportunity is a CAD-independent learning system, but the public website should focus on the initial Onshape experience.
+
+### Current product versus future vision
+
+**Current prototype:**
+- Chrome/Edge browser extension.
+- React-based draggable and collapsible teaching panel.
+- Eight-step "Your First Sketch" beginner lesson.
+- Progressive hints and recognized-control highlighting.
+- Local lesson progress and preferences.
+- Conservative feedback when actual CAD completion cannot be verified.
+- Controlled automated testing, with remaining live Onshape acceptance requirements.
+
+**Planned, not yet shipped:**
+- General contextual AI teacher.
+- Geometry-aware CAD verifier.
+- Custom Part Studio for original designs.
+- Adaptive learning and educator tools.
+- Cross-CAD integrations.
+
+The website must never blur these boundaries.
+
+## 2. Design inspiration and visual direction
+
+Study these products for design principles:
+
+- **Linear — linear.app:** Visual hierarchy, careful spacing, sophisticated interface previews, polished transitions.
+- **Cursor — cursor.com:** Demonstrate a complex technical product through an immediately recognizable workflow.
+- **Vercel — vercel.com:** Typography, precision, documentation-like credibility, restrained presentation.
+- **Y Combinator — ycombinator.com:** Clear language, immediate explanation, minimal distractions.
+
+Do not reproduce proprietary layouts, artwork, copy, or logos.
+
+### Visual identity
+
+The approved Leqad logo must be used from the existing repository.
+
+Inspect:
+
+`apps/extension/src/assets/brand/`
+
+Use the active primary branding and follow its README.
+
+Do not use the old Version B logo or historical cube/arrow concepts.
+
+**Color system**
+
+| Token | Value | Purpose |
+|---|---|---|
+| Brand navy | `#0E2943` | Primary text, buttons, dark surfaces |
+| Brand ivory | `#F5EFE7` | Branded backgrounds and logo field |
+| Brand rust | `#B74B21` | Controlled accents and important UI details |
+| Near white | `#FAF8F4` | Main page background |
+| Surface | `#FFFFFF` | Content surfaces |
+| Muted border | `#D9DDD9` | Dividers and interface framing |
+| Secondary text | `#55616B` | Supporting information |
+| CAD workspace | `#EDF1F3` | Illustrative canvas background |
+
+Preserve exact brand colors for the logo.
+
+Avoid generic purple AI gradients, fluorescent cyan, oversized glowing orbs, and randomly colored feature cards.
+
+### Typography
+
+- Headings: Geist or Inter, using properly licensed/font-delivered assets.
+- Body: Inter or a similarly readable sans-serif.
+- Small technical labels: IBM Plex Mono or a suitable monospace font.
+- Large, confident headings.
+- Comfortable line height and substantial negative space.
+- No decorative fonts or overly wide text blocks.
+
+### Layout rules
+
+- Content max-width: approximately 1200px.
+- Desktop page gutters: 48–64px where space permits.
+- Tablet gutters: 32px.
+- Mobile gutters: 20px.
+- Spacious sections with consistent vertical rhythm.
+- Responsive, accessible, keyboard-friendly navigation.
+- Minimal motion. Honor `prefers-reduced-motion`.
+
+The finished website should look like a sophisticated engineering product, not a course marketplace.
+
+## 3. Primary website structure
+
+Implement three public pages:
+
+1. `/` — Main product landing page.
+2. `/demo` — Interactive educational walkthrough.
+3. `/partners` — Overview for potential collaborators and educators.
+
+Avoid creating login, billing, dashboard, or pricing flows at this stage.
+
+The product is not yet being offered as a generally available production service.
+
+---
+
+## 4. Homepage — exact layout and content
+
+### Section 1: Navigation
+
+Left: approved Leqad symbol and "Leqad" wordmark.
+
+Center/right:
+- Product
+- Demo
+- For Partners
+
+Primary navigation action:
+**Explore demo →**
+
+Use a compact sticky navbar with a subtle border.
+
+On mobile, use an accessible expandable menu.
+
+### Section 2: Hero
+
+Small eyebrow:
+
+`INTERACTIVE CAD LEARNING · EARLY PROTOTYPE`
+
+Primary headline:
+
+**Learn CAD by building, not just watching.**
+
+Supporting text:
+
+"Leqad brings guided lessons and contextual help into your CAD workflow, helping beginners learn the tools and understand the decisions behind their designs. Starting with Onshape."
+
+Primary button:
+
+**Explore the guided lesson →**
+
+Secondary text link:
+
+**Explore the vision**
+
+This should scroll to the product roadmap section.
+
+Do not use a "Get started free" button unless users can actually start using the service.
+
+### Section 3: Product hero visualization
+
+This is the most important visual component.
+
+Create a large simulated CAD workspace with a Leqad teaching panel visible on the right.
+
+The workspace should look like an engineering tool, with:
+
+- A subtle coordinate grid.
+- X/Y reference axes.
+- A simple parametric sketch.
+- A rectangle or similarly basic geometric object.
+- Minimal modeling tools.
+- Neutral technical colors.
+
+Avoid recreating the Onshape interface pixel-for-pixel or implying an official integration endorsement.
+
+Overlay a faithful representation of Leqad's existing teaching panel.
+
+Panel contents:
+
+`FOUNDATIONS / YOUR FIRST SKETCH`
+
+`STEP 03 OF 08`
+
+**Create a rectangle**
+
+"Use the Rectangle tool to create the base of your sketch."
+
+Available interactions:
+- Hint
+- Show me
+- Next step
+
+The visualization may demonstrate an illustrative lesson, but must clearly indicate that it is not connected to a real Onshape document.
+
+Place this disclaimer near the visualization:
+
+"Interactive illustration — not a live CAD connection."
+
+If accurate screenshots from the actual extension are available, use those in a separate "Current prototype" area and identify them as such.
+
+**Important:** The hero should look like a CAD product, not a chatbot.
+
+### Section 4: The learning problem
+
+Heading:
+
+**Watching a tutorial isn't the same as knowing how to design.**
+
+Supporting copy:
+
+"Learning CAD often means switching between a tutorial and your own model. When the steps stop matching what you're trying to build, it can be difficult to know what to do next."
+
+Use three compact explanations:
+
+**Learn in context**  
+Guidance appears beside the work rather than in a disconnected lesson.
+
+**Understand the reason**  
+Teach the concepts behind modeling decisions instead of only showing commands.
+
+**Build independence**  
+Provide help when needed, then give learners room to solve problems themselves.
+
+These describe the educational approach, not proven measured benefits.
+
+### Section 5: Product workflow
+
+Heading:
+
+**Guidance that works alongside the learner.**
+
+Create a sophisticated two-column section.
+
+Left column: selectable stages.
+
+01 — Understand the goal  
+02 — Find the next action  
+03 — Get a helpful hint  
+04 — Check what can be observed  
+05 — Continue building independently
+
+Right column: an interactive workspace illustration that changes with the selected stage.
+
+Each stage needs a short, specific explanation and one meaningful visual change.
+
+Behavior:
+- Clicking a stage updates the right-side display.
+- Keyboard navigation works.
+- State is visually clear.
+- Changes use subtle transitions.
+- On reduced-motion devices, switch immediately.
+
+Do not fake model inspection or automatic geometry verification.
+
+### Section 6: The current prototype
+
+Heading:
+
+**Starting with the foundations.**
+
+Show actual or accurately reproduced interface views of the current product.
+
+Feature groups:
+
+**Your First Sketch**  
+An eight-step beginner learning flow.
+
+**Progressive assistance**  
+Hints can become more detailed as the learner requests help.
+
+**Contextual visual guidance**  
+Recognized interface controls can be highlighted in supported states.
+
+**Evidence-aware progress**  
+The system distinguishes observed interface behavior from geometry it cannot verify.
+
+**Resume learning**  
+Lesson progress and selected preferences persist locally.
+
+Include a clearly visible link to the full interactive demonstration.
+
+The content should describe verified implementation only.
+
+### Section 7: Who Leqad is for
+
+Heading:
+
+**For people learning to build real things.**
+
+Use three carefully designed panels:
+
+**Students and beginners**  
+Learn essential CAD skills through guided practice.
+
+**Robotics teams and makers**  
+Develop the modeling skills to create brackets, mounts, and useful components.
+
+**Educators**  
+Explore how in-workflow assistance might complement existing CAD instruction.
+
+Use CAD-related geometry and diagrams rather than generic stock photography.
+
+Do not present fictional projects or success stories as real customer outcomes.
+
+### Section 8: Product roadmap
+
+Heading:
+
+**From guided lessons to independent design.**
+
+Show three stages in a horizontal timeline on desktop and stacked layout on mobile.
+
+**NOW — Guided foundations**  
+A focused lesson prototype, interface recognition, hints, and careful progress handling.
+
+**NEXT — Contextual AI teaching**  
+A proposed AI explanation layer that answers why, adapts guidance, and handles uncertainty.
+
+**LATER — Original projects and verification**  
+Planned support for design briefs, learner-created parts, authorized model evidence, and constructive feedback.
+
+Use different visual treatments for implemented versus proposed capabilities.
+
+Do not use an invented launch date.
+
+### Section 9: Partnership opportunity
+
+Heading:
+
+**Exploring better ways to teach CAD.**
+
+Copy:
+
+"Leqad is exploring opportunities to work with CAD platforms, educators, and other organizations interested in improving how beginners learn engineering design."
+
+Explain three potential collaboration directions:
+
+- Product and technical integration.
+- Educational pilots and feedback.
+- Future distribution and commercial opportunities, subject to demonstrated value.
+
+Button:
+
+**Explore partnerships →**
+
+Do not display Onshape or PTC as a partner unless formal permission or agreement exists.
+
+### Section 10: Footer
+
+Include:
+- Leqad logo.
+- Short product description.
+- Product / Demo / Partners navigation.
+- An appropriate contact route.
+- Copyright notice.
+
+Use this disclaimer where appropriate:
+
+"Leqad is an independent project beginning with Onshape. It is not currently presented as an official Onshape product or partnership."
+
+Do not publish the founder's personal email, school information, or private contact details without approval.
+
+---
+
+## 5. Interactive demo page
+
+Route: `/demo`
+
+Purpose: Allow visitors and potential partners to understand the learning experience without installing the extension.
+
+This must be a functioning educational UI demonstration, not a decorative animation.
+
+### Page structure
+
+Header:
+
+**See how guided CAD learning works.**
+
+Subheading:
+
+"Explore an illustrative version of Leqad's beginner lesson and the kinds of guidance it provides."
+
+Below, provide a large workstation interface.
+
+Desktop layout:
+
+- Left/main: illustrative CAD canvas.
+- Right: Leqad lesson panel.
+- Bottom or top: lesson-stage progress.
+
+On mobile:
+- CAD illustration above.
+- Lesson controls below.
+- No horizontal clipping.
+
+### Demo capabilities
+
+Implement a small, self-contained walkthrough based on the real "Your First Sketch" lesson.
+
+Provide:
+- Previous and Next navigation.
+- A progress indicator.
+- A progressive hint reveal.
+- A "Show me" control that highlights the appropriate simulated control.
+- A "Why?" explanation where the provided lesson data supports one.
+- A restart control.
+- Keyboard operability and accessible status announcements.
+
+When the simulated Rectangle step is active, highlight the Rectangle tool.
+
+When a different step is active, remove outdated highlights.
+
+Do not assume completed geometry simply because a visitor clicks the simulated tool.
+
+### Verification behavior
+
+Do not display:
+
+"Your sketch was verified."
+
+Instead, use accurate text such as:
+
+"Demo step completed. This illustration does not inspect a real CAD model."
+
+Keep the demonstration self-contained.
+
+No Onshape authorization, API calls, authentication, AI inference, or private model access is necessary for this website demo.
+
+### Demo acceptance criteria
+
+- Every working button changes relevant state.
+- No control is decorative unless intentionally labeled noninteractive.
+- Hints progress through meaningful levels.
+- Restart resets the walkthrough.
+- State does not unexpectedly persist into a new session.
+- A screen reader can understand the steps.
+- The page works on narrow screens.
+- No claims of live CAD functionality are made.
+
+---
+
+## 6. Partnership page
+
+Route: `/partners`
+
+Audience: Onshape Partnerships, CAD-platform teams, education product leaders, and potential educator collaborators.
+
+This is **not** a fundraising pitch deck or an announcement of an existing partnership.
+
+### Hero
+
+Headline:
+
+**Building a better learning experience for CAD.**
+
+Subheading:
+
+"Leqad is developing an interactive learning layer that helps people build confidence directly inside their design workflow. We are exploring technical, educational, and future commercial collaborations."
+
+Primary CTA:
+
+**Start a conversation**
+
+Use a working, approved contact mechanism. If none exists, use a clearly identified contact-link placeholder during implementation and do not publish the site until it is resolved.
+
+### Section: What we are building
+
+Explain the teacher–learner–verifier vision:
+
+**Learner takes action → Leqad provides contextual guidance → supported evidence informs feedback → learner improves.**
+
+Explicitly distinguish current hints and UI recognition from planned model verification.
+
+### Section: Why it may be valuable
+
+Potential value to:
+- CAD platform onboarding.
+- Beginner skill development.
+- Educator workflows.
+- Movement from lessons into real projects.
+
+State that these outcomes require validation.
+
+### Section: Partnership possibilities
+
+Present a logical progression:
+
+**1. Technical alignment**  
+Discuss compliant platform integration and product fit.
+
+**2. Educational evaluation**  
+Explore a small pilot measuring learning outcomes.
+
+**3. Commercial exploration**  
+Discuss sustainable distribution, licensing, or premium learning models if mutual interest and evidence justify it.
+
+Do not imply commitments, permissions, licensing terms, or guaranteed revenue.
+
+### Section: Current status
+
+Include:
+- Existing early extension and first lesson.
+- Ongoing compatibility validation.
+- Next proposed product phases.
+- Open interest in feedback and collaboration.
+
+### Final CTA
+
+**Let's explore what's possible.**
+
+The CTA must lead to a real contact action when deployed.
+
+---
+
+## 7. Detailed interaction and motion design
+
+Use polished but understated interactions.
+
+### Navbar
+- Sticky positioning.
+- Subtle background treatment as the page scrolls.
+- Active navigation indication.
+- No excessive blur or flicker.
+
+### Buttons
+- Gentle hover color change.
+- Clear focus-visible ring.
+- Slightly refined transition, approximately 150–200ms.
+- Never animate continuously.
+
+### Product illustration
+- Technical grid and vector geometry.
+- Reusable control highlights.
+- Optional concise staged motion illustrating a user's action.
+- Do not animate the entire product just to create visual excitement.
+
+### Scroll sections
+- Prefer native scrolling and stable content.
+- Optional subtle appearance transition for secondary elements.
+- Respect reduced motion.
+- Avoid parallax, scroll hijacking, and autoplay carousels.
+
+### Mobile
+- Interactive demos remain usable.
+- No essential controls hidden behind hover.
+- Screenshots have mobile-specific framing or a deliberate scalable view.
+- Appropriate tap targets.
+
+## 8. Technical implementation
+
+### Repository and framework
+
+First inspect the current repository rather than guessing its structure.
+
+Existing repository:
+`anandanikait-bot/leqad`
+
+It is a PNPM workspace containing the browser extension.
+
+Proposed website location:
+
+`apps/web/`
+
+Recommended:
+- Next.js App Router.
+- TypeScript, strict mode.
+- Tailwind CSS.
+- CSS custom properties for the Leqad design tokens.
+- Accessible React components.
+- Lucide icons for utility UI.
+- Minimal dependencies.
+
+Use a stable version compatible with the existing Node and PNPM setup. Do not unnecessarily upgrade or modify extension dependencies.
+
+### Suggested file structure
+
+```text
+apps/
+  extension/
+    ... existing application
+  web/
+    app/
+      layout.tsx
+      page.tsx
+      demo/page.tsx
+      partners/page.tsx
+      globals.css
+      not-found.tsx
+    components/
+      layout/
+        SiteHeader.tsx
+        SiteFooter.tsx
+        MobileNavigation.tsx
+      home/
+        Hero.tsx
+        ProductPreview.tsx
+        LearningProblem.tsx
+        Workflow.tsx
+        CurrentPrototype.tsx
+        Audience.tsx
+        Roadmap.tsx
+        PartnershipCTA.tsx
+      demo/
+        DemoWorkbench.tsx
+        SimulatedCADCanvas.tsx
+        LessonPanel.tsx
+        DemoControls.tsx
+        HintDisplay.tsx
+      partners/
+        PartnershipOverview.tsx
+        CollaborationStages.tsx
+      shared/
+        BrandLogo.tsx
+        Button.tsx
+        SectionHeading.tsx
+        StatusText.tsx
+    lib/
+      demo/
+        lesson-data.ts
+        demo-state.ts
+      constants.ts
+    public/
+      brand/
+      images/
+    tests/
+      navigation.spec.ts
+      demo.spec.ts
+      responsive.spec.ts
+      accessibility.spec.ts
+    package.json
+    tsconfig.json
+    next.config.ts
+```
+
+Adjust file organization to established repository conventions if necessary.
+
+### Important architecture rules
+
+1. The website must be independent of the browser extension runtime.
+2. Share brand assets safely rather than duplicating or modifying the approved source artwork.
+3. Do not import extension components that assume Chrome extension APIs or Onshape document access.
+4. Do not create a fake backend.
+5. Do not introduce an OpenAI API dependency merely to make the demo seem intelligent.
+6. Keep all demo behavior deterministic.
+7. The site should be compatible with a conventional deployment platform such as Vercel.
+8. Do not deploy, purchase a domain, or publish a public URL until the owner has reviewed and approved the implementation.
+
+### Lesson content
+
+Inspect existing lesson definitions.
+
+Use their actual terminology and sequence when possible.
+
+If exact step descriptions are unavailable, create clearly labeled illustrative data that does not claim to be a faithful reproduction of uninspected source behavior.
+
+Keep lesson state typed, explicit, and testable.
+
+### SEO and metadata
+
+Implement:
+- Title: `Leqad — Learn CAD by Building`
+- Description explaining in-workflow CAD education.
+- Open Graph metadata using approved brand visuals.
+- Responsive social preview.
+- Favicon from approved Leqad branding.
+- Sitemap and robots configuration.
+- Semantic heading order.
+
+Do not claim affiliation with Onshape or Y Combinator.
+
+### Performance
+
+Goals:
+- Strong Core Web Vitals on representative devices.
+- No unnecessary client-side JavaScript for static sections.
+- Use server components where appropriate.
+- Prevent cumulative layout shifts.
+- Lazy-load below-the-fold media.
+- Avoid large animation libraries if CSS can achieve the same result.
+- Respect user preferences for reduced motion.
+
+### Accessibility
+
+Implement:
+- Semantic HTML.
+- Accessible menus and dialogs.
+- Keyboard-friendly demo controls.
+- Visible focus states.
+- Accessible text labels and image descriptions.
+- WCAG 2.2 AA-oriented contrast and interaction testing.
+- Responsive layouts at 320px, 375px, 768px, 1024px, and 1440px.
+
+### Privacy
+
+The public site should not require student registration.
+
+Do not collect personal or model data for the demo.
+
+If analytics are later considered, require an explicit privacy decision and appropriate safeguards for an educational audience that includes minors.
+
+Do not add tracking scripts by default.
+
+## 9. Development sequence
+
+### Milestone 1 — Audit and design foundation
+
+1. Inspect repo and current branches.
+2. Find the approved brand assets.
+3. Confirm the implemented lesson state.
+4. Create a design token specification.
+5. Add the website app without breaking the extension.
+
+Deliverable: successful local Next.js build with branding and foundational layout.
+
+### Milestone 2 — Homepage
+
+Implement all homepage sections.
+
+Prioritize:
+- Strong hero.
+- Product visualization.
+- Realistic explanation of the learning workflow.
+- Clean, responsive design.
+
+Deliverable: complete public-facing homepage.
+
+### Milestone 3 — Interactive demo
+
+Build the deterministic CAD illustration and lesson panel.
+
+Deliverable: complete guided demo with no fake verification or backend dependency.
+
+### Milestone 4 — Partnership page
+
+Implement a concise and credible partnership overview.
+
+Deliverable: linkable page suitable for a preliminary CAD-platform partnership conversation.
+
+### Milestone 5 — Testing and polish
+
+Run:
+- Type checking.
+- Linting.
+- Formatting checks.
+- Production build.
+- Browser interaction tests.
+- Accessibility checks.
+- Desktop/mobile visual review.
+- Link checks.
+- Reduced-motion testing.
+
+Report actual failures and fix them.
+
+Do not fabricate test results.
+
+### Milestone 6 — Review before deployment
+
+Provide:
+- Screenshots at desktop and mobile widths.
+- A local or private preview where supported.
+- List of all pages and working interactions.
+- Test results.
+- Any unresolved limitations.
+- Clear comparison of website claims against implemented product capabilities.
+
+Wait for owner approval before public deployment.
+
+## 10. Explicit anti-patterns
+
+Do not:
+- Build a generic AI chatbot landing page.
+- Invent customers, testimonials, user numbers, or revenue.
+- Display a fake Onshape or PTC partnership.
+- Use logos from famous startups as social proof.
+- Claim that Leqad already understands and verifies arbitrary CAD geometry.
+- Present Custom Part Studio as currently available.
+- Add fake signup buttons, pricing, or billing.
+- Build unnecessary authentication or dashboards.
+- Fill empty areas with unrelated 3D renders or stock imagery.
+- Copy a famous startup's website.
+- Modify the selected Leqad logo.
+- Commit directly to the production branch without review.
+
+## 11. Final acceptance criteria
+
+The website is ready for owner review when:
+
+1. A visitor understands what Leqad does within five seconds.
+2. The initial niche—beginners learning CAD for practical design—is obvious.
+3. The site visually communicates CAD learning, not generic AI.
+4. The brand matches the approved Leqad identity.
+5. The illustrated walkthrough is actually interactive.
+6. The distinction between existing and planned features is clear.
+7. The partnership page explains a realistic potential collaboration.
+8. The website is responsive and accessible.
+9. Navigation and calls to action lead to real destinations.
+10. No fake integration, verification, usage, or partnership claims exist.
+11. All relevant tests and production builds are reported truthfully.
+12. The extension's existing behavior remains unaffected.
+
+## 12. Instructions to the implementing AI
+
+Treat this as an implementation specification, not permission to silently change the underlying product roadmap.
+
+First examine the repository, including:
+
+- `AGENTS.md`
+- `docs/product/TutorCAD_Product_and_System_Design.md`
+- `docs/product/leqad-master-vision-roadmap.md`
+- `docs/product/phase-1-scope.md`
+- `docs/product/leqad-master-implementation-spec.md`
+- Existing extension source and lesson definitions
+- Active branding in PR #15, if still relevant and accessible
+
+Confirm which brand and implementation branch is current before coding.
+
+Produce a brief implementation plan, then implement in a separate website branch or draft pull request.
+
+Make high-quality design decisions, maintain technical accuracy, and avoid unnecessary scope expansion.
+
+**Final product standard: a distinctive, professional engineering-education startup website that Leqad could confidently show to potential partners, while accurately reflecting what the team has built.**
