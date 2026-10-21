@@ -21,7 +21,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
         </p>
         <button
           onClick={onOpenContact}
-          className="text-[#B74B21] hover:text-[#e9762b] font-semibold transition-colors cursor-pointer whitespace-nowrap text-xs focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B74B21]"
+          className="text-[#F3AD88] hover:text-[#F5EFE7] font-semibold transition-colors cursor-pointer whitespace-nowrap text-xs focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#B74B21]"
         >
           Prepare an Inquiry →
         </button>

@@ -87,7 +87,7 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
   { title: "Contact", links: [{ label: "hello@halden.co" }, { label: "+47 22 00 41 00" }] },
 ]
 
-const SANS_STACK = '"Inter Tight", "Inter Variable", "Inter", "Helvetica Neue", Arial, system-ui, sans-serif'
+const SANS_STACK = '"DM Sans", "Helvetica Neue", Arial, system-ui, sans-serif'
 const MONO_STACK = '"JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace'
 
 // #region halftone
@@ -154,7 +154,7 @@ const HWF_CSS = `
 .hwf-top {
   position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2.3vw, 24px); padding: clamp(18px, 2.7vw, 30px) clamp(20px, 3.4vw, 44px) clamp(18px, 2.6vw, 30px);
-  font-family: var(--hwf-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; line-height: 1.75;
+  font-family: var(--hwf-mono); font-size: clamp(11px, .85vw, 12px); letter-spacing: .10em; text-transform: uppercase; line-height: 1.7;
 }
 .hwf-brand strong { display: block; font-weight: 500; }
 .hwf-brand span { opacity: .55; }

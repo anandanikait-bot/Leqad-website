@@ -92,6 +92,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
 
   // Execute explicit simulated actions (Fix #2, Fix #3, Fix #4)
   const handleTriggerAction = useCallback((actionId: string) => {
+    // A toolbar press for another step must not silently change sketch state.
+    if (currentStep.semanticActionId !== actionId) return;
     setCompletedDemoActionIds((prev) => (prev.includes(actionId) ? prev : [...prev, actionId]));
 
     if (actionId === 'select-top-plane') {
@@ -112,7 +114,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     } else if (actionId === 'understand-result') {
       if (currentStepIndex === 6) handleNext();
     }
-  }, [currentStepIndex, handleNext]);
+  }, [currentStepIndex, currentStep.semanticActionId, handleNext]);
 
   // Reset sketch from modal cancel
   const handleResetSketch = useCallback(() => {
