@@ -1,4 +1,21 @@
-export type PageRoute = 'home' | 'demo' | 'partners';
+export type PageRoute = 'home' | 'demo' | 'about' | 'partners';
+
+export type DemoActionId =
+  | 'select-top-plane'
+  | 'start-sketch'
+  | 'draw-rectangle'
+  | 'apply-dimensions'
+  | 'finish-sketch'
+  | 'understand-result'
+  | 'practice-overview';
+
+export type SketchDemoStatus =
+  | 'not-started'
+  | 'plane-selected'
+  | 'sketch-active'
+  | 'rectangle-drawn'
+  | 'dimensioned'
+  | 'accepted-in-demo';
 
 export interface LessonStep {
   id: number;
@@ -7,14 +24,25 @@ export interface LessonStep {
   category: string;
   title: string;
   instruction: string;
+  semanticActionId?: DemoActionId;
   activeToolId?: string;
   recommendedAction: string;
   hints: string[];
   whyExplanation: string;
   recognizedControlId: string;
   recognizedControlLabel: string;
-  isComplete: boolean;
-  geometryState: 'plane_selected' | 'oriented_normal' | 'rectangle_tool_active' | 'rectangle_drawn' | 'width_dimensioned' | 'height_dimensioned' | 'fully_constrained' | 'sketch_accepted';
+  geometryState: 'overview' | 'plane_selected' | 'sketch_active' | 'rectangle_drawn' | 'dimensioned' | 'sketch_accepted' | 'extrude_preview' | 'practice';
 }
 
 export type ViewOrientation = 'iso' | 'top' | 'front' | 'right';
+
+export interface DemoState {
+  currentStepIndex: number;
+  visitedStepIds: number[];
+  completedDemoActionIds: string[];
+  revealedHintsByStep: Record<number, number>;
+  showWhyByStep: Record<number, boolean>;
+  highlightedTargetId: string | null;
+  isWalkthroughComplete: boolean;
+  sketchStatus: SketchDemoStatus;
+}

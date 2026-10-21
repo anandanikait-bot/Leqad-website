@@ -8,10 +8,9 @@ import {
   School, 
   Cpu, 
   TrendingUp, 
-  Layers, 
-  FileCheck2,
   CheckCircle2,
-  Clock
+  Clock,
+  ExternalLink
 } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../../lib/constants';
 
@@ -21,21 +20,21 @@ interface PartnershipOverviewProps {
 
 export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpenContact }) => {
   return (
-    <div className="min-h-screen py-8 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 animate-fadeIn">
-      {/* Hero Section */}
+    <div className="min-h-screen py-10 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 animate-fadeIn">
+      {/* 1. Header & Overview */}
       <div className="max-w-3xl space-y-5">
         <div className="inline-flex items-center gap-2">
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#B74B21] bg-[#B74B21]/10 px-3 py-1 rounded-sm border border-[#B74B21]/20">
-            For CAD Platforms, Educators & Mentors
+            For CAD Platform Teams & Educators
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0E2943] leading-[1.15]">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0E2943] leading-[1.14]">
           Building a better learning experience for CAD.
         </h1>
 
         <p className="text-lg sm:text-xl text-[#55616B] leading-relaxed">
-          Leqad is developing an interactive learning layer that helps people build confidence directly inside their design workflow. We are exploring technical, educational, and future commercial collaborations.
+          Leqad is developing an in-workflow learning layer that helps beginners build modeling confidence directly inside browser-based CAD, starting with Onshape.
         </p>
 
         <div className="pt-2 flex items-center gap-4">
@@ -45,214 +44,190 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             onClick={() => onOpenContact('Partnership Inquiry')}
             icon={<ArrowRight className="w-4 h-4" />}
           >
-            Start a conversation
+            Start a Conversation
           </Button>
         </div>
       </div>
 
-      {/* Section: What we are building (Teacher - Learner - Verifier loop) */}
-      <div className="bg-white rounded-2xl p-6 sm:p-10 border border-[#D9DDD9] space-y-8">
+      {/* 2. The Core Problem & What Leqad Addresses */}
+      <div className="bg-white rounded-2xl p-7 sm:p-10 border border-[#D9DDD9] space-y-8 shadow-xs">
         <SectionHeading
-          eyebrow="Architecture & Vision"
-          title="The Teacher — Learner — Verifier loop"
-          description="A closed feedback loop designed to build lasting parametric competence rather than generating geometry for the user."
+          eyebrow="The Problem"
+          title="The gap between watching tutorials and designing original parts."
+          description="Learning CAD often means switching repeatedly between video guides and an open document. When instructions stop matching what the student is building, frustration stalls progress."
         />
 
-        {/* 4-Stage Progression Diagram */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
-          <div className="p-4 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <span className="font-mono text-xs font-bold text-[#0E2943] bg-white px-2 py-0.5 rounded border border-[#D9DDD9]">
-              01
-            </span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Learner takes action</h4>
-            <p className="text-xs text-[#55616B] leading-relaxed">
-              The user initiates CAD operations directly within the real design environment.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
+            <h4 className="text-base font-semibold text-[#0E2943]">High Onboarding Friction</h4>
+            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
+              New users get overwhelmed by complex tool ribbons and silent constraint conflicts during their first hours in professional CAD.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <span className="font-mono text-xs font-bold text-[#B74B21] bg-[#B74B21]/10 px-2 py-0.5 rounded border border-[#B74B21]/20">
-              02
-            </span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Contextual guidance</h4>
-            <p className="text-xs text-[#55616B] leading-relaxed">
-              Leqad supplies progressive hints, control highlights, and mechanical explanations.
+          <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
+            <h4 className="text-base font-semibold text-[#0E2943]">Heavy Instructor Workload</h4>
+            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
+              Educators and robotics mentors spend hours triaging basic misclicks rather than coaching higher-level mechanical design thinking.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <span className="font-mono text-xs font-bold text-[#0E2943] bg-white px-2 py-0.5 rounded border border-[#D9DDD9]">
-              03
-            </span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Evidence informs feedback</h4>
+          <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
+            <h4 className="text-base font-semibold text-[#0E2943]">Passive vs. Active Learning</h4>
+            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
+              Copying video tutorials rarely leads to lasting parametric understanding. Learners need contextual feedback while manipulating geometry.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. How the Current Prototype Works */}
+      <div className="bg-[#FAF8F4] rounded-2xl p-7 sm:p-10 border border-[#D9DDD9] space-y-8">
+        <SectionHeading
+          eyebrow="Current Prototype"
+          title="How the early extension operates."
+          description="Tested as a functional Chrome and Edge browser extension with an 8-step foundational sketch lesson."
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
+            <span className="font-mono text-xs font-semibold text-[#B74B21]">01 · Ribbon Recognition</span>
+            <h4 className="text-sm font-semibold text-[#0E2943]">Control Highlighting</h4>
             <p className="text-xs text-[#55616B] leading-relaxed">
-              Observed actions provide grounded, conservative feedback without fake validation.
+              Recognized CAD interface tools are highlighted with visual target rings when the learner requests guidance.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <span className="font-mono text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              04
-            </span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Learner improves</h4>
+          <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
+            <span className="font-mono text-xs font-semibold text-[#B74B21]">02 · Scaffolding</span>
+            <h4 className="text-sm font-semibold text-[#0E2943]">Tiered Hints</h4>
             <p className="text-xs text-[#55616B] leading-relaxed">
-              The learner develops independent spatial reasoning and parametric fluency.
+              Hints escalate on demand from spatial intuition to exact keyboard shortcuts, avoiding cognitive overload.
+            </p>
+          </div>
+
+          <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
+            <span className="font-mono text-xs font-semibold text-[#B74B21]">03 · Pedagogy</span>
+            <h4 className="text-sm font-semibold text-[#0E2943]">Engineering 'Why'</h4>
+            <p className="text-xs text-[#55616B] leading-relaxed">
+              Every step teaches the design rationale behind datums, parametric dimensions, and constraint degrees of freedom.
+            </p>
+          </div>
+
+          <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
+            <span className="font-mono text-xs font-semibold text-[#B74B21]">04 · Truthfulness</span>
+            <h4 className="text-sm font-semibold text-[#0E2943]">Conservative Verification</h4>
+            <p className="text-xs text-[#55616B] leading-relaxed">
+              The system explicitly distinguishes observed user actions from geometry it cannot conservatively inspect.
             </p>
           </div>
         </div>
 
         {/* Boundary clarification note */}
-        <div className="p-4 rounded-xl bg-[#F5EFE7] border border-[#D9DDD9] text-xs text-[#0E2943] flex items-start gap-3">
+        <div className="p-4 rounded-xl bg-white border border-[#D9DDD9] text-xs text-[#0E2943] flex items-start gap-3">
           <ShieldCheck className="w-4 h-4 text-[#B74B21] flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <strong>Explicit boundary:</strong> The current prototype implements progressive hints, control highlights, and conservative status reporting. Full automatic CAD model inspection and verification is planned for future phases under authorized platform APIs.
+            <strong>Architecture Boundary:</strong> The current prototype is an independent client-side extension. Full automatic CAD model inspection and verification is planned for future phases under authorized platform developer APIs.
           </div>
         </div>
       </div>
 
-      {/* Section: Why it may be valuable */}
+      {/* 4. Partnership Possibilities */}
       <div className="space-y-8">
         <SectionHeading
-          eyebrow="Value Proposition"
-          title="Why in-workflow guidance matters"
-          description="Addressing the steepest drop-off points in engineering software adoption."
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3">
-            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
-              <Cpu className="w-4 h-4" />
-            </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">CAD platform onboarding</h4>
-            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Accelerates time-to-first-part for new users by bridging the gap between passive video tutorials and active UI exploration.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3">
-            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
-              <Workflow className="w-4 h-4" />
-            </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">Beginner skill development</h4>
-            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Instills robust parametric habits—such as origin anchoring, fully constrained profiles, and intentional dimensional references.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3">
-            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
-              <School className="w-4 h-4" />
-            </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">Educator workflows</h4>
-            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Relieves teachers and robotics coaches from triaging basic UI misclicks so they can focus on mechanical design theory.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3">
-            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
-              <TrendingUp className="w-4 h-4" />
-            </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">Movement to real projects</h4>
-            <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Provides the scaffolding needed for students to progress from fixed tutorials into designing their own original parts.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Section: Partnership possibilities (3 Logical Stages) */}
-      <div className="bg-[#FAF8F4] rounded-2xl p-6 sm:p-10 border border-[#D9DDD9] space-y-8">
-        <SectionHeading
           eyebrow="Collaboration Framework"
-          title="Partnership possibilities"
-          description="A phased progression grounded in technical compatibility and measured educational efficacy."
+          title="Three areas for exploration."
+          description="We are open to phased collaboration grounded in technical compatibility and measurable educational outcomes."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-4">
-            <span className="font-mono text-xs font-semibold uppercase text-[#0E2943] bg-[#F5EFE7] px-2.5 py-1 rounded">
-              Phase 1
-            </span>
-            <h4 className="text-lg font-semibold text-[#0E2943]">1. Technical alignment</h4>
+          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3 shadow-2xs">
+            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
+              <Cpu className="w-4.5 h-4.5" />
+            </div>
+            <h4 className="text-base font-semibold text-[#0E2943]">1. Technical Alignment</h4>
             <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Discuss compliant platform integration, document event hooks, and user experience fit within web-first CAD environments.
+              Discuss compliant platform integration, document event hooks, and secure extension sandboxing within modern browser CAD.
             </p>
             <button
               onClick={() => onOpenContact('Technical Alignment')}
-              className="text-xs font-mono text-[#B74B21] hover:underline cursor-pointer"
+              className="text-xs font-mono text-[#B74B21] hover:underline cursor-pointer pt-1 block"
             >
               Discuss technical alignment →
             </button>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-4">
-            <span className="font-mono text-xs font-semibold uppercase text-[#0E2943] bg-[#F5EFE7] px-2.5 py-1 rounded">
-              Phase 2
-            </span>
-            <h4 className="text-lg font-semibold text-[#0E2943]">2. Educational evaluation</h4>
+          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3 shadow-2xs">
+            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
+              <School className="w-4.5 h-4.5" />
+            </div>
+            <h4 className="text-base font-semibold text-[#0E2943]">2. Educational Evaluation</h4>
             <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Explore small pilots measuring learning outcomes, error reduction, and learner autonomy in high school classrooms and maker spaces.
+              Explore small classroom pilots measuring time-to-first-part, error frequency, and student confidence in STEM courses and robotics teams.
             </p>
             <button
               onClick={() => onOpenContact('Educational Pilot')}
-              className="text-xs font-mono text-[#B74B21] hover:underline cursor-pointer"
+              className="text-xs font-mono text-[#B74B21] hover:underline cursor-pointer pt-1 block"
             >
-              Discuss educational pilot →
+              Discuss classroom pilots →
             </button>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-4">
-            <span className="font-mono text-xs font-semibold uppercase text-[#0E2943] bg-[#F5EFE7] px-2.5 py-1 rounded">
-              Phase 3
-            </span>
-            <h4 className="text-lg font-semibold text-[#0E2943]">3. Commercial exploration</h4>
+          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3 shadow-2xs">
+            <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
+              <TrendingUp className="w-4.5 h-4.5" />
+            </div>
+            <h4 className="text-base font-semibold text-[#0E2943]">3. Commercial Exploration</h4>
             <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-              Discuss sustainable distribution, institutional licensing, or platform add-on models if mutual interest and evidence justify it.
+              Evaluate sustainable institutional licensing, app store distribution, or native onboarding add-on models if mutual interest and evidence warrant it.
             </p>
             <button
               onClick={() => onOpenContact('Commercial Exploration')}
-              className="text-xs font-mono text-[#B74B21] hover:underline cursor-pointer"
+              className="text-xs font-mono text-[#B74B21] hover:underline cursor-pointer pt-1 block"
             >
-              Discuss commercial pathways →
+              Discuss distribution paths →
             </button>
           </div>
         </div>
       </div>
 
-      {/* Section: Current Status */}
+      {/* 5. Clear Status & Independent Project Notice */}
       <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D9DDD9] space-y-4">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-          <h3 className="text-base font-semibold text-[#0E2943]">Current Status</h3>
+          <h3 className="text-base font-semibold text-[#0E2943]">Current Project Status</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
-          <div className="p-3 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
-            <div className="text-[#55616B]">Working Extension</div>
-            <div className="text-[#0E2943] font-semibold mt-1">Chrome / Edge Browser Extension</div>
+          <div className="p-3.5 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
+            <div className="text-[#55616B]">Software Form</div>
+            <div className="text-[#0E2943] font-semibold mt-1">Browser Extension Prototype</div>
           </div>
-          <div className="p-3 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
-            <div className="text-[#55616B]">Active Curriculum</div>
-            <div className="text-[#0E2943] font-semibold mt-1">8-Step "Your First Sketch"</div>
+          <div className="p-3.5 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
+            <div className="text-[#55616B]">Curriculum</div>
+            <div className="text-[#0E2943] font-semibold mt-1">8-Step Beginner Sketch</div>
           </div>
-          <div className="p-3 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
-            <div className="text-[#55616B]">Validation Stage</div>
+          <div className="p-3.5 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
+            <div className="text-[#55616B]">Testing Stage</div>
             <div className="text-[#0E2943] font-semibold mt-1">Controlled Automated Testing</div>
           </div>
-          <div className="p-3 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
-            <div className="text-[#55616B]">Collaboration Mode</div>
-            <div className="text-[#0E2943] font-semibold mt-1">Open to Feedback & Pilots</div>
+          <div className="p-3.5 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
+            <div className="text-[#55616B]">Platform Standing</div>
+            <div className="text-[#0E2943] font-semibold mt-1">Independent Research</div>
           </div>
         </div>
+
+        <p className="text-xs text-[#55616B] pt-2 border-t border-[#D9DDD9] leading-relaxed">
+          {LEGAL_DISCLAIMER}
+        </p>
       </div>
 
-      {/* Final CTA Banner */}
+      {/* 6. Professional Call to Action */}
       <div className="text-center py-12 px-6 bg-[#0E2943] text-white rounded-3xl space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F5EFE7]">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#F5EFE7]">
           Let's explore what's possible.
         </h2>
         <p className="max-w-xl mx-auto text-sm sm:text-base text-white/80 leading-relaxed">
-          Whether you're developing CAD software, teaching engineering, or mentoring high school robotics students, we welcome an initial conversation.
+          Whether you lead platform partnerships, teach mechanical engineering, or mentor robotics students, we welcome an initial exploratory conversation.
         </p>
         <div>
           <Button
@@ -261,7 +236,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             onClick={() => onOpenContact('General Partnership')}
             icon={<ArrowRight className="w-4 h-4" />}
           >
-            Start a conversation
+            Start a Conversation
           </Button>
         </div>
       </div>

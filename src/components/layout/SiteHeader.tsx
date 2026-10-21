@@ -43,7 +43,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                 : 'text-[#55616B] hover:text-[#0E2943]'
             }`}
           >
-            Product
+            Home
           </button>
 
           <button
@@ -55,9 +55,20 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             }`}
           >
             <span>Interactive Demo</span>
-            <span className="font-mono text-[9px] bg-[#B74B21]/15 text-[#B74B21] px-1.5 py-0.5 rounded font-semibold">
-              Live
+            <span className="font-mono text-[10px] bg-[#B74B21]/10 text-[#B74B21] px-1.5 py-0.5 rounded-sm">
+              8 Steps
             </span>
+          </button>
+
+          <button
+            onClick={() => handleNavClick('about')}
+            className={`transition-colors cursor-pointer ${
+              currentPage === 'about'
+                ? 'text-[#0E2943] font-semibold'
+                : 'text-[#55616B] hover:text-[#0E2943]'
+            }`}
+          >
+            About
           </button>
 
           <button
@@ -108,7 +119,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                   : 'text-[#55616B]'
               }`}
             >
-              Product Overview
+              Home
             </button>
             <button
               onClick={() => handleNavClick('demo')}
@@ -122,6 +133,16 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               <span className="font-mono text-[9px] bg-[#B74B21]/15 text-[#B74B21] px-1.5 py-0.5 rounded">
                 8 Steps
               </span>
+            </button>
+            <button
+              onClick={() => handleNavClick('about')}
+              className={`text-left px-3 py-2 rounded-md text-sm font-medium ${
+                currentPage === 'about'
+                  ? 'bg-[#F5EFE7] text-[#0E2943] font-semibold'
+                  : 'text-[#55616B]'
+              }`}
+            >
+              About Leqad
             </button>
             <button
               onClick={() => handleNavClick('partners')}

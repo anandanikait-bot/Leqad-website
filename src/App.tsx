@@ -8,33 +8,38 @@ import { PageRoute } from './types';
 import { SiteHeader } from './components/layout/SiteHeader';
 import { SiteFooter } from './components/layout/SiteFooter';
 import { Hero } from './components/home/Hero';
-import { ProductPreview } from './components/home/ProductPreview';
-import { LearningProblem } from './components/home/LearningProblem';
-import { Workflow } from './components/home/Workflow';
-import { CurrentPrototype } from './components/home/CurrentPrototype';
-import { Audience } from './components/home/Audience';
-import { Roadmap } from './components/home/Roadmap';
-import { PartnershipCTA } from './components/home/PartnershipCTA';
+import { AboutPage } from './components/about/AboutPage';
 import { DemoPage } from './components/demo/DemoPage';
 import { PartnershipOverview } from './components/partners/PartnershipOverview';
 import { ContactModal } from './components/shared/ContactModal';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageRoute>('home');
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
   const [contactTopic, setContactTopic] = useState<string>('Technical Alignment');
 
-  // Sync hash routing so users can refresh or bookmark #demo or #partners with zero lag
+  // Synchronize hash routing so users can refresh or bookmark #/, #/demo, #/about, #/partners
   useEffect(() => {
     const syncRouteFromHash = () => {
-      const hash = window.location.hash.replace('#/', '').replace('#', '');
-      if (hash === 'demo') {
-        setCurrentPage('demo');
-      } else if (hash === 'partners') {
-        setCurrentPage('partners');
-      } else {
-        setCurrentPage('home');
+      const rawHash = window.location.hash.replace(/^#\/?/, '');
+      let target: PageRoute = 'home';
+      if (rawHash === 'demo') {
+        target = 'demo';
+      } else if (rawHash === 'about') {
+        target = 'about';
+      } else if (rawHash === 'partners') {
+        target = 'partners';
       }
+
+      setCurrentPage((prev) => {
+        if (prev !== target) {
+          setIsTransitioning(true);
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          setTimeout(() => setIsTransitioning(false), 200);
+        }
+        return target;
+      });
     };
 
     syncRouteFromHash();
@@ -43,22 +48,16 @@ export default function App() {
   }, []);
 
   const handleNavigate = (page: PageRoute) => {
-    setCurrentPage(page);
-    window.location.hash = page === 'home' ? '' : `/${page}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleScrollToRoadmap = () => {
-    if (currentPage !== 'home') {
-      handleNavigate('home');
-      setTimeout(() => {
-        const el = document.getElementById('roadmap');
-        el?.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
-    } else {
-      const el = document.getElementById('roadmap');
-      el?.scrollIntoView({ behavior: 'smooth' });
+    if (page === currentPage) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      return;
     }
+
+    setIsTransitioning(true);
+    setCurrentPage(page);
+    window.location.hash = page === 'home' ? '/' : `/${page}`;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    setTimeout(() => setIsTransitioning(false), 200);
   };
 
   const handleOpenContact = (topic?: string) => {
@@ -71,54 +70,39 @@ export default function App() {
       {/* Top Sticky Navigation */}
       <SiteHeader currentPage={currentPage} onNavigate={handleNavigate} />
 
-      {/* Main Page Content */}
-      <main className="flex-1">
+      {/* Main Page Content with smooth ~200ms page transitions */}
+      <main
+        className={`flex-1 transition-opacity duration-200 ease-out ${
+          isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
+        {/* 1. Landing Page (#/): The focused InkOrbit Hero visual centerpiece */}
         {currentPage === 'home' && (
-          <div className="space-y-0">
-            {/* 1. Hero with primary CTA & vision scroll */}
-            <Hero
-              onNavigate={handleNavigate}
-              onScrollToRoadmap={handleScrollToRoadmap}
-            />
-
-            {/* 2. Hero Interactive Visualization (The CAD workspace preview at Step 3) */}
-            <ProductPreview onNavigate={handleNavigate} />
-
-            {/* 3. The Learning Problem (3 pillars: Learn in context, Understand reason, Build independence) */}
-            <LearningProblem />
-
-            {/* 4. Product Workflow (5 selectable stages with dynamic workspace illustration) */}
-            <Workflow />
-
-            {/* 5. The Current Prototype (verified features & direct link to demo) */}
-            <CurrentPrototype onNavigate={handleNavigate} />
-
-            {/* 6. Who Leqad is for (Students, Robotics Makers, Educators) */}
-            <Audience />
-
-            {/* 7. Product Roadmap (NOW, NEXT, LATER with visual distinction) */}
-            <Roadmap />
-
-            {/* 8. Partnership Opportunity */}
-            <PartnershipCTA
-              onNavigate={handleNavigate}
-              onOpenContact={() => handleOpenContact('Partnership Inquiry')}
-            />
+          <div className="flex flex-col justify-center min-h-[calc(100vh-16rem)]">
+            <Hero onNavigate={handleNavigate} />
           </div>
         )}
 
+        {/* 2. Interactive Demo (#/demo): Dedicated CAD learning workspace */}
         {currentPage === 'demo' && (
-          /* The Main Attraction: 8-Step Interactive Walkthrough */
           <DemoPage onNavigate={handleNavigate} />
         )}
 
+        {/* 3. About (#/about): Product details, How It Works, and transparent vision */}
+        {currentPage === 'about' && (
+          <AboutPage
+            onNavigate={handleNavigate}
+            onOpenContact={handleOpenContact}
+          />
+        )}
+
+        {/* 4. For Partners (#/partners): High-credibility institutional & platform alignment */}
         {currentPage === 'partners' && (
-          /* For Partners & Educators */
           <PartnershipOverview onOpenContact={handleOpenContact} />
         )}
       </main>
 
-      {/* Site Footer */}
+      {/* Site Footer with Halftone Wordmark */}
       <SiteFooter
         onNavigate={handleNavigate}
         onOpenContact={() => handleOpenContact('General Inquiry')}

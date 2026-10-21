@@ -19,6 +19,8 @@ interface LessonPanelProps {
   step: LessonStep;
   currentStepIndex: number;
   totalSteps: number;
+  completedDemoActionIds: string[];
+  visitedStepIds: number[];
   isDemoComplete?: boolean;
   onNext: () => void;
   onPrev: () => void;
@@ -28,12 +30,15 @@ interface LessonPanelProps {
   isHighlightingControl: boolean;
   onToggleHighlight: () => void;
   isCompact?: boolean;
+  resetKey: number;
 }
 
 export const LessonPanel: React.FC<LessonPanelProps> = ({
   step,
   currentStepIndex,
   totalSteps,
+  completedDemoActionIds,
+  visitedStepIds,
   isDemoComplete = false,
   onNext,
   onPrev,
@@ -43,15 +48,16 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   isHighlightingControl,
   onToggleHighlight,
   isCompact = false,
+  resetKey,
 }) => {
   const [revealedHints, setRevealedHints] = useState<number>(0);
   const [showWhy, setShowWhy] = useState<boolean>(false);
 
-  // Synchronously reset local hint state and why explanation whenever the step changes or demo completes
+  // Reset hints whenever step changes, demo completes, or explicit resetKey changes (Fix #8)
   useEffect(() => {
     setRevealedHints(0);
     setShowWhy(false);
-  }, [step.id, isDemoComplete]);
+  }, [step.id, isDemoComplete, resetKey]);
 
   const handleRevealNextHint = () => {
     if (revealedHints < step.hints.length) {
@@ -62,7 +68,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   const isLastStep = currentStepIndex === totalSteps - 1;
   const isFirstStep = currentStepIndex === 0;
 
-  // Render Completed Walkthrough View
+  // Render Completed Walkthrough View (Fix #7)
   if (isDemoComplete) {
     return (
       <div className="bg-white rounded-xl border border-[#D9DDD9] shadow-md flex flex-col overflow-hidden text-[#0E2943] animate-fadeIn">
@@ -88,41 +94,41 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
 
             <div className="space-y-1.5">
               <span className="font-mono text-[10px] uppercase tracking-wider text-[#B74B21] font-semibold">
-                Foundations Mastered
+                Interactive Walkthrough
               </span>
               <h3 className="text-xl font-bold text-[#0E2943] tracking-tight leading-snug">
                 You've completed the interactive walkthrough.
               </h3>
               <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                You have walked through establishing reference planes, origin anchoring, 40 × 30 mm parametric dimensioning, and degree-of-freedom constraint verification.
+                You've explored the Your First Sketch walkthrough. The demonstration introduced reference planes, sketches, dimensions, and the relationship between 2D profiles and later 3D features.
               </p>
             </div>
 
-            {/* Checklist of learned CAD skills */}
+            {/* Checklist of concepts covered (Fix #7: Honest claims) */}
             <div className="p-3 bg-[#FAF8F4] rounded-lg border border-[#D9DDD9] space-y-1.5 text-xs font-mono">
               <div className="text-[10px] font-bold uppercase text-[#0E2943]">
-                Demonstrated Concepts
+                Concepts Covered
               </div>
               <ul className="space-y-1 text-[#55616B]">
-                <li className="flex items-center gap-1.5 text-emerald-900">
+                <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Top Plane coordinate datum selected</span>
+                  <span>Top Plane (XY) reference datum selection</span>
                 </li>
-                <li className="flex items-center gap-1.5 text-emerald-900">
+                <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Aligned normal to eliminate parallax</span>
+                  <span>Entering 2D sketch-editing mode</span>
                 </li>
-                <li className="flex items-center gap-1.5 text-emerald-900">
+                <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
                   <span>Corner Rectangle anchored to Origin (0,0)</span>
                 </li>
-                <li className="flex items-center gap-1.5 text-emerald-900">
+                <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Parametric 40 mm × 30 mm dimensions set</span>
+                  <span>Parametric dimensioning (40 mm × 30 mm)</span>
                 </li>
-                <li className="flex items-center gap-1.5 text-emerald-900">
+                <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Fully defined sketch profile (0 DOF)</span>
+                  <span>Closed planar profile ready for Extrude</span>
                 </li>
               </ul>
             </div>
@@ -144,7 +150,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <div className="flex items-start gap-1.5 text-[10px] text-[#55616B] bg-[#F5EFE7]/60 p-2.5 rounded-md border border-[#D9DDD9]/60 leading-relaxed font-mono">
               <Info className="w-3.5 h-3.5 text-[#55616B] flex-shrink-0 mt-0.5" />
               <span>
-                Interactive demonstration complete. This was a simulated demonstration, not verification of actual CAD work.
+                This interactive illustration is not connected to a live CAD model and does not verify actual design work.
               </span>
             </div>
           </div>
@@ -158,7 +164,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
       {/* Panel Window Header */}
       <div className="bg-[#0E2943] text-white px-4 py-3 flex items-center justify-between border-b border-[#0E2943]/30">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#B74B21] animate-pulse" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#B74B21]" />
           <span className="font-mono text-[11px] font-medium tracking-wider uppercase text-[#F5EFE7]">
             Leqad Teaching Panel
           </span>
@@ -170,12 +176,17 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
         </div>
       </div>
 
-      {/* Progress Track */}
+      {/* Progress Track (Fix #2: Accurately distinguishing visited vs completed) */}
       <div className="bg-[#F5EFE7] px-4 py-2 border-b border-[#D9DDD9]/70 flex items-center justify-between gap-1">
         <div className="flex items-center gap-1.5 flex-1">
           {Array.from({ length: totalSteps }).map((_, i) => {
-            const isDone = i < currentStepIndex;
+            const stepId = i + 1;
             const isCurrent = i === currentStepIndex;
+            const isActionDone = step.semanticActionId
+              ? completedDemoActionIds.includes(step.semanticActionId)
+              : false;
+            const isVisited = visitedStepIds.includes(stepId);
+
             return (
               <button
                 key={i}
@@ -183,11 +194,13 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 className={`h-1.5 rounded-full transition-all flex-1 cursor-pointer ${
                   isCurrent
                     ? 'bg-[#B74B21] ring-2 ring-[#B74B21]/30'
-                    : isDone
-                    ? 'bg-[#0E2943]'
+                    : isActionDone
+                    ? 'bg-emerald-600'
+                    : isVisited
+                    ? 'bg-[#0E2943]/60'
                     : 'bg-[#D9DDD9]'
                 }`}
-                title={`Step ${i + 1}`}
+                title={`Step ${i + 1}${isActionDone ? ' (Completed)' : isVisited ? ' (Viewed)' : ''}`}
                 aria-label={`Jump to Step ${i + 1}`}
               />
             );
@@ -227,7 +240,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             {step.instruction}
           </p>
 
-          {/* Recognized Control Indicator */}
+          {/* Recognized Control Indicator (Fix #9: Accurate Show Me control) */}
           <div className="bg-[#F5EFE7]/80 rounded-lg p-2.5 border border-[#D9DDD9] flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 overflow-hidden">
               <div className="w-6 h-6 rounded-md bg-[#0E2943] text-white flex items-center justify-center flex-shrink-0 text-xs font-mono">
@@ -244,18 +257,19 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <button
               onClick={onToggleHighlight}
               disabled={!step.activeToolId}
-              className={`text-xs px-2.5 py-1 rounded-md font-medium border flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`text-xs px-2.5 py-1 rounded-md font-medium border flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
                 isHighlightingControl
                   ? 'bg-[#B74B21] text-white border-[#B74B21] shadow-xs'
                   : 'bg-white text-[#0E2943] border-[#D9DDD9] hover:border-[#0E2943]/40'
               }`}
               title={
                 !step.activeToolId
-                  ? 'No specific tool highlighted for this step'
+                  ? 'No direct interface button for this overview step'
                   : isHighlightingControl
                   ? 'Hide active tool highlight'
                   : 'Highlight this tool on the CAD ribbon'
               }
+              aria-label={isHighlightingControl ? 'Hide highlight' : 'Show me'}
             >
               {isHighlightingControl ? (
                 <>
@@ -360,7 +374,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
           <div className="flex items-start gap-1.5 text-[10px] text-[#55616B] bg-[#F5EFE7]/60 p-2 rounded-md border border-[#D9DDD9]/60">
             <Info className="w-3 h-3 text-[#55616B] flex-shrink-0 mt-0.5" />
             <span>
-              Demo step completed. This illustration does not inspect a real CAD model.
+              Interactive illustration. Does not connect to or inspect a real CAD model.
             </span>
           </div>
         </div>

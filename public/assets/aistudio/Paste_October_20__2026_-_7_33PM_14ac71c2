@@ -1,0 +1,1112 @@
+# LEQAD WEBSITE — COMPLETE BUG FIX & QUALITY IMPROVEMENT PLAN
+
+**Repository:** https://github.com/anandanikait-bot/Leqad-website
+
+**Current reviewed commit:** `fec6c7ef7e085afb108f88df21c7cc032b0125be`
+
+**Live website:** https://leqad-learn-cad-by-building.ai.studio/
+
+**Primary goal:** Make Leqad's website reliable, professional, accurate, easy to navigate, and ready to demonstrate during an introductory partnership meeting with Onshape.
+
+## IMPORTANT INSTRUCTIONS
+
+You are working on an existing React, TypeScript, Vite, and Tailwind CSS application.
+
+**Do not rebuild the website from scratch.**
+
+Preserve:
+- The existing Leqad logo.
+- The navy, ivory, and rust brand palette.
+- The overall clean startup aesthetic.
+- The three main pages: Home, Interactive Demo, and Partners.
+- Existing functionality that already works.
+
+Fix the problems described below, verify them, and report actual test results.
+
+Before changing anything, inspect the latest source in GitHub. The reviewed commit is a starting reference; if newer fixes exist, do not reintroduce old bugs.
+
+Create a separate development branch and prepare a pull request. Do not publish changes or overwrite the production deployment without approval.
+
+---
+
+# PHASE 1 — CRITICAL FIXES
+
+These issues must be resolved before the website is shared with potential partners.
+
+## FIX 1 — Partnership contact form falsely confirms submissions
+
+**Priority: CRITICAL**
+
+**File:** `src/components/shared/ContactModal.tsx`
+
+### Current problem
+
+The form's `handleSubmit` function validates that the name and email are nonempty, then immediately calls:
+
+```tsx
+setSubmitted(true);
+```
+
+There is no request to a backend, email service, database, or other delivery mechanism.
+
+Nevertheless, the UI displays:
+- "Inquiry Received"
+- A statement that the Leqad team reviews inquiries weekly
+- A random inquiry reference number
+- "Logged"
+
+This is misleading. A visitor could submit a partnership inquiry and believe it was delivered even though nobody receives it.
+
+### Required fix
+
+**Do not display a successful submission state unless delivery actually succeeds.**
+
+Choose an appropriate implementation based on the available project configuration.
+
+Preferred approach:
+
+1. Use a real, approved contact delivery mechanism.
+2. Validate required fields.
+3. Submit the data through a secure server endpoint or trusted form provider.
+4. Show a loading state while submitting.
+5. Display confirmation only after successful delivery.
+6. Show a clear error with a retry option if submission fails.
+7. Prevent duplicate submissions.
+8. Do not expose private API keys in browser code.
+9. Use privacy-appropriate data handling, especially because Leqad targets students.
+
+If no backend or approved contact service exists, **do not invent one**.
+
+Instead, temporarily replace the form with a working, owner-approved contact method or a clear message indicating that inquiries are not yet enabled.
+
+Do not invent an email address or provide a fake working form.
+
+### Additional improvements
+
+- Remove the randomly generated "LQ-XXXXXX" reference unless the backend creates a real, stored identifier.
+- Remove the unverified claim that inquiries are reviewed weekly.
+- Add accessible labels associated with each field.
+- Validate email format and required text.
+- Add proper error handling and submission state.
+- Ensure closing and reopening the modal resets temporary success and error states correctly.
+- Trap focus inside the open modal, restore focus when closed, and support Escape.
+- Prevent background scrolling while the modal is open.
+
+### Acceptance criteria
+
+- No false submission confirmations.
+- Every successful submission corresponds to confirmed delivery.
+- Failed submissions display errors.
+- The modal works with keyboard navigation.
+- No fake reference numbers or promises appear.
+
+---
+
+## FIX 2 — Separate lesson navigation from actual simulated progress
+
+**Priority: CRITICAL**
+
+**Files:**
+- `src/components/demo/DemoWorkbench.tsx`
+- `src/components/demo/LessonPanel.tsx`
+- `src/components/demo/SimulatedCADCanvas.tsx`
+
+### Current problem
+
+The website uses `currentStepIndex` to determine both which lesson step is displayed and which steps appear completed.
+
+For example:
+
+```tsx
+const isCompleted = idx < currentStepIndex || isDemoComplete;
+```
+
+Someone can jump directly from Step 1 to Step 8, and all previous steps appear completed.
+
+This incorrectly treats navigating through lesson content as completing lesson actions.
+
+The website also advances certain steps when someone clicks a toolbar button, even if the intended drawing or dimensioning action has not occurred.
+
+### Required architecture
+
+Separate these concepts:
+
+1. **Current step:** Which step the visitor is looking at.
+2. **Visited steps:** Which steps the visitor has opened.
+3. **Simulated actions:** Which explicit demonstration interactions have been performed.
+4. **Walkthrough completion:** Whether the visitor reached and acknowledged the final demonstration state.
+5. **CAD verification:** Not available on this public website.
+
+Use one centralized state model in `DemoWorkbench.tsx`.
+
+Suggested shape:
+
+```ts
+interface DemoState {
+  currentStepIndex: number;
+  visitedStepIds: string[];
+  completedDemoActionIds: string[];
+  revealedHintsByStep: Record<string, number>;
+  showWhyByStep: Record<string, boolean>;
+  highlightedTargetId: string | null;
+  isWalkthroughComplete: boolean;
+}
+```
+
+Adapt this to existing types and architecture rather than copying it unnecessarily.
+
+### Behavioral requirements
+
+- Clicking a step number changes the viewed step.
+- Visiting a step does not automatically complete it.
+- Previous and Next navigate without creating false achievements.
+- Simulated progress appears only after its corresponding action or acknowledgment.
+- Jumping to Step 8 never marks Steps 1–7 as completed.
+- A step that has only been viewed must not display a completed checkmark.
+- The visitor must be able to explore steps out of order without corrupting state.
+
+Because this is a public illustration, do not require real Onshape verification.
+
+Use labels such as:
+- Viewed
+- Demo action completed
+- Continue walkthrough
+- Illustration only
+
+Never use these website interactions as proof of real CAD skill or model correctness.
+
+### Acceptance criteria
+
+Jumping from Step 1 to Step 8 must not create seven completed steps.
+
+The current-step indicator, progress bar, lesson panel, and CAD canvas must stay synchronized.
+
+---
+
+## FIX 3 — Repair the final sketch acceptance and completion behavior
+
+**Priority: HIGH**
+
+**Files:**
+- `src/components/demo/SimulatedCADCanvas.tsx`
+- `src/components/demo/DemoWorkbench.tsx`
+- `src/components/demo/LessonPanel.tsx`
+
+### Current problem
+
+Several visual elements use conditions similar to:
+
+```tsx
+isStepAtLeast(8) || isDemoComplete
+```
+
+That means merely navigating to the eighth step can display:
+- An accepted sketch.
+- A completed feature-tree item.
+- A shaded profile.
+- "Watertight profile" or "Ready for Extrude" indicators.
+
+This happens before the visitor performs the simulated acceptance action.
+
+### Required fix
+
+Separate the active step from the simulated sketch's state.
+
+Suggested state:
+
+```ts
+type SketchDemoStatus =
+  | 'not-started'
+  | 'editing'
+  | 'illustrative-profile'
+  | 'accepted-in-demo';
+```
+
+Or use a comparable typed state machine.
+
+Render an accepted sketch only when the appropriate simulated acceptance event occurs.
+
+### Expected behavior
+
+**Before acceptance:**
+- The simulated sketch remains in editing mode.
+- The Finish Sketch/Accept control is available.
+- The feature-tree item must not appear committed.
+- No completed profile message appears.
+
+**When the simulated Accept Sketch control is activated:**
+- Update the local simulated sketch state.
+- Show the example profile as accepted.
+- Replace the editing state with the simulated completed state.
+- Clearly distinguish this from a real Onshape model.
+
+**When the walkthrough finishes:**
+- Show the completion view.
+- Provide a working restart control.
+- Explain that no real CAD file was created or inspected.
+
+**When the visitor navigates backward:**
+- Keep the visual state consistent with the chosen navigation policy.
+- Do not display impossible combinations, such as an accepted sketch while the lesson claims it is being edited for the first time.
+
+### Acceptance criteria
+
+Opening the final step does not automatically accept the sketch.
+
+The simulated acceptance state appears only after an explicit action or clearly identified example transition.
+
+---
+
+## FIX 4 — Correct the first-step tool mapping and CAD interactions
+
+**Priority: HIGH**
+
+**Files:**
+- `src/lib/lesson-data.ts`
+- `src/components/demo/DemoWorkbench.tsx`
+- `src/components/demo/SimulatedCADCanvas.tsx`
+
+### Current problem
+
+The existing website's Step 1 says:
+
+"Select a sketch plane."
+
+But its `activeToolId` is `sketch`.
+
+The simulated Sketch toolbar button can therefore advance a step that was supposed to involve selecting the Top reference plane.
+
+The current workflow also treats choosing some tools as equivalent to creating the intended geometry.
+
+### Required fix
+
+Use separate semantic action identifiers for different operations.
+
+Examples:
+
+```ts
+'select-top-plane'
+'start-sketch'
+'select-corner-rectangle'
+'place-first-corner'
+'place-second-corner'
+'apply-dimensions'
+'finish-sketch'
+```
+
+Do not confuse tool selection with the result of using the tool.
+
+For example:
+
+- Selecting the Top plane is not the same as starting a sketch.
+- Selecting Rectangle is not the same as drawing a closed rectangle.
+- Selecting Dimension is not the same as entering a dimension.
+- Clicking Finish Sketch does not independently verify geometry.
+
+### Implementation guidance
+
+The website does not need to become a complete CAD editor.
+
+Implement a small, deterministic illustration with meaningful interactions.
+
+Where a real CAD operation would be too complex to simulate accurately, use explicit demonstration navigation and explain what would happen in Onshape.
+
+Do not use automatic fake success to make the demo look more impressive.
+
+---
+
+# PHASE 2 — EDUCATIONAL ACCURACY
+
+## FIX 5 — Align the walkthrough with the actual Leqad beginner lesson
+
+**Priority: HIGH**
+
+**Files:**
+- `src/lib/lesson-data.ts`
+- `src/components/demo/DemoWorkbench.tsx`
+- `src/components/demo/LessonPanel.tsx`
+- `src/components/demo/SimulatedCADCanvas.tsx`
+- `src/components/home/Workflow.tsx`
+
+### Source of truth
+
+Original Leqad repository:
+
+https://github.com/anandanikait-bot/leqad
+
+Reference:
+
+`packages/lesson-engine/src/lessons/foundations.ts`
+
+Branch:
+
+`design/approved-v1-lesson-ui`
+
+Inspect the actual current source before changing the website content.
+
+### Approved extension lesson sequence
+
+The referenced extension lesson contains:
+
+1. **Introduction** — Understand what you will build.
+2. **Select reference plane** — Select the Top reference plane.
+3. **Start sketch** — Enter sketch-editing mode.
+4. **Draw rectangle** — Create a closed Corner Rectangle.
+5. **Apply dimensions** — Set the rectangle to 40 mm × 30 mm.
+6. **Finish sketch** — Exit sketch-editing mode.
+7. **Understand result** — Recognize the finished 2D sketch and the role of Extrude.
+8. **Independent practice** — Repeat the workflow with reduced guidance.
+
+The website currently uses a different sequence.
+
+### Required fix
+
+Make the public "Your First Sketch" demonstration consistent with the actual extension's lesson goals, terminology, dimensions, and learning progression.
+
+Do not claim the website is a faithful replica if its steps differ.
+
+If retaining some extra visual examples, label them as separate demonstrations rather than silently inserting them into the official beginner sequence.
+
+Use **40 mm × 30 mm** consistently for the beginner rectangle.
+
+### Important distinctions
+
+Step 7 is about understanding the result. It is not proof that all constraints were verified.
+
+Step 8 is independent practice, not a declaration that the learner has mastered CAD.
+
+The example may illustrate constraints, but it cannot automatically prove that a real sketch has zero degrees of freedom.
+
+### Acceptance criteria
+
+- All eight steps match the referenced learning objectives.
+- Text, CAD illustration, and hints describe the same action.
+- Dimensions are consistent.
+- No unrelated mounting-hole exercise appears as part of the official beginner lesson.
+- No geometry verification is implied.
+
+---
+
+## FIX 6 — Correct coordinate planes and technical statements
+
+**Priority: HIGH**
+
+**File:** `src/components/home/Workflow.tsx`
+
+### Current issue
+
+The workflow content says:
+
+`Reference Plane: Top (XZ)`
+
+For the standard Onshape reference planes, this is incorrect.
+
+Use:
+
+`Top (XY)`
+
+The Front plane corresponds to XZ.
+
+### Additional required checks
+
+Audit the website for:
+- Incorrect plane labels.
+- Incorrect coordinate axes.
+- Contradictory rectangle dimensions.
+- Unsupported shortcut claims.
+- Unsupported constraint descriptions.
+- Statements implying that dimensions alone always guarantee full constraint.
+- Claims that all finished sketches are automatically valid or watertight.
+- Claims that clicking a toolbar control confirms geometry.
+
+The workflow also includes a `±0.1 mm` tolerance without a documented source in the illustrative exercise.
+
+Remove that requirement unless it is intentionally part of the lesson and supported by the actual design specification.
+
+Do not invent precision values to make the illustration appear more technical.
+
+### Acceptance criteria
+
+All educational explanations are technically accurate and consistent with the demo.
+
+---
+
+## FIX 7 — Remove inaccurate completion and mastery claims
+
+**Priority: HIGH**
+
+**Files:**
+- `src/components/demo/LessonPanel.tsx`
+- `src/components/demo/DemoPage.tsx`
+- `src/components/home/Workflow.tsx`
+
+### Current problem
+
+The completion panel contains:
+
+"Foundations Mastered"
+
+It also lists skills as demonstrated even when a visitor can freely navigate through the example.
+
+This overstates what a simulated walkthrough proves.
+
+### Required wording
+
+Replace:
+
+**Foundations Mastered**
+
+With:
+
+**Walkthrough Complete**
+
+Replace:
+
+**Demonstrated Concepts**
+
+With:
+
+**Concepts Covered**
+
+Use completion text similar to:
+
+"You've explored the Your First Sketch walkthrough. The demonstration introduced reference planes, sketches, dimensions, and the relationship between 2D profiles and later 3D features."
+
+Include:
+
+"This interactive illustration is not connected to a live CAD model and does not verify actual design work."
+
+Remove unearned claims that the learner:
+- Mastered CAD fundamentals.
+- Demonstrated independent proficiency.
+- Successfully created a real CAD model.
+- Verified geometry.
+- Achieved fully constrained geometry.
+
+A simulated walkthrough can teach concepts without measuring mastery.
+
+---
+
+# PHASE 3 — NAVIGATION, RESET, AND RELIABILITY
+
+## FIX 8 — Fix reset and hint synchronization
+
+**Priority: MEDIUM**
+
+**Files:**
+- `src/components/demo/DemoWorkbench.tsx`
+- `src/components/demo/LessonPanel.tsx`
+
+### Current problem
+
+The lesson panel resets hints when `step.id` or `isDemoComplete` changes.
+
+However, pressing Restart while already on the first step might not change either value.
+
+Previously revealed hints can therefore remain visible after restart.
+
+### Required fix
+
+Move hint state into the central demo state, or use an explicit reset key that guarantees the lesson panel resets.
+
+Reset should clear:
+- Current step.
+- Simulated completion state.
+- Visited/completed markers.
+- Revealed hints.
+- Why explanations.
+- Active highlights.
+- Simulated sketch acceptance.
+- Any temporary drawing interaction state.
+
+Restart should work identically whether activated:
+- On Step 1.
+- On Step 4.
+- On Step 8.
+- From the completion screen.
+
+### Acceptance criteria
+
+Restart always produces exactly the same fresh initial state.
+
+---
+
+## FIX 9 — Fix tool highlighting
+
+**Priority: MEDIUM**
+
+**Files:**
+- `src/components/demo/DemoWorkbench.tsx`
+- `src/components/demo/LessonPanel.tsx`
+- `src/components/demo/SimulatedCADCanvas.tsx`
+
+### Requirements
+
+The "Show me" button should highlight a relevant simulated control.
+
+When clicked:
+1. Identify the semantic target for the current step.
+2. Highlight that target.
+3. Update the button label to "Hide highlight."
+4. Remove the highlight when hidden or when the lesson changes.
+
+Do not highlight unrelated controls.
+
+For steps without a corresponding interface control, show a useful explanation or disable highlighting.
+
+Ensure visual highlights are placed correctly and are not covered by other elements.
+
+The highlighted target must remain identifiable without animation.
+
+Do not use an endless pulsing animation as the only indication of selection.
+
+---
+
+## FIX 10 — Correct keyboard navigation
+
+**Priority: MEDIUM**
+
+**File:** `src/components/demo/DemoWorkbench.tsx`
+
+Supported shortcuts:
+
+- Right Arrow / N — Next.
+- Left Arrow / P — Previous.
+- R — Restart.
+
+### Requirements
+
+- Do not intercept shortcuts while the visitor is typing.
+- Ignore modifier-key combinations.
+- Respect form fields and content-editable elements.
+- Do not intercept keyboard input on unrelated pages.
+- Do not hijack arrow-key navigation while interacting with other controls.
+- Prevent unintended page movement only while the appropriate lesson shortcut is active.
+- Ensure keyboard navigation cannot create invalid step indexes.
+
+**Important:** `ProductPreview.tsx` also embeds `DemoWorkbench` on the homepage.
+
+The homepage preview should not install global lesson shortcuts that unexpectedly interfere with scrolling or other page interactions.
+
+Restrict keyboard shortcuts to the dedicated Demo experience or an explicitly focused lesson region.
+
+### Acceptance criteria
+
+The website remains usable with keyboard and mouse, and keyboard shortcuts do not interfere with the rest of the site.
+
+---
+
+## FIX 11 — Fix routing and scroll positioning
+
+**Priority: MEDIUM**
+
+**Files:**
+- `src/App.tsx`
+- `src/components/layout/SiteHeader.tsx`
+- `src/components/layout/SiteFooter.tsx`
+
+### Current problem
+
+The website uses hash routing.
+
+The main navigation calls `handleNavigate`, which resets scroll, but footer navigation uses direct links such as:
+
+`#/demo`
+
+Those hash changes are processed without consistent scroll reset behavior.
+
+A visitor clicking Demo from the bottom of the homepage may remain near the bottom after switching routes.
+
+### Required fix
+
+Centralize route changes and scroll behavior.
+
+Expected behavior:
+
+- Home → Demo: display the top of the Demo page.
+- Demo → Partners: display the top of the Partners page.
+- Partners → Home: display the top of the homepage.
+- Refreshing `#/demo`: load the Demo page correctly.
+- Refreshing `#/partners`: load the Partners page correctly.
+- Browser Back/Forward: preserve the correct route and behave predictably.
+- Back to Top: scroll to the top of the current page.
+
+Avoid duplicate or conflicting smooth-scroll calls.
+
+Ensure scrolling happens after the route's content has rendered.
+
+For in-page anchors such as Roadmap, account for the sticky navbar using suitable scroll margins.
+
+Do not introduce a full routing-library migration unless necessary.
+
+### Acceptance criteria
+
+Every navigation link works correctly from every page and scroll position.
+
+---
+
+# PHASE 4 — REMOVE MISLEADING PRODUCT CLAIMS
+
+## FIX 12 — Audit current-versus-planned functionality
+
+**Priority: HIGH**
+
+**Files to inspect:**
+- `src/components/home/CurrentPrototype.tsx`
+- `src/components/home/Roadmap.tsx`
+- `src/components/home/Workflow.tsx`
+- `src/components/layout/SiteHeader.tsx`
+- `src/components/partners/`
+- `src/lib/constants.ts`
+
+### Product truth
+
+Leqad currently has an early browser-extension prototype with an eight-step beginner lesson, progressive hints, contextual highlighting, and local preferences/progress handling.
+
+It does not yet provide a generally available AI CAD teacher or fully validated geometry-verification platform.
+
+### Required fixes
+
+Review claims such as:
+- "Live"
+- "Verified in prototype"
+- "Verified in automated and live browser testing"
+- "Foundations Mastered"
+- "Fully constrained"
+- "Geometry verified"
+- "Live Interactive Mode"
+
+Replace claims that could mislead visitors with more precise descriptions.
+
+For example:
+
+**Instead of:**
+"Live Interactive Mode"
+
+**Use:**
+"Interactive Illustration"
+
+**Instead of:**
+"Verified in prototype"
+
+**Use when accurate:**
+"Implemented in the extension prototype"
+
+**Instead of:**
+"Verified in automated and live browser testing"
+
+**Use:**
+"Automated tests exist; full live Onshape compatibility remains under validation."
+
+Only state completed test results where evidence actually supports them.
+
+The website's simulated CAD canvas must not look like a real connected Onshape session without an explanatory label.
+
+Keep the disclaimer that Leqad is independent and not an officially announced Onshape partner.
+
+### Acceptance criteria
+
+A technically informed visitor can clearly distinguish:
+- Implemented extension features.
+- Website-only illustrations.
+- Proposed AI capabilities.
+- Future integration and commercial opportunities.
+
+---
+
+# PHASE 5 — FOOTER, DESIGN, AND PERFORMANCE
+
+## FIX 13 — Remove duplicate footer component implementations
+
+**Priority: MEDIUM**
+
+The latest push introduces copies of the halftone footer under:
+
+- `components/ui/halftone-wordmark-footer.tsx`
+- `src/components/ui/halftone-wordmark-footer.tsx`
+
+It also adds sample demonstration components.
+
+### Required fix
+
+1. Identify which path is actually imported by the active Vite configuration.
+2. Keep one canonical copy.
+3. Remove unused duplicates after verifying there are no active imports.
+4. Remove development-only demo components that are not used by the actual Leqad website.
+5. Keep a consistent component directory convention.
+6. Verify that imports, aliases, and build behavior still work.
+
+Do not rewrite the component unnecessarily.
+
+---
+
+## FIX 14 — Simplify and optimize the animated footer
+
+**Priority: MEDIUM**
+
+**Files:**
+- `src/components/layout/SiteFooter.tsx`
+- The active `halftone-wordmark-footer.tsx`
+
+### Current concern
+
+The new footer is approximately 520px tall and contains an animated canvas wordmark.
+
+The effect is visually distinctive, but it may distract from the product and make the website feel unnecessarily long.
+
+### Required improvements
+
+- Keep the approved Leqad colors.
+- Preserve a recognizable brand wordmark.
+- Reduce footer height where practical.
+- Make the links easy to scan.
+- Reduce excessive animation.
+- Avoid interaction effects that compete with navigation.
+- Keep mobile performance and readability high.
+- Avoid unnecessary high-resolution canvas work on every frame.
+- Ensure pointer effects cannot interfere with clicking links.
+- Pause rendering when off-screen or when the page is hidden.
+- Respect `prefers-reduced-motion`.
+- Ensure the animation stops cleanly when the component unmounts.
+
+Inspect the existing canvas loop for performance issues and excessive redraws.
+
+Also fix the semantic structure: `SiteFooter.tsx` currently contains a `<footer>` element that wraps a component that itself renders another `<footer>` element.
+
+Use one main footer landmark rather than nested footer landmarks.
+
+### Acceptance criteria
+
+The footer looks intentional and professional, loads efficiently, and does not hurt scrolling performance.
+
+---
+
+## FIX 15 — Improve website readability and scroll flow
+
+**Priority: MEDIUM**
+
+**Files:**
+- `src/App.tsx`
+- `src/components/home/`
+- `src/index.css`
+
+### Goal
+
+The homepage should be easy to understand in one quick scroll.
+
+Retain the existing startup aesthetic, but reduce repeated explanations and unnecessary visual complexity.
+
+### Recommended homepage order
+
+1. **Hero:** One clear value proposition and one main CTA.
+2. **Product Preview:** Large CAD workspace visualization.
+3. **How It Works:** Three concise learning concepts.
+4. **Current Prototype and Future Vision:** Clear capability distinction.
+5. **Partnership CTA:** Short introduction linking to the Partners page.
+
+Consolidate existing content where possible rather than deleting genuinely useful information.
+
+Move technical details to the Demo or Partners page where appropriate.
+
+### Readability requirements
+
+- Short headings.
+- Concise paragraphs.
+- Consistent section spacing.
+- Avoid repeated badges.
+- Avoid dense blocks of tiny text.
+- Use diagrams where they explain something.
+- Ensure mobile layouts are readable without zooming.
+- Keep buttons and important links visually obvious.
+
+### Scrolling requirements
+
+- No horizontal page overflow.
+- No sudden layout jumps.
+- No unnecessary full-screen animations.
+- No scroll hijacking.
+- Avoid excessive entrance animations.
+- Keep the sticky header unobtrusive.
+- Use reduced-motion preferences.
+
+### Design requirement
+
+Do not replace Leqad's distinctive CAD identity with generic AI startup graphics.
+
+The simulated CAD teaching workflow should remain the visual centerpiece.
+
+---
+
+# PHASE 6 — FIX DECORATIVE CONTROLS AND ACCESSIBILITY
+
+## FIX 16 — Eliminate misleading or nonfunctional controls
+
+**Priority: MEDIUM**
+
+Inspect the entire interactive CAD illustration.
+
+Examples requiring review include:
+- Cancel Sketch.
+- View orientation buttons.
+- Simulated toolbar controls.
+- Execute Step Action.
+- Step selectors.
+- Highlight controls.
+
+### Requirements
+
+Every element styled like an interactive button should have meaningful behavior.
+
+If a control is intentionally illustrative:
+- Make that clear.
+- Do not make it look like an active button unless it is interactive.
+- Avoid placing inert controls into the keyboard tab order.
+
+Do not use generic "Execute Step Action" behavior that marks arbitrary steps complete regardless of the intended action.
+
+For the demo, prefer accurately scoped simulated interactions or clearly labeled navigation.
+
+---
+
+## FIX 17 — Accessibility and responsive behavior
+
+**Priority: MEDIUM**
+
+Review the website at:
+- 320px
+- 375px
+- 768px
+- 1024px
+- 1440px
+
+### Verify
+
+- Navigation works on mobile.
+- Modal controls are accessible.
+- All buttons have accessible names.
+- Current lesson step is announced appropriately.
+- Interactive progress controls have meaningful labels.
+- Hover is not required to discover functionality.
+- Focus states are visible.
+- Color contrast is sufficient.
+- Touch targets are usable.
+- The simulated CAD workspace doesn't block lesson instructions.
+- Horizontal overflow is limited to intentional component-level scrolling.
+- Animated elements respect reduced motion.
+
+Check the accessibility of the step selector and completion view.
+
+---
+
+# PHASE 7 — TESTING AND RELEASE VALIDATION
+
+## FIX 18 — Add automated tests and CI
+
+**Priority: HIGH**
+
+The reviewed repository has no reported GitHub Actions workflow runs for the latest push.
+
+A successful commit does not establish that the website functions properly.
+
+### Required work
+
+Add targeted automated tests.
+
+Recommended tools:
+- Vitest for state and component behavior.
+- React Testing Library for interactive component tests.
+- Playwright for full browser walkthroughs.
+
+Do not add unnecessary testing dependencies if suitable infrastructure already exists.
+
+### Required test scenarios
+
+**Lesson progression**
+1. Load Step 1.
+2. Navigate to Step 2.
+3. Navigate backward.
+4. Jump to Step 8.
+5. Confirm previous steps are not automatically completed.
+6. Trigger a relevant simulated action.
+7. Confirm only the intended state changes.
+
+**Demo completion**
+1. Open the final step.
+2. Confirm the sketch is not prematurely accepted.
+3. Perform the simulated acceptance action where applicable.
+4. Complete the walkthrough.
+5. Confirm the completion screen appears.
+6. Restart.
+7. Confirm all state resets.
+
+**Hints**
+1. Reveal a hint.
+2. Reveal another hint.
+3. Change steps.
+4. Confirm unrelated hints do not remain visible.
+5. Restart while on Step 1.
+6. Confirm the initial hint state is restored.
+
+**Controls**
+1. Show Me highlights the intended tool.
+2. Hide Highlight removes it.
+3. Clicking unrelated canvas space does not advance.
+4. Inert controls are not misleadingly presented as functional.
+5. Keyboard shortcuts do not interfere with typing or scrolling.
+
+**Navigation**
+1. Home → Demo.
+2. Demo → Partners.
+3. Partners → Home.
+4. Use footer navigation.
+5. Refresh each route.
+6. Test browser Back and Forward.
+7. Confirm route changes reset scroll appropriately.
+
+**Contact**
+1. Open contact UI.
+2. Submit invalid data.
+3. Confirm validation works.
+4. Simulate delivery failure, if real submission is implemented.
+5. Confirm failure never shows success.
+6. Confirm success appears only after acknowledged delivery.
+7. Close and reopen the modal.
+
+**Responsive**
+1. Check all pages at mobile and desktop widths.
+2. Confirm the demo is usable.
+3. Confirm no horizontal overflow.
+4. Check reduced-motion behavior.
+
+### CI setup
+
+Add a GitHub Actions workflow that runs the available:
+- Dependency installation.
+- TypeScript checking.
+- Linting.
+- Production build.
+- Unit/component tests.
+- Relevant browser tests.
+
+Check the actual `package.json` scripts before configuring CI.
+
+Do not call a build successful unless the corresponding command actually completed successfully.
+
+---
+
+# IMPLEMENTATION ORDER
+
+Follow this priority order:
+
+**P0 — Must fix before sharing**
+1. Fake contact submission.
+2. False lesson completion from jumping between steps.
+3. Premature sketch acceptance.
+4. Misleading completion/mastery claims.
+5. Incorrect lesson action mappings.
+
+**P1 — Product accuracy and reliability**
+6. Align the public walkthrough with the extension.
+7. Correct plane references and technical inaccuracies.
+8. Fix Restart and hint synchronization.
+9. Fix highlighting and keyboard behavior.
+10. Correct unverified implementation/testing claims.
+
+**P2 — User experience and polish**
+11. Fix route scroll behavior.
+12. Remove duplicate footer components.
+13. Optimize animated footer.
+14. Simplify homepage content.
+15. Repair decorative or nonfunctional controls.
+16. Improve accessibility and responsive behavior.
+
+**P3 — Quality assurance**
+17. Add regression tests.
+18. Add CI.
+19. Review desktop and mobile screenshots.
+20. Verify the final deployment only after approval.
+
+---
+
+# FINAL REPORT REQUIRED
+
+When implementation is complete, provide a structured report with:
+
+### 1. Executive summary
+
+Explain what was fixed and whether the website is ready for owner review.
+
+### 2. Root causes
+
+For each issue, identify the actual underlying problem and relevant file.
+
+### 3. File changes
+
+List every modified, added, and deleted file.
+
+### 4. Behavior verification
+
+Explain how each important interaction now behaves.
+
+### 5. Automated tests
+
+Include:
+- Commands executed.
+- Number of tests run.
+- Pass/fail results.
+- Build status.
+- Any skipped tests.
+
+Do not invent test results.
+
+### 6. Screenshots
+
+Provide desktop and mobile screenshots of:
+- Homepage.
+- Active guided lesson.
+- Lesson completion.
+- Partners page.
+- Footer.
+- Contact experience, if enabled.
+
+### 7. Remaining limitations
+
+Clearly explain:
+- Features that are still simulated.
+- Functionality not yet connected to Onshape.
+- Anything requiring owner approval.
+- Any unresolved issues.
+
+### 8. Pull request
+
+Create a pull request from the dedicated development branch.
+
+Include the actual changed files, test results, and instructions for reviewing the site.
+
+Do not deploy to the public production website automatically without approval.
+
+---
+
+# FINAL QUALITY STANDARD
+
+Leqad should feel like an early-stage but technically credible CAD education startup.
+
+The website must:
+
+- Clearly explain what Leqad does.
+- Make the CAD teaching experience easy to explore.
+- Have a fully functional illustrative walkthrough.
+- Never fabricate CAD verification.
+- Never pretend an inquiry was delivered when it wasn't.
+- Distinguish implemented features from future capabilities.
+- Use accurate engineering terminology.
+- Navigate and scroll smoothly.
+- Be accessible and responsive.
+- Maintain the approved Leqad visual identity.
+- Have documented, reproducible test results.
+
+**Focus on correctness first, clarity second, and visual polish third.**
+
+Do not sacrifice product accuracy to make the website appear more advanced.
+
+The result should be a website we can confidently use during an introductory Onshape partnership meeting without making claims that cannot be supported by the actual product.

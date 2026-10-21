@@ -66,8 +66,10 @@ export interface HalftoneWordmarkFooterProps {
   fontWeight?: number
   /** Face for the small type. */
   monoFamily?: string
-  /** Root height. A definite length, never a percentage. */
+  /** Root height. A definite length, never a percentage. Defaults to "380px". */
   height?: string
+  /** Root element tag. Defaults to "footer". Use "div" when wrapped inside another footer landmark. */
+  as?: "footer" | "div"
   /** Extra root class names. */
   className?: string
 }
@@ -195,7 +197,8 @@ export default function HalftoneWordmarkFooter({
   fontFamily = SANS_STACK,
   fontWeight = 800,
   monoFamily = MONO_STACK,
-  height = "560px",
+  height = "380px",
+  as = "footer",
   className = "",
 }: HalftoneWordmarkFooterProps) {
   const colors = { ...(PRESETS[preset] || PRESETS.night), ...(palette || {}) }
@@ -426,6 +429,19 @@ export default function HalftoneWordmarkFooter({
       if (visible) wake()
     })
     io.observe(root)
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        visible = false
+        if (raf) cancelAnimationFrame(raf)
+        raf = 0
+      } else {
+        visible = true
+        wake()
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange)
+
     // A web font that lands late re-sets the word in its real face.
     let alive = true
     if (document.fonts && document.fonts.ready) {
@@ -441,6 +457,7 @@ export default function HalftoneWordmarkFooter({
       cancelAnimationFrame(raf)
       ro.disconnect()
       io.disconnect()
+      document.removeEventListener("visibilitychange", onVisibilityChange)
       root.removeEventListener("pointermove", onMove)
       root.removeEventListener("pointerleave", onLeave)
       root.removeEventListener("pointerdown", onDown)
@@ -451,9 +468,11 @@ export default function HalftoneWordmarkFooter({
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
+  const RootTag = as === "div" ? "div" : "footer"
+
   return (
-    <footer
-      ref={rootRef}
+    <RootTag
+      ref={rootRef as any}
       className={"hwf-root " + className}
       style={
         {
@@ -492,7 +511,7 @@ export default function HalftoneWordmarkFooter({
           </button>
         ) : null}
       </div>
-    </footer>
+    </RootTag>
   )
 }
 

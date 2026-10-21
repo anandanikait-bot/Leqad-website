@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { LessonStep, ViewOrientation } from '../../types';
+import React, { useState, useRef, useEffect } from 'react';
+import { LessonStep, ViewOrientation, SketchDemoStatus } from '../../types';
 import { 
   Square, 
   Minus, 
@@ -11,36 +11,40 @@ import {
   Eye, 
   ShieldCheck,
   MousePointer,
-  CheckCircle2
+  CheckCircle2,
+  Info,
+  Maximize2
 } from 'lucide-react';
 
 interface SimulatedCADCanvasProps {
   step: LessonStep;
   currentStepIndex: number;
-  isHighlightingControl: boolean;
+  sketchStatus: SketchDemoStatus;
+  highlightedTargetId: string | null;
   isDemoComplete?: boolean;
   onAdvanceStep: () => void;
-  onTriggerTool: (toolId: string) => void;
+  onTriggerAction: (actionId: string) => void;
+  onResetSketch?: () => void;
 }
 
 export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   step,
   currentStepIndex,
-  isHighlightingControl,
+  sketchStatus,
+  highlightedTargetId,
   isDemoComplete = false,
   onAdvanceStep,
-  onTriggerTool,
+  onTriggerAction,
+  onResetSketch,
 }) => {
-  const [viewOrientation, setViewOrientation] = useState<ViewOrientation>(
-    currentStepIndex === 0 ? 'iso' : 'top'
-  );
+  const [viewOrientation, setViewOrientation] = useState<ViewOrientation>('iso');
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0.0, y: 0.0 });
   const [svgCursor, setSvgCursor] = useState<{ x: number; y: number } | null>(null);
   const canvasRef = useRef<SVGSVGElement | null>(null);
 
-  // Sync orientation with step 1 -> step 2
-  React.useEffect(() => {
-    if (currentStepIndex === 0) {
+  // Sync orientation with step: Step 1 & 2 are isometric by default, Step 3+ normal to top
+  useEffect(() => {
+    if (currentStepIndex <= 1) {
       setViewOrientation('iso');
     } else {
       setViewOrientation('top');
@@ -73,139 +77,161 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
     setSvgCursor(null);
   };
 
-  const isStepAtLeast = (targetStep: number) => currentStepIndex >= targetStep - 1;
+  // State-aware flags based on actual simulation state (Fix #2, Fix #3)
+  const isPlaneSelected = sketchStatus !== 'not-started';
+  const isSketchActive = ['sketch-active', 'rectangle-drawn', 'dimensioned', 'accepted-in-demo'].includes(sketchStatus);
+  const isRectangleDrawn = ['rectangle-drawn', 'dimensioned', 'accepted-in-demo'].includes(sketchStatus);
+  const isDimensioned = ['dimensioned', 'accepted-in-demo'].includes(sketchStatus);
+  const isSketchAccepted = sketchStatus === 'accepted-in-demo';
 
-  // Active tool mapping for the current step
-  const activeTool = step.activeToolId;
-
-  // Tool highlight helper: ONLY highlight when isHighlightingControl is true AND tool matches
-  const isToolHighlighted = (toolId: string) => {
-    return isHighlightingControl && activeTool === toolId;
-  };
+  // Highlight check
+  const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
   return (
     <div className="relative w-full h-full min-h-[460px] lg:min-h-[580px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
-      {/* CAD Application Top Ribbon */}
+      {/* Disclaimer / Prototype Banner (Fix #12) */}
+      <div className="bg-[#FAF8F4] px-3 py-1.5 border-b border-[#D9DDD9] flex items-center justify-between text-[11px] font-mono text-[#55616B]">
+        <div className="flex items-center gap-1.5 truncate">
+          <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
+          <span className="font-semibold text-[#0E2943]">Simulated CAD Workspace:</span>
+          <span className="truncate">Interactive illustration · Not a live Onshape session</span>
+        </div>
+        <div className="hidden sm:flex items-center gap-2 flex-shrink-0 text-[10px]">
+          <span className="bg-[#E2E8F0] px-2 py-0.5 rounded text-[#0E2943]">40 mm × 30 mm Base</span>
+        </div>
+      </div>
+
+      {/* CAD Application Ribbon Toolbar */}
       <div className="h-11 bg-white border-b border-[#D9DDD9] px-3 flex items-center justify-between text-xs text-[#0E2943] z-20">
         {/* Left CAD Toolbar */}
         <div className="flex items-center gap-1 overflow-x-auto py-1">
-          {/* Sketch tool */}
+          {/* Sketch tool (Step 3: Start Sketch) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onTriggerTool('sketch');
+              onTriggerAction('start-sketch');
             }}
             className={`px-2.5 py-1.5 rounded flex items-center gap-1.5 font-medium transition-all cursor-pointer ${
-              activeTool === 'sketch'
+              currentStepIndex === 2 && !isSketchActive
                 ? 'bg-[#0E2943] text-white shadow-xs'
+                : isSketchActive
+                ? 'bg-[#F5EFE7] text-[#0E2943] border border-[#D9DDD9]'
                 : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
             } ${
-              isToolHighlighted('sketch')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white animate-pulse'
+              isTargetHighlighted('tool-sketch')
+                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
                 : ''
             }`}
-            title="Sketch tool"
+            title="Sketch tool: Click to enter sketch mode on Top Plane"
+            aria-label="Sketch tool"
           >
-            <Layers className="w-3.5 h-3.5" />
+            <Layers className="w-3.5 h-3.5 text-[#B74B21]" />
             <span className="hidden sm:inline">Sketch</span>
           </button>
 
           <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
 
-          {/* Corner Rectangle Tool (G) */}
+          {/* Extrude 3D Tool (Step 7: Understand Result) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onTriggerTool('rectangle');
+              onTriggerAction('understand-result');
             }}
-            className={`p-1.5 rounded transition-all cursor-pointer relative ${
-              activeTool === 'rectangle' || activeTool === 'draw-rectangle'
+            className={`px-2 py-1.5 rounded flex items-center gap-1 transition-all cursor-pointer ${
+              currentStepIndex === 6
                 ? 'bg-[#0E2943] text-white'
-                : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
+                : 'hover:bg-[#FAF8F4] text-[#55616B]'
             } ${
-              isToolHighlighted('rectangle') || isToolHighlighted('draw-rectangle')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white animate-pulse'
+              isTargetHighlighted('tool-extrude')
+                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
                 : ''
             }`}
-            title="Corner Rectangle (G)"
+            title="Extrude (3D Feature Preview)"
+            aria-label="Extrude 3D tool"
+          >
+            <Box className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Extrude</span>
+          </button>
+
+          <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
+
+          {/* Corner Rectangle Tool (G) (Step 4: Draw Rectangle) */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onTriggerAction('draw-rectangle');
+            }}
+            className={`p-1.5 rounded transition-all cursor-pointer relative ${
+              currentStepIndex === 3 && !isRectangleDrawn
+                ? 'bg-[#0E2943] text-white'
+                : isRectangleDrawn
+                ? 'bg-[#F5EFE7] text-[#0E2943] border border-[#D9DDD9]'
+                : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
+            } ${
+              isTargetHighlighted('tool-rectangle')
+                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
+                : ''
+            }`}
+            title="Corner Rectangle (G): Click to draw 40x30 mm rectangle from origin"
+            aria-label="Corner Rectangle tool"
           >
             <Square className="w-4 h-4" />
           </button>
 
-          {/* Line tool (inactive in this lesson) */}
+          {/* Line tool (inactive illustration) */}
           <button
-            className="p-1.5 rounded text-[#55616B] hover:text-[#0E2943] hover:bg-[#FAF8F4] transition-all cursor-pointer"
-            title="Line tool (L)"
+            className="p-1.5 rounded text-[#55616B] opacity-50 cursor-not-allowed"
+            disabled
+            title="Line tool (L) — Not required for this rectangle lesson"
+            aria-label="Line tool (illustrative)"
           >
             <Minus className="w-4 h-4 rotate-45" />
           </button>
 
-          {/* Dimension Tool (D) */}
+          {/* Dimension Tool (D) (Step 5: Apply Dimensions) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onTriggerTool('dimension');
+              onTriggerAction('apply-dimensions');
             }}
             className={`p-1.5 rounded transition-all cursor-pointer relative ${
-              activeTool === 'dimension'
+              currentStepIndex === 4 && !isDimensioned
                 ? 'bg-[#0E2943] text-white'
+                : isDimensioned
+                ? 'bg-[#F5EFE7] text-[#0E2943] border border-[#D9DDD9]'
                 : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
             } ${
-              isToolHighlighted('dimension')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white animate-pulse'
+              isTargetHighlighted('tool-dimension')
+                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
                 : ''
             }`}
-            title="Dimension Tool (D)"
+            title="Dimension Tool (D): Set 40 mm width and 30 mm height"
+            aria-label="Dimension tool"
           >
             <Ruler className="w-4 h-4" />
           </button>
 
           <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
 
-          {/* Constraints Inspector */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onTriggerTool('constraints');
-            }}
-            className={`px-2 py-1 rounded flex items-center gap-1 font-mono text-[11px] transition-all cursor-pointer ${
-              activeTool === 'constraints'
-                ? 'bg-[#0E2943] text-white'
-                : 'hover:bg-[#FAF8F4] text-[#0E2943]'
-            } ${
-              isToolHighlighted('constraints')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white animate-pulse'
-                : ''
-            }`}
-            title="Geometric Constraints"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-[#B74B21]" />
-            <span className="hidden sm:inline">Constraints</span>
-          </button>
-
-          {/* Normal to view tool (N) */}
+          {/* View Normal (N) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               setViewOrientation(viewOrientation === 'top' ? 'iso' : 'top');
-              onTriggerTool('view-normal');
             }}
             className={`p-1.5 rounded transition-all cursor-pointer ${
-              activeTool === 'view-normal' || viewOrientation === 'top'
+              viewOrientation === 'top'
                 ? 'bg-[#F5EFE7] text-[#0E2943] border border-[#D9DDD9]'
                 : 'hover:bg-[#FAF8F4] text-[#55616B]'
-            } ${
-              isToolHighlighted('view-normal')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white animate-pulse'
-                : ''
             }`}
-            title="View Normal to Sketch Plane (N)"
+            title="Toggle Normal to View (N) / Isometric"
+            aria-label="Toggle normal to view"
           >
             <Eye className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Right Info: Live Coordinate Readout (Always accurate mm values) */}
+        {/* Right Info: Coordinate Readout */}
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="font-mono text-[11px] text-[#55616B] flex items-center gap-1.5 sm:gap-2 bg-[#F5EFE7] px-2 sm:px-2.5 py-1 rounded border border-[#D9DDD9] shadow-2xs">
             <span>
@@ -218,7 +244,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </div>
 
           <div className="font-mono text-[11px] font-medium px-2 py-1 bg-white border border-[#D9DDD9] rounded text-[#0E2943]">
-            {viewOrientation === 'top' ? 'Top (Normal)' : 'Isometric'}
+            {viewOrientation === 'top' ? 'Top (XY)' : 'Isometric'}
           </div>
         </div>
       </div>
@@ -226,7 +252,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
       {/* Main CAD Canvas Area */}
       <div className="relative flex-1 flex overflow-hidden">
         {/* Left Feature Tree Panel */}
-        <div className="hidden sm:flex flex-col w-44 bg-white/95 backdrop-blur-xs border-r border-[#D9DDD9] text-xs z-10">
+        <div className="hidden sm:flex flex-col w-44 bg-white/95 backdrop-blur-xs border-r border-[#D9DDD9] text-xs z-10 flex-shrink-0">
           <div className="p-2 border-b border-[#D9DDD9] font-mono text-[10px] uppercase font-semibold text-[#55616B] flex items-center justify-between">
             <span>Features</span>
             <Box className="w-3 h-3 text-[#55616B]" />
@@ -238,42 +264,48 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               <span>Origin (0,0,0)</span>
             </div>
 
-            {/* Top Plane Feature Tree Item - Interactive for Step 1 */}
+            {/* Top Plane Feature Item - Interactive for Step 2 (Fix #4, Fix #6) */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                if (currentStepIndex === 0) onTriggerTool('sketch');
+                onTriggerAction('select-top-plane');
               }}
               className={`w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${
-                currentStepIndex === 0
+                currentStepIndex === 1 && !isPlaneSelected
                   ? 'bg-[#B74B21]/15 text-[#B74B21] font-semibold border border-[#B74B21]/30'
-                  : isStepAtLeast(1)
+                  : isPlaneSelected
                   ? 'text-[#0E2943] font-medium bg-[#F5EFE7]'
                   : 'text-[#55616B] hover:bg-[#FAF8F4]'
+              } ${
+                isTargetHighlighted('tool-top-plane')
+                  ? 'ring-2 ring-[#B74B21] ring-offset-1'
+                  : ''
               }`}
+              title="Top Plane (XY Datum) — Click to select datum"
+              aria-label="Top Plane feature item"
             >
               <div className="flex items-center gap-1.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${currentStepIndex === 0 ? 'bg-[#B74B21]' : 'bg-[#0E2943]'}`} />
-                <span>Top Plane</span>
+                <span className={`w-1.5 h-1.5 rounded-full ${isPlaneSelected ? 'bg-[#0E2943]' : 'bg-[#B74B21]'}`} />
+                <span>Top Plane (XY)</span>
               </div>
-              {currentStepIndex === 0 && (
+              {currentStepIndex === 1 && !isPlaneSelected && (
                 <span className="text-[9px] uppercase px-1 bg-[#B74B21] text-white rounded">Select</span>
               )}
             </button>
 
             <div className="px-2 py-1 rounded text-[#55616B]/60 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9DDD9]" />
-              <span>Front Plane</span>
+              <span>Front Plane (XZ)</span>
             </div>
             <div className="px-2 py-1 rounded text-[#55616B]/60 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9DDD9]" />
-              <span>Right Plane</span>
+              <span>Right Plane (YZ)</span>
             </div>
 
-            {/* Sketch 1 Feature Item */}
-            {isStepAtLeast(1) && (
+            {/* Sketch 1 Feature Item in Tree */}
+            {isSketchActive && (
               <div className={`mt-2 pt-2 border-t border-[#D9DDD9] px-2 py-1 rounded flex items-center justify-between ${
-                isStepAtLeast(8) || isDemoComplete
+                isSketchAccepted
                   ? 'bg-emerald-50 text-emerald-900 font-medium border border-emerald-200'
                   : 'bg-[#F5EFE7] text-[#0E2943] font-semibold'
               }`}>
@@ -281,7 +313,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   <Layers className="w-3 h-3 text-[#B74B21]" />
                   <span>Sketch 1</span>
                 </div>
-                {isStepAtLeast(8) || isDemoComplete ? (
+                {isSketchAccepted ? (
                   <Check className="w-3 h-3 text-emerald-600" />
                 ) : (
                   <span className="text-[9px] text-[#B74B21] uppercase">Editing</span>
@@ -291,8 +323,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </div>
         </div>
 
-        {/* Floating Sketch Dialog Box */}
-        {isStepAtLeast(1) && (
+        {/* Floating Sketch Dialog Box (Only visible while in editing mode, not before or after accept) */}
+        {isSketchActive && !isSketchAccepted && (
           <div className="absolute top-3 left-3 sm:left-48 bg-white/95 backdrop-blur-xs border border-[#D9DDD9] shadow-sm rounded-md px-3 py-1.5 flex items-center gap-3 z-20 text-xs font-mono">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
@@ -301,30 +333,35 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             </div>
 
             <div className="flex items-center gap-1 border-l border-[#D9DDD9] pl-2">
+              {/* Accept Sketch button (Step 6: Finish Sketch) */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onTriggerTool('accept-sketch');
+                  onTriggerAction('finish-sketch');
                 }}
                 className={`w-6 h-6 rounded flex items-center justify-center transition-all cursor-pointer ${
-                  currentStepIndex === 7 && !isDemoComplete
-                    ? 'bg-emerald-600 text-white ring-2 ring-emerald-500 ring-offset-1 animate-bounce'
-                    : isStepAtLeast(8) || isDemoComplete
-                    ? 'bg-emerald-600 text-white'
+                  currentStepIndex === 5
+                    ? 'bg-emerald-600 text-white ring-2 ring-emerald-500 ring-offset-1'
                     : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
                 } ${
-                  isToolHighlighted('accept-sketch')
-                    ? 'ring-2 ring-[#B74B21] ring-offset-1 animate-pulse'
+                  isTargetHighlighted('tool-accept-sketch')
+                    ? 'ring-2 ring-[#B74B21] ring-offset-1'
                     : ''
                 }`}
-                title="Accept Sketch (Green Checkmark)"
+                title="Accept Sketch (Green Checkmark) — Commit Sketch 1"
+                aria-label="Accept Sketch (Green Checkmark)"
               >
                 <Check className="w-3.5 h-3.5" />
               </button>
+
               <button
-                onClick={(e) => e.stopPropagation()}
-                className="w-6 h-6 rounded flex items-center justify-center bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors"
-                title="Cancel Sketch"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onResetSketch?.();
+                }}
+                className="w-6 h-6 rounded flex items-center justify-center bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer"
+                title="Cancel Sketch mode"
+                aria-label="Cancel Sketch"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -339,11 +376,11 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               onClick={(e) => {
                 e.stopPropagation();
                 setViewOrientation('top');
-                if (currentStepIndex === 1) onTriggerTool('view-normal');
               }}
               className={`text-center py-0.5 rounded transition-colors cursor-pointer ${
                 viewOrientation === 'top' ? 'bg-[#0E2943] text-white' : 'hover:bg-[#FAF8F4]'
               }`}
+              aria-label="View Top"
             >
               TOP
             </button>
@@ -354,6 +391,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   setViewOrientation('front');
                 }}
                 className="hover:text-[#B74B21] transition-colors cursor-pointer"
+                aria-label="View Front"
               >
                 F
               </button>
@@ -365,6 +403,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 className={`px-1 py-0.5 rounded transition-colors cursor-pointer ${
                   viewOrientation === 'iso' ? 'bg-[#B74B21] text-white' : 'hover:bg-[#FAF8F4]'
                 }`}
+                aria-label="View Isometric"
               >
                 ISO
               </button>
@@ -374,6 +413,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   setViewOrientation('right');
                 }}
                 className="hover:text-[#B74B21] transition-colors cursor-pointer"
+                aria-label="View Right"
               >
                 R
               </button>
@@ -386,8 +426,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
         {/*
           SVG CAD Canvas:
-          Fix #1: General SVG onClick is completely REMOVED.
-          Clicking empty space, grid lines, or background does NOT advance the lesson.
+          Clicking empty space or grid lines does NOT advance.
+          Only clicking actual interactive entities triggers simulated actions.
         */}
         <svg
           ref={canvasRef}
@@ -408,7 +448,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
           {/* Coordinate Reference Axes & Origin Datum */}
           <g>
-            {/* Origin Datum */}
+            {/* Origin Datum (Clickable in Step 4 to draw rectangle) */}
             <circle
               cx="0"
               cy="0"
@@ -417,7 +457,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               className="cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
-                if (currentStepIndex === 3) onTriggerTool('draw-rectangle');
+                if (currentStepIndex === 3) onTriggerAction('draw-rectangle');
               }}
             />
             <circle
@@ -431,7 +471,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               className="cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
-                if (currentStepIndex === 3) onTriggerTool('draw-rectangle');
+                if (currentStepIndex === 3) onTriggerAction('draw-rectangle');
               }}
             />
             <text x="8" y="-7" fill="#B74B21" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
@@ -453,55 +493,56 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             </text>
           </g>
 
-          {/* Step 1: Isometric Top Plane Preview (only when in ISO view or Step 0) */}
+          {/* Isometric Top Plane Visual (shown when in ISO view or Step 2) */}
           {viewOrientation === 'iso' && (
             <g>
               <polygon
                 points="-140,50 60,110 160,-20 -40,-80"
-                fill={currentStepIndex === 0 ? 'rgba(183, 75, 33, 0.14)' : 'rgba(14, 41, 67, 0.05)'}
-                stroke={currentStepIndex === 0 ? '#B74B21' : '#0E2943'}
-                strokeWidth={currentStepIndex === 0 ? '2.5' : '1'}
-                strokeDasharray={currentStepIndex === 0 ? 'none' : '4 3'}
+                fill={isPlaneSelected ? 'rgba(183, 75, 33, 0.14)' : 'rgba(14, 41, 67, 0.05)'}
+                stroke={isPlaneSelected ? '#B74B21' : '#0E2943'}
+                strokeWidth={isPlaneSelected ? '2.5' : '1'}
+                strokeDasharray={isPlaneSelected ? 'none' : '4 3'}
                 className="cursor-pointer transition-all"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (currentStepIndex === 0) onTriggerTool('sketch');
+                  onTriggerAction('select-top-plane');
                 }}
               />
               <text x="-120" y="45" fill="#0E2943" fontSize="11" fontFamily="IBM Plex Mono" fontWeight="600">
-                Top Plane [Click to Select]
+                Top Plane (XY) {isPlaneSelected ? '[Selected Datum]' : '[Click to Select]'}
               </text>
             </g>
           )}
 
-          {/* Step 3: Interactive drawing prompter at Origin */}
-          {currentStepIndex === 2 && viewOrientation === 'top' && (
+          {/* Step 4: Drawing prompt at Origin */}
+          {currentStepIndex === 3 && !isRectangleDrawn && viewOrientation === 'top' && (
             <g transform="translate(10, 25)" pointerEvents="none" className="animate-fadeIn">
-              <rect x="0" y="0" width="190" height="22" rx="3" fill="#0E2943" fillOpacity="0.88" />
+              <rect x="0" y="0" width="210" height="22" rx="3" fill="#0E2943" fillOpacity="0.88" />
               <text x="8" y="15" fill="#F5EFE7" fontSize="10" fontFamily="IBM Plex Mono">
-                Rectangle tool ready: Anchor at (0,0)
+                Corner Rectangle: Anchor at (0,0)
               </text>
             </g>
           )}
 
           {/*
-            Steps 4+: 40 × 30 mm Base Rectangle Geometry
+            40 × 30 mm Base Rectangle Geometry:
+            Rendered ONLY when rectangle is drawn in the simulation.
             Scale: 1 mm = 3 SVG units
             Width: 40 mm = 120 SVG units (x: 0 to 120)
             Height: 30 mm = 90 SVG units (y: 0 to -90)
-            Under-constrained in Steps 4-6 (Electric Blue #2D7FF9)
-            Fully Constrained in Steps 7-8 (Crisp Black #0E2943)
+            Under-constrained in Step 4 (Electric Blue #2D7FF9)
+            Dimensioned in Step 5+ (Defined Black #0E2943)
           */}
-          {isStepAtLeast(4) && (
+          {isRectangleDrawn && (
             <g>
-              {/* Shaded Profile Face when accepted (Step 8 or Demo Complete) */}
-              {(isStepAtLeast(8) || isDemoComplete) && (
+              {/* Shaded Profile Face when accepted in demo (Fix #3) */}
+              {isSketchAccepted && (
                 <rect
                   x="0"
                   y="-90"
                   width="120"
                   height="90"
-                  fill="rgba(14, 41, 67, 0.14)"
+                  fill="rgba(14, 41, 67, 0.15)"
                   stroke="none"
                 />
               )}
@@ -512,20 +553,24 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 y="-90"
                 width="120"
                 height="90"
-                fill={(isStepAtLeast(8) || isDemoComplete) ? 'transparent' : 'rgba(45, 127, 249, 0.04)'}
-                stroke={(isStepAtLeast(7) || isDemoComplete) ? '#0E2943' : '#2D7FF9'}
-                strokeWidth={(isStepAtLeast(7) || isDemoComplete) ? '2.5' : '2'}
-                className="transition-colors duration-200"
+                fill={isSketchAccepted ? 'transparent' : 'rgba(45, 127, 249, 0.04)'}
+                stroke={isDimensioned ? '#0E2943' : '#2D7FF9'}
+                strokeWidth={isDimensioned ? '2.5' : '2'}
+                className="transition-colors duration-200 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (currentStepIndex === 4 && !isDimensioned) onTriggerAction('apply-dimensions');
+                }}
               />
 
               {/* Corner Vertices */}
               <circle cx="0" cy="0" r="3.5" fill="#B74B21" />
-              <circle cx="120" cy="-90" r="3.5" fill={(isStepAtLeast(7) || isDemoComplete) ? '#0E2943' : '#2D7FF9'} />
-              <circle cx="120" cy="0" r="3" fill={(isStepAtLeast(7) || isDemoComplete) ? '#0E2943' : '#2D7FF9'} />
-              <circle cx="0" cy="-90" r="3" fill={(isStepAtLeast(7) || isDemoComplete) ? '#0E2943' : '#2D7FF9'} />
+              <circle cx="120" cy="-90" r="3.5" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
+              <circle cx="120" cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
+              <circle cx="0" cy="-90" r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
 
-              {/* Under-constrained tag before Step 7 */}
-              {!isStepAtLeast(7) && !isDemoComplete && (
+              {/* Status note */}
+              {!isDimensioned && (
                 <text x="125" y="-85" fill="#2D7FF9" fontSize="9" fontFamily="IBM Plex Mono">
                   [Under-constrained (Blue)]
                 </text>
@@ -537,14 +582,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             Step 5+: Parametric Horizontal Width Dimension (40 mm)
             Leader above top edge (y = -115)
           */}
-          {isStepAtLeast(5) && (
-            <g
-              className="animate-fadeIn cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (currentStepIndex === 4) onTriggerTool('dimension');
-              }}
-            >
+          {isDimensioned && (
+            <g className="animate-fadeIn">
               {/* Witness lines */}
               <line x1="0" y1="-90" x2="0" y2="-120" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
               <line x1="120" y1="-90" x2="120" y2="-120" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
@@ -561,17 +600,11 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           )}
 
           {/*
-            Step 6+: Parametric Vertical Height Dimension (30 mm)
-            Leader to the right of vertical edge (x = 145)
+            Step 5+: Parametric Vertical Height Dimension (30 mm)
+            Leader to right of vertical edge (x = 145)
           */}
-          {isStepAtLeast(6) && (
-            <g
-              className="animate-fadeIn cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (currentStepIndex === 5) onTriggerTool('dimension');
-              }}
-            >
+          {isDimensioned && (
+            <g className="animate-fadeIn">
               {/* Witness lines */}
               <line x1="120" y1="0" x2="150" y2="0" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
               <line x1="120" y1="-90" x2="150" y2="-90" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
@@ -587,55 +620,12 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             </g>
           )}
 
-          {/*
-            Step 7+: Geometric Constraints Badges
-            Coincident (Origin), Horizontal (Top Edge), Vertical (Right Edge)
-          */}
-          {(isStepAtLeast(7) || isDemoComplete) && (
-            <g
-              className="animate-fadeIn cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (currentStepIndex === 6) onTriggerTool('constraints');
-              }}
-            >
-              {/* Coincident constraint glyph at Origin */}
-              <g transform="translate(-16, 12)">
-                <rect x="0" y="0" width="16" height="14" rx="2" fill="#0E2943" />
-                <circle cx="8" cy="7" r="3" fill="#FFFFFF" />
-              </g>
-              <text x="3" y="22" fill="#0E2943" fontSize="9" fontFamily="IBM Plex Mono" fontWeight="600">
-                Coincident (Origin)
-              </text>
-
-              {/* Horizontal constraint glyph on top edge */}
-              <g transform="translate(52, -97)">
-                <rect x="0" y="0" width="16" height="12" rx="2" fill="#0E2943" />
-                <line x1="3" y1="6" x2="13" y2="6" stroke="#FFFFFF" strokeWidth="1.5" />
-              </g>
-
-              {/* Vertical constraint glyph on right edge */}
-              <g transform="translate(122, -51)">
-                <rect x="0" y="0" width="12" height="16" rx="2" fill="#0E2943" />
-                <line x1="6" y1="3" x2="6" y2="13" stroke="#FFFFFF" strokeWidth="1.5" />
-              </g>
-
-              {/* Fully Constrained Status Tag */}
-              <g transform="translate(-180, -140)">
-                <rect x="0" y="0" width="160" height="24" rx="4" fill="#0E2943" />
-                <text x="12" y="16" fill="#FFFFFF" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
-                  ✓ FULLY CONSTRAINED (0 DOF)
-                </text>
-              </g>
-            </g>
-          )}
-
-          {/* Step 8 / Demo Complete: Watertight Profile Ready for Extrude */}
-          {(isStepAtLeast(8) || isDemoComplete) && (
+          {/* Shaded Profile Label when accepted (Step 6 / 7) */}
+          {isSketchAccepted && (
             <g transform="translate(-180, 110)" className="animate-fadeIn">
-              <rect x="0" y="0" width="220" height="28" rx="4" fill="#0E2943" />
-              <text x="10" y="18" fill="#F5EFE7" fontSize="11" fontFamily="IBM Plex Mono" fontWeight="600">
-                ★ WATERTIGHT PROFILE (READY FOR EXTRUDE)
+              <rect x="0" y="0" width="240" height="28" rx="4" fill="#0E2943" />
+              <text x="10" y="18" fill="#F5EFE7" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
+                ★ SHADED 2D PROFILE (READY FOR EXTRUDE)
               </text>
             </g>
           )}
@@ -676,30 +666,29 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           )}
         </svg>
 
-        {/* Floating Interactive Canvas Action Prompter */}
+        {/* Floating Bottom Action Prompter (Accurately Scoped Interaction, Fix #16) */}
         <div className="absolute bottom-3 left-3 sm:left-48 right-3 flex items-center justify-between pointer-events-none">
           <div className="bg-white/95 backdrop-blur-xs border border-[#D9DDD9] rounded-md px-3 py-1.5 shadow-xs flex items-center gap-2 pointer-events-auto">
             <MousePointer className="w-3.5 h-3.5 text-[#B74B21]" />
             <span className="text-xs text-[#0E2943]">
-              <strong className="font-semibold text-[#0E2943]">Action:</strong> {step.recommendedAction}
+              <strong className="font-semibold text-[#0E2943]">Recommended:</strong> {step.recommendedAction}
             </span>
           </div>
 
-          {/* Explicit interactive button for the active step */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              if (activeTool) {
-                onTriggerTool(activeTool);
-              } else {
-                onAdvanceStep();
-              }
-            }}
-            className="hidden sm:inline-flex items-center gap-1.5 bg-[#0E2943] text-white hover:bg-[#163859] px-3 py-1.5 rounded-md text-xs font-medium shadow-xs pointer-events-auto transition-colors cursor-pointer"
-          >
-            <span>Execute step action</span>
-            <span className="font-mono text-[10px] bg-white/20 px-1 rounded">↵</span>
-          </button>
+          {/* Interactive helper button if current step has a semantic action */}
+          {step.semanticActionId && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onTriggerAction(step.semanticActionId!);
+              }}
+              className="hidden sm:inline-flex items-center gap-1.5 bg-[#0E2943] text-white hover:bg-[#163859] px-3 py-1.5 rounded-md text-xs font-medium shadow-xs pointer-events-auto transition-colors cursor-pointer"
+              title={`Simulate: ${step.title}`}
+            >
+              <span>Simulate action</span>
+              <span className="font-mono text-[10px] bg-white/20 px-1 rounded">↵</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

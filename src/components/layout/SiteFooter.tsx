@@ -27,8 +27,9 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
         </button>
       </div>
 
-      {/* Interactive Halftone Wordmark Canvas Footer */}
+      {/* Interactive Halftone Wordmark Canvas (single semantic footer landmark) */}
       <HalftoneWordmarkFooter
+        as="div"
         wordmark="leqad"
         label="Leqad CAD"
         meta="©2026 · In-Workflow CAD Education"
@@ -41,9 +42,9 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
           {
             title: "Product",
             links: [
-              { label: "Overview", href: "#/" },
-              { label: "Your First Sketch", href: "#/demo" },
-              { label: "In-Workflow Guide", href: "#/demo" },
+              { label: "Home", href: "#/" },
+              { label: "Interactive Demo", href: "#/demo" },
+              { label: "About Leqad", href: "#/about" },
             ],
           },
           {
@@ -63,7 +64,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
             ],
           },
         ]}
-        height="520px"
+        height="380px"
         backToTop={true}
       />
     </footer>
