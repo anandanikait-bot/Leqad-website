@@ -65,7 +65,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               Learn CAD by
             </h1>
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
-            <div className="h-[4.2rem] sm:h-[3.6rem] lg:h-[4rem] flex items-center overflow-hidden">
+            <div className="h-[5.5rem] sm:h-[6.5rem] lg:h-[8rem] flex items-center">
               <span
                 className={`font-serif italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
                   isTransitioning
