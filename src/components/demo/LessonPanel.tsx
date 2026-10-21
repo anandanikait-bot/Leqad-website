@@ -4,13 +4,11 @@ import {
   HelpCircle, 
   Eye, 
   EyeOff,
-  ChevronRight, 
   ChevronLeft, 
   RotateCcw, 
   CheckCircle2, 
   Info, 
   Sparkles,
-  Layers,
   Award
 } from 'lucide-react';
 import { Button } from '../shared/Button';
@@ -19,14 +17,12 @@ interface LessonPanelProps {
   step: LessonStep;
   currentStepIndex: number;
   totalSteps: number;
-  completedDemoActionIds: string[];
-  visitedStepIds: number[];
   isDemoComplete?: boolean;
   onNext: () => void;
   onPrev: () => void;
   onRestart: () => void;
-  onJumpToStep: (index: number) => void;
   onFinishDemo: () => void;
+  onSimulateAction: (actionId: string) => void;
   isHighlightingControl: boolean;
   onToggleHighlight: () => void;
   isCompact?: boolean;
@@ -37,14 +33,12 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   step,
   currentStepIndex,
   totalSteps,
-  completedDemoActionIds,
-  visitedStepIds,
   isDemoComplete = false,
   onNext,
   onPrev,
   onRestart,
-  onJumpToStep,
   onFinishDemo,
+  onSimulateAction,
   isHighlightingControl,
   onToggleHighlight,
   isCompact = false,
@@ -67,6 +61,23 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
 
   const isLastStep = currentStepIndex === totalSteps - 1;
   const isFirstStep = currentStepIndex === 0;
+
+  const primaryActionLabel: Record<number, string> = {
+    1: 'Start walkthrough',
+    2: 'Select Top Plane',
+    3: 'Start sketch',
+    4: 'Draw rectangle',
+    5: 'Set 40 × 30 mm dimensions',
+    6: 'Finish sketch',
+    7: 'Continue to practice',
+    8: 'Finish walkthrough',
+  };
+  const handlePrimaryAction = () => {
+    if (isFirstStep) onNext();
+    else if (isLastStep) onFinishDemo();
+    else if (step.semanticActionId) onSimulateAction(step.semanticActionId);
+    else onNext();
+  };
 
   // Render Completed Walkthrough View (Fix #7)
   if (isDemoComplete) {
@@ -176,46 +187,6 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
         </div>
       </div>
 
-      {/* Progress Track (Fix #2: Accurately distinguishing visited vs completed) */}
-      <div className="bg-[#F5EFE7] px-4 py-2 border-b border-[#D9DDD9]/70 flex items-center justify-between gap-1">
-        <div className="flex items-center gap-1.5 flex-1">
-          {Array.from({ length: totalSteps }).map((_, i) => {
-            const stepId = i + 1;
-            const isCurrent = i === currentStepIndex;
-            const isActionDone = step.semanticActionId
-              ? completedDemoActionIds.includes(step.semanticActionId)
-              : false;
-            const isVisited = visitedStepIds.includes(stepId);
-
-            return (
-              <button
-                key={i}
-                onClick={() => onJumpToStep(i)}
-                className={`h-1.5 rounded-full transition-all flex-1 cursor-pointer ${
-                  isCurrent
-                    ? 'bg-[#B74B21] ring-2 ring-[#B74B21]/30'
-                    : isActionDone
-                    ? 'bg-emerald-600'
-                    : isVisited
-                    ? 'bg-[#0E2943]/60'
-                    : 'bg-[#D9DDD9]'
-                }`}
-                title={`Step ${i + 1}${isActionDone ? ' (Completed)' : isVisited ? ' (Viewed)' : ''}`}
-                aria-label={`Jump to Step ${i + 1}`}
-              />
-            );
-          })}
-        </div>
-        <button
-          onClick={onRestart}
-          className="text-[#55616B] hover:text-[#0E2943] text-xs p-1 ml-2 transition-colors cursor-pointer"
-          title="Restart lesson"
-          aria-label="Restart lesson"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
       {/* Panel Body Content */}
       <div className={`p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4 ${isCompact ? 'text-xs' : 'text-sm'}`}>
         <div className="space-y-3">
@@ -224,10 +195,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <span className="font-mono text-[10px] uppercase tracking-wider text-[#55616B]">
               {step.category}
             </span>
-            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-[#0E2943] font-medium bg-[#F5EFE7] px-2 py-0.5 rounded-xs">
-              <Layers className="w-3 h-3 text-[#B74B21]" />
-              In-Workflow Guide
-            </span>
+            <span className="text-xs text-[#55616B]">{step.stepNumber} / {totalSteps}</span>
           </div>
 
           {/* Step Title */}
@@ -240,49 +208,31 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             {step.instruction}
           </p>
 
-          {/* Recognized Control Indicator (Fix #9: Accurate Show Me control) */}
-          <div className="bg-[#F5EFE7]/80 rounded-lg p-2.5 border border-[#D9DDD9] flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-6 h-6 rounded-md bg-[#0E2943] text-white flex items-center justify-center flex-shrink-0 text-xs font-mono">
-                ⌘
-              </div>
-              <div className="truncate">
-                <div className="text-[10px] font-mono uppercase text-[#55616B]">Recognized Tool</div>
-                <div className="text-xs font-semibold text-[#0E2943] truncate">
-                  {step.recognizedControlLabel}
-                </div>
-              </div>
+          {/* One clear primary action; extra help stays secondary. */}
+          <div className="space-y-3 rounded-xl border border-[#B74B21]/25 bg-[#FAF8F4] p-3.5 sm:p-4">
+            <div>
+              <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[#B74B21]">Do this next</p>
+              <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction}</p>
             </div>
-
-            <button
-              onClick={onToggleHighlight}
-              disabled={!step.activeToolId}
-              className={`text-xs px-2.5 py-1 rounded-md font-medium border flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
-                isHighlightingControl
-                  ? 'bg-[#B74B21] text-white border-[#B74B21] shadow-xs'
-                  : 'bg-white text-[#0E2943] border-[#D9DDD9] hover:border-[#0E2943]/40'
-              }`}
-              title={
-                !step.activeToolId
-                  ? 'No direct interface button for this overview step'
-                  : isHighlightingControl
-                  ? 'Hide active tool highlight'
-                  : 'Highlight this tool on the CAD ribbon'
-              }
-              aria-label={isHighlightingControl ? 'Hide highlight' : 'Show me'}
+            <Button
+              variant="rust"
+              size="md"
+              className="w-full justify-center"
+              onClick={handlePrimaryAction}
             >
-              {isHighlightingControl ? (
-                <>
-                  <EyeOff className="w-3.5 h-3.5" />
-                  <span>Hide highlight</span>
-                </>
-              ) : (
-                <>
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>Show me</span>
-                </>
-              )}
-            </button>
+              {primaryActionLabel[step.stepNumber] || 'Continue'}
+            </Button>
+            {step.activeToolId && (
+              <button
+                type="button"
+                onClick={onToggleHighlight}
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#55616B] underline decoration-[#D9DDD9] underline-offset-4 transition-colors hover:text-[#B74B21] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
+                aria-pressed={isHighlightingControl}
+              >
+                {isHighlightingControl ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                {isHighlightingControl ? 'Hide tool highlight' : 'Show me where'}
+              </button>
+            )}
           </div>
 
           {/* Progressive Hints Section */}
@@ -346,37 +296,25 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
           </div>
         </div>
 
-        {/* Action Controls & Conservative Feedback */}
-        <div className="space-y-3 pt-3 border-t border-[#D9DDD9]">
-          <div className="flex items-center justify-between gap-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              disabled={isFirstStep}
+        <div className="flex items-center justify-between gap-3 border-t border-[#D9DDD9] pt-3">
+          {isFirstStep ? <span /> : (
+            <button
+              type="button"
               onClick={onPrev}
-              icon={<ChevronLeft className="w-3.5 h-3.5" />}
-              iconPosition="left"
+              className="inline-flex items-center gap-1 text-xs font-medium text-[#55616B] hover:text-[#0E2943] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
             >
-              Previous
-            </Button>
-
-            <Button
-              variant={isLastStep ? 'rust' : 'primary'}
-              size="sm"
-              onClick={isLastStep ? onFinishDemo : onNext}
-              icon={isLastStep ? <CheckCircle2 className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+              <ChevronLeft className="h-4 w-4" /> Previous
+            </button>
+          )}
+          {!isFirstStep && !isLastStep && (
+            <button
+              type="button"
+              onClick={onNext}
+              className="text-xs text-[#55616B] underline decoration-[#D9DDD9] underline-offset-4 hover:text-[#0E2943] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
             >
-              {isLastStep ? 'Finish demo' : 'Next step'}
-            </Button>
-          </div>
-
-          {/* Conservative verification notice per specification */}
-          <div className="flex items-start gap-1.5 text-[10px] text-[#55616B] bg-[#F5EFE7]/60 p-2 rounded-md border border-[#D9DDD9]/60">
-            <Info className="w-3 h-3 text-[#55616B] flex-shrink-0 mt-0.5" />
-            <span>
-              Interactive illustration. Does not connect to or inspect a real CAD model.
-            </span>
-          </div>
+              Skip this step
+            </button>
+          )}
         </div>
       </div>
     </div>

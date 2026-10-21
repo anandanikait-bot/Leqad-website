@@ -10,7 +10,6 @@ import {
   Ruler, 
   Eye, 
   ShieldCheck,
-  MousePointer,
   CheckCircle2,
   Info,
   Maximize2
@@ -22,7 +21,6 @@ interface SimulatedCADCanvasProps {
   sketchStatus: SketchDemoStatus;
   highlightedTargetId: string | null;
   isDemoComplete?: boolean;
-  onAdvanceStep: () => void;
   onTriggerAction: (actionId: string) => void;
   onResetSketch?: () => void;
 }
@@ -33,7 +31,6 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   sketchStatus,
   highlightedTargetId,
   isDemoComplete = false,
-  onAdvanceStep,
   onTriggerAction,
   onResetSketch,
 }) => {
@@ -88,7 +85,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
   return (
-    <div className="relative w-full h-full min-h-[460px] lg:min-h-[580px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
+    <div className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
       {/* Disclaimer / Prototype Banner (Fix #12) */}
       <div className="bg-[#FAF8F4] px-3 py-1.5 border-b border-[#D9DDD9] flex items-center justify-between text-[11px] font-mono text-[#55616B]">
         <div className="flex items-center gap-1.5 truncate">
@@ -666,30 +663,6 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           )}
         </svg>
 
-        {/* Floating Bottom Action Prompter (Accurately Scoped Interaction, Fix #16) */}
-        <div className="absolute bottom-3 left-3 sm:left-48 right-3 flex items-center justify-between pointer-events-none">
-          <div className="bg-white/95 backdrop-blur-xs border border-[#D9DDD9] rounded-md px-3 py-1.5 shadow-xs flex items-center gap-2 pointer-events-auto">
-            <MousePointer className="w-3.5 h-3.5 text-[#B74B21]" />
-            <span className="text-xs text-[#0E2943]">
-              <strong className="font-semibold text-[#0E2943]">Recommended:</strong> {step.recommendedAction}
-            </span>
-          </div>
-
-          {/* Interactive helper button if current step has a semantic action */}
-          {step.semanticActionId && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onTriggerAction(step.semanticActionId!);
-              }}
-              className="hidden sm:inline-flex items-center gap-1.5 bg-[#0E2943] text-white hover:bg-[#163859] px-3 py-1.5 rounded-md text-xs font-medium shadow-xs pointer-events-auto transition-colors cursor-pointer"
-              title={`Simulate: ${step.title}`}
-            >
-              <span>Simulate action</span>
-              <span className="font-mono text-[10px] bg-white/20 px-1 rounded">↵</span>
-            </button>
-          )}
-        </div>
       </div>
     </div>
   );
