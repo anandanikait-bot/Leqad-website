@@ -391,7 +391,9 @@ export default function HalftoneWordmarkFooter({
         ctx.globalCompositeOperation = "source-over"
       }
       // Sleep once everything is home and nothing is pushing.
-      awake = !reduced && (moving || ringAge < 900 || px > -1e4)
+      // Stop requesting frames once pointer-driven dots settle; the next
+      // pointer move, tap, or observer callback wakes the animation again.
+      awake = !reduced && (moving || ringAge < 900)
     }
 
     const loop = (now: number) => {

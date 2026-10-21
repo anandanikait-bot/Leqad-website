@@ -7,12 +7,12 @@ Production routing on `https://leqada.ai.studio/` is **not verified**. Requests 
 Use Node 24 (validated with 24.19.0), then:
 
 ```sh
-npm ci --legacy-peer-deps
+npm ci
 npm run build
 PORT=3000 npm start
 ```
 
-`--legacy-peer-deps` is necessary because the repository's existing esbuild 0.25 declaration conflicts with Vite 8's optional esbuild peer. The production build uses Vite's default bundler; build, type checking and tests validate this installation. The committed lockfile pins the tested tree. Package integrity and TLS checks remain enabled.
+The obsolete top-level esbuild 0.25 dependency was removed and the lockfile's existing esbuild 0.28.2 dependency was hoisted to satisfy both tsx and Vite 8's optional peer requirement. Run a fresh standard `npm ci`, build, TypeScript check and tests before deployment. The previous 18 Node and 30 browser test results predate this final dependency cleanup; the refreshed installation is not independently validated here. Package integrity and TLS checks must remain enabled.
 
 The build writes real rendered content and route-specific head metadata into:
 

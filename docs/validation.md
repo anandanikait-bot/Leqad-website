@@ -42,3 +42,9 @@ The [prepared PR description](pull-request.md) contains test results, screenshot
 ```sh
 gh pr create --repo anandanikait-bot/Leqad-website --base main --head feat/minimal-cleanup-routing-seo --title "Simplify Leqad and add clean, prerendered routes" --body-file docs/pull-request.md
 ```
+
+## Final pre-merge housekeeping
+
+- Removed the redundant root esbuild 0.25 dependency and reused the preexisting 0.28.2 lockfile package compatible with both tsx and Vite 8.
+- Updated the footer's idle animation condition so a stationary cursor does not force continuous rendering; pointer moves and other existing wake handlers still work.
+- These small final changes have been checked against the repository sources and lockfile dependency relations. The existing 18 Node / 30 browser test totals are **from the earlier commit**; they have not been rerun after this patch in the tool environment. Rerun `npm ci`, `npm run lint`, `npm test`, `npm run build`, and `npm run test:browser` in Google AI Studio or CI before publishing.
