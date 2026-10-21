@@ -46,7 +46,7 @@ export const DemoPage: React.FC<DemoPageProps> = ({ onNavigate }) => {
 
           {/* Right: Platform-Neutral Simulated Illustration Indicator */}
           <div className="flex items-center gap-2">
-            <div className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#55616B] bg-[#FAF8F4] px-2.5 py-1 rounded border border-[#D9DDD9]">
+            <div className="inline-flex max-w-full min-w-0 items-start gap-1.5 font-mono text-[11px] text-[#55616B] bg-[#FAF8F4] px-2.5 py-1 rounded border border-[#D9DDD9]">
               <Info className="w-3.5 h-3.5 text-[#B74B21] flex-shrink-0" />
               <span>Simulated illustration · Not connected to a live CAD environment</span>
             </div>
@@ -67,7 +67,7 @@ export const DemoPage: React.FC<DemoPageProps> = ({ onNavigate }) => {
 
         {/* Compact Software Status & Keyboard Controls Strip */}
         <div className="bg-white px-4 py-3 rounded-xl border border-[#D9DDD9] flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-4 text-[#55616B] font-mono text-[11px]">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#55616B] font-mono text-[11px]">
             <span className="flex items-center gap-1.5 text-[#0E2943] font-semibold">
               <Keyboard className="w-3.5 h-3.5 text-[#B74B21]" />
               <span>Shortcuts:</span>

@@ -34,7 +34,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         </button>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium">
           <button
             onClick={() => handleNavClick('home')}
             className={`transition-colors cursor-pointer rounded-md px-1 py-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] ${
@@ -84,7 +84,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         </nav>
 
         {/* Desktop Primary Action */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <Button
             variant="rust"
             size="sm"
@@ -96,7 +96,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         </div>
 
         {/* Mobile Menu Toggle Button */}
-        <div className="md:hidden flex items-center">
+        <div className="lg:hidden flex items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-md text-[#0E2943] hover:bg-[#F5EFE7] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] cursor-pointer"
@@ -109,7 +109,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
       {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-[#D9DDD9] px-4 pt-3 pb-5 space-y-3 shadow-lg">
+        <div className="lg:hidden bg-white border-b border-[#D9DDD9] px-4 pt-3 pb-5 space-y-3 shadow-lg">
           <div className="flex flex-col space-y-2">
             <button
               onClick={() => handleNavClick('home')}
