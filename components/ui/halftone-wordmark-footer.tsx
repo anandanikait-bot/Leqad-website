@@ -66,7 +66,7 @@ export interface HalftoneWordmarkFooterProps {
   fontWeight?: number
   /** Face for the small type. */
   monoFamily?: string
-  /** Root height. A definite length, never a percentage. Defaults to "380px". */
+  /** Height of the dedicated halftone wordmark strip. Accepts CSS lengths and clamp(). */
   height?: string
   /** Root element tag. Defaults to "footer". Use "div" when wrapped inside another footer landmark. */
   as?: "footer" | "div"
@@ -144,13 +144,16 @@ export function hwfFitSize(measured: number, width: number) {
 
 const HWF_CSS = `
 .hwf-root {
-  position: relative; width: 100%; min-height: 360px; overflow: hidden; isolation: isolate;
+  position: relative; width: 100%; min-width: 0; overflow: hidden; isolation: isolate;
   background: var(--hwf-bg); color: var(--hwf-ink); -webkit-font-smoothing: antialiased;
 }
-.hwf-root canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; }
+/* The artwork gets its own space after the links and back-to-top control.
+   Do not paint it behind interactive footer content. */
+.hwf-art { position: relative; width: 100%; height: var(--hwf-art-height); overflow: hidden; isolation: isolate; }
+.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; }
 .hwf-top {
   position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
-  gap: 24px; padding: clamp(22px, 3.4vw, 36px) clamp(20px, 3.4vw, 44px) clamp(20px, 3vw, 38px);
+  gap: 24px; padding: clamp(18px, 2.7vw, 30px) clamp(20px, 3.4vw, 44px) clamp(18px, 2.6vw, 30px);
   font-family: var(--hwf-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; line-height: 1.75;
 }
 .hwf-brand strong { display: block; font-weight: 500; }
@@ -169,21 +172,17 @@ const HWF_CSS = `
 .hwf-col a:focus-visible, .hwf-up:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; opacity: 1; }
 .hwf-rule {
   position: relative; z-index: 1; display: flex; justify-content: flex-end; align-items: center; gap: 16px;
-  margin: 0 clamp(20px, 3.4vw, 44px) clamp(16px, 2vw, 24px); padding-top: 12px;
+  margin: 0 clamp(20px, 3.4vw, 44px); padding: 12px 0 14px;
   border-top: 0.5px solid color-mix(in srgb, var(--hwf-ink) 16%, transparent);
   font-family: var(--hwf-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
 }
 .hwf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-/* Allow stacked footer navigation and the back-to-top button to fit rather than
-   be clipped by the desktop 360px inline height. The halftone art is unchanged. */
 @media (max-width: 920px) {
-  .hwf-root { min-height: 450px; }
-  .hwf-top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
+  .hwf-top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; }
   .hwf-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 480px) {
-  .hwf-root { min-height: 540px; }
-  .hwf-top { grid-template-columns: minmax(0, 1fr); row-gap: 16px; }
+  .hwf-top { grid-template-columns: minmax(0, 1fr); row-gap: 14px; }
   .hwf-brand { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -212,16 +211,16 @@ export default function HalftoneWordmarkFooter({
   className = "",
 }: HalftoneWordmarkFooterProps) {
   const colors = { ...(PRESETS[preset] || PRESETS.night), ...(palette || {}) }
-  const rootRef = React.useRef(null as HTMLElement | null)
+  const artRef = React.useRef(null as HTMLDivElement | null)
   const canvasRef = React.useRef(null as HTMLCanvasElement | null)
   const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark })
   opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark }
   const key = [wordmark, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
 
   React.useEffect(() => {
-    const root = rootRef.current
+    const art = artRef.current
     const canvas = canvasRef.current
-    if (!root || !canvas) return
+    if (!art || !canvas) return
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
@@ -244,7 +243,7 @@ export default function HalftoneWordmarkFooter({
 
     const layout = () => {
       const o = opts.current
-      const rect = root.getBoundingClientRect()
+      const rect = art.getBoundingClientRect()
       w = Math.max(1, Math.round(rect.width))
       h = Math.max(1, Math.round(rect.height))
       dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -260,14 +259,16 @@ export default function HalftoneWordmarkFooter({
       const face = o.fontWeight + " 100px " + o.fontFamily
       m.font = face
       const word = o.wordmark || " "
-      const fit = hwfFitSize(m.measureText(word).width, w * 1.02)
+      // Fit both width and height so even descenders stay inside the strip.
+      const fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
       m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
       const box = m.measureText(word)
       const cap = box.actualBoundingBoxAscent || fit * 0.72
+      const descent = box.actualBoundingBoxDescent || fit * 0.20
       const c = Math.max(0, Math.min(0.6, o.crop))
       m.fillStyle = "#000"
       m.textBaseline = "alphabetic"
-      m.fillText(word, (w - box.width) / 2, h + cap * c)
+      m.fillText(word, (w - box.width) / 2, (h + cap - descent) / 2 + (cap + descent) * c)
       const img = m.getImageData(0, 0, w, h).data
 
       const gap = Math.max(3, o.dotGap)
@@ -426,19 +427,19 @@ export default function HalftoneWordmarkFooter({
     draw(performance.now())
     wake()
 
-    root.addEventListener("pointermove", onMove)
-    root.addEventListener("pointerleave", onLeave)
-    root.addEventListener("pointerdown", onDown)
+    art.addEventListener("pointermove", onMove)
+    art.addEventListener("pointerleave", onLeave)
+    art.addEventListener("pointerdown", onDown)
     const ro = new ResizeObserver(() => {
       layout()
       wake()
     })
-    ro.observe(root)
+    ro.observe(art)
     const io = new IntersectionObserver((entries) => {
       visible = entries[0] ? entries[0].isIntersecting : true
       if (visible) wake()
     })
-    io.observe(root)
+    io.observe(art)
 
     const onVisibilityChange = () => {
       if (document.hidden) {
@@ -468,9 +469,9 @@ export default function HalftoneWordmarkFooter({
       ro.disconnect()
       io.disconnect()
       document.removeEventListener("visibilitychange", onVisibilityChange)
-      root.removeEventListener("pointermove", onMove)
-      root.removeEventListener("pointerleave", onLeave)
-      root.removeEventListener("pointerdown", onDown)
+      art.removeEventListener("pointermove", onMove)
+      art.removeEventListener("pointerleave", onLeave)
+      art.removeEventListener("pointerdown", onDown)
     }
   }, [key])
 
@@ -482,11 +483,10 @@ export default function HalftoneWordmarkFooter({
 
   return (
     <RootTag
-      ref={rootRef as any}
       className={"hwf-root " + className}
       style={
         {
-          height,
+          "--hwf-art-height": height,
           "--hwf-bg": colors.background,
           "--hwf-ink": colors.ink,
           "--hwf-mono": monoFamily,
@@ -494,7 +494,6 @@ export default function HalftoneWordmarkFooter({
       }
     >
       <style>{HWF_CSS}</style>
-      <canvas ref={canvasRef} aria-hidden="true" />
       <span className="hwf-sr">{wordmark}</span>
       <div className="hwf-top">
         <div className="hwf-brand">
@@ -520,6 +519,9 @@ export default function HalftoneWordmarkFooter({
             Back to top ↑
           </button>
         ) : null}
+      </div>
+      <div className="hwf-art" ref={artRef} aria-hidden="true">
+        <canvas ref={canvasRef} />
       </div>
     </RootTag>
   )

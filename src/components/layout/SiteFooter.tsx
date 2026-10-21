@@ -66,7 +66,8 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
         ]}
         grain={0.25}
         dotGap={7}
-        height="360px"
+        height="clamp(125px, 16vw, 195px)"
+        crop={0}
         backToTop={true}
       />
     </footer>
