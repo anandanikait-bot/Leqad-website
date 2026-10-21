@@ -3,7 +3,7 @@ import { LESSON_STEPS } from '../../lib/lesson-data';
 import { SimulatedCADCanvas } from './SimulatedCADCanvas';
 import { LessonPanel } from './LessonPanel';
 import { DEMO_VERIFICATION_DISCLAIMER } from '../../lib/constants';
-import { RotateCcw, CheckCircle2, Check, Eye } from 'lucide-react';
+import { RotateCcw, CheckCircle2, Check, List } from 'lucide-react';
 import { SketchDemoStatus } from '../../types';
 
 interface DemoWorkbenchProps {
@@ -27,6 +27,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     initialStepIndex >= 2 ? 'plane-selected' : 'not-started'
   );
   const [resetKey, setResetKey] = useState<number>(0);
+  const [showAllSteps, setShowAllSteps] = useState(false);
 
   const totalSteps = LESSON_STEPS.length;
   const currentStep = LESSON_STEPS[currentStepIndex];
@@ -77,6 +78,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     setIsWalkthroughComplete(false);
     setSketchStatus('not-started');
     setResetKey((prev) => prev + 1);
+    setShowAllSteps(false);
   }, []);
 
   // Jumping between steps (Fix #2: Exploring steps does NOT falsely complete them!)
@@ -178,87 +180,81 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
 
   return (
     <div className="w-full flex flex-col gap-3">
-      {/* Step Selector Pills Bar (Fix #2: Accurately distinguishing visited vs completed) */}
-      <div className="bg-white rounded-lg border border-[#D9DDD9] p-2 flex items-center justify-between gap-2 overflow-x-auto text-xs">
-        <div className="flex items-center gap-1.5 overflow-x-auto py-0.5">
-          <span className="font-mono text-[11px] text-[#55616B] font-medium mr-1 uppercase hidden md:inline">
-            Steps:
-          </span>
-          {LESSON_STEPS.map((s, idx) => {
-            const isActive = idx === currentStepIndex && !isWalkthroughComplete;
-            const isActionDone = s.semanticActionId
-              ? completedDemoActionIds.includes(s.semanticActionId)
-              : false;
-            const isVisited = visitedStepIds.includes(s.id);
-
-            return (
-              <button
-                key={s.id}
-                onClick={() => handleJumpToStep(idx)}
-                className={`px-2.5 py-1 rounded-md font-mono text-[11px] transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
-                  isActive
-                    ? 'bg-[#0E2943] text-white font-semibold shadow-xs'
-                    : isActionDone
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 font-medium'
-                    : isVisited
-                    ? 'bg-[#FAF8F4] text-[#0E2943] font-normal border border-[#D9DDD9]'
-                    : 'bg-white text-[#55616B] hover:text-[#0E2943] hover:bg-[#FAF8F4] border border-[#D9DDD9]/50'
-                }`}
-                title={`Step ${s.stepNumber}: ${s.title}${isActionDone ? ' · Demo Action Done' : isVisited ? ' · Viewed' : ''}`}
-                aria-label={`Jump to Step ${s.stepNumber}: ${s.title}`}
-              >
-                {isActionDone ? (
-                  <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" />
-                ) : (
-                  <span>{String(s.stepNumber).padStart(2, '0')}</span>
-                )}
-                <span className="hidden xl:inline font-sans text-xs">{s.title}</span>
-                {isVisited && !isActionDone && !isActive && (
-                  <span className="hidden 2xl:inline text-[9px] text-[#55616B] uppercase font-mono">(Viewed)</span>
-                )}
-              </button>
-            );
-          })}
-
-          {isWalkthroughComplete && (
-            <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md font-mono text-[11px] bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Walkthrough Complete</span>
-            </div>
-          )}
+      {/* Current step first; full navigation is available on demand. */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#D9DDD9] bg-[#FAF8F4] px-3 py-2.5 sm:px-4">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold text-[#0E2943]">Your first sketch</p>
+          <p className="text-xs text-[#55616B]">
+            Step {currentStepIndex + 1} of {totalSteps} · {currentStep.title}
+          </p>
         </div>
-
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2">
           <button
-            onClick={handleRestart}
-            className="text-[11px] font-mono text-[#55616B] hover:text-[#0E2943] flex items-center gap-1 px-2 py-1 rounded hover:bg-[#FAF8F4] border border-[#D9DDD9] transition-colors cursor-pointer"
-            title="Reset walkthrough back to Step 1"
-            aria-label="Restart walkthrough"
+            type="button"
+            onClick={() => setShowAllSteps(value => !value)}
+            aria-expanded={showAllSteps}
+            aria-controls="leqad-all-steps"
+            className="inline-flex items-center gap-1.5 rounded-md border border-[#D9DDD9] bg-white px-3 py-2 text-xs font-medium text-[#0E2943] hover:border-[#0E2943]/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
           >
-            <RotateCcw className="w-3 h-3" />
-            <span className="hidden sm:inline">Reset</span>
+            <List className="h-3.5 w-3.5" />
+            {showAllSteps ? 'Hide steps' : 'All steps'}
+          </button>
+          <button
+            type="button"
+            onClick={handleRestart}
+            aria-label="Restart walkthrough"
+            className="inline-flex items-center gap-1.5 rounded-md border border-[#D9DDD9] bg-white px-3 py-2 text-xs font-medium text-[#55616B] hover:text-[#0E2943] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Restart</span>
           </button>
         </div>
       </div>
+      {showAllSteps && (
+        <nav id="leqad-all-steps" aria-label="Walkthrough steps" className="flex flex-wrap gap-2 rounded-lg border border-[#D9DDD9] bg-white p-3">
+          {LESSON_STEPS.map((step, index) => {
+            const completed = Boolean(step.semanticActionId && completedDemoActionIds.includes(step.semanticActionId));
+            const active = currentStepIndex === index && !isWalkthroughComplete;
+            return (
+              <button
+                type="button"
+                key={step.id}
+                onClick={() => handleJumpToStep(index)}
+                aria-current={active ? 'step' : undefined}
+                className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors ${
+                  active
+                    ? 'border-[#0E2943] bg-[#0E2943] text-white'
+                    : completed
+                      ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
+                      : 'border-[#D9DDD9] bg-white text-[#55616B] hover:bg-[#FAF8F4]'
+                }`}
+              >
+                {completed ? <Check className="h-3 w-3" /> : <span>{index + 1}</span>}
+                <span>{step.title}</span>
+              </button>
+            );
+          })}
+          {isWalkthroughComplete && <span className="inline-flex items-center gap-1.5 text-xs text-emerald-700"><CheckCircle2 className="h-4 w-4" /> Walkthrough complete</span>}
+        </nav>
+      )}
 
       {/* Main CAD + Teaching Panel Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         {/* Left/Main CAD Workspace Canvas (col-span-8 on desktop) */}
-        <div className="lg:col-span-8 h-full">
+        <div className="order-2 h-full min-w-0 lg:order-1 lg:col-span-8">
           <SimulatedCADCanvas
             step={currentStep}
             currentStepIndex={currentStepIndex}
             sketchStatus={sketchStatus}
             highlightedTargetId={highlightedTargetId}
             isDemoComplete={isWalkthroughComplete}
-            onAdvanceStep={handleNext}
             onTriggerAction={handleTriggerAction}
             onResetSketch={handleResetSketch}
           />
         </div>
 
         {/* Right Leqad Teaching Panel (col-span-4 on desktop) */}
-        <div className="lg:col-span-4 h-full">
+        <div className="order-1 h-full min-w-0 lg:order-2 lg:col-span-4">
           <LessonPanel
             step={currentStep}
             currentStepIndex={currentStepIndex}
@@ -271,6 +267,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             onRestart={handleRestart}
             onJumpToStep={handleJumpToStep}
             onFinishDemo={handleFinishDemo}
+            onSimulateAction={handleTriggerAction}
             isHighlightingControl={highlightedTargetId !== null}
             onToggleHighlight={handleToggleHighlight}
             isCompact={isHeroPreview}
