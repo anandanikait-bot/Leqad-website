@@ -14,6 +14,7 @@ import { renderHead } from './lib/seo';
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [contactTopic, setContactTopic] = useState('Technical Alignment');
 
@@ -36,10 +37,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F4] text-[#0E2943] selection:bg-[#B74B21]/15 selection:text-[#0E2943]">
+    <div className="min-h-screen min-h-dvh flex flex-col bg-[#FAF8F4] text-[#0E2943] selection:bg-[#B74B21]/15 selection:text-[#0E2943]">
       <ScrollManager />
       <SiteHeader />
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className={isHomePage ? 'flex flex-1 flex-col' : 'flex-1'}>
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/demo" element={<DemoPage />} />
@@ -48,7 +49,7 @@ export default function App() {
           <Route path="*" element={<section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"><h1 className="text-3xl font-bold">Page not found</h1><Link to="/" className="mt-4 inline-block underline">Return to Leqad home</Link></section>} />
         </Routes>
       </main>
-      <SiteFooter />
+      {!isHomePage && <SiteFooter />}
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultTopic={contactTopic} />
     </div>
   );

@@ -14,7 +14,9 @@ try {
     for (const [name, path] of [['home', '/'], ['demo', '/demo'], ['about', '/about'], ['partners', '/partners']]) {
       await page.goto(origin + path);
       await page.evaluate(() => document.fonts.ready);
-      await page.locator('footer canvas').scrollIntoViewIfNeeded();
+      if (path !== '/') {
+        await page.locator('footer canvas').scrollIntoViewIfNeeded();
+      }
       // Allow IntersectionObserver and the canvas draw to complete before full-page capture.
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       await page.evaluate(() => window.scrollTo(0, 0));

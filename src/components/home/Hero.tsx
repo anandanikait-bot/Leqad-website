@@ -40,7 +40,7 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative pt-8 sm:pt-12 lg:pt-14 pb-12 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative flex w-full flex-1 flex-col justify-center pt-8 sm:pt-12 lg:pt-14 pb-12 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background subtle technical grid */}
       <SonarHeroGrid />
 
