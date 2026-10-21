@@ -85,7 +85,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
   return (
-    <div className="relative w-full h-full min-h-[460px] lg:min-h-[580px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
+    <div className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
       {/* Disclaimer / Prototype Banner (Fix #12) */}
       <div className="bg-[#FAF8F4] px-3 py-1.5 border-b border-[#D9DDD9] flex items-center justify-between text-[11px] font-mono text-[#55616B]">
         <div className="flex items-center gap-1.5 truncate">

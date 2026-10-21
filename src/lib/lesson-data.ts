@@ -10,11 +10,11 @@ export const LESSON_STEPS: LessonStep[] = [
     instruction: 'Understand what you will build: a 40 mm × 30 mm rectangular profile that forms the base of a mechanical bracket.',
     semanticActionId: undefined,
     activeToolId: undefined,
-    recommendedAction: 'Review the lesson goal and click "Next step" to begin',
+    recommendedAction: 'Press Start walkthrough to begin your first sketch',
     hints: [
       'Every 3D mechanical model begins with a 2D sketch situated on a reference plane.',
       'In standard parametric CAD, sketches use geometric constraints and dimensions to establish design intent.',
-      'Click "Next step" below or explore the workspace to proceed to datum selection.'
+      'Press Start walkthrough to move on to selecting a reference plane.'
     ],
     whyExplanation: 'Understanding the part objective before modeling ensures proper coordinate orientation and prevents costly downstream feature rebuilds.',
     recognizedControlId: 'tool-intro',
@@ -150,11 +150,11 @@ export const LESSON_STEPS: LessonStep[] = [
     instruction: 'In the actual Leqad extension, learners repeat the sequence with faded guidance to build lasting habits. Complete this demonstration or explore steps.',
     semanticActionId: 'practice-overview',
     activeToolId: undefined,
-    recommendedAction: 'Click "Finish demo" to review the concepts covered',
+    recommendedAction: 'Press Finish walkthrough to review the concepts covered',
     hints: [
       'Practicing without immediate step-by-step prompts builds muscle memory for plane selection and origin anchoring.',
       'Remember the flow: Reference Plane → Start Sketch → Primitive Geometry → Origin Anchor → Dimensions → Accept Sketch.',
-      'Click "Finish demo" below to see the summary of concepts covered in this walkthrough.'
+      'Press Finish walkthrough to see the concepts covered in this example.'
     ],
     whyExplanation: 'Gradually removing instructional scaffolding while maintaining contextual feedback reinforces problem-solving autonomy in engineering tools.',
     recognizedControlId: 'tool-practice',
