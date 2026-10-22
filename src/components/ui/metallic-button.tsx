@@ -366,11 +366,17 @@ class MetallicShaderMount {
     this.canvas = document.createElement("canvas");
     parent.prepend(this.canvas);
 
-    const gl = this.canvas.getContext("webgl2", {
-      antialias: true,
-      premultipliedAlpha: true,
-      alpha: true,
-    });
+    // Unsupported or disabled WebGL must never make the primary navigation unusable.
+    let gl: WebGL2RenderingContext | null = null;
+    try {
+      gl = this.canvas.getContext("webgl2", {
+        antialias: true,
+        premultipliedAlpha: true,
+        alpha: true,
+      });
+    } catch {
+      // Some browser policies throw instead of returning null.
+    }
     if (!gl) return;
 
     const vertex = createShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
@@ -577,6 +583,10 @@ class MetallicShaderMount {
     if (this.rafId === null) this.renderFrame(performance.now());
   }
 
+  isReady() {
+    return Boolean(this.gl && this.program);
+  }
+
   dispose() {
     this.disposed = true;
     if (this.rafId !== null) cancelAnimationFrame(this.rafId);
@@ -671,6 +681,7 @@ export function MetallicButton({
   hoverSpeed = 0.75,
   clickSpeed = 1.4,
 }: MetallicButtonProps) {
+  const [shaderStatus, setShaderStatus] = useState<"pending" | "ready" | "fallback">("pending");
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const [ripples, setRipples] = useState<
@@ -773,11 +784,18 @@ export function MetallicButton({
 
     if (!surfaceRef.current) return;
 
-    mount.current = new MetallicShaderMount(
+    const shader = new MetallicShaderMount(
       surfaceRef.current,
       uniformsRef.current,
       reducedMotionRef.current ? 0 : idleSpeedRef.current,
     );
+    if (shader.isReady()) {
+      mount.current = shader;
+      setShaderStatus("ready");
+    } else {
+      shader.dispose();
+      setShaderStatus("fallback");
+    }
 
     return () => {
       timersRef.current.forEach(id => window.clearTimeout(id));
@@ -842,7 +860,7 @@ export function MetallicButton({
   };
 
   return (
-    <div data-metallic-cta data-theme="leqad" className={`relative inline-block ${className}`}>
+    <div data-metallic-cta data-theme="leqad" data-shader-status={shaderStatus} className={`relative inline-block ${className}`}>
       <div className="perspective-origin-[50%_50%] perspective-[1000px]">
         <div className={`relative transform-3d ${shellSize}`}>
           <div
