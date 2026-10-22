@@ -2,6 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Copy, Check, Info } from 'lucide-react';
 import { Button } from './Button';
 
+// The contact UI drafts a note rather than submitting it. Every entry point
+// must resolve to one of the actual select values to avoid a blank topic.
+const CONTACT_TOPICS = new Set([
+  'Technical Alignment',
+  'Educational Pilot',
+  'Robotics Team',
+  'Commercial Exploration',
+  'General Inquiry',
+]);
+
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -28,7 +38,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       previousActiveElement.current = document.activeElement as HTMLElement | null;
-      if (defaultTopic) setTopic(defaultTopic);
+      setTopic(CONTACT_TOPICS.has(defaultTopic) ? defaultTopic : 'General Inquiry');
       setCopied(false);
       setCopyError(null);
 
@@ -37,14 +47,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       document.body.style.overflow = 'hidden';
 
       // Focus first input
-      setTimeout(() => {
-        const firstInput = modalRef.current?.querySelector<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        firstInput?.focus();
+      const focusTimeout = window.setTimeout(() => {
+        modalRef.current?.querySelector<HTMLElement>('#contact-topic')?.focus();
       }, 50);
 
       return () => {
+        window.clearTimeout(focusTimeout);
         document.body.style.overflow = originalOverflow;
         previousActiveElement.current?.focus?.();
       };
@@ -107,8 +115,9 @@ Message: ${message.trim() || '[No message entered]'}
         textarea.style.opacity = '0';
         document.body.appendChild(textarea);
         textarea.select();
-        document.execCommand('copy');
+        const success = document.execCommand('copy');
         document.body.removeChild(textarea);
+        if (!success) throw new Error('Clipboard copy was rejected');
       }
       setCopied(true);
       setTimeout(() => setCopied(false), 4000);
