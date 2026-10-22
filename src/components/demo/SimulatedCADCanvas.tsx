@@ -372,7 +372,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
         {/* Simplified feature dialog. The preview is not a committed part until accepted. */}
         {isExtrudePreview && (
-          <div className="absolute z-20 top-3 left-3 sm:left-48 w-[min(265px,calc(100%-100px))] rounded-lg border border-[#B74B21]/30 bg-white/95 p-3 shadow-lg backdrop-blur-xs text-xs" role="group" aria-label="Extrude 1 settings">
+          <div className="absolute z-20 top-3 left-3 sm:left-48 w-[min(265px,calc(100%_-_100px))] rounded-lg border border-[#B74B21]/30 bg-white/95 p-3 shadow-lg backdrop-blur-xs text-xs" role="group" aria-label="Extrude 1 settings">
             <div className="flex items-center justify-between gap-2 text-[#0E2943] font-semibold">
               <span className="flex items-center gap-1.5"><Box className="h-4 w-4 text-[#B74B21]" />Extrude 1</span>
               <span className="text-[10px] text-[#55616B]">Preview</span>
