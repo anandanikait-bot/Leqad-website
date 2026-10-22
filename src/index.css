@@ -54,6 +54,43 @@ body {
     linear-gradient(to bottom, rgba(14, 41, 67, 0.035) 1px, transparent 1px);
 }
 
+/* The CTA uses the original Leqad rust face and a slow copper/ivory metal rim.
+   Register the angle so the border's light travels even without hovering. */
+@property --leqad-rim-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes leqad-metallic-rim-spin {
+  to { --leqad-rim-angle: 360deg; }
+}
+
+.leqad-metallic-rim {
+  background: conic-gradient(
+    from var(--leqad-rim-angle),
+    #8C3619 0deg,
+    #B74B21 64deg,
+    #E6A477 100deg,
+    #F5EFE7 124deg,
+    #CB6B3D 149deg,
+    #8C3619 240deg,
+    #D48A60 315deg,
+    #8C3619 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: leqad-metallic-rim-spin 7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leqad-metallic-rim {
+    animation: none;
+  }
+}
+
 /* Keep optional motion out of the reduced-motion experience. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
