@@ -5,9 +5,9 @@ import { ArrowRight } from 'lucide-react';
 import { CadArtwork3D } from './CadArtwork3D';
 import { SonarHeroGrid } from './SonarHeroGrid';
 
-// The metallic CTA is Leqad's default primary action. Loading the shader in a
-// split bundle leaves the homepage usable with a stable, static navy fallback.
-const MetallicButton = React.lazy(() => import('../ui/metallic-button').then(module => ({ default: module.MetallicButton })));
+// Render the default CTA during SSR as well as on the client.
+// WebGL initialization still happens only in MetallicButton's browser effect.
+import { MetallicButton } from '../ui/metallic-button';
 
 const CYCLING_PHRASES = [
   'building, not just watching.',
@@ -77,33 +77,20 @@ export const Hero: React.FC = () => {
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
-            <React.Suspense
-              fallback={
-                <ButtonLink
-                  variant="primary"
-                  size="lg"
-                  to="/demo"
-                  className="flex w-full h-12 sm:w-[270px] rounded-full"
-                >
-                  Explore Interactive Demo
-                </ButtonLink>
-              }
-            >
-              <MetallicButton
-                to="/demo"
-                label="Explore Interactive Demo"
-                className="w-full sm:w-[270px] shrink-0"
-                baseColor="#0E2943"
-                sheenColor="#F5EFE799"
-                bandCount={3}
-                edgeBlur={0.7}
-                redFringe={0.12}
-                blueFringe={0.08}
-                idleSpeed={0}
-                hoverSpeed={0.65}
-                clickSpeed={1.2}
-              />
-            </React.Suspense>
+            <MetallicButton
+              to="/demo"
+              label="Explore Interactive Demo"
+              className="w-full sm:w-[270px] shrink-0"
+              baseColor="#0E2943"
+              sheenColor="#F5EFE799"
+              bandCount={3}
+              edgeBlur={0.7}
+              redFringe={0.12}
+              blueFringe={0.08}
+              idleSpeed={0}
+              hoverSpeed={0.65}
+              clickSpeed={1.2}
+            />
 
             <Link
               to="/about"
