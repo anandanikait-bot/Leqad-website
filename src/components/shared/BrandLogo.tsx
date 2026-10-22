@@ -12,24 +12,24 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   size = 'md',
 }) => {
   const sizeMap = {
-    sm: { symbol: 'w-6 h-6', text: 'text-lg' },
-    md: { symbol: 'w-8 h-8', text: 'text-xl' },
-    lg: { symbol: 'w-10 h-10', text: 'text-2xl' },
+    sm: { symbol: 'w-7 h-7', text: 'text-lg' },
+    md: { symbol: 'w-10 h-10', text: 'text-xl' },
+    lg: { symbol: 'w-12 h-12', text: 'text-2xl' },
   };
 
   const currentSize = sizeMap[size];
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      {/* Precision CAD Drafting Emblem */}
+      {/* Approved Leqad emblem, presented without an extra border or frame. */}
       <div
-        className={`${currentSize.symbol} relative flex-shrink-0 rounded-full overflow-hidden flex items-center justify-center`}
+        className={`${currentSize.symbol} shrink-0 flex items-center justify-center`}
         title="Leqad — In-Workflow CAD Education"
       >
         <img
           src="/assets/brand/leqad-approved.png"
           alt="Leqad logo"
-          className="w-full h-full object-contain"
+          className="block w-full h-full object-contain mix-blend-multiply"
           width="1254"
           height="1254"
         />
