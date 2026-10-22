@@ -13,7 +13,7 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 1000 }, hasTouch: device === 'mobile', reducedMotion: 'no-preference' });
     for (const [name, route, selector] of [
       ['about-preview', '/about', '#product-preview img'],
-      ['about-grid', '/about', '[aria-hidden="true"][data-parallax-travel="20"]'],
+      ['about-grid', '/about', '[aria-hidden="true"][data-parallax-travel="12"]'],
       ['about-secondary', '/about', '[data-parallax-direction="-1"]'],
       ['partners-grid', '/partners', '[data-parallax-travel="20"]'],
       ['partners-secondary', '/partners', '[data-parallax-direction="-1"]'],
