@@ -135,7 +135,7 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   const depth = page.getByLabel('Depth (mm)');
   await expect(depth).toHaveValue('10');
   await depth.fill('12');
-  await expect(page.getByText('Extrude preview · 12 mm depth')).toBeVisible();
+  await expect(page.getByText('Extrude preview · 40 × 30 × 12 mm')).toBeVisible();
   await page.getByRole('button', { name: 'Create solid', exact: true }).click();
   await expect(page.getByRole('heading', { name: "You've completed the interactive walkthrough." })).toBeVisible();
   await expect(page.getByTestId('extruded-solid')).toHaveAttribute('aria-label', 'Created 3D rectangular plate');
@@ -207,6 +207,12 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
 });
 
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
+  const titles: Record<string, string> = {
+    '/': 'Leqad — Learn CAD by Building',
+    '/demo': 'Interactive CAD Demo — Leqad',
+    '/about': 'About Leqad — Guided CAD Education',
+    '/partners': 'For Partners — Leqad',
+  };
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   const ogTitles = new Set<string>();
@@ -216,7 +222,7 @@ test('prerendered public content and metadata work with JavaScript disabled', as
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
     expect((await page.locator('main').innerText()).length).toBeGreaterThan(150);
     await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqada.ai.studio${path}`);
-    expect(await page.title()).toBe('Leqad');
+    expect(await page.title()).toBe(titles[path]);
     const ogTitle = await page.locator('head meta[property="og:title"]').getAttribute('content');
     expect(ogTitle).toBeTruthy();
     ogTitles.add(ogTitle!);
