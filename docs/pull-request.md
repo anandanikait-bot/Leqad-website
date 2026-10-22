@@ -1,24 +1,43 @@
-Leqad's landing page and walkthrough had repeated UI and two live demo instances, while hash routing and an empty HTML shell limited direct navigation and crawler-visible content. This change removes the annotated clutter, keeps the full lesson at `/demo`, uses a static About preview, and adds clean React Router links with legacy hash replacement.
+# Pull Request: Unified Halftone Logo & Wordmark Footer Composition
 
-The navy footer retains the original halftone particles and a large centered wordmark, with actual font-metric fitting and a canvas-only bottom fade. The logo emblem, Leqad name, fonts, colors, hero layout/artwork and CAD lesson callbacks are preserved; the annotated standalone CAD descriptor is removed. Optional hints and explanations are closed under “Need help?”. Lenis provides subtle wheel scrolling with native touch, reduced-motion opt-out, CAD/dialog exclusions and cleanup. The approved font families are served locally.
+**Branch:** `feat/approved-branding-footer`  
+**Repository:** `anandanikait-bot/Leqad-website`
 
-The production build prerenders `/`, `/demo`, `/about` and `/partners` with meaningful HTML, unique titles/descriptions, canonical links, Open Graph/Twitter metadata, a sharing image and accurate structured data. Robots and sitemap are included. An explicit production server serves the correct document for each route, redirects generated-document aliases and returns real 404s. It does not rely on undocumented SPA rewrites.
+## Summary of Changes
 
-Validation:
+Rebuilt the bottom footer artwork across interior routes (`/demo`, `/about`, and `/partners`) so the official Leqad circular symbol and the oversized lowercase `leqad` wordmark appear together as one cohesive, animated halftone composition (inspired by Rift's footer design at https://tryrift.xyz/ and adapted to Leqad's brand identity).
 
-- TypeScript and production client/prerender build passed.
-- All 18 Node tests passed, including the 14 existing tests.
-- All 30 Chromium browser tests passed: five requested widths, full lesson progression/restart, hints/highlighting, no duplicate interactive About demo, clean URLs/refreshes/history/legacy links, no-JS public content and metadata, mobile menu/touch, Lenis exclusions, reduced-motion lifecycle and footer fit/fade.
-- Independent review findings were fixed with failing-then-passing regression coverage. Screenshot review corrected clipped wordmark ascenders and the narrow CAD ribbon.
+### Key Implementations
 
-**Hosting limitation:** local production routing works; AI Studio production compatibility is **unverified** because this environment's proxy rejects `leqada.ai.studio` with a tunnel 403. The host must honor `npm run build` followed by `npm start`, or serve the generated route documents correctly. [Hosting contract and exact post-deployment checks](https://github.com/anandanikait-bot/Leqad-website/blob/feat/minimal-cleanup-routing-seo/docs/hosting.md) are documented. No deployment or merge was performed.
+1. **Integrated Halftone Architecture (`components/ui/halftone-wordmark-footer.tsx`):**
+   - Maintained the core mathematical helpers: `hwfHex()`, `hwfRadius()`, `hwfStep()`, `hwfWarmth()`, and `hwfFitSize()`.
+   - Converted the approved logo asset (`/assets/brand/leqad-approved.png`) into a temporary offscreen canvas mask that isolates the silhouette and internal negative space without creating any rectangular background patch.
+   - Identified the logo's three russet accent petals to preserve their brand color (`#B74B21`) alongside the ivory structure (`#F5EFE7`) on the dark navy canvas (`#0E2943`).
+   - Sampled both the circular mark and the `leqad` wordmark within a shared coordinate system, rendering both through the same dot field.
+   - Applied identical spring-based pointer displacement, ripple shockwaves, and settling physics across both the circular mark and the wordmark.
+   - Preserved reduced-motion lifecycle listeners, window/visibility listeners, and ResizeObserver.
 
-[Full validation record and all eight screenshots](https://github.com/anandanikait-bot/Leqad-website/blob/feat/minimal-cleanup-routing-seo/docs/validation.md)
+2. **Responsive Proportions & Vertical Alignment:**
+   - **Desktop & Tablet (≥580px):** Side-by-side layout with ~25% logo width, ~5% gap, and ~70% wordmark width, optically centered along the same horizontal centerline.
+   - **Mobile (<580px):** Stacked composition inside the same compact canvas region, preventing any horizontal overflow, clipping of the circular logo, or collisions with the copyright section.
+   - Maintained generous top clearance (≥18px above ascenders) ensuring zero ink in the top rows, with a subtle bottom gradient fade.
 
-| Home, desktop | Home, mobile |
+3. **Footer Cleanliness & Accessibility (`src/components/layout/SiteFooter.tsx`):**
+   - Removed the isolated ivory card container above the brand thesis to avoid fragmented card-within-card clutter.
+   - Maintained semantic accessibility and asset preloading via `<img src="/assets/brand/leqad-approved.png" alt="Leqad CAD education mark" className="sr-only" />`.
+   - Verified that the official logo asset `public/assets/brand/leqad-approved.png` remains byte-identical with verified SHA-256: `ca9cb8ffd5c6643db19756cbd4d2e71b02565283a0d0a21227655336957c17e1`.
+   - Preserved site routing contracts: homepage remains hero-only without a footer; browser tab title remains exactly `Leqad`.
+
+## Validation Results
+
+- **`npm run lint`**: Passed (0 TypeScript errors).
+- **`npm test`**: All 18 unit tests passed.
+- **`npm run build`**: Client and SSR prerendering passed for `/`, `/demo`, `/about`, `/partners`, and `/404`.
+- **`npm run test:browser`**: All 32 Playwright browser tests passed across viewports (320px, 375px, 768px, 1024px, 1440px), including reduced-motion settling, no-overflow checks, and ascender clearance.
+- **Visual Capture**: Captured footer screenshots at 1440px, 768px, and 375px (`docs/screenshots/footer-*.png`).
+
+| Viewport | Footer Screenshot |
 | --- | --- |
-| ![Desktop home](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/minimal-cleanup-routing-seo/docs/screenshots/home-desktop.png) | ![Mobile home](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/minimal-cleanup-routing-seo/docs/screenshots/home-mobile.png) |
-
-| Demo, desktop | Demo, mobile |
-| --- | --- |
-| ![Desktop demo](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/minimal-cleanup-routing-seo/docs/screenshots/demo-desktop.png) | ![Mobile demo](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/minimal-cleanup-routing-seo/docs/screenshots/demo-mobile.png) |
+| **Desktop (1440px)** | ![Footer 1440px](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/approved-branding-footer/docs/screenshots/footer-1440px.png) |
+| **Tablet (768px)** | ![Footer 768px](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/approved-branding-footer/docs/screenshots/footer-768px.png) |
+| **Mobile (375px)** | ![Footer 375px](https://raw.githubusercontent.com/anandanikait-bot/Leqad-website/feat/approved-branding-footer/docs/screenshots/footer-375px.png) |

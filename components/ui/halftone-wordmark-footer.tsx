@@ -38,6 +38,8 @@ export interface FooterColumn {
 export interface HalftoneWordmarkFooterProps {
   /** The giant word printed in dots. Lowercase reads best. */
   wordmark?: string
+  /** Optional logo image asset path to render alongside the wordmark in halftone. */
+  logoSrc?: string
   /** Top-left studio line. */
   label?: string
   /** The muted line under it. */
@@ -191,7 +193,8 @@ const HWF_CSS = `
 `
 
 export default function HalftoneWordmarkFooter({
-  wordmark = "halden",
+  wordmark = "leqad",
+  logoSrc = "/assets/brand/leqad-approved.png",
   label = "Halden Studio",
   meta = "©2026 · Oslo / Lisbon",
   columns = DEFAULT_COLUMNS,
@@ -213,9 +216,9 @@ export default function HalftoneWordmarkFooter({
   const colors = { ...(PRESETS[preset] || PRESETS.night), ...(palette || {}) }
   const artRef = React.useRef(null as HTMLDivElement | null)
   const canvasRef = React.useRef(null as HTMLCanvasElement | null)
-  const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark })
-  opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark }
-  const key = [wordmark, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
+  const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark, logoSrc })
+  opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark, logoSrc }
+  const key = [wordmark, logoSrc, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
 
   React.useEffect(() => {
     const art = artRef.current
@@ -224,6 +227,7 @@ export default function HalftoneWordmarkFooter({
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    let alive = true
     const motionMedia = window.matchMedia("(prefers-reduced-motion: reduce)")
     let reduced = motionMedia.matches
     let w = 0
@@ -235,12 +239,26 @@ export default function HalftoneWordmarkFooter({
     let visible = true
     let awake = true
     let ring = { x: 0, y: 0, t: -1 }
-    // Flat arrays: x, y, vx, vy, hx, hy, r per dot.
+    // Flat arrays: x, y, vx, vy, hx, hy, r, isAccent per dot.
     let dots = new Float32Array(0)
     let count = 0
     let grainTile = null as HTMLCanvasElement | null
     const ink = hwfHex(opts.current.colors.ink) || [233, 228, 218]
     const warm = hwfHex(opts.current.colors.warm) || [233, 118, 43]
+
+    let logoImg: HTMLImageElement | null = null
+    if (opts.current.logoSrc) {
+      logoImg = new Image()
+      logoImg.src = opts.current.logoSrc
+      if (!logoImg.complete) {
+        logoImg.onload = () => {
+          if (alive) {
+            layout()
+            wake()
+          }
+        }
+      }
+    }
 
     const layout = () => {
       const o = opts.current
@@ -251,56 +269,175 @@ export default function HalftoneWordmarkFooter({
       canvas.width = Math.round(w * dpr)
       canvas.height = Math.round(h * dpr)
 
-      // Set the word once, at a size that fills the width, on a 1x mask.
+      // Set the artwork once on a 1x mask canvas.
       const mask = document.createElement("canvas")
       mask.width = w
       mask.height = h
       const m = mask.getContext("2d", { willReadFrequently: true })
       if (!m) return
-      const face = o.fontWeight + " 100px " + o.fontFamily
-      m.font = face
-      const word = o.wordmark || " "
-      // Fit both width and height so even descenders stay inside the strip.
-      let fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
-      m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
-      // Fit the actual ascenders + descenders, rather than assuming font metrics.
-      const measured = m.measureText(word)
-      const measuredHeight = measured.actualBoundingBoxAscent + measured.actualBoundingBoxDescent
-      if (measuredHeight > 0) fit *= Math.min(1, (h * 0.90) / measuredHeight)
-      m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
-      const box = m.measureText(word)
-      const cap = box.actualBoundingBoxAscent || fit * 0.72
-      const descent = box.actualBoundingBoxDescent || fit * 0.20
-      const c = Math.max(0, Math.min(0.6, o.crop))
-      m.fillStyle = "#000"
-      m.textBaseline = "alphabetic"
-      m.fillText(word, (w - box.width) / 2, (h + cap - descent) / 2 + (cap + descent) * c)
-      const img = m.getImageData(0, 0, w, h).data
 
+      const word = o.wordmark || ""
+      const hasLogo = Boolean(logoImg && logoImg.complete && logoImg.naturalWidth > 0)
+      const isMobile = w < 580
+      const c = Math.max(0, Math.min(0.6, o.crop))
+
+      if (!hasLogo) {
+        // Fallback when no logo is available: fit wordmark only
+        const face = o.fontWeight + " 100px " + o.fontFamily
+        m.font = face
+        let fit = Math.min(hwfFitSize(m.measureText(word).width, w * 0.95), h * 1.12)
+        m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+        const measured = m.measureText(word)
+        const measuredHeight = measured.actualBoundingBoxAscent + measured.actualBoundingBoxDescent
+        if (measuredHeight > 0) fit *= Math.min(1, (h * 0.90) / measuredHeight)
+        m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+        const box = m.measureText(word)
+        const cap = box.actualBoundingBoxAscent || fit * 0.72
+        const descent = box.actualBoundingBoxDescent || fit * 0.20
+        m.fillStyle = "#000"
+        m.textBaseline = "alphabetic"
+        m.fillText(word, (w - box.width) / 2, (h + cap - descent) / 2 + (cap + descent) * c)
+      } else if (!isMobile) {
+        // Desktop & Tablet: unified side-by-side composition
+        // Starting target proportions: logo ~25%, gap ~5%, wordmark ~70%
+        const margin = Math.max(16, Math.round(w * 0.04))
+        const availW = w - 2 * margin
+        const maxArtworkH = Math.max(80, h - 36)
+        const logoD = Math.min(Math.round(availW * 0.23), maxArtworkH)
+        const gap = Math.max(16, Math.round(availW * 0.05))
+        const wordmarkTargetW = Math.max(100, availW - logoD - gap)
+
+        m.font = o.fontWeight + " 100px " + o.fontFamily
+        const m100 = m.measureText(word)
+        let fit = hwfFitSize(m100.width, wordmarkTargetW)
+        m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+        let box = m.measureText(word)
+        let mH = (box.actualBoundingBoxAscent || fit * 0.72) + (box.actualBoundingBoxDescent || fit * 0.20)
+        if (mH > maxArtworkH) {
+          fit *= (maxArtworkH / mH)
+          m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+          box = m.measureText(word)
+        }
+        const cap = box.actualBoundingBoxAscent || fit * 0.72
+        const descent = box.actualBoundingBoxDescent || fit * 0.20
+        const totalW = logoD + gap + box.width
+        const startX = Math.round((w - totalW) / 2)
+        const logoX = startX
+        const logoY = Math.round((h - logoD) / 2 + logoD * c)
+        const wmX = logoX + logoD + gap
+        const textY = Math.round((h + cap - descent) / 2 + (cap + descent) * c)
+
+        // Convert logo into isolated mask preserving internal negative space
+        const logoCanvas = document.createElement("canvas")
+        logoCanvas.width = logoD
+        logoCanvas.height = logoD
+        const lctx = logoCanvas.getContext("2d", { willReadFrequently: true })
+        if (lctx) {
+          lctx.drawImage(logoImg!, 0, 0, logoD, logoD)
+          const id = lctx.getImageData(0, 0, logoD, logoD)
+          const d = id.data
+          for (let i = 0; i < d.length; i += 4) {
+            const r = d[i], g = d[i+1], b = d[i+2]
+            const diff = Math.sqrt((r - 254)**2 + (g - 254)**2 + (b - 248)**2)
+            const alpha = Math.min(255, Math.max(0, Math.round(((diff - 16) / 28) * 255)))
+            const isAccent = (diff > 30 && r > 140 && b < 95) ? 255 : 0
+            d[i] = isAccent
+            d[i+1] = 0
+            d[i+2] = 0
+            d[i+3] = alpha
+          }
+          lctx.putImageData(id, 0, 0)
+          m.drawImage(logoCanvas, logoX, logoY)
+        }
+
+        // Draw wordmark onto shared mask
+        m.fillStyle = "#000"
+        m.textBaseline = "alphabetic"
+        m.fillText(word, wmX, textY)
+      } else {
+        // Mobile: stacked within the same artwork region
+        const maxLogoH = Math.min(Math.round(w * 0.28), Math.floor(h * 0.36), 80)
+        const logoD = Math.max(56, maxLogoH)
+        const logoX = Math.round((w - logoD) / 2)
+        const targetWmW = Math.round(w * 0.86)
+        const maxWmH = Math.floor(h * 0.38)
+
+        m.font = o.fontWeight + " 100px " + o.fontFamily
+        const m100 = m.measureText(word)
+        let fit = Math.min(hwfFitSize(m100.width, targetWmW), maxWmH * 1.25)
+        m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+        let box = m.measureText(word)
+        let wmH = (box.actualBoundingBoxAscent || fit * 0.72) + (box.actualBoundingBoxDescent || fit * 0.20)
+        if (wmH > maxWmH) {
+          fit *= (maxWmH / wmH)
+          m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
+          box = m.measureText(word)
+          wmH = (box.actualBoundingBoxAscent || fit * 0.72) + (box.actualBoundingBoxDescent || fit * 0.20)
+        }
+        const cap = box.actualBoundingBoxAscent || fit * 0.72
+        const descent = box.actualBoundingBoxDescent || fit * 0.20
+        const gapY = Math.max(8, Math.round((h - logoD - wmH) * 0.24))
+        const totalStackH = logoD + gapY + wmH
+        const startY = Math.max(14, Math.round((h - totalStackH) / 2 + totalStackH * c))
+        const logoY = startY
+        const wmX = Math.round((w - box.width) / 2)
+        const textY = Math.round(startY + logoD + gapY + cap)
+
+        const logoCanvas = document.createElement("canvas")
+        logoCanvas.width = logoD
+        logoCanvas.height = logoD
+        const lctx = logoCanvas.getContext("2d", { willReadFrequently: true })
+        if (lctx) {
+          lctx.drawImage(logoImg!, 0, 0, logoD, logoD)
+          const id = lctx.getImageData(0, 0, logoD, logoD)
+          const d = id.data
+          for (let i = 0; i < d.length; i += 4) {
+            const r = d[i], g = d[i+1], b = d[i+2]
+            const diff = Math.sqrt((r - 254)**2 + (g - 254)**2 + (b - 248)**2)
+            const alpha = Math.min(255, Math.max(0, Math.round(((diff - 16) / 28) * 255)))
+            const isAccent = (diff > 30 && r > 140 && b < 95) ? 255 : 0
+            d[i] = isAccent
+            d[i+1] = 0
+            d[i+2] = 0
+            d[i+3] = alpha
+          }
+          lctx.putImageData(id, 0, 0)
+          m.drawImage(logoCanvas, logoX, logoY)
+        }
+
+        m.fillStyle = "#000"
+        m.textBaseline = "alphabetic"
+        m.fillText(word, wmX, textY)
+      }
+
+      const img = m.getImageData(0, 0, w, h).data
       const gap = Math.max(3, o.dotGap)
       const cols = Math.ceil(w / gap)
       const rows = Math.ceil(h / gap)
       const tmp = []
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
-          // Coverage: average alpha over a 3×3 sample of the cell.
-          let sum = 0
+          let sumAlpha = 0
+          let sumRed = 0
           for (let sy = 0; sy < 3; sy++) {
             for (let sx = 0; sx < 3; sx++) {
               const x = Math.min(w - 1, Math.floor(gx * gap + ((sx + 0.5) * gap) / 3))
               const y = Math.min(h - 1, Math.floor(gy * gap + ((sy + 0.5) * gap) / 3))
-              sum += img[(y * w + x) * 4 + 3]
+              const idx = (y * w + x) * 4
+              sumAlpha += img[idx + 3]
+              sumRed += img[idx]
             }
           }
-          const cov = sum / (9 * 255)
+          const cov = sumAlpha / (9 * 255)
           if (cov < 0.06) continue
           const hx = gx * gap + gap / 2
           const hy = gy * gap + gap / 2
-          tmp.push(hx, hy, 0, 0, hx, hy, hwfRadius(cov, gap))
+          const isAccent = (sumRed / (9 * 255)) > 0.30 ? 1 : 0
+          tmp.push(hx, hy, 0, 0, hx, hy, hwfRadius(cov, gap), isAccent)
         }
       }
       dots = new Float32Array(tmp)
-      count = tmp.length / 7
+      count = tmp.length / 8
 
       // A fixed tile of print grain, drawn once and laid over every frame.
       grainTile = document.createElement("canvas")
@@ -330,13 +467,16 @@ export default function HalftoneWordmarkFooter({
       const ringR = ringAge * 0.9
       let moving = false
       for (let i = 0; i < count; i++) {
-        const j = i * 7
+        const j = i * 8
         let x = dots[j]
         let y = dots[j + 1]
         let vx = dots[j + 2]
         let vy = dots[j + 3]
         const hx = dots[j + 4]
         const hy = dots[j + 5]
+        const dotR = dots[j + 6]
+        const isAccent = dots[j + 7] > 0.5
+
         if (!reduced) {
           if (ringAge < 900) {
             const dx = hx - ring.x
@@ -366,16 +506,21 @@ export default function HalftoneWordmarkFooter({
           dots[j + 2] = vx
           dots[j + 3] = vy
         }
+
         const k = hwfWarmth(x, y, hx, hy, 28)
-        ctx.fillStyle =
-          k > 0.02
-            ? "rgb(" +
-              Math.round(ink[0] + (warm[0] - ink[0]) * k) + "," +
-              Math.round(ink[1] + (warm[1] - ink[1]) * k) + "," +
-              Math.round(ink[2] + (warm[2] - ink[2]) * k) + ")"
-            : o.colors.ink
+        if (isAccent) {
+          ctx.fillStyle = o.colors.warm
+        } else if (k > 0.02) {
+          ctx.fillStyle =
+            "rgb(" +
+            Math.round(ink[0] + (warm[0] - ink[0]) * k) + "," +
+            Math.round(ink[1] + (warm[1] - ink[1]) * k) + "," +
+            Math.round(ink[2] + (warm[2] - ink[2]) * k) + ")"
+        } else {
+          ctx.fillStyle = o.colors.ink
+        }
         ctx.beginPath()
-        ctx.arc(x, y, dots[j + 6], 0, 6.2832)
+        ctx.arc(x, y, dotR, 0, 6.2832)
         ctx.fill()
       }
 
@@ -474,7 +619,6 @@ export default function HalftoneWordmarkFooter({
     document.addEventListener("visibilitychange", onVisibilityChange)
 
     // A web font that lands late re-sets the word in its real face.
-    let alive = true
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
         if (!alive) return

@@ -23,22 +23,16 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
       {/* Precision CAD Drafting Emblem */}
       <div
-        className={`${currentSize.symbol} relative flex-shrink-0 rounded-md overflow-hidden border border-[#0E2943]/15 flex items-center justify-center shadow-xs`}
+        className={`${currentSize.symbol} relative flex-shrink-0 rounded-full overflow-hidden flex items-center justify-center`}
         title="Leqad — In-Workflow CAD Education"
       >
-        <svg
-          viewBox="0 0 278 278"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full rounded-sm"
-          role="img"
-          aria-labelledby="leqad-logo-title"
-        >
-          <title id="leqad-logo-title">Leqad</title>
-          <rect width="278" height="278" fill="#F5EFE7" />
-          <path d="M0 0H268L204.45 64.45H64.45V203.55L0 268Z" fill="#0E2943" />
-          <path d="M278 10V278H10L74.45 213.55H213.55V74.45Z" fill="#0E2943" />
-          <path d="M89.31 89.31H188.69V188.69H89.31Z" fill="#B74B21" />
-        </svg>
+        <img
+          src="/assets/brand/leqad-approved.png"
+          alt="Leqad logo"
+          className="w-full h-full object-contain"
+          width="1254"
+          height="1254"
+        />
       </div>
 
       {!symbolOnly && (

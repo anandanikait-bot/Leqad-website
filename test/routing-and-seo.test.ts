@@ -14,22 +14,24 @@ test('known legacy hash URLs are replaced by their clean destinations', () => {
   assert.equal(legacyDestination(''), null);
 });
 
-test('each public route has unique crawlable metadata and an absolute canonical', () => {
-  const titles = new Set<string>();
+test('each public route has unique crawlable metadata, an absolute canonical, and document title Leqad', () => {
+  const ogTitles = new Set<string>();
   const descriptions = new Set<string>();
   assert.deepEqual(PUBLIC_ROUTES.map(route => route.path), ['/', '/demo', '/about', '/partners']);
   for (const route of PUBLIC_ROUTES) {
     const head = renderHead(route.path);
-    assert.match(head, /<title[^>]*>.+<\/title>/);
+    // Tab title is strictly "Leqad" on every route
+    assert.match(head, /<title data-route-head>Leqad<\/title>/);
     assert.ok(head.includes(`href="https://leqada.ai.studio${route.path === '/' ? '/' : route.path}"`));
     assert.match(head, /property="og:url"/);
     assert.ok(head.includes('property="og:image" content="https://leqada.ai.studio/assets/cad-lesson-preview.png"'));
     assert.match(head, /name="twitter:title"/);
     assert.match(head, /application\/ld\+json/);
-    titles.add(route.title);
+    assert.equal(route.title, 'Leqad');
+    ogTitles.add(route.ogTitle);
     descriptions.add(route.description);
   }
-  assert.equal(titles.size, 4);
+  assert.equal(ogTitles.size, 4);
   assert.equal(descriptions.size, 4);
 });
 

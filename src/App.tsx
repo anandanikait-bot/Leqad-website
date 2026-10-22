@@ -24,6 +24,7 @@ export default function App() {
   }, [location.hash, location.search, navigate]);
 
   useEffect(() => {
+    document.title = 'Leqad';
     const template = document.createElement('template');
     template.innerHTML = renderHead(location.pathname);
     document.head.querySelectorAll('[data-route-head]').forEach(element => element.remove());

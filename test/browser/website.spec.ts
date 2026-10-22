@@ -25,6 +25,20 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
   await expect(page.locator('footer')).toHaveCount(0);
 });
 
+test('approved brand logo, favicon, and Leqad document title across all routes', async ({ page }) => {
+  for (const path of ['/', '/demo', '/about', '/partners']) {
+    await page.goto(path);
+    await expect(page).toHaveTitle('Leqad');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-approved.png');
+    await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
+    if (path === '/') {
+      await expect(page.locator('footer')).toHaveCount(0);
+    } else {
+      await expect(page.locator('footer img[alt="Leqad CAD education mark"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
+    }
+  }
+});
+
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
   await page.goto('/about');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Learn CAD by building/);
@@ -84,18 +98,20 @@ test('lesson actions, optional help, highlighting, completion and restart remain
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
-  const titles = new Set<string>();
+  const ogTitles = new Set<string>();
   for (const path of ['/', '/demo', '/about', '/partners']) {
     const response = await page.goto(`http://127.0.0.1:4173${path}`);
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
     expect((await page.locator('main').innerText()).length).toBeGreaterThan(150);
     await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqada.ai.studio${path}`);
-    await expect(page.locator('head meta[property="og:title"]')).toHaveAttribute('content', await page.title());
+    expect(await page.title()).toBe('Leqad');
+    const ogTitle = await page.locator('head meta[property="og:title"]').getAttribute('content');
+    expect(ogTitle).toBeTruthy();
+    ogTitles.add(ogTitle!);
     expect(JSON.parse(await page.locator('script[type="application/ld+json"]').innerText())['@graph']).toHaveLength(3);
-    titles.add(await page.title());
   }
-  expect(titles.size).toBe(4);
+  expect(ogTitles.size).toBe(4);
   await context.close();
 });
 
