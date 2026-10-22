@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test('landing contains only the intended navigation and hero CTA', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
+  await expect(page.locator('main h1')).toHaveText('Learn CAD by');
   await expect(page.getByText('INTERACTIVE CAD LEARNING', { exact: true })).toHaveCount(0);
   await expect(page.getByText('8 Steps', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Explore demo', exact: true })).toHaveCount(0);
@@ -31,6 +33,7 @@ test('approved brand logo, favicon, and Leqad document title across all routes',
     await expect(page).toHaveTitle('Leqad');
     await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-approved.png');
     await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
+    await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'multiply');
     if (path === '/') {
       await expect(page.locator('footer')).toHaveCount(0);
     } else {
