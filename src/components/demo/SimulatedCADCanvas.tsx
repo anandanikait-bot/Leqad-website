@@ -23,6 +23,7 @@ interface SimulatedCADCanvasProps {
   isDemoComplete?: boolean;
   onTriggerAction: (actionId: string) => void;
   onResetSketch?: () => void;
+  onCancelExtrude?: () => void;
 }
 
 export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
@@ -33,20 +34,22 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   isDemoComplete = false,
   onTriggerAction,
   onResetSketch,
+  onCancelExtrude,
 }) => {
   const [viewOrientation, setViewOrientation] = useState<ViewOrientation>('iso');
+  const [extrudeDepthMm, setExtrudeDepthMm] = useState(10);
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0.0, y: 0.0 });
   const [svgCursor, setSvgCursor] = useState<{ x: number; y: number } | null>(null);
   const canvasRef = useRef<SVGSVGElement | null>(null);
 
-  // Sync orientation with step: Step 1 & 2 are isometric by default, Step 3+ normal to top
+  // Keep the sketch planar; return to an isometric view only once there is
+  // a genuine extrusion preview. This prevents step navigation faking a solid.
   useEffect(() => {
-    if (currentStepIndex <= 1) {
-      setViewOrientation('iso');
-    } else {
-      setViewOrientation('top');
-    }
-  }, [currentStepIndex]);
+    setViewOrientation(
+      sketchStatus === 'extrude-preview' || sketchStatus === 'solid-created'
+        ? 'iso' : currentStepIndex <= 1 ? 'iso' : 'top'
+    );
+  }, [currentStepIndex, sketchStatus]);
 
   // Precise mathematical conversion from SVG viewBox to 40x30 mm CAD coordinate space
   // Scale: 1 mm in CAD = 3 SVG units (120 SVG units = 40 mm, 90 SVG units = 30 mm)
@@ -76,10 +79,14 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
   // State-aware flags based on actual simulation state (Fix #2, Fix #3)
   const isPlaneSelected = sketchStatus !== 'not-started';
-  const isSketchActive = ['sketch-active', 'rectangle-drawn', 'dimensioned', 'accepted-in-demo'].includes(sketchStatus);
-  const isRectangleDrawn = ['rectangle-drawn', 'dimensioned', 'accepted-in-demo'].includes(sketchStatus);
-  const isDimensioned = ['dimensioned', 'accepted-in-demo'].includes(sketchStatus);
-  const isSketchAccepted = sketchStatus === 'accepted-in-demo';
+  const isExtrudePreview = sketchStatus === 'extrude-preview';
+  const isSolidCreated = sketchStatus === 'solid-created';
+  const isExtruding = isExtrudePreview || isSolidCreated;
+  const isSketchActive = sketchStatus !== 'not-started' && sketchStatus !== 'plane-selected';
+  const isRectangleDrawn = ['rectangle-drawn', 'dimensioned', 'accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
+  const isDimensioned = ['dimensioned', 'accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
+  const isSketchAccepted = ['accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
+  const extrudeOffset = extrudeDepthMm * 3;
 
   // Highlight check
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
@@ -116,11 +123,11 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
           <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
 
-          {/* Extrude 3D Tool (Step 7: Understand Result) */}
+          {/* Extrude starts a real feature preview, not a silent advance. */}
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onTriggerAction('understand-result');
+              onTriggerAction('start-extrude');
             }}
             className={`px-2 py-1.5 rounded flex items-center gap-1 transition-all cursor-pointer ${
               currentStepIndex === 6
@@ -131,7 +138,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
                 : ''
             }`}
-            title="Extrude (3D Feature Preview)"
+            title="Extrude: Start a Solid / New / Blind preview"
             aria-label="Extrude 3D tool"
           >
             <Box className="w-3.5 h-3.5" />
@@ -305,6 +312,15 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 )}
               </div>
             )}
+            {isExtruding && (
+              <div className={`mt-1 px-2 py-1 rounded flex items-center justify-between font-semibold ${isSolidCreated ? 'bg-emerald-50 text-emerald-900' : 'bg-[#F5EFE7] text-[#0E2943]'}`}>
+                <span className="inline-flex items-center gap-1.5"><Box className="w-3 h-3 text-[#B74B21]" />Extrude 1</span>
+                {isSolidCreated ? <Check className="h-3 w-3 text-emerald-700" /> : <span className="text-[9px] text-[#B74B21]">PREVIEW</span>}
+              </div>
+            )}
+            {isSolidCreated && (
+              <div className="px-2 py-1 text-[#0E2943] font-medium">Part 1 · {extrudeDepthMm} mm</div>
+            )}
           </div>
         </div>
 
@@ -354,7 +370,45 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </div>
         )}
 
-        {/* Viewport View Cube (Top Right) */}
+        {/* Simplified feature dialog. The preview is not a committed part until accepted. */}
+        {isExtrudePreview && (
+          <div className="absolute z-20 top-3 left-3 sm:left-48 w-[min(265px,calc(100%-100px))] rounded-lg border border-[#B74B21]/30 bg-white/95 p-3 shadow-lg backdrop-blur-xs text-xs" role="group" aria-label="Extrude 1 settings">
+            <div className="flex items-center justify-between gap-2 text-[#0E2943] font-semibold">
+              <span className="flex items-center gap-1.5"><Box className="h-4 w-4 text-[#B74B21]" />Extrude 1</span>
+              <span className="text-[10px] text-[#55616B]">Preview</span>
+            </div>
+            <p className="mt-2 text-[11px] text-[#55616B]">Solid · New · Blind</p>
+            <label htmlFor="extrude-depth" className="mt-2 flex items-center justify-between gap-2 text-[#0E2943]">
+              Depth (mm)
+              <input
+                id="extrude-depth"
+                type="number"
+                min={1}
+                max={50}
+                step={1}
+                value={extrudeDepthMm}
+                onChange={event => {
+                  const value = Number(event.target.value);
+                  if (Number.isFinite(value) && value >= 1 && value <= 50) setExtrudeDepthMm(value);
+                }}
+                className="w-20 rounded border border-[#D9DDD9] px-2 py-1 text-right font-mono text-[#0E2943] focus-visible:outline-[#B74B21]"
+              />
+            </label>
+            <div className="mt-3 flex gap-2">
+              <button type="button" onClick={() => onTriggerAction('confirm-extrude')}
+                aria-label="Accept Extrude (Green Checkmark)"
+                className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1.5 text-white bg-emerald-700 hover:bg-emerald-800 ${isTargetHighlighted('tool-accept-extrude') ? 'ring-2 ring-[#B74B21] ring-offset-2' : ''}`}>
+                <Check className="h-3.5 w-3.5" />Accept
+              </button>
+              <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude"
+                className="inline-flex items-center gap-1.5 rounded border border-[#D9DDD9] px-2.5 py-1.5 text-[#55616B] hover:bg-[#FAF8F4]">
+                <X className="h-3.5 w-3.5" />Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+                {/* Viewport View Cube (Top Right) */}
         <div className="absolute top-3 right-3 z-20 flex flex-col items-end gap-1">
           <div className="w-16 h-16 bg-white border border-[#D9DDD9] rounded-lg shadow-sm p-1.5 flex flex-col justify-between text-[9px] font-mono font-semibold text-[#0E2943] select-none">
             <button
@@ -432,7 +486,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </g>
 
           {/* Coordinate Reference Axes & Origin Datum */}
-          <g>
+          {!isExtruding && <g>
             {/* Origin Datum (Clickable in Step 4 to draw rectangle) */}
             <circle
               cx="0"
@@ -476,10 +530,10 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             <text x="-4" y="-66" fill="#10B981" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="700">
               +Y
             </text>
-          </g>
+          </g>}
 
           {/* Isometric Top Plane Visual (shown when in ISO view or Step 2) */}
-          {viewOrientation === 'iso' && (
+          {viewOrientation === 'iso' && !isExtruding && (
             <g>
               <polygon
                 points="-140,50 60,110 160,-20 -40,-80"
@@ -518,7 +572,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             Under-constrained in Step 4 (Electric Blue #2D7FF9)
             Dimensioned in Step 5+ (Defined Black #0E2943)
           */}
-          {isRectangleDrawn && (
+          {isRectangleDrawn && !isExtruding && (
             <g>
               {/* Shaded Profile Face when accepted in demo (Fix #3) */}
               {isSketchAccepted && (
@@ -567,7 +621,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             Step 5+: Parametric Horizontal Width Dimension (40 mm)
             Leader above top edge (y = -115)
           */}
-          {isDimensioned && (
+          {isDimensioned && !isExtruding && (
             <g className="animate-fadeIn">
               {/* Witness lines */}
               <line x1="0" y1="-90" x2="0" y2="-120" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
@@ -588,7 +642,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             Step 5+: Parametric Vertical Height Dimension (30 mm)
             Leader to right of vertical edge (x = 145)
           */}
-          {isDimensioned && (
+          {isDimensioned && !isExtruding && (
             <g className="animate-fadeIn">
               {/* Witness lines */}
               <line x1="120" y1="0" x2="150" y2="0" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
@@ -606,14 +660,44 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           )}
 
           {/* Shaded Profile Label when accepted (Step 6 / 7) */}
-          {isSketchAccepted && (
-            <g transform="translate(-180, 110)" className="animate-fadeIn">
-              <rect x="0" y="0" width="240" height="28" rx="4" fill="#0E2943" />
-              <text x="10" y="18" fill="#F5EFE7" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
-                ★ SHADED 2D PROFILE (READY FOR EXTRUDE)
-              </text>
+          {sketchStatus === 'accepted-in-demo' && (
+            <g transform="translate(-170, 110)" pointerEvents="none">
+              <rect width="205" height="24" rx="4" fill="#0E2943" />
+              <text x="10" y="16" fill="#F5EFE7" fontSize="10" fontFamily="IBM Plex Mono">Sketch accepted · Choose Extrude</text>
             </g>
           )}
+
+          {/* Actual action-driven solid: projected from a rectangular plate,
+              with the vertical elevation proportional to the chosen depth.
+              The drawing is an illustration, not geometry verified in Onshape. */}
+          {isExtruding && (viewOrientation === 'top' ? (
+            <g data-testid="solid-top-view" role="img" aria-label="Top view of rectangular plate">
+              <rect x="-60" y="-45" width="120" height="90" fill="#D8E2EB" stroke="#0E2943" strokeWidth="2.5" />
+              <text x="-60" y="65" fontSize="11" fill="#0E2943" fontFamily="IBM Plex Mono">Top · 40 × 30 mm</text>
+            </g>
+          ) : (
+            <g data-testid="extruded-solid" role="img" aria-label={isSolidCreated ? 'Created 3D rectangular plate' : '3D extrusion preview'}>
+              {/* Two downward-visible side faces and the upper planar face.
+                  40:30 footprint proportions; z height scales with mm depth. */}
+              <polygon points={`-94,${30-extrudeOffset} 19,${80-extrudeOffset} 19,80 -94,30`}
+                fill="#607E98" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round"/>
+              <polygon points={`19,${80-extrudeOffset} 115,${28-extrudeOffset} 115,28 19,80`}
+                fill="#829EB3" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round"/>
+              <polygon points={`-94,${30-extrudeOffset} 19,${80-extrudeOffset} 115,${28-extrudeOffset} 2,${-22-extrudeOffset}`}
+                fill={isExtrudePreview ? '#DCE8EF' : '#C6D8E4'} stroke="#0E2943"
+                strokeWidth="2.5" strokeLinejoin="round"/>
+              {isExtrudePreview && (
+                <path d="M-94 30 L19 80 L115 28 M-94 30 L-94 -2 M19 80 L19 48 M115 28 L115 -4"
+                  stroke="#B74B21" strokeDasharray="4 4" strokeOpacity="0.65" fill="none" strokeWidth="1.5"/>
+              )}
+              <g transform="translate(-175, 119)" pointerEvents="none">
+                <rect x="0" y="0" width="240" height="27" rx="4" fill="#0E2943" />
+                <text x="10" y="17" fontSize="10" fontFamily="IBM Plex Mono" fill="#F5EFE7">
+                  {isSolidCreated ? 'Part 1 created' : 'Extrude preview'} · {extrudeDepthMm} mm depth
+                </text>
+              </g>
+            </g>
+          ))}
 
           {/* Real-time CAD Precision Cursor & Tracking Crosshair */}
           {svgCursor && (
