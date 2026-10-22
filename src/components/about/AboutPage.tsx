@@ -71,7 +71,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
       {/* Partnership & Educational Collaboration */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-[#0E2943] rounded-2xl p-8 sm:p-12 text-white relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+          <div aria-hidden="true" data-parallax-travel="16" className="absolute -inset-4 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl space-y-6">
             <span className="font-mono text-xs uppercase tracking-wider text-[#B74B21] bg-white/10 px-2.5 py-1 rounded border border-white/10 font-semibold">

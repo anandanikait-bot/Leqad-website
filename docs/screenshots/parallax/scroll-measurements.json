@@ -1,0 +1,86 @@
+[
+  {
+    "name": "about-preview",
+    "device": "desktop",
+    "before": {
+      "offset": -1.89,
+      "textTop": 1368.21875,
+      "scrollY": 413
+    },
+    "after": {
+      "offset": -0.31,
+      "textTop": 1368.21875,
+      "scrollY": 573
+    }
+  },
+  {
+    "name": "about-grid",
+    "device": "desktop",
+    "before": {
+      "offset": 0,
+      "textTop": 3128.96875,
+      "scrollY": 2738
+    },
+    "after": {
+      "offset": 1.88,
+      "textTop": 3128.96875,
+      "scrollY": 2898
+    }
+  },
+  {
+    "name": "partners-grid",
+    "device": "desktop",
+    "before": {
+      "offset": 0,
+      "textTop": 2541.1875,
+      "scrollY": 2133
+    },
+    "after": {
+      "offset": 1.5,
+      "textTop": 2541.1875,
+      "scrollY": 2293
+    }
+  },
+  {
+    "name": "about-preview",
+    "device": "mobile",
+    "before": {
+      "offset": -4.63,
+      "textTop": 1145.796875,
+      "scrollY": 239
+    },
+    "after": {
+      "offset": -2.61,
+      "textTop": 1145.796875,
+      "scrollY": 399
+    }
+  },
+  {
+    "name": "about-grid",
+    "device": "mobile",
+    "before": {
+      "offset": 0,
+      "textTop": 4126.546875,
+      "scrollY": 3795
+    },
+    "after": {
+      "offset": 1.77,
+      "textTop": 4126.546875,
+      "scrollY": 3955
+    }
+  },
+  {
+    "name": "partners-grid",
+    "device": "mobile",
+    "before": {
+      "offset": 0,
+      "textTop": 4289.8125,
+      "scrollY": 3913
+    },
+    "after": {
+      "offset": 1.43,
+      "textTop": 4289.8125,
+      "scrollY": 4073
+    }
+  }
+]

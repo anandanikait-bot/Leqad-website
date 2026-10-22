@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-test('landing contains only the intended navigation and hero CTA', async ({ page }) => {
+test('landing contains only the hero and its CTA links', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
+  await expect(page.locator('header')).toHaveCount(0);
   await expect(page.locator('main h1')).toHaveText('Learn CAD by');
   await expect(page.getByText('INTERACTIVE CAD LEARNING', { exact: true })).toHaveCount(0);
   await expect(page.getByText('8 Steps', { exact: true })).toHaveCount(0);
@@ -19,7 +19,7 @@ test('landing contains only the intended navigation and hero CTA', async ({ page
 test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header', async ({ page }) => {
   for (const [width, expectedSize] of [[375, 44], [1440, 48]] as const) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto('/');
+    await page.goto('/about');
     const img = page.locator('header img[alt="Leqad logo"]');
     const imageBox = await img.boundingBox();
     expect(imageBox).not.toBeNull();
@@ -28,7 +28,7 @@ test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header'
     const headerBox = await page.locator('header').boundingBox();
     expect(headerBox).not.toBeNull();
     expect(headerBox!.height).toBe(65); // 64px content + 1px bottom border
-    await expect(page.locator('main h1')).toHaveText('Learn CAD by');
+    await expect(page.locator('main h1')).toContainText('Learn CAD by building');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
@@ -57,11 +57,12 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
     await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-navbar.png');
-    await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-navbar.png');
-    await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'multiply');
     if (path === '/') {
+      await expect(page.locator('header')).toHaveCount(0);
       await expect(page.locator('footer')).toHaveCount(0);
     } else {
+      await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-navbar.png');
+      await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'multiply');
       await expect(page.locator('footer img[alt="Leqad CAD education mark"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
     }
   }
@@ -219,6 +220,7 @@ test('prerendered public content and metadata work with JavaScript disabled', as
   for (const path of ['/', '/demo', '/about', '/partners']) {
     const response = await page.goto(`http://127.0.0.1:4173${path}`);
     expect(response?.status()).toBe(200);
+    await expect(page.locator('header')).toHaveCount(path === '/' ? 0 : 1);
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
     expect((await page.locator('main').innerText()).length).toBeGreaterThan(150);
     await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqada.ai.studio${path}`);
@@ -266,8 +268,10 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       if (route === '/') {
+        await expect(page.locator('header')).toHaveCount(0);
         await expect(page.locator('footer')).toHaveCount(0);
       } else {
+        await expect(page.locator('header')).toHaveCount(1);
         const canvas = page.locator('footer canvas');
         await canvas.scrollIntoViewIfNeeded();
         const box = await canvas.boundingBox();
@@ -353,6 +357,8 @@ test('mobile navigation and native touch scrolling remain usable', async ({ brow
   const context = await browser.newContext({ viewport: { width: 375, height: 900 }, isMobile: true, hasTouch: true });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4173/');
+  await page.getByRole('link', { name: 'Explore Interactive Demo', exact: true }).tap();
+  await expect(page).toHaveURL(/\/demo$/);
   await page.getByRole('button', { name: 'Open navigation menu', exact: true }).tap();
   await expect(page.getByRole('button', { name: 'Close navigation menu', exact: true })).toHaveAttribute('aria-expanded', 'true');
   await page.getByRole('navigation', { name: 'Mobile navigation', exact: true }).getByRole('link', { name: 'About', exact: true }).tap();
