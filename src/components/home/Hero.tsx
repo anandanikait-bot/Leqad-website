@@ -5,6 +5,10 @@ import { ArrowRight } from 'lucide-react';
 import { CadArtwork3D } from './CadArtwork3D';
 import { SonarHeroGrid } from './SonarHeroGrid';
 
+// Loaded only for the explicit ?metallic=1 visual experiment.
+// The normal rust CTA remains the default and avoids loading any WebGL code.
+const MetallicButton = React.lazy(() => import('../ui/metallic-button').then(module => ({ default: module.MetallicButton })));
+
 const CYCLING_PHRASES = [
   'building, not just watching.',
   'designing with guidance.',
@@ -14,6 +18,11 @@ const CYCLING_PHRASES = [
 export const Hero: React.FC = () => {
   const [phraseIndex, setPhraseIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [showMetallicExperiment, setShowMetallicExperiment] = useState(false);
+
+  useEffect(() => {
+    setShowMetallicExperiment(new URLSearchParams(window.location.search).get('metallic') === '1');
+  }, []);
 
   // Cycle phrases every 4 seconds with smooth blur transition & proper timer cleanup
   useEffect(() => {
@@ -74,14 +83,30 @@ export const Hero: React.FC = () => {
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
-            <ButtonLink
-              variant="rust"
-              size="lg"
-              to="/demo"
-              icon={<ArrowRight className="w-4 h-4" />}
-            >
-              Explore Interactive Demo
-            </ButtonLink>
+            {showMetallicExperiment ? (
+              <React.Suspense fallback={<ButtonLink variant="rust" size="lg" to="/demo" icon={<ArrowRight className="w-4 h-4" />}>Explore Interactive Demo</ButtonLink>}>
+                <MetallicButton
+                  to="/demo"
+                  label="Explore Interactive Demo"
+                  className="w-full sm:w-[270px] shrink-0"
+                  baseColor="#0E2943"
+                  sheenColor="#F5EFE7"
+                  bandCount={4}
+                  idleSpeed={0}
+                  hoverSpeed={0.75}
+                  clickSpeed={1.4}
+                />
+              </React.Suspense>
+            ) : (
+              <ButtonLink
+                variant="rust"
+                size="lg"
+                to="/demo"
+                icon={<ArrowRight className="w-4 h-4" />}
+              >
+                Explore Interactive Demo
+              </ButtonLink>
+            )}
 
             <Link
               to="/about"
