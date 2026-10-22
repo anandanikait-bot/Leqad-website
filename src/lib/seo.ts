@@ -14,14 +14,22 @@ export function renderHead(pathname: string): string {
   const metaTitle = route?.ogTitle ?? route?.title ?? 'Page not found — Leqad';
   const description = route?.description ?? 'The requested Leqad page could not be found.';
   const canonical = `${SITE_ORIGIN}${route?.path ?? '/'}`;
-  const image = `${SITE_ORIGIN}/assets/cad-lesson-preview.png`;
-  const imageAlt = 'Leqad CAD lesson preview with a reference plane and contextual teaching panel.';
+  // Social cards are fetched without JavaScript by messaging and link-preview bots.
+  // Homepage/general pages use the branded home hero, not the CAD lesson canvas.
+  // Give the replacement image its own URL so caches can fetch the new asset.
+  const isDemo = route?.page === 'demo';
+  const image = `${SITE_ORIGIN}/assets/${isDemo ? 'cad-lesson-preview.png' : 'leqad-home-share-v1.png'}`;
+  const imageAlt = isDemo
+    ? 'Leqad interactive CAD lesson showing a sketch and contextual teaching panel.'
+    : 'Leqad homepage: Learn CAD by building, with an interactive 3D engineering illustration.';
+  const imageWidth = isDemo ? '1182' : '1440';
+  const imageHeight = isDemo ? '534' : '1000';
   const tags = [
     `<title data-route-head>${escapeHtml(documentTitle)}</title>`,
     `<meta data-route-head name="description" content="${escapeHtml(description)}">`,
     `<meta data-route-head name="robots" content="${route ? 'index,follow' : 'noindex,follow'}">`,
     ...(route ? [`<link data-route-head rel="canonical" href="${canonical}">`] : []),
-    ...Object.entries({ 'og:type': 'website', 'og:site_name': 'Leqad', 'og:title': metaTitle, 'og:description': description, 'og:url': canonical, 'og:image': image, 'og:image:alt': imageAlt, 'og:image:width': '1182', 'og:image:height': '534' })
+    ...Object.entries({ 'og:type': 'website', 'og:site_name': 'Leqad', 'og:title': metaTitle, 'og:description': description, 'og:url': canonical, 'og:image': image, 'og:image:alt': imageAlt, 'og:image:width': imageWidth, 'og:image:height': imageHeight })
       .map(([property, content]) => `<meta data-route-head property="${property}" content="${escapeHtml(content)}">`),
     ...Object.entries({ 'twitter:card': 'summary_large_image', 'twitter:title': metaTitle, 'twitter:description': description, 'twitter:image': image, 'twitter:image:alt': imageAlt })
       .map(([name, content]) => `<meta data-route-head name="${name}" content="${escapeHtml(content)}">`),

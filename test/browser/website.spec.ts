@@ -68,6 +68,21 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   }
 });
 
+test('homepage prerender contains correct social preview and serves the actual image', async ({ page }) => {
+  await page.goto('/');
+  const preview = 'https://leqada.ai.studio/assets/leqad-home-share-v1.png';
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', preview);
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', preview);
+  const response = await page.request.get('/assets/leqad-home-share-v1.png');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toMatch(/^image\/png/);
+  await page.goto('/demo');
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    'content',
+    'https://leqada.ai.studio/assets/cad-lesson-preview.png',
+  );
+});
+
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
   await page.goto('/about');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Learn CAD by building/);
