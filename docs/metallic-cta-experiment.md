@@ -1,30 +1,24 @@
-# Optional metallic hero CTA experiment
+# Leqad metallic hero CTA — approved as default
 
-This is a visual A/B experiment, **not** a redesign or automatic replacement of Leqad's approved CTA.
+The homepage's primary **Explore Interactive Demo** link now uses the Leqad-styled metallic treatment by default. This change is limited to the primary CTA; About, Partners, and the CAD lesson retain their existing standard button styles.
 
-| Version | Preview route | Behavior |
-| --- | --- | --- |
-| Original (default) | `/` | Existing rust link to `/demo`, no metallic code loaded |
-| Experimental | `/?metallic=1` | Self-contained WebGL2 metallic sheen around a navy-toned link to `/demo` |
+## User-facing behavior
+- `/`: metallic navy/ivory primary CTA, linking to `/demo`. No query parameter is necessary.
+- WebGL2 unavailable/blocked: a static navy button with ivory text and the same link remains functional. The failed canvas is removed.
+- Reduced motion: static initial shader image; no perpetual idle animation. If motion is allowed, the effect is hover-led, with a restrained rust-accented edge.
+- While the lazily split WebGL component loads: a layout-matched static navy link prevents a missing CTA.
 
-The experimental component is derived from the complete uploaded `Pasted text(3).txt` source. It does **not** use `@paper-design/shaders` or install other dependencies. The component is adapted for React Router link semantics, a responsive 270px desktop label, keyboard focus, pointer inputs, ripple cleanup, hover-only animation (idle speed 0), reduced-motion support, and cleanup of WebGL/observers.
+The shader derives from the supplied complete WebGL component, without adding `@paper-design/shaders` or other packages. It includes proper cleanup of timers, WebGL renderer, resize/visibility observers, plus keyboard-focus indicators and native React Router link semantics.
 
-The original rust CTA remains on the homepage when the query parameter is not present. The experiment now uses Leqad navy (#0E2943), ivory (#F5EFE7) and a muted rust rim (#B74B21). The reflective animation remains subtle and hover-led, with a static initial state. No CAD demo, approved logo, hero geometry, footer, or scroll-engine changes are made.
+## About page — gentler presentation
+The About page uses a shorter, less forceful introduction, softer background grids and lower parallax travel (preview 12px desktop/6px mobile; decorative layers 12px and 4px). A repeated final demo promo card was removed; original product status disclosures, educational content, partnership inquiry and demo links remain available.
 
-## About page: gentler presentation
-The About page now uses a shorter, less forceful introduction, softer background grids, reduced parallax travel (preview 12px desktop / 6px mobile; decorative layers 12px and 4px), and removes the repeated final demo promo card. Existing product-status disclosure, educational content, partnership inquiry, and direct demo links remain available.
+## Verification
+- Home at 320, 375, 768, 1024, and 1440px without horizontal overflow.
+- Mouse/touch/keyboard CTA still reaches `/demo`.
+- WebGL2-disabled environment uses the static navy fallback.
+- Reduced-motion users can see and use the link.
+- TypeScript, build, unit and browser tests; fresh screenshot evidence.
+- `metallic-cta-experiment-review` artifact compares the default metallic look to the actual WebGL-disabled fallback at 375 and 1440px, alongside lightweight transfer-byte and bounding-box data.
 
-The About update is a modest visual and copy adjustment, **not** a change to the approved homepage. Tests validate that its parallax remains bounded and that the CTA paths stay accessible.
-
-## Acceptance
-- Both versions can reach `/demo` via mouse or keyboard.
-- Experiment fits mobile and desktop widths without horizontal overflow.
-- Static shader rendering is used with reduced-motion preference.
-- No extra animation or WebGL module loads for the original homepage route.
-- `npm ci`, `npm run lint`, `npm test`, `npm run build`, and `npm run test:browser` pass.
-- Compare *fresh* CI screenshots and bundle/resource results before choosing a default.
-
-## Visual comparison
-The GitHub Action uploads `metallic-cta-experiment-review` with screenshots at 375px and 1440px for both variants and `comparison.json` describing element bounds, resource transfers, and canvas presence. This is a lightweight comparison, not a GPU frame-time benchmark.
-
-**Do not merge or deploy** this experiment until the new treatment is approved.
+This draft PR **does not merge or deploy** the change.
