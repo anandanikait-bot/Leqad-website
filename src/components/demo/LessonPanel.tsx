@@ -235,7 +235,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
           <div className="space-y-3 rounded-xl border border-[#B74B21]/25 bg-[#FAF8F4] p-3.5 sm:p-4">
             <div>
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[#B74B21]">Do this next</p>
-              <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction}</p>
+              <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction.replace('40 mm × 30 mm', `${widthMm} mm × ${heightMm} mm`).replace('40 × 30 mm', `${widthMm} × ${heightMm} mm`)}</p>
             </div>
             {step.stepNumber === 5 && canPerformCurrentAction && !isStepActionCompleted && (
               <div className="grid grid-cols-2 gap-3" role="group" aria-label="Sketch dimensions">
@@ -329,7 +329,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                     <span className="font-mono text-[10px] text-[#B74B21] font-semibold mr-1.5">
                       HINT {idx + 1}:
                     </span>
-                    {hintText}
+                    {hintText.replace('40 mm', `${widthMm} mm`).replace('30 mm', `${heightMm} mm`)}
                   </div>
                 ))}
               </div>
