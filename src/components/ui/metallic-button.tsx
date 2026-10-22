@@ -619,18 +619,18 @@ function usePrefersReducedMotion() {
   );
 }
 
-const SETTLE = "transition-all duration-800 ease-[cubic-bezier(0.34,1.56,0.64,1)]";
+const SETTLE = "transition-all duration-300 ease-out";
 const SHADOW_SHIFT =
   "transition-[box-shadow] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]";
 
 const RIM_PRESSED =
-  "shadow-[0px_0px_0px_1px_rgba(0,0,0,0.5),0px_1px_2px_0px_rgba(0,0,0,0.3)]";
+  "shadow-[0_0_0_1px_rgba(14,41,67,0.55),0_1px_2px_rgba(14,41,67,0.14)]";
 const RIM_HOVERED =
-  "shadow-[0px_0px_0px_1px_rgba(0,0,0,0.4),0px_12px_6px_0px_rgba(0,0,0,0.05),0px_8px_5px_0px_rgba(0,0,0,0.1),0px_4px_4px_0px_rgba(0,0,0,0.15),0px_1px_2px_0px_rgba(0,0,0,0.2)]";
+  "shadow-[0_0_0_1px_rgba(183,75,33,0.55),0_5px_12px_rgba(14,41,67,0.12)]";
 const RIM_RESTING =
-  "shadow-[0px_0px_0px_1px_rgba(0,0,0,0.3),0px_36px_14px_0px_rgba(0,0,0,0.02),0px_20px_12px_0px_rgba(0,0,0,0.08),0px_9px_9px_0px_rgba(0,0,0,0.12),0px_2px_5px_0px_rgba(0,0,0,0.15)]";
+  "shadow-[0_0_0_1px_rgba(14,41,67,0.28),0_3px_8px_rgba(14,41,67,0.09)]";
 const FACE_PRESSED =
-  "shadow-[inset_0px_2px_4px_rgba(0,0,0,0.4),inset_0px_1px_2px_rgba(0,0,0,0.3)]";
+  "shadow-[inset_0_2px_4px_rgba(14,41,67,0.3)]";
 
 interface MetallicButtonProps {
   to: string;
@@ -658,15 +658,15 @@ export function MetallicButton({
   onClick,
   viewMode = "text",
   className = "",
-  baseColor = "#000000",
-  sheenColor = "#ffffff",
-  bandCount = 4,
-  edgeBlur = 0.5,
+  baseColor = "#0E2943",
+  sheenColor = "#F5EFE799",
+  bandCount = 3,
+  edgeBlur = 0.7,
   flowAngle = 45,
   zoom = 8,
   warp = 0,
-  redFringe = 0.3,
-  blueFringe = 0.3,
+  redFringe = 0.12,
+  blueFringe = 0.08,
   idleSpeed = 0,
   hoverSpeed = 0.75,
   clickSpeed = 1.4,
@@ -850,11 +850,11 @@ export function MetallicButton({
           >
             {isIcon ? (
               <Sparkles
-                className={`size-4 text-white drop-shadow-[0px_1px_2px_rgba(0,0,0,0.5)] ${SETTLE}`}
+                className={`size-4 text-[#F5EFE7] ${SETTLE}`}
               />
             ) : (
               <span
-                className={`text-sm font-normal whitespace-nowrap text-white [text-shadow:0px_1px_2px_rgba(0,0,0,0.5)] ${SETTLE}`}
+                className={`text-sm font-medium whitespace-nowrap text-[#F5EFE7] [text-shadow:0px_1px_2px_rgba(14,41,67,0.35)] ${SETTLE}`}
               >
                 {label}
               </span>
@@ -865,7 +865,7 @@ export function MetallicButton({
             className={`absolute top-0 left-0 z-20 translate-z-2.5 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
           >
             <div
-              className={`m-0.5 rounded-full bg-[linear-gradient(180deg,#202020_0%,#000000_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
+              className={`m-0.5 rounded-full bg-[linear-gradient(180deg,#163859_0%,#0E2943_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
             />
           </div>
 
@@ -903,7 +903,7 @@ export function MetallicButton({
             {ripples.map((ripple) => (
               <span
                 key={ripple.id}
-                className="pointer-events-none absolute size-5 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_70%)] animate-[metallic-button-ripple_0.6s_ease-out]"
+                className="pointer-events-none absolute size-5 rounded-full bg-[radial-gradient(circle,rgba(245,239,231,0.28)_0%,rgba(183,75,33,0)_70%)] animate-[metallic-button-ripple_0.6s_ease-out]"
                 style={{
                   left: `${ripple.x}px`,
                   top: `${ripple.y}px`,
