@@ -12,17 +12,33 @@ const evidence: object[] = [];
 
 try {
   for (const width of [375, 1440]) {
-    const page = await browser.newPage({
-      viewport: { width, height: 900 },
-      deviceScaleFactor: 1,
-      reducedMotion: 'reduce',
-    });
-    for (const variant of ['rust', 'metallic'] as const) {
-      await page.goto(origin + (variant === 'metallic' ? '/?metallic=1' : '/'));
+    for (const variant of ['metallic-default', 'static-webgl-fallback'] as const) {
+      const page = await browser.newPage({
+        viewport: { width, height: 900 },
+        deviceScaleFactor: 1,
+        reducedMotion: 'reduce',
+      });
+      if (variant === 'static-webgl-fallback') {
+        await page.addInitScript(() => {
+          const original = HTMLCanvasElement.prototype.getContext;
+          Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+            configurable: true,
+            value: function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
+              if (type === 'webgl2') return null;
+              return Reflect.apply(original, this, [type, ...args]);
+            },
+          });
+        });
+      }
+      await page.goto(origin + '/');
       await page.evaluate(() => document.fonts.ready);
+      const button = page.locator('[data-metallic-cta]');
+      await expect(button).toBeVisible();
+      if (variant === 'static-webgl-fallback') {
+        await expect(button).toHaveAttribute('data-shader-status', 'fallback');
+      }
       const link = page.getByRole('link', { name: 'Explore Interactive Demo', exact: true });
-      await expect(link).toBeVisible();
-      await expect(page.locator('[data-metallic-cta]')).toHaveCount(variant === 'metallic' ? 1 : 0);
+      await expect(link).toHaveAttribute('href', '/demo');
       await page.screenshot({
         path: `docs/screenshots/metallic-cta/${variant}-${width}px.png`,
         fullPage: true,
@@ -34,16 +50,16 @@ try {
         return {
           ctaBounds: { x: box.x, y: box.y, width: box.width, height: box.height },
           horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+          shaderStatus: document.querySelector('[data-metallic-cta]')?.getAttribute('data-shader-status'),
           shaderCanvases: document.querySelectorAll('[data-metallic-cta] canvas').length,
-          shaderEnabled: Boolean(document.querySelector('[data-metallic-cta]')),
           resourceTransferBytes: performance.getEntriesByType('resource')
             .reduce((total, resource) => total + ((resource as PerformanceResourceTiming).transferSize || 0), 0),
         };
       });
       if (data.horizontalOverflow) throw new Error(`Horizontal overflow at ${width}px: ${variant}`);
       evidence.push({ width, variant, ...data });
+      await page.close();
     }
-    await page.close();
   }
   await writeFile('docs/screenshots/metallic-cta/comparison.json', JSON.stringify(evidence, null, 2) + '\n');
 } finally {
