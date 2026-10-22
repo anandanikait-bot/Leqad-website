@@ -9,8 +9,8 @@ function escapeHtml(value: string) {
 // Shared by the build and client navigation. Initial HTML never needs JS for SEO.
 export function renderHead(pathname: string): string {
   const route = routeForPath(pathname);
-  // Browser tab / document title is strictly "Leqad" on all public routes
-  const documentTitle = route ? 'Leqad' : 'Page not found — Leqad';
+  // Use the same route title for prerendered HTML and client-side navigation.
+  const documentTitle = route?.title ?? 'Page not found — Leqad';
   const metaTitle = route?.ogTitle ?? route?.title ?? 'Page not found — Leqad';
   const description = route?.description ?? 'The requested Leqad page could not be found.';
   const canonical = `${SITE_ORIGIN}${route?.path ?? '/'}`;
