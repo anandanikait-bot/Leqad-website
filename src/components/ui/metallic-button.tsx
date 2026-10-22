@@ -784,16 +784,24 @@ export function MetallicButton({
 
     if (!surfaceRef.current) return;
 
-    const shader = new MetallicShaderMount(
-      surfaceRef.current,
-      uniformsRef.current,
-      reducedMotionRef.current ? 0 : idleSpeedRef.current,
-    );
-    if (shader.isReady()) {
-      mount.current = shader;
-      setShaderStatus("ready");
-    } else {
-      shader.dispose();
+    // Shader initialization is an enhancement, never a dependency of navigation.
+    // Drivers can throw even when getContext('webgl2') succeeded.
+    try {
+      const shader = new MetallicShaderMount(
+        surfaceRef.current,
+        uniformsRef.current,
+        reducedMotionRef.current ? 0 : idleSpeedRef.current,
+      );
+      if (shader.isReady()) {
+        mount.current = shader;
+        setShaderStatus("ready");
+      } else {
+        shader.dispose();
+        setShaderStatus("fallback");
+      }
+    } catch {
+      // A partially initialized canvas must not obscure the normal navy CTA.
+      surfaceRef.current.querySelector("canvas")?.remove();
       setShaderStatus("fallback");
     }
 
