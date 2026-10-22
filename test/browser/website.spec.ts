@@ -48,15 +48,16 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
 
 test('approved brand logo, favicon, and unique browser title across routes', async ({ page }) => {
   const titles: Record<string, string> = {
-    '/': 'Leqad — Learn CAD by Building',
-    '/demo': 'Interactive CAD Demo — Leqad',
-    '/about': 'About Leqad — Guided CAD Education',
-    '/partners': 'For Partners — Leqad',
+    '/': 'Leqad',
+    '/demo': 'Leqad Demo',
+    '/about': 'About Leqad',
+    '/partners': 'Leqad Partners',
   };
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-navbar.png');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-tab-v1.svg');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
       await expect(page.locator('footer')).toHaveCount(0);
@@ -81,6 +82,18 @@ test('homepage prerender contains correct social preview and serves the actual i
     'content',
     'https://leqada.ai.studio/assets/cad-lesson-preview.png',
   );
+});
+
+test('tab icon uses the approved geometry on both light and dark themes', async ({ page }) => {
+  await page.goto('/');
+  const res = await page.request.get('/assets/brand/leqad-tab-v1.svg');
+  expect(res.status()).toBe(200);
+  expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
+  const source = await res.text();
+  expect(source).toContain('prefers-color-scheme: dark');
+  expect(source).toContain('prefers-color-scheme: light');
+  expect(source).toContain('data:image/png;base64,');
+  expect(source).toContain('feColorMatrix');
 });
 
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
@@ -224,10 +237,10 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
 
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
   const titles: Record<string, string> = {
-    '/': 'Leqad — Learn CAD by Building',
-    '/demo': 'Interactive CAD Demo — Leqad',
-    '/about': 'About Leqad — Guided CAD Education',
-    '/partners': 'For Partners — Leqad',
+    '/': 'Leqad',
+    '/demo': 'Leqad Demo',
+    '/about': 'About Leqad',
+    '/partners': 'Leqad Partners',
   };
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
