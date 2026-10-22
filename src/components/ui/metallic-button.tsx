@@ -271,7 +271,14 @@ void main() {
   float stripe_b = fract(direction - dispersionBlue);
   float b = getColorChanges(color1.b, color2.b, stripe_b, w, blur + fwidth(stripe_b), bump, u_colorTint.b);
 
-  color = vec3(r, g, b);
+  // Preserve the moving metallic reflections, but grade them through Leqad's
+  // original rust base instead of leaving the face black, white, or silver.
+  // The ivory highlight is deliberately limited so the button still reads rust.
+  float metalLuma = dot(vec3(r, g, b), vec3(.2126, .7152, .0722));
+  vec3 rustShadow = u_colorBack.rgb * .59;
+  vec3 rustMid = mix(rustShadow, u_colorBack.rgb, smoothstep(.10, .72, metalLuma));
+  vec3 rustHighlight = mix(u_colorBack.rgb, u_colorTint.rgb, .51);
+  color = mix(rustMid, rustHighlight, smoothstep(.73, 1., metalLuma));
   color *= opacity;
 
   vec3 bgColor = u_colorBack.rgb * u_colorBack.a;
@@ -914,6 +921,14 @@ export function MetallicButton({
               />
             </div>
           </div>
+
+          {/* A separate continuously moving copper/ivory rim; not hover-dependent.
+              The center is masked out so the rust metallic face stays visible. */}
+          <span
+            data-metallic-rim
+            aria-hidden="true"
+            className="leqad-metallic-rim pointer-events-none absolute inset-0 z-[25] rounded-full p-[2px]"
+          />
 
           <Link
             to={to}
