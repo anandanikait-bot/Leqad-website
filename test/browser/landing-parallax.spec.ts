@@ -16,7 +16,8 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     const links = await page.locator('main a').all();
     const first = (await links[0].boundingBox())!;
     const last = (await links[1].boundingBox())!;
-    expect(Math.abs((first.x + last.x + last.width) / 2 - (column.x + column.width / 2))).toBeLessThan(2);
+    // Allow subpixel rounding introduced by the decorative 3D CTA transform.
+    expect(Math.abs((first.x + last.x + last.width) / 2 - (column.x + column.width / 2))).toBeLessThan(3);
     const artwork = page.getByLabel('Interactive 3D CAD Geometry Visualization', { exact: true });
     const box = (await artwork.boundingBox())!;
     if (width >= 1024) {
