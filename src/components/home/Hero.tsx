@@ -5,8 +5,8 @@ import { ArrowRight } from 'lucide-react';
 import { CadArtwork3D } from './CadArtwork3D';
 import { SonarHeroGrid } from './SonarHeroGrid';
 
-// Loaded only for the explicit ?metallic=1 visual experiment.
-// The normal rust CTA remains the default and avoids loading any WebGL code.
+// The metallic CTA is Leqad's default primary action. Loading the shader in a
+// split bundle leaves the homepage usable with a stable, static navy fallback.
 const MetallicButton = React.lazy(() => import('../ui/metallic-button').then(module => ({ default: module.MetallicButton })));
 
 const CYCLING_PHRASES = [
@@ -18,12 +18,6 @@ const CYCLING_PHRASES = [
 export const Hero: React.FC = () => {
   const [phraseIndex, setPhraseIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-  const [showMetallicExperiment, setShowMetallicExperiment] = useState(false);
-
-  useEffect(() => {
-    setShowMetallicExperiment(new URLSearchParams(window.location.search).get('metallic') === '1');
-  }, []);
-
   // Cycle phrases every 4 seconds with smooth blur transition & proper timer cleanup
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -83,33 +77,33 @@ export const Hero: React.FC = () => {
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
-            {showMetallicExperiment ? (
-              <React.Suspense fallback={<ButtonLink variant="rust" size="lg" to="/demo" icon={<ArrowRight className="w-4 h-4" />}>Explore Interactive Demo</ButtonLink>}>
-                <MetallicButton
+            <React.Suspense
+              fallback={
+                <ButtonLink
+                  variant="primary"
+                  size="lg"
                   to="/demo"
-                  label="Explore Interactive Demo"
-                  className="w-full sm:w-[270px] shrink-0"
-                  baseColor="#0E2943"
-                  sheenColor="#F5EFE799"
-                  bandCount={3}
-                  edgeBlur={0.7}
-                  redFringe={0.12}
-                  blueFringe={0.08}
-                  idleSpeed={0}
-                  hoverSpeed={0.65}
-                  clickSpeed={1.2}
-                />
-              </React.Suspense>
-            ) : (
-              <ButtonLink
-                variant="rust"
-                size="lg"
+                  className="flex w-full h-12 sm:w-[270px] rounded-full"
+                >
+                  Explore Interactive Demo
+                </ButtonLink>
+              }
+            >
+              <MetallicButton
                 to="/demo"
-                icon={<ArrowRight className="w-4 h-4" />}
-              >
-                Explore Interactive Demo
-              </ButtonLink>
-            )}
+                label="Explore Interactive Demo"
+                className="w-full sm:w-[270px] shrink-0"
+                baseColor="#0E2943"
+                sheenColor="#F5EFE799"
+                bandCount={3}
+                edgeBlur={0.7}
+                redFringe={0.12}
+                blueFringe={0.08}
+                idleSpeed={0}
+                hoverSpeed={0.65}
+                clickSpeed={1.2}
+              />
+            </React.Suspense>
 
             <Link
               to="/about"
