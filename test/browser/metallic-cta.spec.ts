@@ -12,7 +12,7 @@ test('homepage uses the Leqad metallic CTA by default', async ({ page }) => {
 });
 
 for (const width of [320, 375, 768, 1024, 1440]) {
-  test(`default metallic CTA fits and navigates at ${width}px`, async ({ page }) => {
+  test('default metallic CTA fits and navigates at ' + width + 'px', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     const errors: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -30,7 +30,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     await link.focus();
     await expect(link).toBeFocused();
     await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(new RegExp('/demo
+    await expect(page).toHaveURL(/\/demo$/);
     await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
     expect(errors).toEqual([]);
   });
@@ -55,7 +55,7 @@ test('WebGL2-disabled browsers still display a static navy CTA that navigates', 
   const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
   await expect(link).toBeVisible();
   await link.click();
-    await expect(page).toHaveURL(new RegExp('/demo$'));
+  await expect(page).toHaveURL(/\/demo$/);
 });
 
 test('reduced motion keeps the metallic CTA readable and navigable', async ({ page }) => {
@@ -66,58 +66,5 @@ test('reduced motion keeps the metallic CTA readable and navigable', async ({ pa
   await expect(link).toBeVisible();
   await expect(button.locator('[data-metallic-face]')).toBeVisible();
   await link.click();
-    await expect(page).toHaveURL(new RegExp('/demo$'));
-});
-));
-    await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
-    expect(errors).toEqual([]);
-  });
-}
-
-test('WebGL2-disabled browsers still display a static navy CTA that navigates', async ({ page }) => {
-  await page.addInitScript(() => {
-    const original = HTMLCanvasElement.prototype.getContext;
-    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
-      configurable: true,
-      value: function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
-        if (type === 'webgl2') return null;
-        return Reflect.apply(original, this, [type, ...args]);
-      },
-    });
-  });
-  await page.goto('/');
-  const button = page.locator('[data-metallic-cta]');
-  await expect(button).toHaveAttribute('data-shader-status', 'fallback');
-  await expect(button.locator('canvas')).toHaveCount(0);
-  await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /14, 41, 67/);
-  const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
-  await expect(link).toBeVisible();
-  await link.click();
-  await expect(page).toHaveURL(new RegExp('/demo
-});
-
-test('reduced motion keeps the metallic CTA readable and navigable', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  const button = page.locator('[data-metallic-cta]');
-  const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
-  await expect(link).toBeVisible();
-  await expect(button.locator('[data-metallic-face]')).toBeVisible();
-  await link.click();
-    await expect(page).toHaveURL(new RegExp('/demo$'));
-});
-));
-});
-
-test('reduced motion keeps the metallic CTA readable and navigable', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  const button = page.locator('[data-metallic-cta]');
-  const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
-  await expect(link).toBeVisible();
-  await expect(button.locator('[data-metallic-face]')).toBeVisible();
-  await link.click();
-  await expect(page).toHaveURL(new RegExp('/demo
-});
-));
+  await expect(page).toHaveURL(/\/demo$/);
 });
