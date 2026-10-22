@@ -26,7 +26,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
               Computer-Aided Design (CAD) is essential for engineering, product development, and physical making. But learning it from video tutorials is frustrating: you constantly pause videos, switch back and forth between tabs, and get stuck on confusing menus and constraint errors.
             </p>
             <p>
-              <strong>Leqad brings lessons and guidance directly into your CAD workflow.</strong> Instead of watching someone else model, you practice directly on the canvas with interactive step-by-step instructions, spatial tool hints, and clear explanations of why each decision matters.
+              <strong>Leqad is prototyping lessons and guidance alongside browser-based CAD workflows.</strong> The interactive website demo illustrates step-by-step sketching and extrusion, while the extension explores local tool cues and contextual explanations.
             </p>
           </div>
 
@@ -56,7 +56,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
           <SectionHeading
             eyebrow="Product Preview"
             title="A teaching panel inside your workspace."
-            description="Leqad sits directly beside your 3D canvas, highlighting recognized tools and providing context as you work."
+            description="The prototype explores contextual guidance beside a CAD workspace; the website demo illustrates the experience without connecting to a live model."
           />
         </div>
         <ProductPreview />
@@ -79,11 +79,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
             </span>
 
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Partnering with CAD platforms and engineering educators.
+              Exploring collaboration with CAD teams and educators.
             </h2>
 
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-              We are actively exploring pilots with university engineering labs, robotics teams, and CAD platform ecosystems. We prioritize verified geometry rules over ungrounded generative AI, ensuring students learn real mechanical constraints.
+              We welcome conversations with CAD platform teams, robotics mentors, and engineering educators about evaluating guided practice. Geometry-aware model verification is a future direction, not a current capability.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
