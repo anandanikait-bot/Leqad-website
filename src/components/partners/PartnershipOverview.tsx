@@ -86,7 +86,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         <SectionHeading
           eyebrow="Current Prototype"
           title="How the early extension operates."
-          description="Tested as a functional Chrome and Edge browser extension with an 8-step foundational sketch lesson."
+          description="Early browser-extension prototype with guided CAD concepts and local cues for supported controls; the separate website demo illustrates an eight-step sketch-to-solid lesson."
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -94,7 +94,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <span className="font-mono text-xs font-semibold text-[#B74B21]">01 · Ribbon Recognition</span>
             <h4 className="text-sm font-semibold text-[#0E2943]">Control Highlighting</h4>
             <p className="text-xs text-[#55616B] leading-relaxed">
-              Recognized CAD interface tools are highlighted with visual target rings when the learner requests guidance.
+              Supported interface controls can receive local visual cues when learners request guidance; this does not inspect model geometry.
             </p>
           </div>
 
@@ -118,7 +118,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <span className="font-mono text-xs font-semibold text-[#B74B21]">04 · Truthfulness</span>
             <h4 className="text-sm font-semibold text-[#0E2943]">Conservative Verification</h4>
             <p className="text-xs text-[#55616B] leading-relaxed">
-              The system explicitly distinguishes observed user actions from geometry it cannot conservatively inspect.
+              The current prototype offers local interface cues, not verified geometric or engineering checks.
             </p>
           </div>
         </div>
@@ -127,7 +127,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         <div className="p-4 rounded-xl bg-white border border-[#D9DDD9] text-xs text-[#0E2943] flex items-start gap-3">
           <ShieldCheck className="w-4 h-4 text-[#B74B21] flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <strong>Architecture Boundary:</strong> The current prototype is an independent client-side extension. Full automatic CAD model inspection and verification is planned for future phases under authorized platform developer APIs.
+            <strong>Architecture Boundary:</strong> The prototype is an independent client-side extension. Geometry-aware feedback would require future technical development and authorized platform access.
           </div>
         </div>
       </div>
@@ -204,7 +204,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
           </div>
           <div className="p-3.5 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
             <div className="text-[#55616B]">Curriculum</div>
-            <div className="text-[#0E2943] font-semibold mt-1">8-Step Beginner Sketch</div>
+            <div className="text-[#0E2943] font-semibold mt-1">Website: 8-Step Demo</div>
           </div>
           <div className="p-3.5 rounded bg-[#FAF8F4] border border-[#D9DDD9]">
             <div className="text-[#55616B]">Testing Stage</div>
