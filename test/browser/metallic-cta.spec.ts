@@ -6,7 +6,8 @@ test('normal homepage keeps original rust CTA and never mounts metallic shader',
   const link = page.getByRole('link', { name: 'Explore Interactive Demo', exact: true });
   await expect(link).toHaveAttribute('href', '/demo');
   await expect(link).toHaveCSS('background-color', 'rgb(183, 75, 33)');
-  await expect(page.locator('main canvas')).toHaveCount(1); // existing CAD artwork only
+  // Both the CAD artwork and sonar background own canvases; only the experimental shader must be absent.
+  await expect(page.locator('[data-metallic-cta] canvas')).toHaveCount(0);
 });
 
 for (const width of [320, 375, 1440]) {
