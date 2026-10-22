@@ -12,7 +12,7 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
   return (
-    <div className="py-10 sm:py-16 space-y-16 animate-fadeIn">
+    <div className="py-10 sm:py-16 space-y-12 sm:space-y-16 animate-fadeIn">
       {/* 1. What is Leqad? Clear explanation in plain English */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-5">
@@ -23,10 +23,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
 
           <div className="space-y-4 text-base sm:text-lg text-[#55616B] leading-relaxed">
             <p>
-              Computer-Aided Design (CAD) is essential for engineering, product development, and physical making. But learning it from video tutorials is frustrating: you constantly pause videos, switch back and forth between tabs, and get stuck on confusing menus and constraint errors.
+              CAD is easier to learn when you can practice each step yourself. Tutorials explain the tools, but it can be difficult to connect those lessons to what you are building.
             </p>
             <p>
-              <strong>Leqad is prototyping lessons and guidance alongside browser-based CAD workflows.</strong> The interactive website demo illustrates step-by-step sketching and extrusion, while the extension explores local tool cues and contextual explanations.
+              <strong>Leqad explores guided CAD learning alongside the workspace.</strong> Try the interactive sketch-to-solid demo, or learn how the extension prototype introduces contextual cues.
             </p>
           </div>
 
@@ -70,22 +70,22 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
 
       {/* Partnership & Educational Collaboration */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div data-parallax-anchor className="bg-[#0E2943] rounded-2xl p-8 sm:p-12 text-white relative overflow-hidden">
+        <div data-parallax-anchor className="bg-[#0E2943] rounded-2xl p-7 sm:p-10 text-white relative overflow-hidden">
           {/* Slow technical grid and counter-moving pinpoints share one stable anchor. */}
-          <div aria-hidden="true" data-parallax-travel="20" data-parallax-mobile-travel="12" className="absolute -inset-6 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-          <div aria-hidden="true" data-parallax-travel="8" data-parallax-mobile-travel="4" data-parallax-direction="-1" className="absolute -inset-6 opacity-[0.035] bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] pointer-events-none" />
+          <div aria-hidden="true" data-parallax-travel="12" data-parallax-mobile-travel="6" className="absolute -inset-6 opacity-[0.05] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+          <div aria-hidden="true" data-parallax-travel="4" data-parallax-mobile-travel="2" data-parallax-direction="-1" className="absolute -inset-6 opacity-[0.02] bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] pointer-events-none" />
 
-          <div className="relative z-10 max-w-3xl space-y-6">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#B74B21] bg-white/10 px-2.5 py-1 rounded border border-white/10 font-semibold">
+          <div className="relative z-10 max-w-3xl space-y-4">
+            <span className="font-mono text-xs uppercase tracking-wider text-[#F5EFE7]/75 font-medium">
               Collaboration & Testing
             </span>
 
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
               Exploring collaboration with CAD teams and educators.
             </h2>
 
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-              We welcome conversations with CAD platform teams, robotics mentors, and engineering educators about evaluating guided practice. Geometry-aware model verification is a future direction, not a current capability.
+              We welcome conversations about evaluating guided CAD practice with educators and platform teams. Geometry-aware feedback remains a future direction.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -109,27 +109,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
         </div>
       </section>
 
-      {/* Bottom CTA Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-2 pb-4">
-        <div className="inline-flex flex-col sm:flex-row items-center justify-between gap-6 p-6 sm:p-8 bg-white rounded-2xl border border-[#D9DDD9] w-full text-left">
-          <div className="space-y-1">
-            <h3 className="text-lg font-bold text-[#0E2943]">
-              Experience the 8-step guided lesson.
-            </h3>
-            <p className="text-sm text-[#55616B]">
-              Try the interactive CAD learning demonstration right in your browser with zero setup.
-            </p>
-          </div>
-          <ButtonLink
-            variant="rust"
-            size="lg"
-            to="/demo"
-            icon={<ArrowRight className="w-4 h-4" />}
-          >
-            Launch Interactive Demo
-          </ButtonLink>
-        </div>
-      </div>
     </div>
   );
 };
