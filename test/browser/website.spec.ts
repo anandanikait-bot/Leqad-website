@@ -123,7 +123,7 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   await page.getByRole('navigation', { name: 'Walkthrough steps', exact: true })
     .getByRole('button', { name: '2 Select reference plane', exact: true }).click();
 
-  for (const [index, label] of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch'].entries()) {
+  for (const [index, label] of ['Select Top Plane', 'Start sketch', 'Use guided rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch'].entries()) {
     await page.getByRole('button', { name: label, exact: true }).click();
     await snapshot(`demo-0${index + 3}-${['start-sketch', 'draw-rectangle', 'dimensions', 'finish-sketch', 'extrude-ready'][index]}`);
   }
@@ -152,7 +152,7 @@ test('lesson actions, optional help, highlighting, completion and restart remain
 test('editing dimensions resizes sketch and the accepted 3D plate', async ({ page }) => {
   await page.goto('/demo');
   await page.getByRole('button', { name: 'Start walkthrough', exact: true }).click();
-  for (const name of ['Select Top Plane', 'Start sketch', 'Draw rectangle']) {
+  for (const name of ['Select Top Plane', 'Start sketch', 'Use guided rectangle']) {
     await page.getByRole('button', { name, exact: true }).click();
   }
   const profile = page.getByTestId('sketch-profile');
@@ -170,7 +170,7 @@ test('editing dimensions resizes sketch and the accepted 3D plate', async ({ pag
   await expect(page.getByText('Part 1 created · 48 × 36 × 10 mm')).toBeVisible();
   await page.getByRole('button', { name: 'Restart walkthrough', exact: true }).click();
   await page.getByRole('button', { name: 'Start walkthrough', exact: true }).click();
-  for (const name of ['Select Top Plane', 'Start sketch', 'Draw rectangle']) {
+  for (const name of ['Select Top Plane', 'Start sketch', 'Use guided rectangle']) {
     await page.getByRole('button', { name, exact: true }).click();
   }
   await expect(page.getByRole('spinbutton', { name: 'Width (mm)' })).toHaveValue('40');
@@ -180,7 +180,7 @@ test('editing dimensions resizes sketch and the accepted 3D plate', async ({ pag
 test('cancel extrusion returns to accepted sketch without inventing a solid', async ({ page }) => {
   await page.goto('/demo');
   await page.getByRole('button', { name: 'Start walkthrough' }).click();
-  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
+  for (const label of ['Select Top Plane', 'Start sketch', 'Use guided rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
     await page.getByRole('button', { name: label, exact: true }).click();
   }
   await page.getByRole('button', { name: 'Start Extrude', exact: true }).click();
@@ -194,7 +194,7 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
   await page.setViewportSize({ width: 375, height: 900 });
   await page.goto('/demo');
   await page.getByRole('button', { name: 'Start walkthrough' }).click();
-  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
+  for (const label of ['Select Top Plane', 'Start sketch', 'Use guided rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
     await page.getByRole('button', { name: label, exact: true }).click();
   }
   await page.getByRole('button', { name: 'Start Extrude' }).click();

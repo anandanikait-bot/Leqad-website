@@ -1,76 +1,62 @@
-# Final website and hands-on demo refinement
+# Final three polish fixes
 
-This work continues draft [PR #11](https://github.com/anandanikait-bot/Leqad-website/pull/11), branch `polish/minimal-demo-footer-seo`. Before editing, `main` (`840fc03`) and PR #11 (`c0caf52`) were fetched and compared. PR #11 already included the latest main, editable sketch sizes, extrusion prerequisites, the simplified two-group footer, accurate product copy, and exact browser titles. Those changes were retained.
+This pass starts at `f7b0861` on the existing `polish/minimal-demo-footer-seo` source branch. A fresh fetch revealed that PR #11 had already been merged by the owner on the remote: `origin/main` contains merge commit `68e1818`. These follow-up changes are committed to that same source branch; pushing it cannot add commits to an already-merged PR. No new PR, merge, or deployment is performed by this pass.
 
-## Implemented
+## Changes
 
-- Corner Rectangle now arms a drawing tool. Select the origin, move the pointer to see a live preview, and select the opposite corner. Touch uses the same two-tap interaction. The guided Draw rectangle button remains available; G arms drawing and Escape cancels it.
-- Width, height, depth and action validity live in the lesson state. Empty/out-of-range drafts do not create invalid geometry or unlock actions. Returning to a field restores both its last valid value and action validity. D applies valid dimensions when focus is outside an input.
-- Sketch cancellation discards dependent geometry. Extrusion cancellation returns to the accepted sketch and restores the default depth. Restart restores the initial lesson, sizes and completion tracking. Skipping steps cannot create a part.
-- A lightweight shared-vertex plate model uses hero-inspired Euler rotation and perspective, fine edges, restrained shading and a 260ms sketch-to-solid transition. Reduced motion skips the transition. The hero itself is unchanged. Top, Isometric, Front and Right views use real projections, and the final solid stays visible after confirmation.
-- Sketch/extrusion controls sit above the viewport rather than over the model. Each step retains one primary teaching-panel action, optional help, highlighting and existing navigation.
-- The approved logo remains byte-identical. A 144×144 navbar/favicon PNG was derived by resampling the source, with no redrawing, tracing, color changes or cropping. The 44px mobile/48px desktop header sizes are unchanged. The About preview is a fresh, noninteractive capture of the current implementation.
-- PR #11's two-group footer, integrated circular symbol, large halftone lettering, fade, prototype disclaimer and absence from the homepage are preserved. Footer animation math was not modified. Product claims and exact route titles remain accurate before and after hydration.
+- Desktop model framing uses a uniform **1.18 camera scale**, with view-dependent bounds and clearance for dimension labels. The underlying vertices, proportions, translucent preview, shading, fine edges, and rust indicators are unchanged. Smaller screens prioritize a complete fit. Top, Isometric, Front, and Right views and live depth updates remain functional.
+- Step 4 emphasizes the existing toolbar → origin → live preview → opposite-corner workflow. The toolbar names Corner Rectangle while drawing is available. The **Use guided rectangle** alternative has an outline treatment and a minimum 44px touch target. Existing inline status text supplies context-sensitive instructions; no additional panels were added.
+- Coordinates show dashes when the pointer leaves or the model enters extrusion. Reserved numeric space prevents the readout from wrapping the toolbar and moving the drawing target at 1024px.
+- The completion tap's follow-up click cannot also apply dimensions to the newly mounted profile. This preserves the dimension-editing step on touch devices while retaining subsequent deliberate profile clicks.
+- The homepage hero, official logo artwork and optimized navbar asset, footer and its animation, typography, palette, dependencies, lesson actions and prerequisites are unchanged. `PlateModel.tsx` retains the existing 260ms transition and runtime reduced-motion handling.
 
-## Actual commands and outcomes
+## Verification
 
-| Command | Result |
+| Command | Final result |
 | --- | --- |
-| `npm ci` | Passed, no legacy-peer workaround needed on PR #11's dependency tree |
-| `npm run lint` | Passed, TypeScript |
+| `npm ci --cache /workspace/.npm-cache` | Passed; no dependency or lockfile changes |
+| `npm run lint` | Passed; TypeScript |
 | `npm test` | 23 passed, 0 failed, 0 skipped |
-| `npm run build` | Client build plus prerendered `/`, `/demo`, `/about`, `/partners`, `/404` passed |
-| `npm run test:browser` | 46 passed, 0 failed, 0 skipped in system Chromium |
+| `npm run build` | Passed; client build plus four public routes and 404 prerender |
+| `npm run test:browser` | 48 passed, 0 failed, 0 skipped; 48.7 seconds, system Chromium |
 | `git diff --check` | Passed |
 
-Browser tests cover all four routes at **320, 375, 768, 1024 and 1440px**; full eight-step completion; direct feature-tree and viewport plane selection; armed two-click rectangle drawing; two-tap mobile drawing; valid/invalid dimension edits; actual sketch proportions; dimension/depth consistency through preview and confirmation; depth cancellation; drawing/sketch cancellation; restart and prerequisite guards; keyboard shortcuts; fields revisited after invalid drafts; model bounds at maximum width/height/depth at every breakpoint; settings not covering geometry; static About; exact browser titles with and without JavaScript; clean URLs, refresh, Back/Forward and legacy hash links; logo sizing; reduced motion; native mobile scrolling; footer behavior and overflow.
+Browser playtests include the complete eight-step lesson, two-click drawing, two-tap mobile drawing followed by width/height/depth editing, extrusion cancellation, confirmation and restart; guided drawing; sketch/drawing cancellation; invalid drafts; prerequisites; keyboard shortcuts; view controls; and reduced motion. Maximum 50 × 40 × 50mm geometry **and labels** are checked against the SVG bounds in all four views at 320, 375, 768, 1024 and 1440px. Existing route, SEO, prerender, navigation, static About, footer, logo, overflow and scrolling checks remain in the full suite.
 
-## Fresh visual evidence
+During development, the new tests first failed for missing framing/guidance, then caught a misplaced guided-button style and a touch completion click skipping dimension editing. Capture playtesting also exposed a 32.66px coordinate-driven layout shift at 1024px; its regression test failed before the fixed-width readout correction. Final outcomes above supersede those development failures. Independent review checked the framing, state preservation, guided styling and touch event fix; all material findings were resolved.
 
-All linked captures below were generated from this modified production build. They are not copied from earlier work. Page screenshots wait for local fonts and footer painting. Demo captures hide the sticky header only while cropping the tall workspace, so the header is not misleadingly overlaid across the teaching panel. The header remains unchanged in the application.
+## Before and after
 
-| Page | 320px | 375px | 768px | 1024px | 1440px |
+Before captures were freshly generated from the unchanged `f7b0861` production build immediately before implementation. After captures are generated from the modified production build. Preview and solid comparisons use the same 48 × 36 × 12mm dimensions.
+
+| State | Before desktop | After desktop | Before mobile | After mobile |
+| --- | --- | --- | --- | --- |
+| Rectangle interaction | [Before](screenshots/before-polish/04-draw-rectangle-desktop.png) | [After](screenshots/demo/04-draw-rectangle-desktop.png) | [Before](screenshots/before-polish/04-draw-rectangle-mobile.png) | [After](screenshots/demo/04-draw-rectangle-mobile.png) |
+| Extrusion preview | [Before](screenshots/before-polish/08-extrude-preview-desktop.png) | [After](screenshots/demo/08-extrude-preview-desktop.png) | [Before](screenshots/before-polish/08-extrude-preview-mobile.png) | [After](screenshots/demo/08-extrude-preview-mobile.png) |
+| Confirmed solid | [Before](screenshots/before-polish/09-confirmed-plate-desktop.png) | [After](screenshots/demo/09-confirmed-plate-desktop.png) | [Before](screenshots/before-polish/09-confirmed-plate-mobile.png) | [After](screenshots/demo/09-confirmed-plate-mobile.png) |
+
+## Fresh evidence from this build
+
+| Width | Drawing | Dimensions | Extrusion preview | Confirmed solid | Maximum model |
 | --- | --- | --- | --- | --- | --- |
-| Home | [Image](screenshots/home-320px.png) | [Image](screenshots/home-mobile.png) | [Image](screenshots/home-768px.png) | [Image](screenshots/home-1024px.png) | [Image](screenshots/home-desktop.png) |
-| Demo | [Image](screenshots/demo-320px.png) | [Image](screenshots/demo-mobile.png) | [Image](screenshots/demo-768px.png) | [Image](screenshots/demo-1024px.png) | [Image](screenshots/demo-desktop.png) |
-| About | [Image](screenshots/about-320px.png) | [Image](screenshots/about-mobile.png) | [Image](screenshots/about-768px.png) | [Image](screenshots/about-1024px.png) | [Image](screenshots/about-desktop.png) |
-| Partners | [Image](screenshots/partners-320px.png) | [Image](screenshots/partners-mobile.png) | [Image](screenshots/partners-768px.png) | [Image](screenshots/partners-1024px.png) | [Image](screenshots/partners-desktop.png) |
+| 320px | [Drawing](screenshots/demo/04-draw-rectangle-320px.png) | [Dimensions](screenshots/demo/05-edit-dimensions-320px.png) | [Preview](screenshots/demo/08-extrude-preview-320px.png) | [Solid](screenshots/demo/09-confirmed-plate-320px.png) | [50 × 40 × 50](screenshots/demo/10-maximum-model-320px.png) |
+| 375px | [Drawing](screenshots/demo/04-draw-rectangle-mobile.png) | [Dimensions](screenshots/demo/05-edit-dimensions-mobile.png) | [Preview](screenshots/demo/08-extrude-preview-mobile.png) | [Solid](screenshots/demo/09-confirmed-plate-mobile.png) | [50 × 40 × 50](screenshots/demo/10-maximum-model-mobile.png) |
+| 768px | [Drawing](screenshots/demo/04-draw-rectangle-768px.png) | [Dimensions](screenshots/demo/05-edit-dimensions-768px.png) | [Preview](screenshots/demo/08-extrude-preview-768px.png) | [Solid](screenshots/demo/09-confirmed-plate-768px.png) | [50 × 40 × 50](screenshots/demo/10-maximum-model-768px.png) |
+| 1024px | [Drawing](screenshots/demo/04-draw-rectangle-1024px.png) | [Dimensions](screenshots/demo/05-edit-dimensions-1024px.png) | [Preview](screenshots/demo/08-extrude-preview-1024px.png) | [Solid](screenshots/demo/09-confirmed-plate-1024px.png) | [50 × 40 × 50](screenshots/demo/10-maximum-model-1024px.png) |
+| 1440px | [Drawing](screenshots/demo/04-draw-rectangle-desktop.png) | [Dimensions](screenshots/demo/05-edit-dimensions-desktop.png) | [Preview](screenshots/demo/08-extrude-preview-desktop.png) | [Solid](screenshots/demo/09-confirmed-plate-desktop.png) | [50 × 40 × 50](screenshots/demo/10-maximum-model-desktop.png) |
 
-| Lesson state | Desktop | Mobile |
-| --- | --- | --- |
-| 1. Introduction | [Image](screenshots/demo/01-introduction-desktop.png) | [Image](screenshots/demo/01-introduction-mobile.png) |
-| 2. Select plane | [Image](screenshots/demo/02-select-plane-desktop.png) | [Image](screenshots/demo/02-select-plane-mobile.png) |
-| 3. Start sketch | [Image](screenshots/demo/03-start-sketch-desktop.png) | [Image](screenshots/demo/03-start-sketch-mobile.png) |
-| 4. Draw rectangle | [Image](screenshots/demo/04-draw-rectangle-desktop.png) | [Image](screenshots/demo/04-draw-rectangle-mobile.png) |
-| 5. Edit dimensions | [Image](screenshots/demo/05-edit-dimensions-desktop.png) | [Image](screenshots/demo/05-edit-dimensions-mobile.png) |
-| 6. Finish sketch | [Image](screenshots/demo/06-finish-sketch-desktop.png) | [Image](screenshots/demo/06-finish-sketch-mobile.png) |
-| 7. Accepted planar profile | [Image](screenshots/demo/07-accepted-profile-desktop.png) | [Image](screenshots/demo/07-accepted-profile-mobile.png) |
-| 8. Extrusion preview | [Image](screenshots/demo/08-extrude-preview-desktop.png) | [Image](screenshots/demo/08-extrude-preview-mobile.png) |
-| Confirmed solid | [Image](screenshots/demo/09-confirmed-plate-desktop.png) | [Image](screenshots/demo/09-confirmed-plate-mobile.png) |
+The capture script uses actual corner selections; narrow mobile captures use touchscreen taps. Desktop drawing captures show the live pointer preview. Mobile drawing captures show the first-corner preview before the second tap. Tall workspace crops temporarily hide the sticky header only during capture; the application header is unchanged.
 
-[Sketch-to-extrude recording](screenshots/demo/sketch-to-extrude.mp4): 3.5 seconds of actual browser frames, including depth editing and confirmation. Footer closeups: [desktop](screenshots/footer-1440px.png), [tablet](screenshots/footer-768px.png), [mobile](screenshots/footer-375px.png).
+Final footer: [1440px](screenshots/footer-1440px.png), [768px](screenshots/footer-768px.png), [375px](screenshots/footer-375px.png). Full-page route captures were also refreshed at all five widths.
 
-Regenerate against the production server with `npm run screenshots`, `npm run screenshots:demo`, and `tsx scripts/capture-footer-screenshots.ts`. The demo recording uses system ffmpeg when available. CI runs the fresh page/demo captures and uploads review artifacts after successful checks.
+[Updated hands-on recording](screenshots/demo/sketch-to-extrude.mp4), **13.25 seconds**, shows viewport Top Plane selection, Sketch, Corner Rectangle, origin placement, live pointer preview, opposite corner, width/height editing, Finish Sketch, Start Extrude, depth editing, confirmation and the final isometric solid. A recording-only pointer dot makes the real cursor path visible; it is not application UI. Frames come from the actual browser, encoded with system ffmpeg. No dependency was added.
 
-## Review, performance and accessibility
+Regenerate with the production server running: `npm run screenshots`, `npm run screenshots:demo`, and `npx tsx scripts/capture-footer-screenshots.ts`. The demo script captures every lesson state at all five widths, maximum model size, and the recording when system ffmpeg is available.
 
-An independent reviewer found a field-remount validation defect, incorrect Front/Right view labels and stale instructions. All were corrected; the validation defect has a failing-then-passing browser regression. No material review findings remain deferred. Screenshots were inspected manually, including the model faces, numeric labels, mobile controls and footer composition.
+## Changed files and limitations
 
-The navbar derivative is **24,349 bytes**, compared with **1,208,163 bytes** for the source (about 98% less). The canonical SHA-256 remains `ca9cb8ffd5c6643db19756cbd4d2e71b02565283a0d0a21227655336957c17e1`. No heavy 3D dependency was added. Compared with PR #11's baseline, client JS grew from 120.59 to 121.52 kB gzip; CSS dropped from 9.20 to 9.07 kB gzip. The new transition stops after 260ms and respects runtime reduced-motion changes; model inspection does not run an idle animation loop.
+[Exact changed-file manifest](modified-files.txt) includes implementation, tests, scripts, documentation and all evidence paths for this pass.
 
-Number fields retain explicit labels and linked validation messages. Invalid values disable both guided and toolbar actions. Plane selection is keyboard accessible. Native page/touch scrolling is retained. No formal screen-reader or complete WCAG audit was run. Freeform orbiting is deliberately deferred: tested view buttons provide inspection, and the unsupported orbit-ready claim was removed. This remains a local illustrated CAD lesson, not a CAD kernel, geometry validator or live integration.
+This remains an educational CAD simulation, not a CAD geometry engine or live integration. Freeform orbiting remains deferred. Mouse, keyboard and Chromium touch emulation were tested; physical-device and formal screen-reader/WCAG audits were not performed.
 
-## Production/build synchronization
-
-Local production build, prerendering and routing were verified. A fresh read-only request to `https://leqada.ai.studio/demo` still failed with `Tunnel connection failed: 403 Forbidden` from the environment proxy. Consequently the deployed build/version and any older production walkthrough cannot be compared from this environment. This is an access limitation, not evidence about the deployed app. A Git push does not update or verify production.
-
-No deployment or merge was performed. Follow [the hosting contract and post-deployment checks](hosting.md) only after a separately reviewed, authorized deployment. GitHub API access was also unavailable earlier; updating PR #11's source branch through Git preserves the existing draft PR while keeping this report and the prepared description reviewable in the repository.
-
-## Modified implementation files
-
-- `src/components/demo/DemoWorkbench.tsx`, `LessonPanel.tsx`, `SimulatedCADCanvas.tsx`: interaction/state, validation, clear controls and corrected views.
-- `src/components/demo/PlateModel.tsx`, `DimensionInput.tsx`, `src/lib/plate-geometry.ts`: focused rendering, editable drafts and projection helpers.
-- `src/lib/lesson-data.ts`: accurate two-click/inline-control guidance.
-- `src/components/shared/BrandLogo.tsx`, `public/assets/brand/leqad-navbar.png`, `index.html`: optimized approved logo and favicon.
-- `src/components/home/ProductPreview.tsx`, `public/assets/cad-lesson-preview.png`, `src/lib/seo.ts`: fresh static preview and correct intrinsic/share-image dimensions.
-- Browser/unit tests, screenshot scripts, package scripts, CI workflow and review documentation.
+Production hosting/build synchronization remains unverified: the environment proxy blocks `leqada.ai.studio` with a tunnel 403. Local routing and refresh checks do not establish deployed routing compatibility. Follow the [hosting verification checklist](hosting.md) after a separately authorized deployment. GitHub GraphQL access is also blocked (`Forbidden`), so the repository contains prepared review text in [pull-request.md](pull-request.md); live PR metadata was not updated. The already-merged PR #11 cannot receive these new commits. Owner review must account for the source-branch follow-up separately.

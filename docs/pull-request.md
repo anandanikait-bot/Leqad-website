@@ -1,18 +1,19 @@
-# Final website and hands-on demo refinement
+# Final model framing and canvas drawing polish
 
-The walkthrough previously created a rectangle immediately on tool selection and used a separate static prism for extrusion. It now supports tool → origin → live preview → opposite-corner drawing, including mobile taps, while keeping guided actions. Edited width, height and depth carry through one shared-vertex plate model with real Top/Isometric/Front/Right projections, restrained hero-inspired shading and a reduced-motion-aware transition.
+PR #11 was already merged remotely at `68e1818` before this polish pass finished. This text describes the follow-up on its existing source branch, `polish/minimal-demo-footer-seo`; it does not claim these changes are in the merged PR or deployed. No replacement PR was created.
 
-Feature controls sit above the viewport. Invalid numeric drafts cannot create geometry; navigation, cancel and restart preserve the prerequisite/completion rules. The approved logo source is unchanged; the 144px navbar/favicon derivative is 24KB and retains 44px/48px display sizing. About has a fresh static preview.
+The extrusion now uses an approximately 18% larger desktop camera framing with complete responsive fitting and legible labels. Geometry proportions and preview/confirmed shading remain unchanged. Step 4 foregrounds toolbar-based two-click or two-tap rectangle creation, while retaining the accessible, secondary **Use guided rectangle** action. Fixed readout space keeps pointer targets stationary; completing a touch rectangle no longer also applies dimensions.
 
-This continues PR #11's existing improvements: the hero-only homepage, exact browser titles and clean routes, accurate prototype/future claims, and the two-group footer with integrated halftone symbol, lettering, fade and disclaimer. Hero and footer animation mathematics were not changed.
+The existing lesson supports editable width, height and depth, dimension-driven solids, Top/Isometric/Front/Right views, cancellation, restart, validation and prerequisite guards. This is an educational CAD simulation, not a real CAD engine. The optimized navbar logo remains unchanged in this pass. The homepage hero, official logo artwork, footer and animation, fonts, palette, dependencies and lesson state machine are preserved. Freeform orbiting remains deferred.
 
-Validation: `npm ci`, TypeScript and production/prerender build passed; **23 unit tests and 46 browser tests passed**. Browser checks include full completion, direct selections, pointer/touch drawing, invalid drafts, cancel/restart/prerequisites, maximum-size models at all five requested widths, metadata before/after hydration, logo sizing, reduced motion and native mobile scrolling. Independent review findings were fixed.
+Validation passed: clean `npm ci`, TypeScript, production/prerender build, **23 unit tests and 48 browser tests**, with zero failures or skips.
 
-[All four pages at five breakpoints, every major demo state, modified files, test results and limitations](https://github.com/anandanikait-bot/Leqad-website/blob/polish/minimal-demo-footer-seo/docs/validation.md).
+See [validation.md](validation.md) for final command results, full mouse/touch playtesting, independent review, exact changed files, before-and-after comparisons and five-width screenshots.
 
-- [Desktop extrusion preview](https://github.com/anandanikait-bot/Leqad-website/blob/polish/minimal-demo-footer-seo/docs/screenshots/demo/08-extrude-preview-desktop.png)
-- [Mobile extrusion preview](https://github.com/anandanikait-bot/Leqad-website/blob/polish/minimal-demo-footer-seo/docs/screenshots/demo/08-extrude-preview-mobile.png)
-- [Confirmed plate](https://github.com/anandanikait-bot/Leqad-website/blob/polish/minimal-demo-footer-seo/docs/screenshots/demo/09-confirmed-plate-desktop.png)
-- [Sketch-to-extrude recording](https://github.com/anandanikait-bot/Leqad-website/blob/polish/minimal-demo-footer-seo/docs/screenshots/demo/sketch-to-extrude.mp4)
+- [Desktop live rectangle drawing](screenshots/demo/04-draw-rectangle-desktop.png)
+- [Desktop extrusion preview](screenshots/demo/08-extrude-preview-desktop.png)
+- [Mobile confirmed solid](screenshots/demo/09-confirmed-plate-mobile.png)
+- [Actual drawing-to-extrusion recording](screenshots/demo/sketch-to-extrude.mp4)
+- [Final footer](screenshots/footer-1440px.png)
 
-Freeform orbit is deferred; the view controls are implemented and tested. Production build/version remains unverified because this environment's proxy blocks `leqada.ai.studio` with a tunnel 403. [Hosting verification steps](https://github.com/anandanikait-bot/Leqad-website/blob/polish/minimal-demo-footer-seo/docs/hosting.md) remain necessary after an authorized deployment. **No merge or deployment was performed.**
+Production compatibility remains unverified because this environment's proxy blocks the production host. GitHub GraphQL is also blocked, so live PR metadata has not been edited. No new PR, merge or deployment was performed.

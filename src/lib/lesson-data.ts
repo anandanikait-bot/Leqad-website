@@ -70,11 +70,11 @@ export const LESSON_STEPS: LessonStep[] = [
     instruction: 'Activate Corner Rectangle (G) and anchor the first corner at the coordinate origin (0,0), then move the pointer and select the opposite corner.',
     semanticActionId: 'draw-rectangle',
     activeToolId: 'rectangle',
-    recommendedAction: 'Click Corner Rectangle (G) and anchor at Origin (0,0)',
+    recommendedAction: 'Draw in the viewport: select Corner Rectangle (G), select the origin, then select the opposite corner. Move the pointer to preview your rectangle.',
     hints: [
       'Click the Corner Rectangle icon (keyboard shortcut: G) in the sketch ribbon.',
       'Hover near the coordinate origin (0,0) until you see the coincident snap indicator, then click.',
-      'Move diagonally up and right, then click to place the second corner. The boundary lines appear blue because size is not yet locked.'
+      'Move diagonally up and right, then click or tap to place the second corner. Rust-colored lines show that the size is not yet locked.'
     ],
     whyExplanation: 'Anchoring the first corner to the coordinate origin immediately removes two translational degrees of freedom, stabilizing the sketch in space.',
     recognizedControlId: 'tool-rectangle',

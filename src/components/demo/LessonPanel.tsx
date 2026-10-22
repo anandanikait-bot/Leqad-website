@@ -87,7 +87,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
     1: 'Start walkthrough',
     2: 'Select Top Plane',
     3: 'Start sketch',
-    4: 'Draw rectangle',
+    4: 'Use guided rectangle',
     5: `Set ${widthMm} × ${heightMm} mm dimensions`,
     6: 'Finish sketch',
     7: 'Start Extrude',
@@ -254,9 +254,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               </div>
             )}
             <Button
-              variant="rust"
+              variant={step.stepNumber === 4 && !isStepActionCompleted ? 'outline' : 'rust'}
               size="md"
-              className={`w-full justify-center ${isHighlightingControl && step.stepNumber === 8 ? 'ring-2 ring-[#B74B21] ring-offset-2' : ''}`}
+              className={`w-full min-h-11 justify-center ${isHighlightingControl && step.stepNumber === 8 ? 'ring-2 ring-[#B74B21] ring-offset-2' : ''}`}
               onClick={handlePrimaryAction}
               disabled={!canPerformCurrentAction}
             >

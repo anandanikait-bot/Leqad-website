@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { LessonStep, ViewOrientation, SketchDemoStatus } from '../../types';
 import { PlateModel } from './PlateModel';
 import { DimensionInput } from './DimensionInput';
+import { plateViewBox } from '../../lib/plate-geometry';
 import { 
   Square, 
   Check, 
@@ -51,9 +52,19 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const [rectangleArmed, setRectangleArmed] = useState(false);
   const [originSet, setOriginSet] = useState(false);
   const [rectanglePreview, setRectanglePreview] = useState({ width: 20, height: 15 });
-  const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0.0, y: 0.0 });
+  const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
+  const [desktop, setDesktop] = useState(false);
   const [svgCursor, setSvgCursor] = useState<{ x: number; y: number } | null>(null);
   const canvasRef = useRef<SVGSVGElement | null>(null);
+  const drawingGesture = useRef(false);
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 1024px)');
+    const update = () => setDesktop(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
 
   // Keep the sketch planar; return to an isometric view only once there is
   // a genuine extrusion preview. This prevents step navigation faking a solid.
@@ -63,6 +74,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         ? 'iso' : currentStepIndex <= 1 ? 'iso' : 'top'
     );
   }, [currentStepIndex, sketchStatus]);
+
+  useEffect(() => { setCursorPos(null); setSvgCursor(null); }, [sketchStatus]);
 
   useEffect(() => {
     if (currentStepIndex !== 3 || sketchStatus !== 'sketch-active') {
@@ -94,6 +107,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
     height: Math.max(15, Math.min(40, Math.round(-point.y / 3))),
   });
   const handleDrawingClick = (event: React.PointerEvent<SVGSVGElement>) => {
+    drawingGesture.current = false;
     if (event.button !== 0 || !rectangleArmed || currentStepIndex !== 3 || sketchStatus !== 'sketch-active') return;
     const p = pointerPoint(event);
     if (!p) return;
@@ -101,6 +115,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
       if (Math.hypot(p.x, p.y) <= 18) setOriginSet(true);
     } else if (p.x >= 60 && p.y <= -45) {
       const dimensions = pointerDimensions(p);
+      drawingGesture.current = true;
       onDrawRectangle(dimensions.width, dimensions.height);
     }
   };
@@ -131,6 +146,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
   const handleMouseLeave = () => {
     setSvgCursor(null);
+    setCursorPos(null);
   };
 
   // State-aware flags based on actual simulation state (Fix #2, Fix #3)
@@ -214,7 +230,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               if (canDraw) { setRectangleArmed(true); setOriginSet(false); }
             }}
-            className={`p-1.5 rounded transition-all cursor-pointer relative ${
+            className={`p-1.5 rounded transition-all cursor-pointer relative ${canDraw ? 'min-h-11 px-2' : ''} ${
               currentStepIndex === 3 && !isRectangleDrawn
                 ? 'bg-[#0E2943] text-white'
                 : isRectangleDrawn
@@ -229,6 +245,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             aria-label="Corner Rectangle tool" disabled={!canDraw} aria-pressed={rectangleArmed}
           >
             <Square className="w-4 h-4" />
+            {canDraw && <span className="text-xs">Corner Rectangle</span>}
           </button>
 
           {/* Dimension Tool (D) (Step 5: Apply Dimensions) */}
@@ -261,13 +278,13 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
         {/* Right Info: Coordinate Readout */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-          <div className="font-mono whitespace-nowrap text-[11px] text-[#55616B] flex items-center gap-1.5 sm:gap-2 bg-[#F5EFE7] px-2 sm:px-2.5 py-1 rounded border border-[#D9DDD9] shadow-2xs">
+          <div aria-label="Cursor coordinates" className="font-mono whitespace-nowrap text-[11px] text-[#55616B] flex items-center gap-1.5 sm:gap-2 bg-[#F5EFE7] px-2 sm:px-2.5 py-1 rounded border border-[#D9DDD9] shadow-2xs">
             <span>
-              X: <strong className="text-[#0E2943]">{cursorPos.x >= 0 ? `+${cursorPos.x.toFixed(1)}` : cursorPos.x.toFixed(1)}</strong>
+              X: <strong className="inline-block w-[7ch] tabular-nums text-[#0E2943]">{cursorPos ? `${cursorPos.x >= 0 ? '+' : ''}${cursorPos.x.toFixed(1)}` : '—'}</strong>
             </span>
             <span className="text-[#D9DDD9]">|</span>
             <span>
-              Y: <strong className="text-[#0E2943]">{cursorPos.y >= 0 ? `+${cursorPos.y.toFixed(1)}` : cursorPos.y.toFixed(1)}</strong> mm
+              Y: <strong className="inline-block w-[7ch] tabular-nums text-[#0E2943]">{cursorPos ? `${cursorPos.y >= 0 ? '+' : ''}${cursorPos.y.toFixed(1)}` : '—'}</strong> mm
             </span>
           </div>
 
@@ -431,10 +448,15 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           ref={canvasRef}
           onPointerMove={handleMouseMove}
           onPointerDown={handleDrawingClick}
+          onClickCapture={event => {
+            // The completion tap must not also click the newly mounted profile
+            // and apply dimensions in the next lesson step.
+            if (drawingGesture.current) { event.stopPropagation(); drawingGesture.current = false; }
+          }}
           role="group" aria-label="CAD drawing viewport"
           onPointerLeave={handleMouseLeave}
           className="w-full min-w-0 h-[380px] lg:h-[440px] cursor-crosshair relative touch-pan-y"
-          viewBox={isSketchActive ? '-85 -285 350 380' : '-100 -140 350 280'}
+          viewBox={isExtruding ? plateViewBox({ width: widthMm, height: heightMm, depth: extrudeDepthMm }, viewOrientation, desktop) : isSketchActive ? '-85 -285 350 380' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}
           <g stroke={isExtruding ? '#F5EFE7' : '#0E2943'} strokeOpacity="0.08" strokeWidth="1" pointerEvents="none">
@@ -572,7 +594,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
       </div>
       <p role="status" className="min-h-10 border-t border-[#D9DDD9] bg-white px-3 py-2.5 text-xs leading-relaxed text-[#55616B]">
-        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace'}
+        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw ? (rectangleArmed ? (originSet ? 'Select the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Select Corner Rectangle in the toolbar, then draw in the viewport.') : 'Illustrated CAD workspace'}
       </p>
     </div>
   );

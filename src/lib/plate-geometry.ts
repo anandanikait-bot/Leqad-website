@@ -4,6 +4,21 @@ export interface PlateDimensions { width: number; height: number; depth: number 
 export interface Point3 { x: number; y: number; z: number }
 export interface Point2 { x: number; y: number }
 
+// Fit the camera, never the model. Include the transition and label clearance
+// so maximum depth and all inspection views remain inside the SVG.
+export function plateViewBox(dimensions: PlateDimensions, view: ViewOrientation, desktop: boolean): string {
+  const points = (view === 'iso' ? [0, .25, .5, .75, 1] : [1])
+    .flatMap(progress => projectPlate(dimensions, view, progress));
+  const minX = Math.min(...points.map(p => p.x));
+  const maxX = Math.max(...points.map(p => p.x));
+  const minY = Math.min(...points.map(p => p.y));
+  const maxY = Math.max(...points.map(p => p.y));
+  const scale = desktop ? 1.18 : 1;
+  const width = Math.max(350 / scale, maxX - minX + 40, 190);
+  const height = Math.max(380 / scale, maxY - minY + 96);
+  return `${(minX + maxX - width) / 2} ${(minY + maxY - height) / 2} ${width} ${height}`;
+}
+
 export function plateVertices({ width: w, height: h, depth: d }: PlateDimensions): Point3[] {
   return [
     { x: 0, y: 0, z: 0 }, { x: w, y: 0, z: 0 }, { x: w, y: h, z: 0 }, { x: 0, y: h, z: 0 },
