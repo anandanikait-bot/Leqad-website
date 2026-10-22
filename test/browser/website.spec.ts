@@ -37,17 +37,25 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
   for (const path of ['/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page.locator('footer canvas')).toHaveCount(1);
-    await expect(page.locator('footer').getByText('Leqad CAD', { exact: true })).toBeVisible();
-    await expect(page.locator('footer').getByText('© 2026 · In-workflow CAD education')).toBeVisible();
+    await expect(page.locator('footer').getByText('LEQAD / CAD LEARNING')).toBeVisible();
+    await expect(page.locator('footer').getByText('© 2026 Leqad · In-workflow CAD education')).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link')).toHaveCount(3);
+    await expect(page.locator('footer').getByText('CURRICULUM /')).toHaveCount(0);
   }
   await page.goto('/');
   await expect(page.locator('footer')).toHaveCount(0);
 });
 
-test('approved brand logo, favicon, and Leqad document title across all routes', async ({ page }) => {
+test('approved brand logo, favicon, and unique browser title across routes', async ({ page }) => {
+  const titles: Record<string, string> = {
+    '/': 'Leqad — Learn CAD by Building',
+    '/demo': 'Interactive CAD Demo — Leqad',
+    '/about': 'About Leqad — Guided CAD Education',
+    '/partners': 'For Partners — Leqad',
+  };
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
-    await expect(page).toHaveTitle('Leqad');
+    await expect(page).toHaveTitle(titles[path]);
     await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-approved.png');
     await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
     await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'multiply');
@@ -139,6 +147,34 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   await expect(page.getByText("You've completed the interactive walkthrough.", { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Restart', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
+});
+
+test('editing dimensions resizes sketch and the accepted 3D plate', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: 'Start walkthrough', exact: true }).click();
+  for (const name of ['Select Top Plane', 'Start sketch', 'Draw rectangle']) {
+    await page.getByRole('button', { name, exact: true }).click();
+  }
+  const profile = page.getByTestId('sketch-profile');
+  await expect(profile).toHaveAttribute('aria-label', 'Rectangle 40 by 30 millimeters');
+  await page.getByRole('spinbutton', { name: 'Width (mm)' }).fill('48');
+  await page.getByRole('spinbutton', { name: 'Height (mm)' }).fill('36');
+  await expect(profile).toHaveAttribute('aria-label', 'Rectangle 48 by 36 millimeters');
+  await expect(profile.locator('rect').last()).toHaveAttribute('width', '144');
+  await expect(profile.locator('rect').last()).toHaveAttribute('height', '108');
+  await page.getByRole('button', { name: 'Set 48 × 36 mm dimensions', exact: true }).click();
+  await page.getByRole('button', { name: 'Finish sketch', exact: true }).click();
+  await page.getByRole('button', { name: 'Start Extrude', exact: true }).click();
+  await expect(page.getByText('Extrude preview · 48 × 36 × 10 mm')).toBeVisible();
+  await page.getByRole('button', { name: 'Create solid', exact: true }).click();
+  await expect(page.getByText('Part 1 created · 48 × 36 × 10 mm')).toBeVisible();
+  await page.getByRole('button', { name: 'Restart walkthrough', exact: true }).click();
+  await page.getByRole('button', { name: 'Start walkthrough', exact: true }).click();
+  for (const name of ['Select Top Plane', 'Start sketch', 'Draw rectangle']) {
+    await page.getByRole('button', { name, exact: true }).click();
+  }
+  await expect(page.getByRole('spinbutton', { name: 'Width (mm)' })).toHaveValue('40');
+  await expect(page.getByRole('spinbutton', { name: 'Height (mm)' })).toHaveValue('30');
 });
 
 test('cancel extrusion returns to accepted sketch without inventing a solid', async ({ page }) => {
