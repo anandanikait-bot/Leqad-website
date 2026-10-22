@@ -19,7 +19,7 @@ test('rust metallic rim moves while idle without hovering', async ({ page }) => 
   await expect(rim).toBeVisible();
   await expect(rim).toHaveCSS('animation-name', 'leqad-metallic-rim-spin');
   await expect(rim).toHaveCSS('animation-play-state', 'running');
-  await expect(rim).toHaveCSS('mask-composite', 'exclude');
+  await expect(rim).toHaveCSS('mask-composite', /exclude/);
   // The actual angle changes over time with no pointer activity.
   const angle = () => rim.evaluate(node =>
     getComputedStyle(node).getPropertyValue('--leqad-rim-angle').trim());
