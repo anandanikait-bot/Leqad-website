@@ -30,6 +30,13 @@ jobs:
         env:
           CI: 'true'
         run: npm run test:browser
+      - name: Upload step-by-step demo screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-step-visual-review
+          path: test-results/demo-*.png
+          if-no-files-found: ignore
       - name: Upload failed browser traces
         if: failure()
         uses: actions/upload-artifact@v4
