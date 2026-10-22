@@ -13,8 +13,10 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 1000 }, hasTouch: device === 'mobile', reducedMotion: 'no-preference' });
     for (const [name, route, selector] of [
       ['about-preview', '/about', '#product-preview img'],
-      ['about-grid', '/about', '[aria-hidden="true"][data-parallax-travel="16"]'],
-      ['partners-grid', '/partners', '[data-parallax-travel="12"]'],
+      ['about-grid', '/about', '[aria-hidden="true"][data-parallax-travel="20"]'],
+      ['about-secondary', '/about', '[data-parallax-direction="-1"]'],
+      ['partners-grid', '/partners', '[data-parallax-travel="20"]'],
+      ['partners-secondary', '/partners', '[data-parallax-direction="-1"]'],
     ]) {
       await page.goto(origin + route);
       await page.evaluate(() => document.fonts.ready);
@@ -29,13 +31,16 @@ try {
           offset: new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
           textTop: text.getBoundingClientRect().top + scrollY,
           scrollY,
+          maxTravel: Number((element as HTMLElement).dataset.parallaxMobileTravel && window.innerWidth < 640
+            ? (element as HTMLElement).dataset.parallaxMobileTravel
+            : (element as HTMLElement).dataset.parallaxTravel),
         };
       });
       const before = await sample();
       await page.evaluate(() => scrollBy(0, 160));
       await expect.poll(async () => (await sample()).offset).not.toBe(before.offset);
       const after = await sample();
-      expect(Math.abs(after.offset)).toBeLessThanOrEqual(8);
+      expect(Math.abs(after.offset)).toBeLessThanOrEqual(after.maxTravel / 2);
       expect(after.textTop).toBeCloseTo(before.textTop, 1);
       await section.screenshot({ path: `docs/screenshots/parallax/${name}-${device}.png`, animations: 'disabled' });
       evidence.push({ name, device, before, after });
