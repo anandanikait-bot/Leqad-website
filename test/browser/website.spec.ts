@@ -27,7 +27,7 @@ test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header'
     expect(imageBox!.height).toBe(expectedSize);
     const headerBox = await page.locator('header').boundingBox();
     expect(headerBox).not.toBeNull();
-    expect(headerBox!.height).toBe(64);
+    expect(headerBox!.height).toBe(65); // 64px content + 1px bottom border
     await expect(page.locator('main h1')).toHaveText('Learn CAD by');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
