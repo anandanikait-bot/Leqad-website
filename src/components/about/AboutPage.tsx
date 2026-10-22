@@ -4,7 +4,7 @@ import { ProductPreview } from '../home/ProductPreview';
 import { HowItWorks } from '../home/HowItWorks';
 import { CurrentProductAndVision } from '../home/CurrentProductAndVision';
 import { ButtonLink } from '../shared/Button';
-import { ArrowRight, Compass, Sparkles, Layers, ShieldCheck, CheckCircle2, MessageSquare } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface AboutPageProps {
   onOpenContact: (topic?: string) => void;
@@ -12,11 +12,11 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
   return (
-    <div className="py-10 sm:py-16 space-y-12 sm:space-y-16 animate-fadeIn">
+    <div className="py-10 sm:py-14 space-y-12 sm:space-y-14 animate-fadeIn">
       {/* 1. What is Leqad? Clear explanation in plain English */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-5">
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#0E2943] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0E2943] leading-tight">
             Learn CAD by building, <br className="hidden sm:inline" />
             not just watching.
           </h1>
@@ -99,10 +99,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
               </ButtonLink>
               <button
                 type="button"
-                onClick={() => onOpenContact('Educational Collaboration')}
-                className="text-sm font-medium text-white/80 hover:text-white underline underline-offset-4 cursor-pointer"
+                onClick={() => onOpenContact('Educational Pilot')}
+                className="inline-flex min-h-11 items-center rounded-md text-sm font-medium text-white/80 hover:text-white underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer"
               >
-                Prepare an educational inquiry →
+                Draft an education inquiry note →
               </button>
             </div>
           </div>
