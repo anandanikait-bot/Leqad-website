@@ -14,8 +14,8 @@ describe('Lesson Data & Curriculum Alignment (Fix #4, Fix #5, Fix #6)', () => {
       'Draw rectangle',
       'Apply dimensions',
       'Finish sketch',
-      'Understand result',
-      'Independent practice',
+      'Start Extrude',
+      'Confirm solid',
     ];
 
     LESSON_STEPS.forEach((step, idx) => {
@@ -49,12 +49,15 @@ describe('Lesson Data & Curriculum Alignment (Fix #4, Fix #5, Fix #6)', () => {
     assert.strictEqual(LESSON_STEPS[5].semanticActionId, 'finish-sketch');
     assert.strictEqual(LESSON_STEPS[5].activeToolId, 'accept-sketch');
 
-    // Step 7: Understand result
-    assert.strictEqual(LESSON_STEPS[6].semanticActionId, 'understand-result');
+    // Step 7: Start a preview, not a solid.
+    assert.strictEqual(LESSON_STEPS[6].semanticActionId, 'start-extrude');
     assert.strictEqual(LESSON_STEPS[6].activeToolId, 'extrude');
+    assert.strictEqual(LESSON_STEPS[6].geometryState, 'extrude_preview');
 
-    // Step 8: Independent practice
-    assert.strictEqual(LESSON_STEPS[7].semanticActionId, 'practice-overview');
+    // Step 8: Committing the feature is a separate required action.
+    assert.strictEqual(LESSON_STEPS[7].semanticActionId, 'confirm-extrude');
+    assert.strictEqual(LESSON_STEPS[7].activeToolId, 'accept-extrude');
+    assert.strictEqual(LESSON_STEPS[7].geometryState, 'solid_created');
   });
 
   test('Consistent 40 mm x 30 mm rectangle dimensions across lesson descriptions', () => {
@@ -121,6 +124,8 @@ describe('Demo State Machine & Separation of Navigation from Action Completion (
     if (actionId === 'draw-rectangle') newSketchStatus = 'rectangle-drawn';
     if (actionId === 'apply-dimensions') newSketchStatus = 'dimensioned';
     if (actionId === 'finish-sketch') newSketchStatus = 'accepted-in-demo';
+    if (actionId === 'start-extrude') newSketchStatus = 'extrude-preview';
+    if (actionId === 'confirm-extrude') newSketchStatus = 'solid-created';
 
     return {
       ...state,
@@ -165,6 +170,19 @@ describe('Demo State Machine & Separation of Navigation from Action Completion (
     state = triggerAction(state, 'finish-sketch');
     assert.strictEqual(state.sketchStatus, 'accepted-in-demo');
     assert.ok(state.completedDemoActionIds.includes('finish-sketch'));
+  });
+
+  test('Extrude preview is distinct from a committed solid', () => {
+    let state = createInitialState();
+    for (const action of ['select-top-plane', 'start-sketch', 'draw-rectangle', 'apply-dimensions', 'finish-sketch']) {
+      state = triggerAction(state, action);
+    }
+    assert.strictEqual(state.sketchStatus, 'accepted-in-demo');
+    state = triggerAction(state, 'start-extrude');
+    assert.strictEqual(state.sketchStatus, 'extrude-preview');
+    assert.ok(!state.completedDemoActionIds.includes('confirm-extrude'));
+    state = triggerAction(state, 'confirm-extrude');
+    assert.strictEqual(state.sketchStatus, 'solid-created');
   });
 
   test('Reset returns all state to fresh initial state (Fix #8)', () => {
