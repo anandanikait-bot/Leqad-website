@@ -222,7 +222,8 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
       </div>
 
       {/* 6. Professional Call to Action */}
-      <div className="text-center py-12 px-6 bg-[#0E2943] text-white rounded-3xl space-y-6">
+      <div className="relative isolate overflow-hidden text-center py-12 px-6 bg-[#0E2943] text-white rounded-3xl space-y-6">
+        <div aria-hidden="true" data-parallax-travel="12" className="pointer-events-none absolute -inset-4 -z-10 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px]" />
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#F5EFE7]">
           Let's explore what's possible.
         </h2>

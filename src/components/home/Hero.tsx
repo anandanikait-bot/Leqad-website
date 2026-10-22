@@ -40,21 +40,21 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative flex w-full flex-1 flex-col justify-center pt-8 sm:pt-12 lg:pt-14 pb-12 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative flex w-full flex-1 flex-col justify-center py-10 sm:py-12 lg:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background subtle technical grid */}
       <SonarHeroGrid />
 
       {/* Two-Column Split Layout (50% / 50% on desktop) */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Side — Content (col-span-6 on lg screens: 50% width) */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-6 text-center">
           {/* Main Headline with Cycling Serif Phrase */}
           <div className="space-y-1">
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#0E2943] leading-[1.12]">
               Learn CAD by
             </h1>
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
-            <div className="h-[5.5rem] sm:h-[6.5rem] lg:h-[8rem] flex items-center">
+            <div className="h-[5.5rem] sm:h-[6.5rem] lg:h-[8rem] flex items-center justify-center">
               <span
                 className={`font-serif italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
                   isTransitioning
@@ -68,12 +68,12 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Description */}
-          <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-xl">
+          <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-xl mx-auto">
             Leqad helps you learn CAD by building. Follow guided lessons, find the right tools, and understand why each design step matters.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
             <ButtonLink
               variant="rust"
               size="lg"
