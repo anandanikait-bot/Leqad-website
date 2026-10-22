@@ -38,7 +38,7 @@ for (const route of ['/about', '/partners']) {
     await page.goto(route);
     await page.evaluate(() => document.fonts.ready);
     const layers = page.locator('[data-parallax-travel]');
-    await expect(layers).toHaveCount(route === '/about' ? 2 : 1);
+    await expect(layers).toHaveCount(route === '/about' ? 3 : 2);
     await expect(page.locator('p[data-parallax-travel], button[data-parallax-travel], a[data-parallax-travel]')).toHaveCount(0);
     for (const layer of await layers.all()) {
       await layer.scrollIntoViewIfNeeded();
@@ -57,6 +57,7 @@ for (const route of ['/about', '/partners']) {
         travel: Number((element as HTMLElement).dataset.parallaxTravel),
       }));
       expect(Math.abs(after.y)).toBeLessThanOrEqual(after.travel / 2);
+      expect(after.travel).toBeLessThanOrEqual(24);
       expect(after.top).toBeCloseTo(before.top, 1);
       expect(after.height).toBe(before.height);
     }
@@ -73,13 +74,55 @@ for (const route of ['/about', '/partners']) {
   });
 }
 
+for (const route of ['/about', '/partners']) {
+  test(`${route} decorative layers slide in opposite directions without moving CTA text`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(route);
+    await page.evaluate(() => document.fonts.ready);
+    const anchor = page.locator('[data-parallax-anchor]').last();
+    const fast = anchor.locator('[data-parallax-travel="20"]');
+    const slow = anchor.locator('[data-parallax-direction="-1"]');
+    await expect(fast).toHaveCount(1);
+    await expect(slow).toHaveCount(1);
+    await anchor.scrollIntoViewIfNeeded();
+    const offsets = async () => anchor.evaluate(node => {
+      const first = node.querySelector('[data-parallax-travel="20"]') as HTMLElement;
+      const second = node.querySelector('[data-parallax-direction="-1"]') as HTMLElement;
+      const y = (element: HTMLElement) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42;
+      const title = node.querySelector('h2')!;
+      return { fast: y(first), slow: y(second), titlePosition: title.getBoundingClientRect().top + scrollY };
+    });
+    const before = await offsets();
+    await page.evaluate(() => window.scrollBy(0, -180));
+    await expect.poll(async () => (await offsets()).fast).not.toBe(before.fast);
+    const after = await offsets();
+    expect((after.fast - before.fast) * (after.slow - before.slow)).toBeLessThan(0);
+    expect(after.titlePosition).toBeCloseTo(before.titlePosition, 1);
+    expect(Math.abs(after.fast)).toBeLessThanOrEqual(10);
+    expect(Math.abs(after.slow)).toBeLessThanOrEqual(4);
+  });
+}
+
+test('layered movement is limited on narrow screens and leaves the demo untouched', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto('/about');
+  const preview = page.locator('#product-preview img[data-parallax-travel]');
+  await preview.scrollIntoViewIfNeeded();
+  const offset = await preview.evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42);
+  expect(Math.abs(offset)).toBeLessThanOrEqual(6);
+  // At 375px desktop navigation is collapsed; use the real product-preview CTA.
+  await page.locator('#product-preview').getByRole('link', { name: 'Explore Full Demo' }).click();
+  await expect(page.locator('[data-parallax-travel]')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
+});
+
 test('reduced-motion pages show complete, stationary visual layers on first load', async ({ browser }) => {
   const context = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await context.newPage();
   for (const route of ['/about', '/partners']) {
     await page.goto(route);
     const layers = page.locator('[data-parallax-travel]');
-    await expect(layers).toHaveCount(route === '/about' ? 2 : 1);
+    await expect(layers).toHaveCount(route === '/about' ? 3 : 2);
     for (const layer of await layers.all()) await expect(layer).toHaveCSS('transform', 'none');
     if (route === '/about') expect(await page.locator('#product-preview img').evaluate(element => (element as HTMLImageElement).complete)).toBe(true);
   }

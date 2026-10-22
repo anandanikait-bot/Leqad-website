@@ -70,8 +70,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
 
       {/* Partnership & Educational Collaboration */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#0E2943] rounded-2xl p-8 sm:p-12 text-white relative overflow-hidden">
-          <div aria-hidden="true" data-parallax-travel="16" className="absolute -inset-4 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+        <div data-parallax-anchor className="bg-[#0E2943] rounded-2xl p-8 sm:p-12 text-white relative overflow-hidden">
+          {/* Slow technical grid and counter-moving pinpoints share one stable anchor. */}
+          <div aria-hidden="true" data-parallax-travel="20" data-parallax-mobile-travel="12" className="absolute -inset-6 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+          <div aria-hidden="true" data-parallax-travel="8" data-parallax-mobile-travel="4" data-parallax-direction="-1" className="absolute -inset-6 opacity-[0.035] bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl space-y-6">
             <span className="font-mono text-xs uppercase tracking-wider text-[#B74B21] bg-white/10 px-2.5 py-1 rounded border border-white/10 font-semibold">

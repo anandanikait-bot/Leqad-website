@@ -4,9 +4,9 @@ import { ArrowRight } from 'lucide-react';
 
 export const ProductPreview: React.FC = () => (
   <section id="product-preview" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-    <div className="rounded-2xl border border-[#D9DDD9] bg-white p-3 shadow-sm sm:p-5">
+    <div data-parallax-anchor className="rounded-2xl border border-[#D9DDD9] bg-white p-3 shadow-sm sm:p-5">
       <img
-        data-parallax-travel="16"
+        data-parallax-travel="24" data-parallax-mobile-travel="12"
         src="/assets/cad-lesson-preview.png"
         alt="Static Leqad product preview: a CAD reference plane beside the teaching panel, with the instruction to start a sketch."
         width={1182}
