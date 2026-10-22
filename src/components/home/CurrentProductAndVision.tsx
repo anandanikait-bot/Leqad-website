@@ -22,7 +22,7 @@ export const CurrentProductAndVision: React.FC = () => {
                 </span>
                 <span className="flex items-center gap-1 font-mono text-xs text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  Tested in Extension
+                  Prototype Tested
                 </span>
               </div>
 
@@ -31,7 +31,7 @@ export const CurrentProductAndVision: React.FC = () => {
                   Guided Foundations Extension
                 </h3>
                 <p className="text-sm text-[#55616B] leading-relaxed">
-                  A functional browser extension teaching foundational CAD inside browser-based CAD environments through structured instruction.
+                  An early browser-extension prototype exploring step-by-step CAD instruction and local cues near supported interface controls.
                 </p>
               </div>
 
@@ -42,7 +42,7 @@ export const CurrentProductAndVision: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0E2943] mt-2 flex-shrink-0" />
-                  <span>Recognized CAD toolbar highlighting ("Show me")</span>
+                  <span>Local highlights for supported toolbar controls ("Show me")</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0E2943] mt-2 flex-shrink-0" />
@@ -54,13 +54,13 @@ export const CurrentProductAndVision: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0E2943] mt-2 flex-shrink-0" />
-                  <span>Local preference & progress persistence</span>
+                  <span>Local assistance preferences and dismissed suggestions</span>
                 </li>
               </ul>
             </div>
 
             <div className="pt-3 border-t border-[#D9DDD9] text-xs font-mono text-[#55616B]">
-              Conservative feedback: does not fabricate unverified model geometry.
+              The prototype does not inspect or validate model geometry. The website demo illustrates sketching and extrusion separately.
             </div>
           </div>
 
@@ -82,7 +82,7 @@ export const CurrentProductAndVision: React.FC = () => {
                   Adaptive Teaching & Verification
                 </h3>
                 <p className="text-sm text-[#55616B] leading-relaxed">
-                  Extending guided practice into an intelligent pedagogical layer that adapts to learner errors and evaluates original parts.
+                  Future research could expand guided practice into adaptive assistance and authorized model feedback.
                 </p>
               </div>
 
@@ -93,7 +93,7 @@ export const CurrentProductAndVision: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B74B21] mt-2 flex-shrink-0" />
-                  <span>Geometry-aware model verification via authorized CAD APIs</span>
+                  <span>Potential geometry-aware feedback through authorized CAD APIs</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B74B21] mt-2 flex-shrink-0" />

@@ -16,7 +16,7 @@ const browser = await chromium.launch({
 });
 await mkdir('docs/screenshots', { recursive: true });
 try {
-  for (const [device, width, height] of [['desktop', 1440, 1000], ['mobile', 375, 900]] as const) {
+  for (const [device, width, height] of [['desktop', 1440, 1000], ['mobile', 375, 900], ['320px', 320, 900], ['768px', 768, 1000], ['1024px', 1024, 1000]] as const) {
     const page = await browser.newPage({ viewport: { width, height }, reducedMotion: 'reduce' });
     for (const [name, path] of [['home', '/'], ['demo', '/demo'], ['about', '/about'], ['partners', '/partners']]) {
       await page.goto(origin + path);

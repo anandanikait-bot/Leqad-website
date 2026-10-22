@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LESSON_STEPS } from '../../lib/lesson-data';
 import { SimulatedCADCanvas } from './SimulatedCADCanvas';
 import { LessonPanel } from './LessonPanel';
-import { RotateCcw, CheckCircle2, Check, List } from 'lucide-react';
+import { CheckCircle2, Check } from 'lucide-react';
 import { SketchDemoStatus } from '../../types';
 
 interface DemoWorkbenchProps {
@@ -27,6 +27,11 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
   );
   const [resetKey, setResetKey] = useState<number>(0);
   const [showAllSteps, setShowAllSteps] = useState(false);
+  const [widthMm, setWidthMm] = useState(40);
+  const [heightMm, setHeightMm] = useState(30);
+  const [depthMm, setDepthMm] = useState(10);
+  const [dimensionValidity, setDimensionValidity] = useState({ width: true, height: true });
+  const [depthValid, setDepthValid] = useState(true);
 
   const totalSteps = LESSON_STEPS.length;
   const currentStep = LESSON_STEPS[currentStepIndex];
@@ -43,9 +48,10 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     'confirm-extrude': 'extrude-preview',
   };
   const isStepActionCompleted = Boolean(currentStep.semanticActionId && completedDemoActionIds.includes(currentStep.semanticActionId));
-  const canPerformCurrentAction = !currentStep.semanticActionId ||
-    isStepActionCompleted ||
-    sketchStatus === actionPrerequisites[currentStep.semanticActionId];
+  const canPerformCurrentAction = (!currentStep.semanticActionId || isStepActionCompleted ||
+    sketchStatus === actionPrerequisites[currentStep.semanticActionId]) &&
+    (currentStepIndex !== 4 || (dimensionValidity.width && dimensionValidity.height)) &&
+    (currentStepIndex !== 7 || depthValid);
 
   // Helper to mark a step visited
   const markStepVisited = useCallback((stepId: number) => {
@@ -96,6 +102,11 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     setSketchStatus('not-started');
     setResetKey((prev) => prev + 1);
     setShowAllSteps(false);
+    setWidthMm(40);
+    setHeightMm(30);
+    setDepthMm(10);
+    setDepthValid(true);
+    setDimensionValidity({ width: true, height: true });
   }, []);
 
   // Jumping between steps (Fix #2: Exploring steps does NOT falsely complete them!)
@@ -113,6 +124,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
   // manufacturing sketch geometry or a part.
   const handleTriggerAction = useCallback((actionId: string) => {
     if (currentStep.semanticActionId !== actionId) return;
+    if (actionId === 'apply-dimensions' && (!dimensionValidity.width || !dimensionValidity.height)) return;
+    if (actionId === 'confirm-extrude' && !depthValid) return;
     if (completedDemoActionIds.includes(actionId)) {
       if (currentStepIndex < totalSteps - 1) handleNext();
       return;
@@ -140,7 +153,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
       markStepVisited(LESSON_STEPS[nextIndex].id);
     }
   }, [currentStepIndex, currentStep.semanticActionId, completedDemoActionIds,
-      sketchStatus, handleNext, markStepVisited, totalSteps]);
+      sketchStatus, handleNext, markStepVisited, totalSteps, dimensionValidity, depthValid]);
 
   const handleResetSketch = useCallback(() => {
     setSketchStatus('plane-selected');
@@ -149,6 +162,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     setIsWalkthroughComplete(false);
     setCurrentStepIndex(2);
     markStepVisited(3);
+    setWidthMm(40); setHeightMm(30); setDepthMm(10);
+    setDepthValid(true); setDimensionValidity({ width: true, height: true });
   }, [markStepVisited]);
 
   const handleCancelExtrude = useCallback(() => {
@@ -157,6 +172,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     setHighlightedTargetId(null);
     setIsWalkthroughComplete(false);
     setCurrentStepIndex(6);
+    setDepthMm(10);
+    setDepthValid(true);
   }, []);
 
   // Tool Highlighting toggle (Fix #9)
@@ -257,6 +274,17 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             step={currentStep}
             currentStepIndex={currentStepIndex}
             sketchStatus={sketchStatus}
+            widthMm={widthMm}
+            heightMm={heightMm}
+            extrudeDepthMm={depthMm}
+            onDepthChange={setDepthMm}
+            onDepthValidityChange={setDepthValid}
+            onDrawRectangle={(width, height) => {
+              if (currentStepIndex !== 3 || sketchStatus !== 'sketch-active') return;
+              setWidthMm(width); setHeightMm(height);
+              handleTriggerAction('draw-rectangle');
+            }}
+            actionAllowed={canPerformCurrentAction}
             highlightedTargetId={highlightedTargetId}
             isDemoComplete={isWalkthroughComplete}
             onTriggerAction={handleTriggerAction}
@@ -271,6 +299,15 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             step={currentStep}
             currentStepIndex={currentStepIndex}
             totalSteps={totalSteps}
+            widthMm={widthMm}
+            heightMm={heightMm}
+            canEditDimensions={sketchStatus === 'rectangle-drawn'}
+            onDimensionValidityChange={(axis, valid) => setDimensionValidity(previous => ({ ...previous, [axis]: valid }))}
+            onDimensionsChange={(width, height) => {
+              if (sketchStatus !== 'rectangle-drawn') return;
+              setWidthMm(width);
+              setHeightMm(height);
+            }}
             isDemoComplete={isWalkthroughComplete}
             onNext={handleNext}
             onPrev={handlePrev}

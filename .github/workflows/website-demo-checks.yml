@@ -30,6 +30,50 @@ jobs:
         env:
           CI: 'true'
         run: npm run test:browser
+      - name: Capture fresh screenshots of every public page
+        if: success()
+        shell: bash
+        run: |
+          PORT=4173 npm start >/tmp/leqad-preview.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 1
+          done
+          npm run screenshots
+          npm run screenshots:demo
+      - name: Upload fresh full-page screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-visual-review
+          path: docs/screenshots/*-desktop.png
+          if-no-files-found: ignore
+      - name: Upload mobile full-page screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-mobile-review
+          path: docs/screenshots/*-mobile.png
+          if-no-files-found: ignore
+      - name: Upload additional responsive breakpoints
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-breakpoint-review
+          path: |
+            docs/screenshots/*-320px.png
+            docs/screenshots/*-768px.png
+            docs/screenshots/*-1024px.png
+          if-no-files-found: error
+      - name: Upload fresh refined demo screenshots and transition
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-refinement-review
+          path: docs/screenshots/demo/
+          if-no-files-found: error
       - name: Upload step-by-step demo screenshots
         if: always()
         uses: actions/upload-artifact@v4

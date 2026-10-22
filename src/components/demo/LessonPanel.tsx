@@ -12,6 +12,7 @@ import {
   Award
 } from 'lucide-react';
 import { Button } from '../shared/Button';
+import { DimensionInput } from './DimensionInput';
 
 interface LessonPanelProps {
   step: LessonStep;
@@ -31,6 +32,11 @@ interface LessonPanelProps {
   onToggleSteps: () => void;
   isStepActionCompleted: boolean;
   canPerformCurrentAction: boolean;
+  widthMm: number;
+  heightMm: number;
+  canEditDimensions: boolean;
+  onDimensionsChange: (width: number, height: number) => void;
+  onDimensionValidityChange: (axis: 'width' | 'height', valid: boolean) => void;
 }
 
 export const LessonPanel: React.FC<LessonPanelProps> = ({
@@ -51,6 +57,11 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   onToggleSteps,
   isStepActionCompleted,
   canPerformCurrentAction,
+  widthMm,
+  heightMm,
+  canEditDimensions,
+  onDimensionsChange,
+  onDimensionValidityChange,
 }) => {
   const [revealedHints, setRevealedHints] = useState<number>(0);
   const [helpOpen, setHelpOpen] = useState(false);
@@ -77,7 +88,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
     2: 'Select Top Plane',
     3: 'Start sketch',
     4: 'Draw rectangle',
-    5: 'Set 40 × 30 mm dimensions',
+    5: `Set ${widthMm} × ${heightMm} mm dimensions`,
     6: 'Finish sketch',
     7: 'Start Extrude',
     8: 'Create solid',
@@ -124,7 +135,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 You've completed the interactive walkthrough.
               </h2>
               <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                You've built a dimensioned 40 × 30 mm sketch and created a solid plate using Extrude in this guided simulation.
+                You've built a dimensioned {widthMm} × {heightMm} mm sketch and created a solid plate using Extrude in this guided simulation.
               </p>
             </div>
 
@@ -148,7 +159,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Parametric dimensioning (40 mm × 30 mm)</span>
+                  <span>Parametric dimensioning ({widthMm} mm × {heightMm} mm)</span>
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
@@ -222,26 +233,37 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
 
           {/* Main Instruction */}
           <p className="text-[#55616B] leading-relaxed text-[13px] sm:text-sm">
-            {step.instruction}
+            {step.instruction.replace('40 mm × 30 mm', `${widthMm} mm × ${heightMm} mm`).replace('40 × 30 mm', `${widthMm} × ${heightMm} mm`)}
           </p>
 
           {/* One clear primary action; extra help stays secondary. */}
           <div className="space-y-3 rounded-xl border border-[#B74B21]/25 bg-[#FAF8F4] p-3.5 sm:p-4">
             <div>
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[#B74B21]">Do this next</p>
-              <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction}</p>
+              <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction.replace('40 mm × 30 mm', `${widthMm} mm × ${heightMm} mm`).replace('40 × 30 mm', `${widthMm} × ${heightMm} mm`)}</p>
             </div>
+            {step.stepNumber === 5 && canEditDimensions && !isStepActionCompleted && (
+              <div className="grid grid-cols-2 gap-3" role="group" aria-label="Sketch dimensions">
+                <DimensionInput label="Width (mm)" value={widthMm} min={20} max={50}
+                  onChange={width => onDimensionsChange(width, heightMm)} onValidityChange={valid => onDimensionValidityChange('width', valid)} />
+                <DimensionInput label="Height (mm)" value={heightMm} min={15} max={40}
+                  onChange={height => onDimensionsChange(widthMm, height)} onValidityChange={valid => onDimensionValidityChange('height', valid)} />
+                <p className="col-span-2 text-[11px] text-[#55616B]" role="status">
+                  The illustrated sketch updates as you change dimensions.
+                </p>
+              </div>
+            )}
             <Button
               variant="rust"
               size="md"
-              className="w-full justify-center"
+              className={`w-full justify-center ${isHighlightingControl && step.stepNumber === 8 ? 'ring-2 ring-[#B74B21] ring-offset-2' : ''}`}
               onClick={handlePrimaryAction}
               disabled={!canPerformCurrentAction}
             >
               {isStepActionCompleted && !isLastStep ? 'Review next step' : primaryActionLabel[step.stepNumber] || 'Continue'}
             </Button>
             {!canPerformCurrentAction && (
-              <p className="text-xs text-[#55616B]" role="status">Complete earlier CAD actions first. Use All steps to return.</p>
+              <p className="text-xs text-[#55616B]" role="status">Complete earlier actions and enter valid dimensions to continue.</p>
             )}
             {step.activeToolId && (
               <button
@@ -298,7 +320,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                     <span className="font-mono text-[10px] text-[#B74B21] font-semibold mr-1.5">
                       HINT {idx + 1}:
                     </span>
-                    {hintText}
+                    {hintText.replace('40 mm', `${widthMm} mm`).replace('30 mm', `${heightMm} mm`)}
                   </div>
                 ))}
               </div>
@@ -312,7 +334,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                   Engineering Concept
                 </div>
                 <p className="text-[#55616B] leading-relaxed">
-                  {step.whyExplanation}
+                  {step.whyExplanation.replace('40 mm × 30 mm', `${widthMm} mm × ${heightMm} mm`)}
                 </p>
               </div>
             )}
