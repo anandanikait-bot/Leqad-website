@@ -48,15 +48,16 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
 
 test('approved brand logo, favicon, and unique browser title across routes', async ({ page }) => {
   const titles: Record<string, string> = {
-    '/': 'Leqad — Learn CAD by Building',
-    '/demo': 'Interactive CAD Demo — Leqad',
-    '/about': 'About Leqad — Guided CAD Education',
-    '/partners': 'For Partners — Leqad',
+    '/': 'Leqad',
+    '/demo': 'Leqad Demo',
+    '/about': 'About Leqad',
+    '/partners': 'Leqad Partners',
   };
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-navbar.png');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-tab-v1.svg');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
       await expect(page.locator('footer')).toHaveCount(0);
@@ -81,6 +82,40 @@ test('homepage prerender contains correct social preview and serves the actual i
     'content',
     'https://leqada.ai.studio/assets/cad-lesson-preview.png',
   );
+});
+
+test('tab icon uses the approved geometry on both light and dark themes', async ({ page }) => {
+  await page.goto('/');
+  const res = await page.request.get('/assets/brand/leqad-tab-v1.svg');
+  expect(res.status()).toBe(200);
+  expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
+  const source = await res.text();
+  expect(source).toContain('prefers-color-scheme: dark');
+  expect(source).toContain('prefers-color-scheme: light');
+  expect(source).toContain('data:image/png;base64,');
+  expect(source).toContain('feColorMatrix');
+});
+
+test('favicon actually renders legibly at 16px with transparent corners', async ({ page }) => {
+  await page.goto('/');
+  const pixels = await page.evaluate(async () => {
+    const image = new Image();
+    image.src = '/assets/brand/leqad-tab-v1.svg';
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('2D canvas is unavailable');
+    ctx.drawImage(image, 0, 0, 16, 16);
+    const data = ctx.getImageData(0, 0, 16, 16).data;
+    let visible = 0;
+    for (let i = 3; i < data.length; i += 4) if (data[i] > 60) visible++;
+    return { visible, topLeftAlpha: data[3], bottomRightAlpha: data[data.length - 1] };
+  });
+  expect(pixels.visible).toBeGreaterThan(15);
+  expect(pixels.topLeftAlpha).toBeLessThan(30);
+  expect(pixels.bottomRightAlpha).toBeLessThan(30);
 });
 
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
@@ -224,10 +259,10 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
 
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
   const titles: Record<string, string> = {
-    '/': 'Leqad — Learn CAD by Building',
-    '/demo': 'Interactive CAD Demo — Leqad',
-    '/about': 'About Leqad — Guided CAD Education',
-    '/partners': 'For Partners — Leqad',
+    '/': 'Leqad',
+    '/demo': 'Leqad Demo',
+    '/about': 'About Leqad',
+    '/partners': 'Leqad Partners',
   };
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

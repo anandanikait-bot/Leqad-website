@@ -11,3 +11,14 @@ test('approved logo source is intact and the navbar derivative supports 3x displ
   assert.equal(navbar.readUInt32BE(20), 144);
   assert.ok(navbar.length < 50_000);
 });
+
+test('browser tab favicon embeds original approved navbar pixels, without editing the source asset', () => {
+  const navbar = readFileSync(new URL('../public/assets/brand/leqad-navbar.png', import.meta.url));
+  const svg = readFileSync(new URL('../public/assets/brand/leqad-tab-v1.svg', import.meta.url), 'utf8');
+  const image = svg.match(/data:image\/png;base64,([A-Za-z0-9+/=]+)/);
+  assert.ok(image, 'favicon must embed the exact approved navbar PNG');
+  assert.deepEqual(Buffer.from(image[1], 'base64'), navbar);
+  assert.match(svg, /prefers-color-scheme: dark/);
+  assert.match(svg, /prefers-color-scheme: light/);
+  assert.match(svg, /feColorMatrix/);
+});
