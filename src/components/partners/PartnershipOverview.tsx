@@ -49,21 +49,21 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
           <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <h4 className="text-base font-semibold text-[#0E2943]">High Onboarding Friction</h4>
+            <h3 className="text-base font-semibold text-[#0E2943]">High Onboarding Friction</h3>
             <p className="text-sm text-[#55616B] leading-relaxed">
               New users get overwhelmed by complex tool ribbons and silent constraint conflicts during their first hours in professional CAD.
             </p>
           </div>
 
           <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <h4 className="text-base font-semibold text-[#0E2943]">Heavy Instructor Workload</h4>
+            <h3 className="text-base font-semibold text-[#0E2943]">Heavy Instructor Workload</h3>
             <p className="text-sm text-[#55616B] leading-relaxed">
               Educators and robotics mentors spend hours triaging basic misclicks rather than coaching higher-level mechanical design thinking.
             </p>
           </div>
 
           <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <h4 className="text-base font-semibold text-[#0E2943]">Passive vs. Active Learning</h4>
+            <h3 className="text-base font-semibold text-[#0E2943]">Passive vs. Active Learning</h3>
             <p className="text-sm text-[#55616B] leading-relaxed">
               Following a tutorial is different from designing independently. Learners benefit from guided practice that explains choices and constraints.
             </p>
@@ -82,7 +82,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
             <span className="font-mono text-xs font-semibold text-[#B74B21]">01 · Ribbon Recognition</span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Control Highlighting</h4>
+            <h3 className="text-sm font-semibold text-[#0E2943]">Control Highlighting</h3>
             <p className="text-xs text-[#55616B] leading-relaxed">
               Supported interface controls can receive local visual cues when learners request guidance; this does not inspect model geometry.
             </p>
@@ -90,7 +90,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
 
           <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
             <span className="font-mono text-xs font-semibold text-[#B74B21]">02 · Scaffolding</span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Tiered Hints</h4>
+            <h3 className="text-sm font-semibold text-[#0E2943]">Tiered Hints</h3>
             <p className="text-xs text-[#55616B] leading-relaxed">
               Hints escalate on demand from spatial intuition to exact keyboard shortcuts, avoiding cognitive overload.
             </p>
@@ -98,7 +98,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
 
           <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
             <span className="font-mono text-xs font-semibold text-[#B74B21]">03 · Pedagogy</span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Engineering 'Why'</h4>
+            <h3 className="text-sm font-semibold text-[#0E2943]">Engineering 'Why'</h3>
             <p className="text-xs text-[#55616B] leading-relaxed">
               Every step teaches the design rationale behind datums, parametric dimensions, and constraint degrees of freedom.
             </p>
@@ -106,7 +106,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
 
           <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2 shadow-2xs">
             <span className="font-mono text-xs font-semibold text-[#B74B21]">04 · Truthfulness</span>
-            <h4 className="text-sm font-semibold text-[#0E2943]">Conservative Verification</h4>
+            <h3 className="text-sm font-semibold text-[#0E2943]">Conservative Verification</h3>
             <p className="text-xs text-[#55616B] leading-relaxed">
               The current prototype offers local interface cues, not verified geometric or engineering checks.
             </p>
@@ -135,7 +135,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
               <Cpu className="w-4.5 h-4.5" />
             </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">1. Technical Alignment</h4>
+            <h3 className="text-base font-semibold text-[#0E2943]">1. Technical Alignment</h3>
             <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
               Explore supported extension surfaces, relevant platform APIs, and security requirements before proposing any deeper integration.
             </p>
@@ -151,7 +151,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
               <School className="w-4.5 h-4.5" />
             </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">2. Educational Evaluation</h4>
+            <h3 className="text-base font-semibold text-[#0E2943]">2. Educational Evaluation</h3>
             <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
               Consider small educational evaluations measuring time-to-first-part, common errors, and student confidence if partners are interested.
             </p>
@@ -167,7 +167,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <div className="w-9 h-9 rounded-lg bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
               <TrendingUp className="w-4.5 h-4.5" />
             </div>
-            <h4 className="text-base font-semibold text-[#0E2943]">3. Commercial Exploration</h4>
+            <h3 className="text-base font-semibold text-[#0E2943]">3. Commercial Exploration</h3>
             <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
               Explore licensing, distribution, or onboarding models only if technical fit and educational value are established.
             </p>
@@ -229,7 +229,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             onClick={() => onOpenContact('General Inquiry')}
             icon={<ArrowRight className="w-4 h-4" />}
           >
-            Draft an Inquiry Note
+            Draft a Collaboration Note
           </Button>
         </div>
       </div>
