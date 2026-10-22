@@ -13,7 +13,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 }) => {
   const sizeMap = {
     sm: { symbol: 'w-7 h-7', text: 'text-lg' },
-    md: { symbol: 'w-10 h-10', text: 'text-xl' },
+    md: { symbol: 'w-11 h-11 md:w-12 md:h-12', text: 'text-xl' },
     lg: { symbol: 'w-12 h-12', text: 'text-2xl' },
   };
 

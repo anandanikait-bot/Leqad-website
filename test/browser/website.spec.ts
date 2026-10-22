@@ -16,6 +16,23 @@ test('landing contains only the intended navigation and hero CTA', async ({ page
   await expect(page.locator('main').getByRole('link', { name: 'Learn About Leqad' })).toHaveAttribute('href', '/about');
 });
 
+test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header', async ({ page }) => {
+  for (const [width, expectedSize] of [[375, 44], [1440, 48]] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const img = page.locator('header img[alt="Leqad logo"]');
+    const imageBox = await img.boundingBox();
+    expect(imageBox).not.toBeNull();
+    expect(imageBox!.width).toBe(expectedSize);
+    expect(imageBox!.height).toBe(expectedSize);
+    const headerBox = await page.locator('header').boundingBox();
+    expect(headerBox).not.toBeNull();
+    expect(headerBox!.height).toBe(64);
+    await expect(page.locator('main h1')).toHaveText('Learn CAD by');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
+
 test('only Demo, About and Partners have the halftone Leqad footer', async ({ page }) => {
   for (const path of ['/demo', '/about', '/partners']) {
     await page.goto(path);
