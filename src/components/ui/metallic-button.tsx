@@ -842,7 +842,7 @@ export function MetallicButton({
   };
 
   return (
-    <div data-metallic-cta className={`relative inline-block ${className}`}>
+    <div data-metallic-cta data-theme="leqad" className={`relative inline-block ${className}`}>
       <div className="perspective-origin-[50%_50%] perspective-[1000px]">
         <div className={`relative transform-3d ${shellSize}`}>
           <div
@@ -865,6 +865,7 @@ export function MetallicButton({
             className={`absolute top-0 left-0 z-20 translate-z-2.5 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
           >
             <div
+              data-metallic-face
               className={`m-0.5 rounded-full bg-[linear-gradient(180deg,#163859_0%,#0E2943_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
             />
           </div>
