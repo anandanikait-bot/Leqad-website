@@ -5,6 +5,10 @@ import { ArrowRight } from 'lucide-react';
 import { CadArtwork3D } from './CadArtwork3D';
 import { SonarHeroGrid } from './SonarHeroGrid';
 
+// Render the default CTA during SSR as well as on the client.
+// WebGL initialization still happens only in MetallicButton's browser effect.
+import { MetallicButton } from '../ui/metallic-button';
+
 const CYCLING_PHRASES = [
   'building, not just watching.',
   'designing with guidance.',
@@ -14,7 +18,6 @@ const CYCLING_PHRASES = [
 export const Hero: React.FC = () => {
   const [phraseIndex, setPhraseIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-
   // Cycle phrases every 4 seconds with smooth blur transition & proper timer cleanup
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -74,14 +77,20 @@ export const Hero: React.FC = () => {
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
-            <ButtonLink
-              variant="rust"
-              size="lg"
+            <MetallicButton
               to="/demo"
-              icon={<ArrowRight className="w-4 h-4" />}
-            >
-              Explore Interactive Demo
-            </ButtonLink>
+              label="Explore Interactive Demo"
+              className="w-full sm:w-[270px] shrink-0"
+              baseColor="#0E2943"
+              sheenColor="#F5EFE799"
+              bandCount={3}
+              edgeBlur={0.7}
+              redFringe={0.12}
+              blueFringe={0.08}
+              idleSpeed={0}
+              hoverSpeed={0.65}
+              clickSpeed={1.2}
+            />
 
             <Link
               to="/about"

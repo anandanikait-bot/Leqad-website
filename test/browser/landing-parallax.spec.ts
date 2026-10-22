@@ -16,7 +16,8 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     const links = await page.locator('main a').all();
     const first = (await links[0].boundingBox())!;
     const last = (await links[1].boundingBox())!;
-    expect(Math.abs((first.x + last.x + last.width) / 2 - (column.x + column.width / 2))).toBeLessThan(2);
+    // Allow subpixel rounding introduced by the decorative 3D CTA transform.
+    expect(Math.abs((first.x + last.x + last.width) / 2 - (column.x + column.width / 2))).toBeLessThan(3);
     const artwork = page.getByLabel('Interactive 3D CAD Geometry Visualization', { exact: true });
     const box = (await artwork.boundingBox())!;
     if (width >= 1024) {
@@ -80,26 +81,27 @@ for (const route of ['/about', '/partners']) {
     await page.goto(route);
     await page.evaluate(() => document.fonts.ready);
     const anchor = page.locator('[data-parallax-anchor]').last();
-    const fast = anchor.locator('[data-parallax-travel="20"]');
+    const fastTravel = route === '/about' ? '12' : '20';
+    const fast = anchor.locator(`[data-parallax-travel="${fastTravel}"]`);
     const slow = anchor.locator('[data-parallax-direction="-1"]');
     await expect(fast).toHaveCount(1);
     await expect(slow).toHaveCount(1);
     await anchor.scrollIntoViewIfNeeded();
-    const offsets = async () => anchor.evaluate(node => {
-      const first = node.querySelector('[data-parallax-travel="20"]') as HTMLElement;
+    const offsets = async () => anchor.evaluate((node, travel) => {
+      const first = node.querySelector(`[data-parallax-travel="${travel}"]`) as HTMLElement;
       const second = node.querySelector('[data-parallax-direction="-1"]') as HTMLElement;
       const y = (element: HTMLElement) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42;
       const title = node.querySelector('h2')!;
       return { fast: y(first), slow: y(second), titlePosition: title.getBoundingClientRect().top + scrollY };
-    });
+    }, fastTravel);
     const before = await offsets();
     await page.evaluate(() => window.scrollBy(0, -180));
     await expect.poll(async () => (await offsets()).fast).not.toBe(before.fast);
     const after = await offsets();
     expect((after.fast - before.fast) * (after.slow - before.slow)).toBeLessThan(0);
     expect(after.titlePosition).toBeCloseTo(before.titlePosition, 1);
-    expect(Math.abs(after.fast)).toBeLessThanOrEqual(10);
-    expect(Math.abs(after.slow)).toBeLessThanOrEqual(4);
+    expect(Math.abs(after.fast)).toBeLessThanOrEqual(route === '/about' ? 6 : 10);
+    expect(Math.abs(after.slow)).toBeLessThanOrEqual(route === '/about' ? 2 : 4);
   });
 }
 
@@ -127,4 +129,14 @@ test('reduced-motion pages show complete, stationary visual layers on first load
     if (route === '/about') expect(await page.locator('#product-preview img').evaluate(element => (element as HTMLImageElement).complete)).toBe(true);
   }
   await context.close();
+});
+
+test('About reduces decoration and avoids repeated conversion prompts', async ({ page }) => {
+  await page.goto('/about');
+  await expect(page.locator('#product-preview img')).toHaveAttribute('data-parallax-travel', '12');
+  await expect(page.locator('[data-parallax-anchor]').last().locator('[data-parallax-direction="-1"]'))
+    .toHaveAttribute('data-parallax-travel', '4');
+  await expect(page.getByRole('link', { name: 'Launch Interactive Demo' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Explore Full Demo' })).toHaveAttribute('href', '/demo');
+  await expect(page.getByRole('heading', { name: /Exploring collaboration with CAD teams and educators/ })).toBeVisible();
 });
