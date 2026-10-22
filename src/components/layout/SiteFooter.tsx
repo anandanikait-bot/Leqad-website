@@ -7,8 +7,8 @@ export const SiteFooter: React.FC = () => (
     {/* Dedicated branding area with generous breathing room inspired by Rift */}
     <div className="mx-auto w-full max-w-7xl px-5 pt-12 pb-10 sm:px-8 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-16">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 lg:gap-16">
-        {/* Brand identity & thesis */}
-        <div className="space-y-4 max-w-xl">
+        {/* Brand identity */}
+        <div className="space-y-4 max-w-sm">
           {/* Approved logo asset referenced for accessibility and preloading */}
           <img
             src="/assets/brand/leqad-approved.png"
@@ -17,17 +17,9 @@ export const SiteFooter: React.FC = () => (
             width="1254"
             height="1254"
           />
-          <div className="space-y-2.5">
-            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-[#B74B21]">
-              <span className="font-semibold">LEQAD /</span>
-              <span className="text-[#F5EFE7]/50 tracking-[0.14em]">CAD LEARNING</span>
-            </div>
-            <p className="font-serif text-xl sm:text-2xl text-[#F5EFE7] leading-snug">
-              Learn CAD by building. Guided lessons and contextual tool hints inside real engineering workflows.
-            </p>
-            <p className="text-xs sm:text-sm text-[#F5EFE7]/65 leading-relaxed font-sans max-w-md">
-              Independent CAD education platform for engineering students and educators. Understand the design rationale behind every step.
-            </p>
+          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-[#B74B21]">
+            <span className="font-semibold">LEQAD /</span>
+            <span className="text-[#F5EFE7]/50 tracking-[0.14em]">CAD LEARNING</span>
           </div>
         </div>
 

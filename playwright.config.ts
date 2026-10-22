@@ -1,7 +1,12 @@
 import { defineConfig } from '@playwright/test';
 import { existsSync } from 'node:fs';
 
-const defaultChromium = existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined;
+const defaultChromium = [
+  process.env.CHROMIUM_PATH,
+  '/usr/bin/chromium',
+  '/ms-playwright/chrome-headless-shell-linux64/chrome-headless-shell',
+  '/ms-playwright/chromium_headless_shell-1247/chrome-headless-shell-linux64/chrome-headless-shell',
+].find(p => p && existsSync(p));
 
 export default defineConfig({
   testDir: './test/browser',

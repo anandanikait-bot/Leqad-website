@@ -4,7 +4,12 @@ import { existsSync } from 'node:fs';
 
 // Run against the built site: PORT=4173 npm start, then npm run screenshots.
 const origin = process.env.SCREENSHOT_ORIGIN || 'http://127.0.0.1:4173';
-const defaultChromium = existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined;
+const defaultChromium = [
+  process.env.CHROMIUM_PATH,
+  '/usr/bin/chromium',
+  '/ms-playwright/chrome-headless-shell-linux64/chrome-headless-shell',
+  '/ms-playwright/chromium_headless_shell-1247/chrome-headless-shell-linux64/chrome-headless-shell',
+].find(p => p && existsSync(p));
 const browser = await chromium.launch({
   executablePath: process.env.CHROMIUM_PATH || defaultChromium,
   args: ['--no-sandbox'],

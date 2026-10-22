@@ -4,7 +4,6 @@ import { BrandLogo } from '../shared/BrandLogo';
 import { Menu, X } from 'lucide-react';
 
 const navigation = [
-  { to: '/', label: 'Home' },
   { to: '/demo', label: 'Interactive Demo' },
   { to: '/about', label: 'About' },
   { to: '/partners', label: 'For Partners' },
