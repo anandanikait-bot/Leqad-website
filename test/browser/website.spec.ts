@@ -96,6 +96,28 @@ test('tab icon uses the approved geometry on both light and dark themes', async 
   expect(source).toContain('feColorMatrix');
 });
 
+test('favicon actually renders legibly at 16px with transparent corners', async ({ page }) => {
+  await page.goto('/');
+  const pixels = await page.evaluate(async () => {
+    const image = new Image();
+    image.src = '/assets/brand/leqad-tab-v1.svg';
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('2D canvas is unavailable');
+    ctx.drawImage(image, 0, 0, 16, 16);
+    const data = ctx.getImageData(0, 0, 16, 16).data;
+    let visible = 0;
+    for (let i = 3; i < data.length; i += 4) if (data[i] > 60) visible++;
+    return { visible, topLeftAlpha: data[3], bottomRightAlpha: data[data.length - 1] };
+  });
+  expect(pixels.visible).toBeGreaterThan(15);
+  expect(pixels.topLeftAlpha).toBeLessThan(30);
+  expect(pixels.bottomRightAlpha).toBeLessThan(30);
+});
+
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
   await page.goto('/about');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Learn CAD by building/);
