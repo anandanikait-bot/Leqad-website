@@ -18,6 +18,8 @@ for (const width of [320, 375, 1440]) {
     await page.goto('/?metallic=1');
     const button = page.locator('[data-metallic-cta]');
     await expect(button).toBeVisible();
+    await expect(button).toHaveAttribute('data-theme', 'leqad');
+    await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /rgb\(14, 41, 67\)/);
     const link = button.getByRole('link', { name: 'Explore Interactive Demo', exact: true });
     await expect(link).toHaveAttribute('href', '/demo');
     await expect(button.locator('canvas')).toHaveCount(1);
