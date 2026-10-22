@@ -102,17 +102,65 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   await expect(help).not.toHaveAttribute('open');
   await page.getByRole('button', { name: 'Show me where', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Hide tool highlight', exact: true })).toHaveAttribute('aria-pressed', 'true');
-  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch', 'Continue to practice', 'Finish walkthrough']) {
+  // A future lesson may be previewed, but cannot manufacture a solid.
+  await page.getByRole('button', { name: 'All steps', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Walkthrough steps', exact: true })
+    .getByRole('button', { name: '8 Confirm solid', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Create solid', exact: true })).toBeDisabled();
+  await expect(page.getByTestId('extruded-solid')).toHaveCount(0);
+  await page.getByRole('navigation', { name: 'Walkthrough steps', exact: true })
+    .getByRole('button', { name: '2 Select reference plane', exact: true }).click();
+
+  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
     await page.getByRole('button', { name: label, exact: true }).click();
   }
+  await expect(page.getByText('Sketch accepted · Choose Extrude')).toBeVisible();
+  await expect(page.getByTestId('extruded-solid')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Start Extrude', exact: true }).click();
+  await expect(page.getByTestId('extruded-solid')).toHaveAttribute('aria-label', '3D extrusion preview');
+  const depth = page.getByLabel('Depth (mm)');
+  await expect(depth).toHaveValue('10');
+  await depth.fill('12');
+  await expect(page.getByText('Extrude preview · 12 mm depth')).toBeVisible();
+  await page.getByRole('button', { name: 'Create solid', exact: true }).click();
   await expect(page.getByRole('heading', { name: "You've completed the interactive walkthrough." })).toBeVisible();
+  await expect(page.getByTestId('extruded-solid')).toHaveAttribute('aria-label', 'Created 3D rectangular plate');
   await page.getByRole('button', { name: 'Restart walkthrough', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'All steps', exact: true }).click();
-  await page.getByRole('navigation', { name: 'Walkthrough steps', exact: true }).getByRole('button', { name: '8 Independent practice', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Walkthrough steps', exact: true }).getByRole('button', { name: '8 Confirm solid', exact: true }).click();
   await expect(page.getByText("You've completed the interactive walkthrough.", { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Restart', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
+});
+
+test('cancel extrusion returns to accepted sketch without inventing a solid', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByRole('button', { name: 'Start walkthrough' }).click();
+  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+  }
+  await page.getByRole('button', { name: 'Start Extrude', exact: true }).click();
+  await page.getByRole('button', { name: 'Cancel Extrude' }).click();
+  await expect(page.getByTestId('extruded-solid')).toHaveCount(0);
+  await expect(page.getByText('Sketch accepted · Choose Extrude')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Start Extrude', exact: true })).toBeEnabled();
+});
+
+test('CAD feature preview has responsive view and depth controls', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto('/demo');
+  await page.getByRole('button', { name: 'Start walkthrough' }).click();
+  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+  }
+  await page.getByRole('button', { name: 'Start Extrude' }).click();
+  await expect(page.getByLabel('Extrude 1 settings')).toBeVisible();
+  await page.getByRole('button', { name: 'View Top' }).click();
+  await expect(page.getByTestId('solid-top-view')).toBeVisible();
+  await page.getByRole('button', { name: 'View Isometric' }).click();
+  await expect(page.getByTestId('extruded-solid')).toBeVisible();
+  await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
 });
 
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
