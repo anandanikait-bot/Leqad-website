@@ -56,8 +56,8 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-approved.png');
-    await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-navbar.png');
+    await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-navbar.png');
     await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'multiply');
     if (path === '/') {
       await expect(page.locator('footer')).toHaveCount(0);

@@ -1,18 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { LessonStep, ViewOrientation, SketchDemoStatus } from '../../types';
+import { PlateModel } from './PlateModel';
+import { DimensionInput } from './DimensionInput';
 import { 
   Square, 
-  Minus, 
   Check, 
   X, 
   Box, 
   Layers, 
   Ruler, 
-  Eye, 
-  ShieldCheck,
-  CheckCircle2,
   Info,
-  Maximize2
 } from 'lucide-react';
 
 interface SimulatedCADCanvasProps {
@@ -21,6 +18,11 @@ interface SimulatedCADCanvasProps {
   sketchStatus: SketchDemoStatus;
   widthMm: number;
   heightMm: number;
+  extrudeDepthMm: number;
+  onDepthChange: (depth: number) => void;
+  onDepthValidityChange: (valid: boolean) => void;
+  onDrawRectangle: (width: number, height: number) => void;
+  actionAllowed: boolean;
   highlightedTargetId: string | null;
   isDemoComplete?: boolean;
   onTriggerAction: (actionId: string) => void;
@@ -34,6 +36,11 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   sketchStatus,
   widthMm,
   heightMm,
+  extrudeDepthMm,
+  onDepthChange,
+  onDepthValidityChange,
+  onDrawRectangle,
+  actionAllowed,
   highlightedTargetId,
   isDemoComplete = false,
   onTriggerAction,
@@ -41,7 +48,9 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   onCancelExtrude,
 }) => {
   const [viewOrientation, setViewOrientation] = useState<ViewOrientation>('iso');
-  const [extrudeDepthMm, setExtrudeDepthMm] = useState(10);
+  const [rectangleArmed, setRectangleArmed] = useState(false);
+  const [originSet, setOriginSet] = useState(false);
+  const [rectanglePreview, setRectanglePreview] = useState({ width: 20, height: 15 });
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0.0, y: 0.0 });
   const [svgCursor, setSvgCursor] = useState<{ x: number; y: number } | null>(null);
   const canvasRef = useRef<SVGSVGElement | null>(null);
@@ -55,11 +64,53 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
     );
   }, [currentStepIndex, sketchStatus]);
 
+  useEffect(() => {
+    if (currentStepIndex !== 3 || sketchStatus !== 'sketch-active') {
+      setRectangleArmed(false); setOriginSet(false);
+    }
+  }, [currentStepIndex, sketchStatus]);
+
+  useEffect(() => {
+    const key = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey || (event.target as HTMLElement)?.closest('input,textarea,select,[contenteditable="true"]')) return;
+      if (event.key.toLowerCase() === 'd' && currentStepIndex === 4 && sketchStatus === 'rectangle-drawn' && actionAllowed) onTriggerAction('apply-dimensions');
+      if (currentStepIndex !== 3 || sketchStatus !== 'sketch-active') return;
+      if (event.key.toLowerCase() === 'g') { setRectangleArmed(true); setOriginSet(false); }
+      if (event.key === 'Escape') { setRectangleArmed(false); setOriginSet(false); }
+    };
+    window.addEventListener('keydown', key);
+    return () => window.removeEventListener('keydown', key);
+  }, [currentStepIndex, sketchStatus, actionAllowed, onTriggerAction]);
+
+  const pointerPoint = (event: React.PointerEvent<SVGSVGElement>) => {
+    const svg = canvasRef.current;
+    const matrix = svg?.getScreenCTM();
+    if (!svg || !matrix) return null;
+    const p = svg.createSVGPoint(); p.x = event.clientX; p.y = event.clientY;
+    return p.matrixTransform(matrix.inverse());
+  };
+  const pointerDimensions = (point: { x: number; y: number }) => ({
+    width: Math.max(20, Math.min(50, Math.round(point.x / 3))),
+    height: Math.max(15, Math.min(40, Math.round(-point.y / 3))),
+  });
+  const handleDrawingClick = (event: React.PointerEvent<SVGSVGElement>) => {
+    if (event.button !== 0 || !rectangleArmed || currentStepIndex !== 3 || sketchStatus !== 'sketch-active') return;
+    const p = pointerPoint(event);
+    if (!p) return;
+    if (!originSet) {
+      if (Math.hypot(p.x, p.y) <= 18) setOriginSet(true);
+    } else if (p.x >= 60 && p.y <= -45) {
+      const dimensions = pointerDimensions(p);
+      onDrawRectangle(dimensions.width, dimensions.height);
+    }
+  };
+
   // Precise mathematical conversion from SVG viewBox to 40x30 mm CAD coordinate space
   // Scale: 1 mm in CAD = 3 SVG units (120 SVG units = 40 mm, 90 SVG units = 30 mm)
   // Origin (0,0) in SVG is CAD (0.0, 0.0) mm
   // Standard CAD +Y is upwards (-SVG Y)
-  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+  const handleMouseMove = (e: React.PointerEvent<SVGSVGElement>) => {
+    if (sketchStatus === 'extrude-preview' || sketchStatus === 'solid-created') return;
     if (!canvasRef.current) return;
     const svg = canvasRef.current;
     const ctm = svg.getScreenCTM();
@@ -75,6 +126,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
     setCursorPos({ x: cadX, y: cadY });
     setSvgCursor({ x: svgPoint.x, y: svgPoint.y });
+    if (rectangleArmed && originSet && currentStepIndex === 3) setRectanglePreview(pointerDimensions(svgPoint));
   };
 
   const handleMouseLeave = () => {
@@ -90,20 +142,12 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const isRectangleDrawn = ['rectangle-drawn', 'dimensioned', 'accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
   const isDimensioned = ['dimensioned', 'accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
   const isSketchAccepted = ['accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
-  const extrudeOffset = extrudeDepthMm * 3;
   const widthUnits = widthMm * 3;
   const heightUnits = heightMm * 3;
-  // A consistent isometric basis makes the solid resize with its sketch.
-  const ux = 113 * widthMm / 40;
-  const uy = 50 * widthMm / 40;
-  const vx = 96 * heightMm / 30;
-  const vy = -52 * heightMm / 30;
-  const a: [number, number] = [10.5 - (ux + vx) / 2, 29 - (uy + vy) / 2];
-  const b: [number, number] = [a[0] + ux, a[1] + uy];
-  const c: [number, number] = [b[0] + vx, b[1] + vy];
-  const d: [number, number] = [a[0] + vx, a[1] + vy];
-  const raised = (v: [number, number]): [number, number] => [v[0], v[1] - extrudeOffset];
-  const polygonPoints = (points: [number, number][]) => points.map(([x,y]) => x + ',' + y).join(' ');
+  const canStartSketch = currentStepIndex === 2 && sketchStatus === 'plane-selected';
+  const canDraw = currentStepIndex === 3 && sketchStatus === 'sketch-active';
+  const canDimension = currentStepIndex === 4 && sketchStatus === 'rectangle-drawn' && actionAllowed;
+  const canExtrude = currentStepIndex === 6 && sketchStatus === 'accepted-in-demo';
 
   // Highlight check
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
@@ -111,7 +155,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   return (
     <div data-lenis-prevent className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
       {/* CAD Application Ribbon Toolbar */}
-      <div role="toolbar" aria-label="CAD tools" className="min-h-11 bg-white border-b border-[#D9DDD9] px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-xs text-[#0E2943] z-20">
+      <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed min-h-11 bg-white border-b border-[#D9DDD9] px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-xs text-[#0E2943] z-20">
         {/* Left CAD Toolbar */}
         <div className="flex items-center gap-1 overflow-x-auto py-1">
           {/* Sketch tool (Step 3: Start Sketch) */}
@@ -132,7 +176,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 : ''
             }`}
             title="Sketch tool: Click to enter sketch mode on Top Plane"
-            aria-label="Sketch tool"
+            aria-label="Sketch tool" disabled={!canStartSketch}
           >
             <Layers className="w-3.5 h-3.5 text-[#B74B21]" />
             <span className="hidden sm:inline">Sketch</span>
@@ -156,7 +200,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 : ''
             }`}
             title="Extrude: Start a Solid / New / Blind preview"
-            aria-label="Extrude 3D tool"
+            aria-label="Extrude 3D tool" disabled={!canExtrude}
           >
             <Box className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Extrude</span>
@@ -168,7 +212,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onTriggerAction('draw-rectangle');
+              if (canDraw) { setRectangleArmed(true); setOriginSet(false); }
             }}
             className={`p-1.5 rounded transition-all cursor-pointer relative ${
               currentStepIndex === 3 && !isRectangleDrawn
@@ -181,20 +225,10 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
                 : ''
             }`}
-            title="Corner Rectangle (G): Click to draw 40x30 mm rectangle from origin"
-            aria-label="Corner Rectangle tool"
+            title="Corner Rectangle (G): select the origin, then the opposite corner"
+            aria-label="Corner Rectangle tool" disabled={!canDraw} aria-pressed={rectangleArmed}
           >
             <Square className="w-4 h-4" />
-          </button>
-
-          {/* Line tool (inactive illustration) */}
-          <button
-            className="p-1.5 rounded text-[#55616B] opacity-50 cursor-not-allowed"
-            disabled
-            title="Line tool (L) — Not required for this rectangle lesson"
-            aria-label="Line tool (illustrative)"
-          >
-            <Minus className="w-4 h-4 rotate-45" />
           </button>
 
           {/* Dimension Tool (D) (Step 5: Apply Dimensions) */}
@@ -214,30 +248,15 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
                 : ''
             }`}
-            title="Dimension Tool (D): Set 40 mm width and 30 mm height"
-            aria-label="Dimension tool"
+            title="Apply the current sketch dimensions"
+            aria-label="Dimension tool" disabled={!canDimension}
           >
             <Ruler className="w-4 h-4" />
           </button>
 
           <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
 
-          {/* View Normal (N) */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setViewOrientation(viewOrientation === 'top' ? 'iso' : 'top');
-            }}
-            className={`p-1.5 rounded transition-all cursor-pointer ${
-              viewOrientation === 'top'
-                ? 'bg-[#F5EFE7] text-[#0E2943] border border-[#D9DDD9]'
-                : 'hover:bg-[#FAF8F4] text-[#55616B]'
-            }`}
-            title="Toggle Normal to View (N) / Isometric"
-            aria-label="Toggle normal to view"
-          >
-            <Eye className="w-4 h-4" />
-          </button>
+
         </div>
 
         {/* Right Info: Coordinate Readout */}
@@ -253,13 +272,75 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </div>
 
           <div className="font-mono text-[11px] font-medium px-2 py-1 bg-white border border-[#D9DDD9] rounded text-[#0E2943]">
-            {viewOrientation === 'top' ? 'Top (XY)' : 'Isometric'}
+            {{ top: 'Top (XY)', iso: 'Isometric', front: 'Front (XZ)', right: 'Right (YZ)' }[viewOrientation]}
           </div>
         </div>
       </div>
 
+      {isExtruding && <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-3 py-2">
+        <span className="text-xs text-[#55616B]">{isExtruding ? 'Extrude 1' : isSketchActive ? 'Sketch 1' : 'Reference planes'}</span>
+        <div role="group" aria-label="Model view" className="flex gap-1 text-[11px] font-mono">
+          {(['top', 'iso', 'front', 'right'] as const).map(view => (
+            <button type="button" key={view} aria-label={`View ${view === 'iso' ? 'Isometric' : view[0].toUpperCase() + view.slice(1)}`}
+              aria-pressed={viewOrientation === view} onClick={() => setViewOrientation(view)}
+              className={`rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-[#B74B21] ${viewOrientation === view ? 'bg-[#0E2943] text-white' : 'text-[#55616B] hover:bg-[#FAF8F4]'}`}>
+              {view === 'iso' ? 'Iso' : view[0].toUpperCase() + view.slice(1)}
+            </button>
+          ))}
+        </div>
+      </div>}
+        {/* Inline sketch controls keep the viewport clear. */}
+        {isSketchActive && !isSketchAccepted && (
+          <div className="border-b border-[#D9DDD9] bg-white px-3 py-2 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
+              <strong className="text-[#0E2943]">Sketch 1</strong>
+              <span className="text-[#55616B] text-[11px]">(Top Plane)</span>
+            </div>
+
+            <div className="flex items-center gap-1 border-l border-[#D9DDD9] pl-2">
+              {/* Accept Sketch button (Step 6: Finish Sketch) */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTriggerAction('finish-sketch');
+                }}
+                className={`disabled:opacity-35 disabled:cursor-not-allowed w-6 h-6 rounded flex items-center justify-center transition-all cursor-pointer ${
+                  currentStepIndex === 5
+                    ? 'bg-emerald-600 text-white ring-2 ring-emerald-500 ring-offset-1'
+                    : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                } ${
+                  isTargetHighlighted('tool-accept-sketch')
+                    ? 'ring-2 ring-[#B74B21] ring-offset-1'
+                    : ''
+                }`}
+                title="Accept Sketch (Green Checkmark) — Commit Sketch 1"
+                aria-label="Accept Sketch (Green Checkmark)" disabled={currentStepIndex !== 5 || sketchStatus !== 'dimensioned'}
+              >
+                <Check className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onResetSketch?.();
+                }}
+                className="w-6 h-6 rounded flex items-center justify-center bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer"
+                title="Cancel Sketch mode"
+                aria-label="Cancel Sketch"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+      {isExtrudePreview && <div role="group" aria-label="Extrude 1 settings" className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[#D9DDD9] bg-white px-3 py-3">
+        <div className="max-w-48"><DimensionInput label="Depth (mm)" value={extrudeDepthMm} min={1} max={50} onChange={onDepthChange} onValidityChange={onDepthValidityChange} /></div>
+        <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude" className="mb-1 rounded px-2 py-2 text-xs text-[#55616B] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-[#B74B21]">Cancel</button>
+      </div>}
       {/* Main CAD Canvas Area */}
-      <div className="relative flex-1 flex overflow-hidden">
+      <div className={`relative flex-1 flex overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
         {/* Left Feature Tree Panel */}
         <div className="hidden sm:flex flex-col w-44 bg-white/95 backdrop-blur-xs border-r border-[#D9DDD9] text-xs z-10 flex-shrink-0">
           <div className="p-2 border-b border-[#D9DDD9] font-mono text-[10px] uppercase font-semibold text-[#55616B] flex items-center justify-between">
@@ -291,7 +372,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   : ''
               }`}
               title="Top Plane (XY Datum) — Click to select datum"
-              aria-label="Top Plane feature item"
+              aria-label="Top Plane feature item" disabled={currentStepIndex !== 1 || sketchStatus !== 'not-started'}
             >
               <div className="flex items-center gap-1.5">
                 <span className={`w-1.5 h-1.5 rounded-full ${isPlaneSelected ? 'bg-[#0E2943]' : 'bg-[#B74B21]'}`} />
@@ -341,145 +422,6 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </div>
         </div>
 
-        {/* Floating Sketch Dialog Box (Only visible while in editing mode, not before or after accept) */}
-        {isSketchActive && !isSketchAccepted && (
-          <div className="absolute top-3 left-3 sm:left-48 bg-white/95 backdrop-blur-xs border border-[#D9DDD9] shadow-sm rounded-md px-3 py-1.5 flex items-center gap-3 z-20 text-xs font-mono">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
-              <strong className="text-[#0E2943]">Sketch 1</strong>
-              <span className="text-[#55616B] text-[11px]">(Top Plane)</span>
-            </div>
-
-            <div className="flex items-center gap-1 border-l border-[#D9DDD9] pl-2">
-              {/* Accept Sketch button (Step 6: Finish Sketch) */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onTriggerAction('finish-sketch');
-                }}
-                className={`w-6 h-6 rounded flex items-center justify-center transition-all cursor-pointer ${
-                  currentStepIndex === 5
-                    ? 'bg-emerald-600 text-white ring-2 ring-emerald-500 ring-offset-1'
-                    : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                } ${
-                  isTargetHighlighted('tool-accept-sketch')
-                    ? 'ring-2 ring-[#B74B21] ring-offset-1'
-                    : ''
-                }`}
-                title="Accept Sketch (Green Checkmark) — Commit Sketch 1"
-                aria-label="Accept Sketch (Green Checkmark)"
-              >
-                <Check className="w-3.5 h-3.5" />
-              </button>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onResetSketch?.();
-                }}
-                className="w-6 h-6 rounded flex items-center justify-center bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer"
-                title="Cancel Sketch mode"
-                aria-label="Cancel Sketch"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Simplified feature dialog. The preview is not a committed part until accepted. */}
-        {isExtrudePreview && (
-          <div className="absolute z-20 top-3 left-3 sm:left-48 w-[min(265px,calc(100%_-_100px))] rounded-lg border border-[#B74B21]/30 bg-white/95 p-3 shadow-lg backdrop-blur-xs text-xs" role="group" aria-label="Extrude 1 settings">
-            <div className="flex items-center justify-between gap-2 text-[#0E2943] font-semibold">
-              <span className="flex items-center gap-1.5"><Box className="h-4 w-4 text-[#B74B21]" />Extrude 1</span>
-              <span className="text-[10px] text-[#55616B]">Preview</span>
-            </div>
-            <p className="mt-2 text-[11px] text-[#55616B]">Solid · New · Blind</p>
-            <label htmlFor="extrude-depth" className="mt-2 flex items-center justify-between gap-2 text-[#0E2943]">
-              Depth (mm)
-              <input
-                id="extrude-depth"
-                type="number"
-                min={1}
-                max={50}
-                step={1}
-                value={extrudeDepthMm}
-                onChange={event => {
-                  const value = Number(event.target.value);
-                  if (Number.isFinite(value) && value >= 1 && value <= 50) setExtrudeDepthMm(value);
-                }}
-                className="w-20 rounded border border-[#D9DDD9] px-2 py-1 text-right font-mono text-[#0E2943] focus-visible:outline-[#B74B21]"
-              />
-            </label>
-            <div className="mt-3 flex gap-2">
-              <button type="button" onClick={() => onTriggerAction('confirm-extrude')}
-                aria-label="Accept Extrude (Green Checkmark)"
-                className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1.5 text-white bg-emerald-700 hover:bg-emerald-800 ${isTargetHighlighted('tool-accept-extrude') ? 'ring-2 ring-[#B74B21] ring-offset-2' : ''}`}>
-                <Check className="h-3.5 w-3.5" />Accept
-              </button>
-              <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude"
-                className="inline-flex items-center gap-1.5 rounded border border-[#D9DDD9] px-2.5 py-1.5 text-[#55616B] hover:bg-[#FAF8F4]">
-                <X className="h-3.5 w-3.5" />Cancel
-              </button>
-            </div>
-          </div>
-        )}
-
-                {/* Viewport View Cube (Top Right) */}
-        <div className="absolute top-3 right-3 z-20 flex flex-col items-end gap-1">
-          <div className="w-16 h-16 bg-white border border-[#D9DDD9] rounded-lg shadow-sm p-1.5 flex flex-col justify-between text-[9px] font-mono font-semibold text-[#0E2943] select-none">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setViewOrientation('top');
-              }}
-              className={`text-center py-0.5 rounded transition-colors cursor-pointer ${
-                viewOrientation === 'top' ? 'bg-[#0E2943] text-white' : 'hover:bg-[#FAF8F4]'
-              }`}
-              aria-label="View Top"
-            >
-              TOP
-            </button>
-            <div className="flex justify-between items-center px-0.5">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setViewOrientation('front');
-                }}
-                className="hover:text-[#B74B21] transition-colors cursor-pointer"
-                aria-label="View Front"
-              >
-                F
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setViewOrientation('iso');
-                }}
-                className={`px-1 py-0.5 rounded transition-colors cursor-pointer ${
-                  viewOrientation === 'iso' ? 'bg-[#B74B21] text-white' : 'hover:bg-[#FAF8F4]'
-                }`}
-                aria-label="View Isometric"
-              >
-                ISO
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setViewOrientation('right');
-                }}
-                className="hover:text-[#B74B21] transition-colors cursor-pointer"
-                aria-label="View Right"
-              >
-                R
-              </button>
-            </div>
-          </div>
-          <span className="text-[10px] font-mono text-[#55616B] bg-white/70 px-1.5 py-0.5 rounded border border-[#D9DDD9]">
-            CAD Orbit: Ready
-          </span>
-        </div>
-
         {/*
           SVG CAD Canvas:
           Clicking empty space or grid lines does NOT advance.
@@ -487,13 +429,15 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         */}
         <svg
           ref={canvasRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          className="w-full h-full cursor-crosshair bg-cad-grid relative transition-all"
-          viewBox="-250 -180 500 360"
+          onPointerMove={handleMouseMove}
+          onPointerDown={handleDrawingClick}
+          role="group" aria-label="CAD drawing viewport"
+          onPointerLeave={handleMouseLeave}
+          className="w-full min-w-0 h-[380px] lg:h-[440px] cursor-crosshair relative touch-pan-y"
+          viewBox={isSketchActive ? '-85 -285 350 380' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}
-          <g stroke="#0E2943" strokeOpacity="0.08" strokeWidth="1" pointerEvents="none">
+          <g stroke={isExtruding ? '#F5EFE7' : '#0E2943'} strokeOpacity="0.08" strokeWidth="1" pointerEvents="none">
             {[-200, -150, -100, -50, 0, 50, 100, 150, 200].map((pos) => (
               <line key={`gx-${pos}`} x1={pos} y1="-180" x2={pos} y2="180" />
             ))}
@@ -511,10 +455,6 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               r="4.5"
               fill="#B74B21"
               className="cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (currentStepIndex === 3) onTriggerAction('draw-rectangle');
-              }}
             />
             <circle
               cx="0"
@@ -525,10 +465,6 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               strokeWidth="1.25"
               strokeDasharray="3 2"
               className="cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (currentStepIndex === 3) onTriggerAction('draw-rectangle');
-              }}
             />
             <text x="8" y="-7" fill="#B74B21" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
               (0,0) Origin
@@ -550,10 +486,12 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </g>}
 
           {/* Isometric Top Plane Visual (shown when in ISO view or Step 2) */}
-          {viewOrientation === 'iso' && !isExtruding && (
+          {!isSketchActive && !isExtruding && (
             <g>
               <polygon
-                points="-140,50 60,110 160,-20 -40,-80"
+                points="-60,0 80,45 160,-35 20,-80"
+                role="button" aria-disabled={currentStepIndex !== 1} tabIndex={currentStepIndex === 1 ? 0 : -1} aria-label="Select Top Plane in viewport"
+                onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onTriggerAction('select-top-plane'); } }}
                 fill={isPlaneSelected ? 'rgba(183, 75, 33, 0.14)' : 'rgba(14, 41, 67, 0.05)'}
                 stroke={isPlaneSelected ? '#B74B21' : '#0E2943'}
                 strokeWidth={isPlaneSelected ? '2.5' : '1'}
@@ -564,22 +502,13 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   onTriggerAction('select-top-plane');
                 }}
               />
-              <text x="-120" y="45" fill="#0E2943" fontSize="11" fontFamily="IBM Plex Mono" fontWeight="600">
-                Top Plane (XY) {isPlaneSelected ? '[Selected Datum]' : '[Click to Select]'}
+              <text x="50" y="-95" textAnchor="middle" pointerEvents="none" fill="#0E2943" fontSize="11" fontFamily="IBM Plex Mono" fontWeight="600">
+                Top Plane (XY)
               </text>
             </g>
           )}
 
-          {/* Step 4: Drawing prompt at Origin */}
-          {currentStepIndex === 3 && !isRectangleDrawn && viewOrientation === 'top' && (
-            <g transform="translate(10, 25)" pointerEvents="none" className="animate-fadeIn">
-              <rect x="0" y="0" width="210" height="22" rx="3" fill="#0E2943" fillOpacity="0.88" />
-              <text x="8" y="15" fill="#F5EFE7" fontSize="10" fontFamily="IBM Plex Mono">
-                Corner Rectangle: Anchor at (0,0)
-              </text>
-            </g>
-          )}
-
+          {canDraw && rectangleArmed && originSet && <rect role="img" aria-label="Rectangle drawing preview" x="0" y={-rectanglePreview.height * 3} width={rectanglePreview.width * 3} height={rectanglePreview.height * 3} fill="rgba(183,75,33,.06)" stroke="#B74B21" strokeWidth="1.5" strokeDasharray="4 3" pointerEvents="none" />}
           {/* Drawing is driven by editable sketch dimensions. */}
           {isRectangleDrawn && !isExtruding && (
             <g data-testid="sketch-profile" aria-label={`Rectangle ${widthMm} by ${heightMm} millimeters`}>
@@ -588,76 +517,31 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   fill="rgba(14, 41, 67, 0.15)" stroke="none" />
               )}
               <rect x="0" y={-heightUnits} width={widthUnits} height={heightUnits}
-                fill={isSketchAccepted ? 'transparent' : 'rgba(45, 127, 249, 0.04)'}
-                stroke={isDimensioned ? '#0E2943' : '#2D7FF9'}
+                fill={isSketchAccepted ? 'transparent' : 'rgba(183,75,33,0.04)'}
+                stroke={isDimensioned ? '#0E2943' : '#B74B21'}
                 strokeWidth={isDimensioned ? 2.5 : 2} className="transition-colors duration-200 cursor-pointer"
                 onClick={event => { event.stopPropagation(); if (currentStepIndex === 4 && !isDimensioned) onTriggerAction('apply-dimensions'); }} />
               <circle cx="0" cy="0" r="3.5" fill="#B74B21" />
-              <circle cx={widthUnits} cy={-heightUnits} r="3.5" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
-              <circle cx={widthUnits} cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
-              <circle cx="0" cy={-heightUnits} r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
-              {!isDimensioned && (
-                <text x={widthUnits + 6} y={-heightUnits + 8} fill="#2D7FF9" fontSize="9" fontFamily="IBM Plex Mono">
-                  Under-constrained
-                </text>
-              )}
+              <circle cx={widthUnits} cy={-heightUnits} r="3.5" fill={isDimensioned ? '#0E2943' : '#B74B21'} />
+              <circle cx={widthUnits} cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#B74B21'} />
+              <circle cx="0" cy={-heightUnits} r="3" fill={isDimensioned ? '#0E2943' : '#B74B21'} />
+
             </g>
           )}
-          {isDimensioned && !isExtruding && (
-            <g pointerEvents="none" fontFamily="IBM Plex Mono" fontSize="10">
-              <line x1="0" y1={-heightUnits} x2="0" y2={-heightUnits - 30} stroke="#55616B" strokeWidth="1" />
-              <line x1={widthUnits} y1={-heightUnits} x2={widthUnits} y2={-heightUnits - 30} stroke="#55616B" strokeWidth="1" />
-              <line x1="4" y1={-heightUnits - 25} x2={widthUnits - 4} y2={-heightUnits - 25} stroke="#0E2943" strokeWidth="1" />
-              <rect x={widthUnits / 2 - 20} y={-heightUnits - 35} width="40" height="16" rx="3" fill="#fff" stroke="#0E2943" />
-              <text x={widthUnits / 2} y={-heightUnits - 23} textAnchor="middle" fill="#0E2943">{widthMm} mm</text>
-              <line x1={widthUnits} y1="0" x2={widthUnits + 30} y2="0" stroke="#55616B" strokeWidth="1" />
-              <line x1={widthUnits} y1={-heightUnits} x2={widthUnits + 30} y2={-heightUnits} stroke="#55616B" strokeWidth="1" />
-              <line x1={widthUnits + 24} y1="-4" x2={widthUnits + 24} y2={-heightUnits + 4} stroke="#0E2943" strokeWidth="1" />
-              <rect x={widthUnits + 4} y={-heightUnits / 2 - 8} width="40" height="16" rx="3" fill="#fff" stroke="#0E2943" />
-              <text x={widthUnits + 24} y={-heightUnits / 2 + 4} textAnchor="middle" fill="#0E2943">{heightMm} mm</text>
+          {isRectangleDrawn && !isExtruding && (
+            <g pointerEvents="none" fontFamily="IBM Plex Mono" fontSize="16" fill="#0E2943">
+              <path d={`M 0 ${-heightUnits - 5} V ${-heightUnits - 20} H ${widthUnits} V ${-heightUnits - 5}`} fill="none" stroke="#55616B" strokeWidth="1" />
+              <text x={widthUnits / 2} y={-heightUnits - 28} textAnchor="middle">{widthMm} mm</text>
+              <path d={`M ${widthUnits + 5} 0 H ${widthUnits + 20} V ${-heightUnits} H ${widthUnits + 5}`} fill="none" stroke="#55616B" strokeWidth="1" />
+              <text x={widthUnits + 30} y={-heightUnits / 2 + 5}>{heightMm} mm</text>
             </g>
           )}
 
-          {/* Shaded Profile Label when accepted (Step 6 / 7) */}
-          {sketchStatus === 'accepted-in-demo' && (
-            <g transform="translate(-170, 110)" pointerEvents="none">
-              <rect width="205" height="24" rx="4" fill="#0E2943" />
-              <text x="10" y="16" fill="#F5EFE7" fontSize="10" fontFamily="IBM Plex Mono">Sketch accepted · Choose Extrude</text>
-            </g>
-          )}
 
-          {/* Dimension-driven illustrative solid, with separate preview and committed states. */}
-          {isExtruding && (viewOrientation === 'top' ? (
-            <g data-testid="solid-top-view" role="img" aria-label="Top view of rectangular plate">
-              <rect x={-widthUnits / 2} y={-heightUnits / 2} width={widthUnits} height={heightUnits}
-                fill="#D8E2EB" stroke="#0E2943" strokeWidth="2.5" />
-              <text x={-widthUnits / 2} y={heightUnits / 2 + 20} fontSize="11" fill="#0E2943" fontFamily="IBM Plex Mono">
-                Top · {widthMm} × {heightMm} mm
-              </text>
-            </g>
-          ) : (
-            <g data-testid="extruded-solid" role="img" aria-label={isSolidCreated ? 'Created 3D rectangular plate' : '3D extrusion preview'}>
-              <polygon points={polygonPoints([raised(a), raised(b), b, a])}
-                fill="#607E98" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round" />
-              <polygon points={polygonPoints([raised(b), raised(c), c, b])}
-                fill="#829EB3" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round" />
-              <polygon points={polygonPoints([raised(a), raised(b), raised(c), raised(d)])}
-                fill={isExtrudePreview ? '#DCE8EF' : '#C6D8E4'} stroke="#0E2943" strokeWidth="2.5" strokeLinejoin="round" />
-              {isExtrudePreview && (
-                <polygon points={polygonPoints([a, b, c, d])} stroke="#B74B21"
-                  strokeDasharray="4 4" strokeOpacity="0.65" fill="none" strokeWidth="1.5" />
-              )}
-              <g transform="translate(-175, 119)" pointerEvents="none">
-                <rect width="260" height="27" rx="4" fill="#0E2943" />
-                <text x="10" y="17" fontSize="10" fontFamily="IBM Plex Mono" fill="#F5EFE7">
-                  {isSolidCreated ? 'Part 1 created' : 'Extrude preview'} · {widthMm} × {heightMm} × {extrudeDepthMm} mm
-                </text>
-              </g>
-            </g>
-          ))}
 
+          {isExtruding && <PlateModel dimensions={{ width: widthMm, height: heightMm, depth: extrudeDepthMm }} view={viewOrientation} confirmed={isSolidCreated} />}
           {/* Real-time CAD Precision Cursor & Tracking Crosshair */}
-          {svgCursor && (
+          {svgCursor && !isExtruding && (
             <g pointerEvents="none" className="transition-opacity">
               <line
                 x1="-250"
@@ -681,18 +565,15 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               />
               <circle cx={svgCursor.x} cy={svgCursor.y} r="2.5" fill="#B74B21" />
               <circle cx={svgCursor.x} cy={svgCursor.y} r="5.5" fill="none" stroke="#B74B21" strokeWidth="1" strokeDasharray="2 2" />
-              {/* Floating Coordinate HUD near cursor */}
-              <g transform={`translate(${Math.min(135, Math.max(-235, svgCursor.x + 10))}, ${Math.min(155, Math.max(-165, svgCursor.y - 12))})`}>
-                <rect x="0" y="0" width="104" height="18" rx="3" fill="#0E2943" fillOpacity="0.9" />
-                <text x="6" y="12" fill="#FFFFFF" fontSize="9" fontFamily="IBM Plex Mono">
-                  X:{cursorPos.x >= 0 ? `+${cursorPos.x.toFixed(1)}` : cursorPos.x.toFixed(1)} Y:{cursorPos.y >= 0 ? `+${cursorPos.y.toFixed(1)}` : cursorPos.y.toFixed(1)}
-                </text>
-              </g>
+
             </g>
           )}
         </svg>
 
       </div>
+      <p role="status" className="min-h-10 border-t border-[#D9DDD9] bg-white px-3 py-2.5 text-xs leading-relaxed text-[#55616B]">
+        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace'}
+      </p>
     </div>
   );
 };

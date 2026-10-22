@@ -42,6 +42,7 @@ jobs:
             sleep 1
           done
           npm run screenshots
+          npm run screenshots:demo
       - name: Upload fresh full-page screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -56,6 +57,23 @@ jobs:
           name: website-mobile-review
           path: docs/screenshots/*-mobile.png
           if-no-files-found: ignore
+      - name: Upload additional responsive breakpoints
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-breakpoint-review
+          path: |
+            docs/screenshots/*-320px.png
+            docs/screenshots/*-768px.png
+            docs/screenshots/*-1024px.png
+          if-no-files-found: error
+      - name: Upload fresh refined demo screenshots and transition
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-refinement-review
+          path: docs/screenshots/demo/
+          if-no-files-found: error
       - name: Upload step-by-step demo screenshots
         if: always()
         uses: actions/upload-artifact@v4

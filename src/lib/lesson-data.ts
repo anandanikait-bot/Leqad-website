@@ -67,14 +67,14 @@ export const LESSON_STEPS: LessonStep[] = [
     totalSteps: 8,
     category: 'FOUNDATIONS / YOUR FIRST SKETCH',
     title: 'Draw rectangle',
-    instruction: 'Activate Corner Rectangle (G) and anchor the first corner at the coordinate origin (0,0), then drag outward to define the boundary.',
+    instruction: 'Activate Corner Rectangle (G) and anchor the first corner at the coordinate origin (0,0), then move the pointer and select the opposite corner.',
     semanticActionId: 'draw-rectangle',
     activeToolId: 'rectangle',
     recommendedAction: 'Click Corner Rectangle (G) and anchor at Origin (0,0)',
     hints: [
       'Click the Corner Rectangle icon (keyboard shortcut: G) in the sketch ribbon.',
       'Hover near the coordinate origin (0,0) until you see the coincident snap indicator, then click.',
-      'Drag diagonally up and right, then click to drop the second corner. The boundary lines appear blue because size is not yet locked.'
+      'Move diagonally up and right, then click to place the second corner. The boundary lines appear blue because size is not yet locked.'
     ],
     whyExplanation: 'Anchoring the first corner to the coordinate origin immediately removes two translational degrees of freedom, stabilizing the sketch in space.',
     recognizedControlId: 'tool-rectangle',
@@ -87,14 +87,14 @@ export const LESSON_STEPS: LessonStep[] = [
     totalSteps: 8,
     category: 'FOUNDATIONS / YOUR FIRST SKETCH',
     title: 'Apply dimensions',
-    instruction: 'Activate the Dimension tool (D) and set the rectangle width to 40 mm and height to 30 mm.',
+    instruction: 'Edit the width and height, then apply the dimensions to lock the rectangle.',
     semanticActionId: 'apply-dimensions',
     activeToolId: 'dimension',
-    recommendedAction: 'Select Dimension (D) and assign 40 mm × 30 mm',
+    recommendedAction: 'Edit the two values, then apply the sketch dimensions',
     hints: [
       'Select the Dimension tool (keyboard shortcut: D) from the sketch toolbar.',
-      'Click the top horizontal edge to define the 40 mm width.',
-      'Click the right vertical edge to define the 30 mm height. Notice the boundary lines change to black as lengths become fixed.'
+      'The default 40 mm × 30 mm size is a starting point. Use Width (mm) to resize the horizontal edges.',
+      'Use Height (mm) to resize the vertical edges. Notice the boundary lines change to black as lengths become fixed.'
     ],
     whyExplanation: 'Parametric dimensions define exact numeric values that drive geometry mathematically, enabling automated downstream updates.',
     recognizedControlId: 'tool-dimension',
@@ -107,12 +107,12 @@ export const LESSON_STEPS: LessonStep[] = [
     totalSteps: 8,
     category: 'FOUNDATIONS / YOUR FIRST SKETCH',
     title: 'Finish sketch',
-    instruction: 'Click the green checkmark in the floating Sketch 1 dialog to exit sketch-editing mode and commit your entities.',
+    instruction: 'Accept Sketch 1 using the checkmark above the viewport, or press Finish sketch in the teaching panel.',
     semanticActionId: 'finish-sketch',
     activeToolId: 'accept-sketch',
-    recommendedAction: 'Click the green checkmark in the floating Sketch dialog',
+    recommendedAction: 'Accept the sketch to create a closed planar profile',
     hints: [
-      'Locate the floating Sketch 1 dialog in the upper-left of the viewport.',
+      'Locate the Sketch 1 controls above the drawing viewport.',
       'Click the green checkmark (Accept) to exit 2D sketch mode.',
       'Once accepted, the profile fills with a shaded tint, indicating a closed planar face.'
     ],

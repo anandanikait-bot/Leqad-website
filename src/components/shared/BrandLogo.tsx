@@ -27,11 +27,11 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
         title="Leqad — In-Workflow CAD Education"
       >
         <img
-          src="/assets/brand/leqad-approved.png"
+          src="/assets/brand/leqad-navbar.png"
           alt="Leqad logo"
           className="block w-full h-full object-contain mix-blend-multiply"
-          width="1254"
-          height="1254"
+          width="144"
+          height="144"
         />
       </div>
 

@@ -9,7 +9,7 @@ export const ProductPreview: React.FC = () => (
         src="/assets/cad-lesson-preview.png"
         alt="Static Leqad product preview: a CAD reference plane beside the teaching panel, with the instruction to start a sketch."
         width={1182}
-        height={520}
+        height={534}
         loading="lazy"
         decoding="async"
         className="block h-auto w-full rounded-lg border border-[#D9DDD9]"

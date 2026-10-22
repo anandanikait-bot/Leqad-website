@@ -12,7 +12,8 @@
     "test": "tsx --test test/*.test.ts",
     "start": "node server.mjs",
     "test:browser": "playwright test",
-    "screenshots": "tsx scripts/capture-screenshots.ts"
+    "screenshots": "tsx scripts/capture-screenshots.ts",
+    "screenshots:demo": "tsx scripts/capture-demo-states.ts"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.3.0",

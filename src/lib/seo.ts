@@ -21,7 +21,7 @@ export function renderHead(pathname: string): string {
     `<meta data-route-head name="description" content="${escapeHtml(description)}">`,
     `<meta data-route-head name="robots" content="${route ? 'index,follow' : 'noindex,follow'}">`,
     ...(route ? [`<link data-route-head rel="canonical" href="${canonical}">`] : []),
-    ...Object.entries({ 'og:type': 'website', 'og:site_name': 'Leqad', 'og:title': metaTitle, 'og:description': description, 'og:url': canonical, 'og:image': image, 'og:image:alt': imageAlt, 'og:image:width': '1182', 'og:image:height': '520' })
+    ...Object.entries({ 'og:type': 'website', 'og:site_name': 'Leqad', 'og:title': metaTitle, 'og:description': description, 'og:url': canonical, 'og:image': image, 'og:image:alt': imageAlt, 'og:image:width': '1182', 'og:image:height': '534' })
       .map(([property, content]) => `<meta data-route-head property="${property}" content="${escapeHtml(content)}">`),
     ...Object.entries({ 'twitter:card': 'summary_large_image', 'twitter:title': metaTitle, 'twitter:description': description, 'twitter:image': image, 'twitter:image:alt': imageAlt })
       .map(([name, content]) => `<meta data-route-head name="${name}" content="${escapeHtml(content)}">`),
