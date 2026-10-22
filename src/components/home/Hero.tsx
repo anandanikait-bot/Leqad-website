@@ -90,11 +90,14 @@ export const Hero: React.FC = () => {
                   label="Explore Interactive Demo"
                   className="w-full sm:w-[270px] shrink-0"
                   baseColor="#0E2943"
-                  sheenColor="#F5EFE7"
-                  bandCount={4}
+                  sheenColor="#F5EFE799"
+                  bandCount={3}
+                  edgeBlur={0.7}
+                  redFringe={0.12}
+                  blueFringe={0.08}
                   idleSpeed={0}
-                  hoverSpeed={0.75}
-                  clickSpeed={1.4}
+                  hoverSpeed={0.65}
+                  clickSpeed={1.2}
                 />
               </React.Suspense>
             ) : (
