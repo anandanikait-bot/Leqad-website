@@ -90,7 +90,10 @@ test('clean links, old hash replacement, refreshes and browser history work', as
 });
 
 test('lesson actions, optional help, highlighting, completion and restart remain functional', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/demo');
+  const snapshot = (name: string) => page.locator('section[aria-labelledby="demo-title"] > div').screenshot({ path: `test-results/${name}.png` });
+  await snapshot('demo-01-intro');
   const help = page.locator('details');
   await expect(help).not.toHaveAttribute('open');
   await page.getByText('Need help?', { exact: true }).click();
@@ -99,6 +102,7 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   await page.getByRole('button', { name: 'Why?', exact: true }).click();
   await expect(page.getByText('Engineering Concept', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Start walkthrough', exact: true }).click();
+  await snapshot('demo-02-select-plane');
   await expect(help).not.toHaveAttribute('open');
   await page.getByRole('button', { name: 'Show me where', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Hide tool highlight', exact: true })).toHaveAttribute('aria-pressed', 'true');
@@ -111,13 +115,15 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   await page.getByRole('navigation', { name: 'Walkthrough steps', exact: true })
     .getByRole('button', { name: '2 Select reference plane', exact: true }).click();
 
-  for (const label of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch']) {
+  for (const [index, label] of ['Select Top Plane', 'Start sketch', 'Draw rectangle', 'Set 40 × 30 mm dimensions', 'Finish sketch'].entries()) {
     await page.getByRole('button', { name: label, exact: true }).click();
+    await snapshot(`demo-0${index + 3}-${['start-sketch', 'draw-rectangle', 'dimensions', 'finish-sketch', 'extrude-ready'][index]}`);
   }
   await expect(page.getByText('Sketch accepted · Choose Extrude')).toBeVisible();
   await expect(page.getByTestId('extruded-solid')).toHaveCount(0);
   await page.getByRole('button', { name: 'Start Extrude', exact: true }).click();
   await expect(page.getByTestId('extruded-solid')).toHaveAttribute('aria-label', '3D extrusion preview');
+  await snapshot('demo-08-extrude-preview');
   const depth = page.getByLabel('Depth (mm)');
   await expect(depth).toHaveValue('10');
   await depth.fill('12');
@@ -125,6 +131,7 @@ test('lesson actions, optional help, highlighting, completion and restart remain
   await page.getByRole('button', { name: 'Create solid', exact: true }).click();
   await expect(page.getByRole('heading', { name: "You've completed the interactive walkthrough." })).toBeVisible();
   await expect(page.getByTestId('extruded-solid')).toHaveAttribute('aria-label', 'Created 3D rectangular plate');
+  await snapshot('demo-09-confirmed-solid');
   await page.getByRole('button', { name: 'Restart walkthrough', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'All steps', exact: true }).click();
@@ -160,7 +167,7 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
   await expect(page.getByTestId('solid-top-view')).toBeVisible();
   await page.getByRole('button', { name: 'View Isometric' }).click();
   await expect(page.getByTestId('extruded-solid')).toBeVisible();
-  await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
