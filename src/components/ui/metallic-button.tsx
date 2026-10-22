@@ -634,13 +634,13 @@ const SHADOW_SHIFT =
   "transition-[box-shadow] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]";
 
 const RIM_PRESSED =
-  "shadow-[0_0_0_1px_rgba(14,41,67,0.55),0_1px_2px_rgba(14,41,67,0.14)]";
+  "shadow-[0_0_0_1px_rgba(183,75,33,0.55),0_1px_2px_rgba(183,75,33,0.14)]";
 const RIM_HOVERED =
-  "shadow-[0_0_0_1px_rgba(183,75,33,0.55),0_5px_12px_rgba(14,41,67,0.12)]";
+  "shadow-[0_0_0_1px_rgba(183,75,33,0.55),0_5px_12px_rgba(183,75,33,0.22)]";
 const RIM_RESTING =
-  "shadow-[0_0_0_1px_rgba(14,41,67,0.28),0_3px_8px_rgba(14,41,67,0.09)]";
+  "shadow-[0_0_0_1px_rgba(183,75,33,0.35),0_3px_8px_rgba(183,75,33,0.14)]";
 const FACE_PRESSED =
-  "shadow-[inset_0_2px_4px_rgba(14,41,67,0.3)]";
+  "shadow-[inset_0_2px_4px_rgba(183,75,33,0.4)]";
 
 interface MetallicButtonProps {
   to: string;
@@ -668,7 +668,7 @@ export function MetallicButton({
   onClick,
   viewMode = "text",
   className = "",
-  baseColor = "#0E2943",
+  baseColor = "#B74B21",
   sheenColor = "#F5EFE799",
   bandCount = 3,
   edgeBlur = 0.7,
@@ -677,8 +677,8 @@ export function MetallicButton({
   warp = 0,
   redFringe = 0.12,
   blueFringe = 0.08,
-  idleSpeed = 0,
-  hoverSpeed = 0.75,
+  idleSpeed = 0.5,
+  hoverSpeed = 0.8,
   clickSpeed = 1.4,
 }: MetallicButtonProps) {
   const [shaderStatus, setShaderStatus] = useState<"pending" | "ready" | "fallback">("pending");
@@ -800,7 +800,7 @@ export function MetallicButton({
         setShaderStatus("fallback");
       }
     } catch {
-      // A partially initialized canvas must not obscure the normal navy CTA.
+      // A partially initialized canvas must not obscure the normal rust CTA.
       surfaceRef.current.querySelector("canvas")?.remove();
       setShaderStatus("fallback");
     }
@@ -880,7 +880,7 @@ export function MetallicButton({
               />
             ) : (
               <span
-                className={`text-sm font-medium whitespace-nowrap text-[#F5EFE7] [text-shadow:0px_1px_2px_rgba(14,41,67,0.35)] ${SETTLE}`}
+                className={`text-sm font-medium whitespace-nowrap text-[#F5EFE7] [text-shadow:0px_1px_2px_rgba(183,75,33,0.35)] ${SETTLE}`}
               >
                 {label}
               </span>
@@ -888,16 +888,16 @@ export function MetallicButton({
           </div>
 
           <div
-            className={`absolute top-0 left-0 z-20 translate-z-2.5 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
+            className={`absolute top-0 left-0 z-10 translate-z-0 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
           >
             <div
               data-metallic-face
-              className={`m-0.5 rounded-full bg-[linear-gradient(180deg,#163859_0%,#0E2943_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
+              className={`m-0.5 rounded-full bg-[linear-gradient(180deg,#C85A2D_0%,#B74B21_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
             />
           </div>
 
           <div
-            className={`absolute top-0 left-0 z-10 translate-z-0 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
+            className={`absolute top-0 left-0 z-20 translate-z-2.5 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
           >
             <div
               className={`rounded-full bg-transparent ${shellSize} ${SHADOW_SHIFT} ${

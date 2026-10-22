@@ -81,15 +81,15 @@ export const Hero: React.FC = () => {
               to="/demo"
               label="Explore Interactive Demo"
               className="w-full sm:w-[270px] shrink-0"
-              baseColor="#0E2943"
+              baseColor="#B74B21"
               sheenColor="#F5EFE799"
               bandCount={3}
               edgeBlur={0.7}
               redFringe={0.12}
               blueFringe={0.08}
-              idleSpeed={0}
-              hoverSpeed={0.65}
-              clickSpeed={1.2}
+              idleSpeed={0.5}
+              hoverSpeed={0.8}
+              clickSpeed={1.4}
             />
 
             <Link
