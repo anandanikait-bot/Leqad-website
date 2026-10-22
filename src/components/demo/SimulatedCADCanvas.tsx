@@ -19,6 +19,8 @@ interface SimulatedCADCanvasProps {
   step: LessonStep;
   currentStepIndex: number;
   sketchStatus: SketchDemoStatus;
+  widthMm: number;
+  heightMm: number;
   highlightedTargetId: string | null;
   isDemoComplete?: boolean;
   onTriggerAction: (actionId: string) => void;
@@ -30,6 +32,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   step,
   currentStepIndex,
   sketchStatus,
+  widthMm,
+  heightMm,
   highlightedTargetId,
   isDemoComplete = false,
   onTriggerAction,
@@ -87,6 +91,19 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const isDimensioned = ['dimensioned', 'accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
   const isSketchAccepted = ['accepted-in-demo', 'extrude-preview', 'solid-created'].includes(sketchStatus);
   const extrudeOffset = extrudeDepthMm * 3;
+  const widthUnits = widthMm * 3;
+  const heightUnits = heightMm * 3;
+  // A consistent isometric basis makes the solid resize with its sketch.
+  const ux = 113 * widthMm / 40;
+  const uy = 50 * widthMm / 40;
+  const vx = 96 * heightMm / 30;
+  const vy = -52 * heightMm / 30;
+  const a: [number, number] = [10.5 - (ux + vx) / 2, 29 - (uy + vy) / 2];
+  const b: [number, number] = [a[0] + ux, a[1] + uy];
+  const c: [number, number] = [b[0] + vx, b[1] + vy];
+  const d: [number, number] = [a[0] + vx, a[1] + vy];
+  const raised = (v: [number, number]): [number, number] => [v[0], v[1] - extrudeOffset];
+  const polygonPoints = (points: [number, number][]) => points.map(([x,y]) => x + ',' + y).join(' ');
 
   // Highlight check
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
@@ -563,99 +580,41 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             </g>
           )}
 
-          {/*
-            40 × 30 mm Base Rectangle Geometry:
-            Rendered ONLY when rectangle is drawn in the simulation.
-            Scale: 1 mm = 3 SVG units
-            Width: 40 mm = 120 SVG units (x: 0 to 120)
-            Height: 30 mm = 90 SVG units (y: 0 to -90)
-            Under-constrained in Step 4 (Electric Blue #2D7FF9)
-            Dimensioned in Step 5+ (Defined Black #0E2943)
-          */}
+          {/* Drawing is driven by editable sketch dimensions. */}
           {isRectangleDrawn && !isExtruding && (
-            <g>
-              {/* Shaded Profile Face when accepted in demo (Fix #3) */}
+            <g data-testid="sketch-profile" aria-label={`Rectangle ${widthMm} by ${heightMm} millimeters`}>
               {isSketchAccepted && (
-                <rect
-                  x="0"
-                  y="-90"
-                  width="120"
-                  height="90"
-                  fill="rgba(14, 41, 67, 0.15)"
-                  stroke="none"
-                />
+                <rect x="0" y={-heightUnits} width={widthUnits} height={heightUnits}
+                  fill="rgba(14, 41, 67, 0.15)" stroke="none" />
               )}
-
-              {/* Rectangle Boundary */}
-              <rect
-                x="0"
-                y="-90"
-                width="120"
-                height="90"
+              <rect x="0" y={-heightUnits} width={widthUnits} height={heightUnits}
                 fill={isSketchAccepted ? 'transparent' : 'rgba(45, 127, 249, 0.04)'}
                 stroke={isDimensioned ? '#0E2943' : '#2D7FF9'}
-                strokeWidth={isDimensioned ? '2.5' : '2'}
-                className="transition-colors duration-200 cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (currentStepIndex === 4 && !isDimensioned) onTriggerAction('apply-dimensions');
-                }}
-              />
-
-              {/* Corner Vertices */}
+                strokeWidth={isDimensioned ? 2.5 : 2} className="transition-colors duration-200 cursor-pointer"
+                onClick={event => { event.stopPropagation(); if (currentStepIndex === 4 && !isDimensioned) onTriggerAction('apply-dimensions'); }} />
               <circle cx="0" cy="0" r="3.5" fill="#B74B21" />
-              <circle cx="120" cy="-90" r="3.5" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
-              <circle cx="120" cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
-              <circle cx="0" cy="-90" r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
-
-              {/* Status note */}
+              <circle cx={widthUnits} cy={-heightUnits} r="3.5" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
+              <circle cx={widthUnits} cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
+              <circle cx="0" cy={-heightUnits} r="3" fill={isDimensioned ? '#0E2943' : '#2D7FF9'} />
               {!isDimensioned && (
-                <text x="125" y="-85" fill="#2D7FF9" fontSize="9" fontFamily="IBM Plex Mono">
-                  [Under-constrained (Blue)]
+                <text x={widthUnits + 6} y={-heightUnits + 8} fill="#2D7FF9" fontSize="9" fontFamily="IBM Plex Mono">
+                  Under-constrained
                 </text>
               )}
             </g>
           )}
-
-          {/*
-            Step 5+: Parametric Horizontal Width Dimension (40 mm)
-            Leader above top edge (y = -115)
-          */}
           {isDimensioned && !isExtruding && (
-            <g className="animate-fadeIn">
-              {/* Witness lines */}
-              <line x1="0" y1="-90" x2="0" y2="-120" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
-              <line x1="120" y1="-90" x2="120" y2="-120" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
-              {/* Dimension line & arrows */}
-              <line x1="4" y1="-115" x2="116" y2="-115" stroke="#0E2943" strokeWidth="1.25" />
-              <polygon points="4,-115 10,-117 10,-113" fill="#0E2943" />
-              <polygon points="116,-115 110,-117 110,-113" fill="#0E2943" />
-              {/* 40 mm Value Badge */}
-              <rect x="42" y="-127" width="36" height="16" rx="2" fill="#FFFFFF" stroke="#0E2943" strokeWidth="1" />
-              <text x="60" y="-115" textAnchor="middle" fill="#0E2943" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
-                40 mm
-              </text>
-            </g>
-          )}
-
-          {/*
-            Step 5+: Parametric Vertical Height Dimension (30 mm)
-            Leader to right of vertical edge (x = 145)
-          */}
-          {isDimensioned && !isExtruding && (
-            <g className="animate-fadeIn">
-              {/* Witness lines */}
-              <line x1="120" y1="0" x2="150" y2="0" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
-              <line x1="120" y1="-90" x2="150" y2="-90" stroke="#55616B" strokeDasharray="2 2" strokeWidth="1" />
-              {/* Dimension line & arrows */}
-              <line x1="145" y1="-4" x2="145" y2="-86" stroke="#0E2943" strokeWidth="1.25" />
-              <polygon points="145,-4 143,-10 147,-10" fill="#0E2943" />
-              <polygon points="145,-86 143,-80 147,-80" fill="#0E2943" />
-              {/* 30 mm Value Badge */}
-              <rect x="128" y="-53" width="34" height="16" rx="2" fill="#FFFFFF" stroke="#0E2943" strokeWidth="1" />
-              <text x="145" y="-41" textAnchor="middle" fill="#0E2943" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
-                30 mm
-              </text>
+            <g pointerEvents="none" fontFamily="IBM Plex Mono" fontSize="10">
+              <line x1="0" y1={-heightUnits} x2="0" y2={-heightUnits - 30} stroke="#55616B" strokeWidth="1" />
+              <line x1={widthUnits} y1={-heightUnits} x2={widthUnits} y2={-heightUnits - 30} stroke="#55616B" strokeWidth="1" />
+              <line x1="4" y1={-heightUnits - 25} x2={widthUnits - 4} y2={-heightUnits - 25} stroke="#0E2943" strokeWidth="1" />
+              <rect x={widthUnits / 2 - 20} y={-heightUnits - 35} width="40" height="16" rx="3" fill="#fff" stroke="#0E2943" />
+              <text x={widthUnits / 2} y={-heightUnits - 23} textAnchor="middle" fill="#0E2943">{widthMm} mm</text>
+              <line x1={widthUnits} y1="0" x2={widthUnits + 30} y2="0" stroke="#55616B" strokeWidth="1" />
+              <line x1={widthUnits} y1={-heightUnits} x2={widthUnits + 30} y2={-heightUnits} stroke="#55616B" strokeWidth="1" />
+              <line x1={widthUnits + 24} y1="-4" x2={widthUnits + 24} y2={-heightUnits + 4} stroke="#0E2943" strokeWidth="1" />
+              <rect x={widthUnits + 4} y={-heightUnits / 2 - 8} width="40" height="16" rx="3" fill="#fff" stroke="#0E2943" />
+              <text x={widthUnits + 24} y={-heightUnits / 2 + 4} textAnchor="middle" fill="#0E2943">{heightMm} mm</text>
             </g>
           )}
 
