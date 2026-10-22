@@ -31,6 +31,9 @@ interface LessonPanelProps {
   onToggleSteps: () => void;
   isStepActionCompleted: boolean;
   canPerformCurrentAction: boolean;
+  widthMm: number;
+  heightMm: number;
+  onDimensionsChange: (width: number, height: number) => void;
 }
 
 export const LessonPanel: React.FC<LessonPanelProps> = ({
@@ -51,6 +54,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   onToggleSteps,
   isStepActionCompleted,
   canPerformCurrentAction,
+  widthMm,
+  heightMm,
+  onDimensionsChange,
 }) => {
   const [revealedHints, setRevealedHints] = useState<number>(0);
   const [helpOpen, setHelpOpen] = useState(false);
@@ -77,7 +83,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
     2: 'Select Top Plane',
     3: 'Start sketch',
     4: 'Draw rectangle',
-    5: 'Set 40 × 30 mm dimensions',
+    5: `Set ${widthMm} × ${heightMm} mm dimensions`,
     6: 'Finish sketch',
     7: 'Start Extrude',
     8: 'Create solid',
@@ -124,7 +130,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 You've completed the interactive walkthrough.
               </h2>
               <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                You've built a dimensioned 40 × 30 mm sketch and created a solid plate using Extrude in this guided simulation.
+                You've built a dimensioned {widthMm} × {heightMm} mm sketch and created a solid plate using Extrude in this guided simulation.
               </p>
             </div>
 
@@ -148,7 +154,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Parametric dimensioning (40 mm × 30 mm)</span>
+                  <span>Parametric dimensioning ({widthMm} mm × {heightMm} mm)</span>
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
@@ -222,7 +228,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
 
           {/* Main Instruction */}
           <p className="text-[#55616B] leading-relaxed text-[13px] sm:text-sm">
-            {step.instruction}
+            {step.instruction.replace('40 mm × 30 mm', `${widthMm} mm × ${heightMm} mm`).replace('40 × 30 mm', `${widthMm} × ${heightMm} mm`)}
           </p>
 
           {/* One clear primary action; extra help stays secondary. */}
@@ -231,6 +237,31 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[#B74B21]">Do this next</p>
               <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction}</p>
             </div>
+            {step.stepNumber === 5 && canPerformCurrentAction && !isStepActionCompleted && (
+              <div className="grid grid-cols-2 gap-3" role="group" aria-label="Sketch dimensions">
+                <label className="space-y-1 text-xs font-medium text-[#55616B]">
+                  Width (mm)
+                  <input type="number" min={20} max={50} step={1} value={widthMm}
+                    onChange={event => {
+                      const next = Number(event.target.value);
+                      if (Number.isFinite(next) && next >= 20 && next <= 50) onDimensionsChange(next, heightMm);
+                    }}
+                    className="block w-full rounded-md border border-[#D9DDD9] bg-white px-2.5 py-2 font-mono text-[#0E2943] focus-visible:outline-2 focus-visible:outline-[#B74B21]" />
+                </label>
+                <label className="space-y-1 text-xs font-medium text-[#55616B]">
+                  Height (mm)
+                  <input type="number" min={15} max={40} step={1} value={heightMm}
+                    onChange={event => {
+                      const next = Number(event.target.value);
+                      if (Number.isFinite(next) && next >= 15 && next <= 40) onDimensionsChange(widthMm, next);
+                    }}
+                    className="block w-full rounded-md border border-[#D9DDD9] bg-white px-2.5 py-2 font-mono text-[#0E2943] focus-visible:outline-2 focus-visible:outline-[#B74B21]" />
+                </label>
+                <p className="col-span-2 text-[11px] text-[#55616B]" role="status">
+                  The illustrated sketch updates as you change dimensions.
+                </p>
+              </div>
+            )}
             <Button
               variant="rust"
               size="md"
