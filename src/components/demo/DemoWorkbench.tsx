@@ -27,6 +27,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
   );
   const [resetKey, setResetKey] = useState<number>(0);
   const [showAllSteps, setShowAllSteps] = useState(false);
+  const [widthMm, setWidthMm] = useState(40);
+  const [heightMm, setHeightMm] = useState(30);
 
   const totalSteps = LESSON_STEPS.length;
   const currentStep = LESSON_STEPS[currentStepIndex];
@@ -96,6 +98,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     setSketchStatus('not-started');
     setResetKey((prev) => prev + 1);
     setShowAllSteps(false);
+    setWidthMm(40);
+    setHeightMm(30);
   }, []);
 
   // Jumping between steps (Fix #2: Exploring steps does NOT falsely complete them!)
@@ -257,6 +261,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             step={currentStep}
             currentStepIndex={currentStepIndex}
             sketchStatus={sketchStatus}
+            widthMm={widthMm}
+            heightMm={heightMm}
             highlightedTargetId={highlightedTargetId}
             isDemoComplete={isWalkthroughComplete}
             onTriggerAction={handleTriggerAction}
@@ -271,6 +277,13 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             step={currentStep}
             currentStepIndex={currentStepIndex}
             totalSteps={totalSteps}
+            widthMm={widthMm}
+            heightMm={heightMm}
+            onDimensionsChange={(width, height) => {
+              if (sketchStatus !== 'rectangle-drawn') return;
+              setWidthMm(width);
+              setHeightMm(height);
+            }}
             isDemoComplete={isWalkthroughComplete}
             onNext={handleNext}
             onPrev={handlePrev}
