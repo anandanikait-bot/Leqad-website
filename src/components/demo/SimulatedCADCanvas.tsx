@@ -336,7 +336,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               </div>
             )}
             {isSolidCreated && (
-              <div className="px-2 py-1 text-[#0E2943] font-medium">Part 1 · {extrudeDepthMm} mm</div>
+              <div className="px-2 py-1 text-[#0E2943] font-medium">Part 1 · {widthMm} × {heightMm} × {extrudeDepthMm} mm</div>
             )}
           </div>
         </div>
@@ -626,33 +626,31 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             </g>
           )}
 
-          {/* Actual action-driven solid: projected from a rectangular plate,
-              with the vertical elevation proportional to the chosen depth.
-              The drawing is an illustration, not geometry verified in Onshape. */}
+          {/* Dimension-driven illustrative solid, with separate preview and committed states. */}
           {isExtruding && (viewOrientation === 'top' ? (
             <g data-testid="solid-top-view" role="img" aria-label="Top view of rectangular plate">
-              <rect x="-60" y="-45" width="120" height="90" fill="#D8E2EB" stroke="#0E2943" strokeWidth="2.5" />
-              <text x="-60" y="65" fontSize="11" fill="#0E2943" fontFamily="IBM Plex Mono">Top · 40 × 30 mm</text>
+              <rect x={-widthUnits / 2} y={-heightUnits / 2} width={widthUnits} height={heightUnits}
+                fill="#D8E2EB" stroke="#0E2943" strokeWidth="2.5" />
+              <text x={-widthUnits / 2} y={heightUnits / 2 + 20} fontSize="11" fill="#0E2943" fontFamily="IBM Plex Mono">
+                Top · {widthMm} × {heightMm} mm
+              </text>
             </g>
           ) : (
             <g data-testid="extruded-solid" role="img" aria-label={isSolidCreated ? 'Created 3D rectangular plate' : '3D extrusion preview'}>
-              {/* Two downward-visible side faces and the upper planar face.
-                  40:30 footprint proportions; z height scales with mm depth. */}
-              <polygon points={`-94,${30-extrudeOffset} 19,${80-extrudeOffset} 19,80 -94,30`}
-                fill="#607E98" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round"/>
-              <polygon points={`19,${80-extrudeOffset} 115,${28-extrudeOffset} 115,28 19,80`}
-                fill="#829EB3" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round"/>
-              <polygon points={`-94,${30-extrudeOffset} 19,${80-extrudeOffset} 115,${28-extrudeOffset} 2,${-22-extrudeOffset}`}
-                fill={isExtrudePreview ? '#DCE8EF' : '#C6D8E4'} stroke="#0E2943"
-                strokeWidth="2.5" strokeLinejoin="round"/>
+              <polygon points={polygonPoints([raised(a), raised(b), b, a])}
+                fill="#607E98" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round" />
+              <polygon points={polygonPoints([raised(b), raised(c), c, b])}
+                fill="#829EB3" fillOpacity={isExtrudePreview ? 0.75 : 1} stroke="#0E2943" strokeWidth="2" strokeLinejoin="round" />
+              <polygon points={polygonPoints([raised(a), raised(b), raised(c), raised(d)])}
+                fill={isExtrudePreview ? '#DCE8EF' : '#C6D8E4'} stroke="#0E2943" strokeWidth="2.5" strokeLinejoin="round" />
               {isExtrudePreview && (
-                <path d="M-94 30 L19 80 L115 28 M-94 30 L-94 -2 M19 80 L19 48 M115 28 L115 -4"
-                  stroke="#B74B21" strokeDasharray="4 4" strokeOpacity="0.65" fill="none" strokeWidth="1.5"/>
+                <polygon points={polygonPoints([a, b, c, d])} stroke="#B74B21"
+                  strokeDasharray="4 4" strokeOpacity="0.65" fill="none" strokeWidth="1.5" />
               )}
               <g transform="translate(-175, 119)" pointerEvents="none">
-                <rect x="0" y="0" width="240" height="27" rx="4" fill="#0E2943" />
+                <rect width="260" height="27" rx="4" fill="#0E2943" />
                 <text x="10" y="17" fontSize="10" fontFamily="IBM Plex Mono" fill="#F5EFE7">
-                  {isSolidCreated ? 'Part 1 created' : 'Extrude preview'} · {extrudeDepthMm} mm depth
+                  {isSolidCreated ? 'Part 1 created' : 'Extrude preview'} · {widthMm} × {heightMm} × {extrudeDepthMm} mm
                 </text>
               </g>
             </g>
