@@ -30,7 +30,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     await link.focus();
     await expect(link).toBeFocused();
     await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/\\/demo$/);
+    await expect(page).toHaveURL(new RegExp('/demo$'));
     await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
     expect(errors).toEqual([]);
   });
@@ -55,7 +55,7 @@ test('WebGL2-disabled browsers still display a static navy CTA that navigates', 
   const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
   await expect(link).toBeVisible();
   await link.click();
-  await expect(page).toHaveURL(/\\/demo$/);
+    await expect(page).toHaveURL(new RegExp('/demo$'));
 });
 
 test('reduced motion keeps the metallic CTA readable and navigable', async ({ page }) => {
@@ -66,5 +66,5 @@ test('reduced motion keeps the metallic CTA readable and navigable', async ({ pa
   await expect(link).toBeVisible();
   await expect(button.locator('[data-metallic-face]')).toBeVisible();
   await link.click();
-  await expect(page).toHaveURL(/\\/demo$/);
+    await expect(page).toHaveURL(new RegExp('/demo$'));
 });
