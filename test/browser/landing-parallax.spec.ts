@@ -110,7 +110,8 @@ test('layered movement is limited on narrow screens and leaves the demo untouche
   await preview.scrollIntoViewIfNeeded();
   const offset = await preview.evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42);
   expect(Math.abs(offset)).toBeLessThanOrEqual(6);
-  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Interactive Demo' }).click();
+  // At 375px desktop navigation is collapsed; use the real product-preview CTA.
+  await page.locator('#product-preview').getByRole('link', { name: 'Explore Full Demo' }).click();
   await expect(page.locator('[data-parallax-travel]')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
 });
@@ -121,7 +122,7 @@ test('reduced-motion pages show complete, stationary visual layers on first load
   for (const route of ['/about', '/partners']) {
     await page.goto(route);
     const layers = page.locator('[data-parallax-travel]');
-    await expect(layers).toHaveCount(route === '/about' ? 2 : 1);
+    await expect(layers).toHaveCount(route === '/about' ? 3 : 2);
     for (const layer of await layers.all()) await expect(layer).toHaveCSS('transform', 'none');
     if (route === '/about') expect(await page.locator('#product-preview img').evaluate(element => (element as HTMLImageElement).complete)).toBe(true);
   }
