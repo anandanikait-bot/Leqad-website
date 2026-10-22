@@ -19,6 +19,6 @@ The About page uses a shorter, less forceful introduction, softer background gri
 - WebGL2-disabled environment uses the static navy fallback.
 - Reduced-motion users can see and use the link.
 - TypeScript, build, unit and browser tests; fresh screenshot evidence.
-- `metallic-cta-experiment-review` artifact compares the default metallic look to the actual WebGL-disabled fallback at 375 and 1440px, alongside lightweight transfer-byte and bounding-box data.
+- `metallic-cta-experiment-review` captures normal and reduced-motion appearances at 375 and 1440px. The **actual WebGL2-disabled fallback is validated separately** by Playwright's browser suite, rather than by unreliable API injection in the standalone screenshot runner.
 
-This draft PR **does not merge or deploy** the change.
+This pull request **has not been merged or deployed**.
