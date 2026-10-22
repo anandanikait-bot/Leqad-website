@@ -1,0 +1,78 @@
+[
+  {
+    "theme": "light",
+    "scale": 1,
+    "physicalTabIconSize": 16,
+    "version": "154.0.8037.57",
+    "devicePixelRatio": 1,
+    "storedFaviconBitmaps": [
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        16,
+        16
+      ],
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        32,
+        32
+      ]
+    ]
+  },
+  {
+    "theme": "light",
+    "scale": 2,
+    "physicalTabIconSize": 32,
+    "version": "154.0.8037.57",
+    "devicePixelRatio": 2,
+    "storedFaviconBitmaps": [
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        16,
+        16
+      ],
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        32,
+        32
+      ]
+    ]
+  },
+  {
+    "theme": "dark",
+    "scale": 1,
+    "physicalTabIconSize": 16,
+    "version": "154.0.8037.57",
+    "devicePixelRatio": 1,
+    "storedFaviconBitmaps": [
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        16,
+        16
+      ],
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        32,
+        32
+      ]
+    ]
+  },
+  {
+    "theme": "dark",
+    "scale": 2,
+    "physicalTabIconSize": 32,
+    "version": "154.0.8037.57",
+    "devicePixelRatio": 2,
+    "storedFaviconBitmaps": [
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        16,
+        16
+      ],
+      [
+        "http://127.0.0.1:4173/assets/favicons/leqad-v2.ico",
+        32,
+        32
+      ]
+    ]
+  }
+]

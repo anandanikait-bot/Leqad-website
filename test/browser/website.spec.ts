@@ -56,8 +56,9 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-tab-v1.svg');
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
+    await expect(page.locator('head link[rel="icon"]')).toHaveCount(4);
+    await expect(page.locator('head link[rel="icon"][sizes="32x32"]')).toHaveAttribute('href', '/assets/favicons/leqad-32-v2.png');
+    await expect(page.locator('head link[rel="icon"][sizes="32x32"]')).toHaveAttribute('type', 'image/png');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
       await expect(page.locator('footer')).toHaveCount(0);
@@ -84,38 +85,57 @@ test('homepage prerender contains correct social preview and serves the actual i
   );
 });
 
-test('tab icon uses the approved geometry on both light and dark themes', async ({ page }) => {
+test('native PNGs and the ICO fallback are served with correct image types', async ({ page }) => {
   await page.goto('/');
-  const res = await page.request.get('/assets/brand/leqad-tab-v1.svg');
-  expect(res.status()).toBe(200);
-  expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
-  const source = await res.text();
-  expect(source).toContain('prefers-color-scheme: dark');
-  expect(source).toContain('prefers-color-scheme: light');
-  expect(source).toContain('data:image/png;base64,');
-  expect(source).toContain('feColorMatrix');
+  for (const size of [16, 32, 48]) {
+    await expect(page.locator(`head link[rel="icon"][sizes="${size}x${size}"]`)).toHaveAttribute('href', `/assets/favicons/leqad-${size}-v2.png`);
+    const res = await page.request.get(`/assets/favicons/leqad-${size}-v2.png`);
+    expect(res.status()).toBe(200);
+    expect(res.headers()['content-type']).toMatch(/^image\/png/);
+  }
+  const ico = await page.request.get('/assets/favicons/leqad-v2.ico');
+  expect(ico.status()).toBe(200);
+  expect(ico.headers()['content-type']).toMatch(/^image\/(x-icon|vnd.microsoft.icon)/);
+  await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveCount(0);
 });
 
-test('favicon actually renders legibly at 16px with transparent corners', async ({ page }) => {
+test('native favicon drawings preserve opaque brand colors and transparent corners at every size', async ({ page }) => {
   await page.goto('/');
-  const pixels = await page.evaluate(async () => {
-    const image = new Image();
-    image.src = '/assets/brand/leqad-tab-v1.svg';
-    await image.decode();
-    const canvas = document.createElement('canvas');
-    canvas.width = 16;
-    canvas.height = 16;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) throw new Error('2D canvas is unavailable');
-    ctx.drawImage(image, 0, 0, 16, 16);
-    const data = ctx.getImageData(0, 0, 16, 16).data;
-    let visible = 0;
-    for (let i = 3; i < data.length; i += 4) if (data[i] > 60) visible++;
-    return { visible, topLeftAlpha: data[3], bottomRightAlpha: data[data.length - 1] };
-  });
-  expect(pixels.visible).toBeGreaterThan(15);
-  expect(pixels.topLeftAlpha).toBeLessThan(30);
-  expect(pixels.bottomRightAlpha).toBeLessThan(30);
+  for (const size of [16, 32, 48]) {
+    const pixels = await page.evaluate(async size => {
+      const image = new Image();
+      image.src = `/assets/favicons/leqad-${size}-v2.png`;
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('2D canvas is unavailable');
+      ctx.drawImage(image, 0, 0);
+      const data = ctx.getImageData(0, 0, size, size).data;
+      let opaque = 0, navy = 0, cream = 0, rust = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        const [r, g, b, alpha] = data.slice(i, i + 4);
+        if (alpha > 220) {
+          opaque++;
+          if (b > r * 2 && b < 130) navy++;
+          if (r > 220 && g > 210 && b > 200) cream++;
+          if (r > 100 && r > g * 1.3 && b < 130) rust++;
+        }
+      }
+      return { opaque, navy, cream, rust, width: image.naturalWidth, height: image.naturalHeight,
+        corners: [data[3], data[size * 4 - 1], data[(size - 1) * size * 4 + 3], data[data.length - 1]] };
+    }, size);
+    expect(pixels.width).toBe(size);
+    expect(pixels.height).toBe(size);
+    expect(pixels.opaque).toBeGreaterThan(size * size * .55);
+    // At 16px, curved edge coverage occupies a larger fraction of the image.
+    // Still require a substantial solid navy core, not only antialiased outlines.
+    expect(pixels.navy).toBeGreaterThan(size === 16 ? 20 : size * size * .15);
+    expect(pixels.cream).toBeGreaterThan(size * size * .15);
+    expect(pixels.rust).toBeGreaterThanOrEqual(size === 16 ? 6 : size / 2);
+    expect(pixels.corners).toEqual([0, 0, 0, 0]);
+  }
 });
 
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
