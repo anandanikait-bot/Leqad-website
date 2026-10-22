@@ -1,28 +1,26 @@
 import { test, expect } from '@playwright/test';
 
-test('normal homepage keeps original rust CTA and never mounts metallic shader', async ({ page }) => {
+test('homepage uses the Leqad metallic CTA by default', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('[data-metallic-cta]')).toHaveCount(0);
-  const link = page.getByRole('link', { name: 'Explore Interactive Demo', exact: true });
-  await expect(link).toHaveAttribute('href', '/demo');
-  await expect(link).toHaveCSS('background-color', 'rgb(183, 75, 33)');
-  // Both the CAD artwork and sonar background own canvases; only the experimental shader must be absent.
-  await expect(page.locator('[data-metallic-cta] canvas')).toHaveCount(0);
+  const wrapper = page.locator('[data-metallic-cta]');
+  await expect(wrapper).toBeVisible();
+  await expect(wrapper).toHaveAttribute('data-theme', 'leqad');
+  await expect(wrapper.locator('[data-metallic-face]')).toHaveCSS('background-image', /rgb\\(14, 41, 67\\)/);
+  await expect(wrapper.getByRole('link', { name: 'Explore Interactive Demo', exact: true })).toHaveAttribute('href', '/demo');
+  await expect(page.getByRole('link', { name: 'Explore Interactive Demo', exact: true })).toHaveCount(1);
+  await expect(page.locator('header, footer')).toHaveCount(0);
 });
 
-for (const width of [320, 375, 1440]) {
-  test(`metallic CTA works at ${width}px without clipping or duplicating navigation`, async ({ page }) => {
+for (const width of [320, 375, 768, 1024, 1440]) {
+  test(`default metallic CTA fits and navigates at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     const errors: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto('/?metallic=1');
+    await page.goto('/');
     const button = page.locator('[data-metallic-cta]');
     await expect(button).toBeVisible();
-    await expect(button).toHaveAttribute('data-theme', 'leqad');
-    await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /rgb\(14, 41, 67\)/);
     const link = button.getByRole('link', { name: 'Explore Interactive Demo', exact: true });
     await expect(link).toHaveAttribute('href', '/demo');
-    await expect(button.locator('canvas')).toHaveCount(1);
     const rect = await button.boundingBox();
     expect(rect).not.toBeNull();
     expect(rect!.width).toBeGreaterThan(140);
@@ -32,18 +30,41 @@ for (const width of [320, 375, 1440]) {
     await link.focus();
     await expect(link).toBeFocused();
     await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/\/demo$/);
+    await expect(page).toHaveURL(/\\/demo$/);
     await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
     expect(errors).toEqual([]);
   });
 }
 
-test('metallic CTA is readable with reduced motion and still navigates', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/?metallic=1');
-  const link = page.locator('[data-metallic-cta]').getByRole('link', { name: 'Explore Interactive Demo' });
+test('WebGL2-disabled browsers still display a static navy CTA that navigates', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+      configurable: true,
+      value: function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
+        if (type === 'webgl2') return null;
+        return Reflect.apply(original, this, [type, ...args]);
+      },
+    });
+  });
+  await page.goto('/');
+  const button = page.locator('[data-metallic-cta]');
+  await expect(button).toHaveAttribute('data-shader-status', 'fallback');
+  await expect(button.locator('canvas')).toHaveCount(0);
+  await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /rgb\\(14, 41, 67\\)/);
+  const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
   await expect(link).toBeVisible();
-  await expect(page.locator('[data-metallic-cta] canvas')).toHaveCount(1);
   await link.click();
-  await expect(page).toHaveURL(/\/demo$/);
+  await expect(page).toHaveURL(/\\/demo$/);
+});
+
+test('reduced motion keeps the metallic CTA readable and navigable', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const button = page.locator('[data-metallic-cta]');
+  const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
+  await expect(link).toBeVisible();
+  await expect(button.locator('[data-metallic-face]')).toBeVisible();
+  await link.click();
+  await expect(page).toHaveURL(/\\/demo$/);
 });
