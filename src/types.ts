@@ -6,8 +6,8 @@ export type DemoActionId =
   | 'draw-rectangle'
   | 'apply-dimensions'
   | 'finish-sketch'
-  | 'understand-result'
-  | 'practice-overview';
+  | 'start-extrude'
+  | 'confirm-extrude';
 
 export type SketchDemoStatus =
   | 'not-started'
@@ -15,7 +15,9 @@ export type SketchDemoStatus =
   | 'sketch-active'
   | 'rectangle-drawn'
   | 'dimensioned'
-  | 'accepted-in-demo';
+  | 'accepted-in-demo'
+  | 'extrude-preview'
+  | 'solid-created';
 
 export interface LessonStep {
   id: number;
@@ -31,7 +33,7 @@ export interface LessonStep {
   whyExplanation: string;
   recognizedControlId: string;
   recognizedControlLabel: string;
-  geometryState: 'overview' | 'plane_selected' | 'sketch_active' | 'rectangle_drawn' | 'dimensioned' | 'sketch_accepted' | 'extrude_preview' | 'practice';
+  geometryState: 'overview' | 'plane_selected' | 'sketch_active' | 'rectangle_drawn' | 'dimensioned' | 'sketch_accepted' | 'extrude_preview' | 'solid_created';
 }
 
 export type ViewOrientation = 'iso' | 'top' | 'front' | 'right';

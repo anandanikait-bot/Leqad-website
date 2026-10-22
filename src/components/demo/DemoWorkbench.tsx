@@ -31,6 +31,22 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
   const totalSteps = LESSON_STEPS.length;
   const currentStep = LESSON_STEPS[currentStepIndex];
 
+  // Each instruction is a real transition in this local demonstration.
+  // Navigating to a later step never creates geometry on its own.
+  const actionPrerequisites: Record<string, SketchDemoStatus> = {
+    'select-top-plane': 'not-started',
+    'start-sketch': 'plane-selected',
+    'draw-rectangle': 'sketch-active',
+    'apply-dimensions': 'rectangle-drawn',
+    'finish-sketch': 'dimensioned',
+    'start-extrude': 'accepted-in-demo',
+    'confirm-extrude': 'extrude-preview',
+  };
+  const isStepActionCompleted = Boolean(currentStep.semanticActionId && completedDemoActionIds.includes(currentStep.semanticActionId));
+  const canPerformCurrentAction = !currentStep.semanticActionId ||
+    isStepActionCompleted ||
+    sketchStatus === actionPrerequisites[currentStep.semanticActionId];
+
   // Helper to mark a step visited
   const markStepVisited = useCallback((stepId: number) => {
     setVisitedStepIds((prev) => (prev.includes(stepId) ? prev : [...prev, stepId]));
@@ -64,9 +80,11 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
   }, [currentStepIndex, isWalkthroughComplete, markStepVisited]);
 
   const handleFinishDemo = useCallback(() => {
+    // A visit or keyboard shortcut alone is not evidence of a completed model.
+    if (sketchStatus !== 'solid-created') return;
     setIsWalkthroughComplete(true);
     setHighlightedTargetId(null);
-  }, []);
+  }, [sketchStatus]);
 
   // Complete Reset: Restores fresh initial state everywhere (Fix #8)
   const handleRestart = useCallback(() => {
@@ -90,36 +108,55 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
     }
   }, [totalSteps, markStepVisited]);
 
-  // Execute explicit simulated actions (Fix #2, Fix #3, Fix #4)
+  // Apply exactly one modeled action to the currently selected lesson.
+  // The prerequisite check prevents deep-linked steps or skipped UI from
+  // manufacturing sketch geometry or a part.
   const handleTriggerAction = useCallback((actionId: string) => {
-    // A toolbar press for another step must not silently change sketch state.
     if (currentStep.semanticActionId !== actionId) return;
-    setCompletedDemoActionIds((prev) => (prev.includes(actionId) ? prev : [...prev, actionId]));
-
-    if (actionId === 'select-top-plane') {
-      setSketchStatus('plane-selected');
-      if (currentStepIndex === 1) handleNext();
-    } else if (actionId === 'start-sketch') {
-      setSketchStatus('sketch-active');
-      if (currentStepIndex === 2) handleNext();
-    } else if (actionId === 'draw-rectangle') {
-      setSketchStatus('rectangle-drawn');
-      if (currentStepIndex === 3) handleNext();
-    } else if (actionId === 'apply-dimensions') {
-      setSketchStatus('dimensioned');
-      if (currentStepIndex === 4) handleNext();
-    } else if (actionId === 'finish-sketch') {
-      setSketchStatus('accepted-in-demo');
-      if (currentStepIndex === 5) handleNext();
-    } else if (actionId === 'understand-result') {
-      if (currentStepIndex === 6) handleNext();
+    if (completedDemoActionIds.includes(actionId)) {
+      if (currentStepIndex < totalSteps - 1) handleNext();
+      return;
     }
-  }, [currentStepIndex, currentStep.semanticActionId, handleNext]);
+    const expectedStatus = actionPrerequisites[actionId];
+    if (!expectedStatus || sketchStatus !== expectedStatus) return;
 
-  // Reset sketch from modal cancel
+    const nextStatus: Record<string, SketchDemoStatus> = {
+      'select-top-plane': 'plane-selected',
+      'start-sketch': 'sketch-active',
+      'draw-rectangle': 'rectangle-drawn',
+      'apply-dimensions': 'dimensioned',
+      'finish-sketch': 'accepted-in-demo',
+      'start-extrude': 'extrude-preview',
+      'confirm-extrude': 'solid-created',
+    };
+    setSketchStatus(nextStatus[actionId]);
+    setCompletedDemoActionIds(prev => [...prev, actionId]);
+    setHighlightedTargetId(null);
+    if (actionId === 'confirm-extrude') {
+      setIsWalkthroughComplete(true);
+    } else if (currentStepIndex < totalSteps - 1) {
+      const nextIndex = currentStepIndex + 1;
+      setCurrentStepIndex(nextIndex);
+      markStepVisited(LESSON_STEPS[nextIndex].id);
+    }
+  }, [currentStepIndex, currentStep.semanticActionId, completedDemoActionIds,
+      sketchStatus, handleNext, markStepVisited, totalSteps]);
+
   const handleResetSketch = useCallback(() => {
     setSketchStatus('plane-selected');
-    setCurrentStepIndex(2); // Return to Start Sketch
+    setCompletedDemoActionIds(['select-top-plane']);
+    setHighlightedTargetId(null);
+    setIsWalkthroughComplete(false);
+    setCurrentStepIndex(2);
+    markStepVisited(3);
+  }, [markStepVisited]);
+
+  const handleCancelExtrude = useCallback(() => {
+    setSketchStatus('accepted-in-demo');
+    setCompletedDemoActionIds(prev => prev.filter(id => id !== 'start-extrude' && id !== 'confirm-extrude'));
+    setHighlightedTargetId(null);
+    setIsWalkthroughComplete(false);
+    setCurrentStepIndex(6);
   }, []);
 
   // Tool Highlighting toggle (Fix #9)
@@ -134,6 +171,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
       'dimension': 'tool-dimension',
       'accept-sketch': 'tool-accept-sketch',
       'extrude': 'tool-extrude',
+      'accept-extrude': 'tool-accept-extrude',
     };
 
     const targetId = targetMap[targetTool] || targetTool;
@@ -162,10 +200,11 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
         if (e.key === 'ArrowRight') e.preventDefault();
         if (isWalkthroughComplete) return;
 
-        if (currentStepIndex === totalSteps - 1) {
-          handleFinishDemo();
-        } else {
-          handleNext();
+        // Keyboard navigation can review completed steps, but must not
+        // skip over a required CAD operation.
+        if (currentStepIndex === 0 || isStepActionCompleted) {
+          if (currentStepIndex === totalSteps - 1) handleFinishDemo();
+          else handleNext();
         }
       } else if (e.key === 'ArrowLeft' || e.key === 'p' || e.key === 'P') {
         if (e.key === 'ArrowLeft') e.preventDefault();
@@ -177,7 +216,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [enableKeyboardShortcuts, currentStepIndex, totalSteps, isWalkthroughComplete, handleNext, handlePrev, handleFinishDemo, handleRestart]);
+  }, [enableKeyboardShortcuts, currentStepIndex, totalSteps, isWalkthroughComplete, handleNext, handlePrev, handleFinishDemo, handleRestart, isStepActionCompleted]);
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -214,6 +253,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
         {/* Left/Main CAD Workspace Canvas (col-span-8 on desktop) */}
         <div className="order-2 h-full min-w-0 lg:order-1 lg:col-span-8">
           <SimulatedCADCanvas
+            key={resetKey}
             step={currentStep}
             currentStepIndex={currentStepIndex}
             sketchStatus={sketchStatus}
@@ -221,6 +261,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             isDemoComplete={isWalkthroughComplete}
             onTriggerAction={handleTriggerAction}
             onResetSketch={handleResetSketch}
+            onCancelExtrude={handleCancelExtrude}
           />
         </div>
 
@@ -242,6 +283,8 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
             resetKey={resetKey}
             showAllSteps={showAllSteps}
             onToggleSteps={() => setShowAllSteps(value => !value)}
+            isStepActionCompleted={isStepActionCompleted}
+            canPerformCurrentAction={canPerformCurrentAction}
           />
         </div>
       </div>

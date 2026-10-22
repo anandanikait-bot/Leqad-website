@@ -29,6 +29,8 @@ interface LessonPanelProps {
   resetKey: number;
   showAllSteps: boolean;
   onToggleSteps: () => void;
+  isStepActionCompleted: boolean;
+  canPerformCurrentAction: boolean;
 }
 
 export const LessonPanel: React.FC<LessonPanelProps> = ({
@@ -47,6 +49,8 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   resetKey,
   showAllSteps,
   onToggleSteps,
+  isStepActionCompleted,
+  canPerformCurrentAction,
 }) => {
   const [revealedHints, setRevealedHints] = useState<number>(0);
   const [helpOpen, setHelpOpen] = useState(false);
@@ -75,12 +79,15 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
     4: 'Draw rectangle',
     5: 'Set 40 × 30 mm dimensions',
     6: 'Finish sketch',
-    7: 'Continue to practice',
-    8: 'Finish walkthrough',
+    7: 'Start Extrude',
+    8: 'Create solid',
   };
   const handlePrimaryAction = () => {
     if (isFirstStep) onNext();
-    else if (isLastStep) onFinishDemo();
+    else if (isStepActionCompleted) {
+      if (isLastStep) onFinishDemo();
+      else onNext();
+    }
     else if (step.semanticActionId) onSimulateAction(step.semanticActionId);
     else onNext();
   };
@@ -117,7 +124,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 You've completed the interactive walkthrough.
               </h2>
               <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                You've explored the Your First Sketch walkthrough. The demonstration introduced reference planes, sketches, dimensions, and the relationship between 2D profiles and later 3D features.
+                You've built a dimensioned 40 × 30 mm sketch and created a solid plate using Extrude in this guided simulation.
               </p>
             </div>
 
@@ -145,7 +152,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Closed planar profile ready for Extrude</span>
+                  <span>Solid extrusion preview and confirmed 3D plate</span>
                 </li>
               </ul>
             </div>
@@ -229,9 +236,13 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               size="md"
               className="w-full justify-center"
               onClick={handlePrimaryAction}
+              disabled={!canPerformCurrentAction}
             >
-              {primaryActionLabel[step.stepNumber] || 'Continue'}
+              {isStepActionCompleted && !isLastStep ? 'Review next step' : primaryActionLabel[step.stepNumber] || 'Continue'}
             </Button>
+            {!canPerformCurrentAction && (
+              <p className="text-xs text-[#55616B]" role="status">Complete earlier CAD actions first. Use All steps to return.</p>
+            )}
             {step.activeToolId && (
               <button
                 type="button"
@@ -319,13 +330,13 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               <ChevronLeft className="h-4 w-4" /> Previous
             </button>
           )}
-          {!isFirstStep && !isLastStep && (
+          {!isFirstStep && !isLastStep && isStepActionCompleted && (
             <button
               type="button"
               onClick={onNext}
               className="text-xs text-[#55616B] underline decoration-[#D9DDD9] underline-offset-4 hover:text-[#0E2943] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
             >
-              Skip this step
+              Next step
             </button>
           )}
         </div>
