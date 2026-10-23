@@ -2,7 +2,7 @@ name: Website demo checks
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, feat/approved-typography-branding]
   push:
     branches: [feat/demo-extrude-step-stability]
 
