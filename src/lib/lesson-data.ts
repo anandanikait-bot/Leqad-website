@@ -156,7 +156,7 @@ export const LESSON_STEPS: LessonStep[] = [
       'Use Depth to choose thickness (10 mm is a good starting value), then confirm.',
       'The illustration shows a completed plate and an Extrude 1 feature. Restart to practice again.'
     ],
-    whyExplanation: 'Extrude depth controls the plate's thickness independently of the sketch width and height. This is a simulated example.',
+    whyExplanation: 'Extrude depth controls the plate thickness independently of the sketch width and height. This is a simulated example.',
     recognizedControlId: 'tool-accept-extrude',
     recognizedControlLabel: 'Confirm Extrude (Green Checkmark)',
     geometryState: 'solid_created',
