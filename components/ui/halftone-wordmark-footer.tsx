@@ -243,8 +243,8 @@ export default function HalftoneWordmarkFooter({
     let dots = new Float32Array(0)
     let count = 0
     let grainTile = null as HTMLCanvasElement | null
-    const ink = hwfHex(opts.current.colors.ink) || [233, 228, 218]
-    const warm = hwfHex(opts.current.colors.warm) || [233, 118, 43]
+    const ink = hwfHex(opts.current.colors.ink) || [245, 239, 231]
+    const warm = hwfHex(opts.current.colors.warm) || [121, 51, 39]
 
     let logoImg: HTMLImageElement | null = null
     if (opts.current.logoSrc) {
@@ -337,10 +337,16 @@ export default function HalftoneWordmarkFooter({
           const id = lctx.getImageData(0, 0, logoD, logoD)
           const d = id.data
           for (let i = 0; i < d.length; i += 4) {
-            const r = d[i], g = d[i+1], b = d[i+2]
-            const diff = Math.sqrt((r - 254)**2 + (g - 254)**2 + (b - 248)**2)
-            const alpha = Math.min(255, Math.max(0, Math.round(((diff - 16) / 28) * 255)))
-            const isAccent = (diff > 30 && r > 140 && b < 95) ? 255 : 0
+            const r = d[i], g = d[i+1], b = d[i+2], a = d[i+3]
+            let alpha = 0
+            let isAccent = 0
+            if (a > 15) {
+              const diff = Math.sqrt((r - 254)**2 + (g - 254)**2 + (b - 248)**2)
+              if (diff > 20) {
+                alpha = a < 250 ? a : Math.min(255, Math.max(0, Math.round(((diff - 16) / 28) * 255)))
+                isAccent = ((r > 90 && r > b * 1.4 && r > g * 1.2) || (diff > 30 && r > 140 && b < 95)) ? 255 : 0
+              }
+            }
             d[i] = isAccent
             d[i+1] = 0
             d[i+2] = 0
@@ -392,10 +398,16 @@ export default function HalftoneWordmarkFooter({
           const id = lctx.getImageData(0, 0, logoD, logoD)
           const d = id.data
           for (let i = 0; i < d.length; i += 4) {
-            const r = d[i], g = d[i+1], b = d[i+2]
-            const diff = Math.sqrt((r - 254)**2 + (g - 254)**2 + (b - 248)**2)
-            const alpha = Math.min(255, Math.max(0, Math.round(((diff - 16) / 28) * 255)))
-            const isAccent = (diff > 30 && r > 140 && b < 95) ? 255 : 0
+            const r = d[i], g = d[i+1], b = d[i+2], a = d[i+3]
+            let alpha = 0
+            let isAccent = 0
+            if (a > 15) {
+              const diff = Math.sqrt((r - 254)**2 + (g - 254)**2 + (b - 248)**2)
+              if (diff > 20) {
+                alpha = a < 250 ? a : Math.min(255, Math.max(0, Math.round(((diff - 16) / 28) * 255)))
+                isAccent = ((r > 90 && r > b * 1.4 && r > g * 1.2) || (diff > 30 && r > 140 && b < 95)) ? 255 : 0
+              }
+            }
             d[i] = isAccent
             d[i+1] = 0
             d[i+2] = 0
