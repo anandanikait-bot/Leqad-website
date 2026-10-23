@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('About education inquiry opens with a valid selected topic', async ({ page }) => {
   await page.goto('/about');
-  const trigger = page.getByRole('button', { name: /Draft an education inquiry note/i });
+  const trigger = page.getByRole('button', { name: /Draft an Inquiry Note/i });
   await trigger.click();
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
@@ -15,31 +15,42 @@ test('About education inquiry opens with a valid selected topic', async ({ page 
   await expect(trigger).toBeFocused();
 });
 
-test('Partners hero and closing inquiries select General Inquiry, never a blank option', async ({ page }) => {
+test('Partners has one visible drafting action and clearly states contact availability', async ({ page }) => {
   await page.goto('/partners');
-  for (const name of ['Draft an Inquiry Note', 'Draft a Collaboration Note']) {
-    const trigger = page.getByRole('button', { name, exact: true });
-    await trigger.click();
-    const dialog = page.getByRole('dialog');
-    await expect(dialog.getByLabel('Area of Interest')).toHaveValue('General Inquiry');
-    await page.keyboard.press('Escape');
-    await expect(dialog).toHaveCount(0);
-  }
+  const trigger = page.getByRole('button', { name: 'Draft an Inquiry Note', exact: true });
+  await expect(trigger).toBeVisible();
+  await expect(page.getByText('A public contact email is not available yet.', { exact: false })).toBeVisible();
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.getByLabel('Area of Interest')).toHaveValue('General Inquiry');
+  await expect(dialog).toContainText('does not send messages directly');
+  await page.keyboard.press('Escape');
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
 });
 
-test('Partners individual collaboration buttons preselect their matching topics', async ({ page }) => {
+test('inquiry topics remain selectable, copy the actual note, and never submit a request', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  const submissions: string[] = [];
+  page.on('request', request => {
+    if (request.method() !== 'GET') submissions.push(request.url());
+  });
   await page.goto('/partners');
-  const options: Array<{ name: RegExp; expected: string }> = [
-    { name: /Discuss technical fit/i, expected: 'Technical Alignment' },
-    { name: /Discuss evaluation/i, expected: 'Educational Pilot' },
-    { name: /Discuss commercial options/i, expected: 'Commercial Exploration' },
-  ];
-  for (const { name, expected } of options) {
-    const trigger = page.getByRole('button', { name });
-    await trigger.click();
-    await expect(page.getByRole('dialog').getByLabel('Area of Interest')).toHaveValue(expected);
+  await page.getByRole('button', { name: 'Draft an Inquiry Note', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  for (const topic of ['Technical Alignment', 'Educational Pilot', 'Commercial Exploration']) {
+    await dialog.getByLabel('Area of Interest').selectOption(topic);
+    await dialog.getByLabel('Brief Note or Context').fill('Discuss a first-sketch evaluation.');
+    await dialog.getByRole('button', { name: 'Copy Inquiry Note' }).click();
+    const note = await page.evaluate(() => navigator.clipboard.readText());
+    expect(note).toContain('Topic: ' + topic);
+    expect(note).toContain('Discuss a first-sketch evaluation.');
+    // Reopening clears the copied state, without sending anything.
     await page.keyboard.press('Escape');
+    await page.getByRole('button', { name: 'Draft an Inquiry Note', exact: true }).click();
   }
+  expect(submissions).toEqual([]);
 });
 
 for (const path of ['/about', '/partners']) {

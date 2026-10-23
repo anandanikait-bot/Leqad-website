@@ -50,7 +50,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       }
       if (route === '/demo') {
         await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
-        await expect(page.getByText('Interactive illustration · Not connected to live CAD.')).toBeVisible();
+        await expect(page.getByText('Simulation · Not connected to live CAD')).toBeVisible();
       }
       if (width === 320 || width === 1440) {
         await page.reload();
@@ -79,10 +79,14 @@ test('lesson explains a simulated CAD process without universal or verified clai
   const allLessonText = await page.evaluate(() => document.querySelector('main')?.textContent || '');
   expect(allLessonText).not.toMatch(/Every 3D mechanical model begins with a 2D sketch/);
   await page.goto('/about');
-  await expect(page.getByText('Website lesson tested with automated navigation, interaction, and dimension checks')).toBeVisible();
-  await expect(page.getByText('These checks test software behavior, not student learning.')).toBeVisible();
+  await expect(page.getByText('Interactive Demo Preview', { exact: true })).toBeVisible();
+  await expect(page.locator('#product-status')).toContainText('Live Onshape compatibility remains unverified');
+  await expect(page.locator('#product-status')).toContainText('separate eight-step simulation');
+  await expect(page.locator('main')).not.toContainText(/automated|Tested|library of lessons/i);
   await page.goto('/partners');
-  await expect(page.getByText('These are ideas for discussion, not partnerships or integrations already agreed upon.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Technical compatibility' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Educational evaluation' })).toBeVisible();
+  await expect(page.locator('main')).not.toContainText(/automated tests|instructor workload/i);
   await expect(page.getByText('Controlled Automated Testing')).toHaveCount(0);
   await expect(page.getByText('Ribbon Recognition')).toHaveCount(0);
 });

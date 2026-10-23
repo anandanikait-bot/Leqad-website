@@ -8,7 +8,7 @@ export const ProductPreview: React.FC = () => (
       <img
         data-parallax-travel="12" data-parallax-mobile-travel="6"
         src="/assets/cad-lesson-preview.png"
-        alt="Static Leqad product preview: a CAD reference plane beside the teaching panel, with the instruction to start a sketch."
+        alt="Leqad interactive demo preview: an illustrated CAD reference plane beside the first-sketch teaching panel."
         width={1182}
         height={534}
         loading="lazy"
@@ -16,8 +16,8 @@ export const ProductPreview: React.FC = () => (
         className="block h-auto w-full rounded-lg border border-[#D9DDD9]"
       />
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-[#55616B]">Illustrated website demo · Not a live CAD workspace or a screenshot of the extension.</p>
-        <ButtonLink to="/demo" variant="rust" size="sm" icon={<ArrowRight className="h-4 w-4" />}>Explore Full Demo</ButtonLink>
+        <p className="text-sm text-[#55616B]">First-sketch exercise · 8 guided steps</p>
+        <ButtonLink to="/demo" variant="rust" size="sm" icon={<ArrowRight className="h-4 w-4" />}>Explore Interactive Demo</ButtonLink>
       </div>
     </div>
   </section>

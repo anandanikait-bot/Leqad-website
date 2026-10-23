@@ -1,0 +1,422 @@
+[
+  {
+    "width": 320,
+    "state": "/",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 8
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "/about",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "/partners",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "/demo",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "/demo completed via keyboard",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "/partners expanded planner",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "/partners draft dialog",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 8
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/about",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/partners",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/demo",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/demo completed via keyboard",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/partners expanded planner",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "/partners draft dialog",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 9
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/about",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/partners",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/demo",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/demo completed via keyboard",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/partners expanded planner",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "/partners draft dialog",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 9
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/about",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/partners",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/demo",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/demo completed via keyboard",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/partners expanded planner",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "/partners draft dialog",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 9
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/about",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/partners",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/demo",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/demo completed via keyboard",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/partners expanded planner",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "/partners draft dialog",
+    "version": "4.14.0",
+    "violations": [],
+    "needsReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  }
+]

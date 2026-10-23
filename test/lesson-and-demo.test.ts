@@ -206,7 +206,7 @@ describe('Demo State Machine & Separation of Navigation from Action Completion (
 describe('Legal & Educational Disclaimers (Fix #7, Fix #12)', () => {
   test('Legal disclaimer states independent standing', () => {
     assert.ok(LEGAL_DISCLAIMER.includes('independent'));
-    assert.ok(LEGAL_DISCLAIMER.includes('not an official product or endorsement of any CAD platform'));
+    assert.ok(LEGAL_DISCLAIMER.includes('not affiliated with or endorsed by Onshape'));
   });
 
   test('Demo disclaimer states illustration without live CAD inspection', () => {

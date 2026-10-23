@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HalftoneWordmarkFooter from '@/components/ui/halftone-wordmark-footer';
+import { LEGAL_DISCLAIMER } from '../../lib/constants';
 
 export const SiteFooter: React.FC = () => (
   <footer className="w-full overflow-x-hidden bg-[#0E2943] text-[#F5EFE7]">
@@ -16,11 +17,8 @@ export const SiteFooter: React.FC = () => (
           loading="lazy"
           decoding="async"
         />
-        <div className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[#F5EFE7]">
-          LEQAD <span className="text-[#B74B21]">/</span> <span className="text-[#F5EFE7]/65">CAD LEARNING</span>
-        </div>
         <p className="max-w-sm text-sm leading-relaxed text-[#F5EFE7]/75">
-          Learn CAD by building. Exploring guided lessons and contextual help for beginner CAD practice.
+          An early learning-assistant prototype for guided CAD practice.
         </p>
       </div>
       <nav aria-label="Footer navigation" className="sm:justify-self-end">
@@ -52,8 +50,8 @@ export const SiteFooter: React.FC = () => (
 
     <div className="border-t border-[#F5EFE7]/10 px-5 py-4 sm:px-8 sm:py-5">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-[#F5EFE7]/60 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:text-[11px]">
-        <span className="text-[#F5EFE7]/85">© 2026 Leqad · In-workflow CAD education</span>
-        <span className="max-w-md">Independent prototype. Browser demo illustrates CAD concepts; it does not inspect or verify live CAD geometry.</span>
+        <span className="shrink-0 text-[#F5EFE7]/85">© 2026 Leqad</span>
+        <span className="max-w-md sm:text-right">{LEGAL_DISCLAIMER}</span>
       </div>
     </div>
   </footer>
