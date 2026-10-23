@@ -1,45 +1,72 @@
 import { test, expect } from '@playwright/test';
 
-test('Partners pilot configurator updates only arithmetic planning quantities', async ({ page }) => {
+test('pilot planner presents questions rather than fabricated outcome promises', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/partners');
   const planner = page.locator('[data-pilot-planner]');
-  await expect(planner.getByRole('heading', { name: 'Sketch an educational pilot' })).toBeVisible();
-  await expect(planner.locator('[data-pilot-contact-hours]')).toHaveText('4 hours');
-  await expect(planner.locator('[data-pilot-participant-hours]')).toHaveText('48 learner-hours');
-
-  const learners = planner.getByRole('slider', { name: 'Learners' });
-  const sessions = planner.getByRole('slider', { name: 'Sessions' });
-  const minutes = planner.getByRole('slider', { name: 'Minutes per session' });
-  await learners.focus();
-  await learners.press('End');
-  await sessions.focus();
-  await sessions.press('End');
-  await minutes.focus();
-  await minutes.press('End');
-  await expect(learners).toHaveValue('40');
-  await expect(sessions).toHaveValue('8');
-  await expect(minutes).toHaveValue('120');
-  await expect(planner.locator('[data-pilot-contact-hours]')).toHaveText('16 hours');
-  await expect(planner.locator('[data-pilot-participant-hours]')).toHaveText('640 learner-hours');
-
-  await planner.getByRole('button', { name: 'Draft a Pilot Inquiry' }).click();
-  await expect(page.getByRole('dialog').getByLabel('Area of Interest')).toHaveValue('Educational Pilot');
-  await expect(page.getByRole('dialog')).toContainText('does not send messages directly');
-  await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(planner.getByRole('heading', { name: 'Outline a potential CAD learning evaluation' })).toBeVisible();
+  await expect(planner.locator('[data-pilot-summary]')).toHaveText('Engineering courses · Small group');
+  await expect(planner.locator('[data-pilot-question]')).toContainText('first-part task');
+  await expect(planner.locator('[data-pilot-baseline]')).toContainText('without Leqad guidance');
+  await expect(planner).not.toContainText(/94%|91%|88%|instructor hours saved|100% Client-Side/i);
+  await expect(planner).toContainText('No participants, results, timelines, learning benefits');
   expect(errors).toEqual([]);
 });
 
+test('audience, group and focus update output and carry into the actual draft', async ({ page }) => {
+  await page.goto('/partners');
+  const planner = page.locator('[data-pilot-planner]');
+  await planner.getByRole('button', { name: 'Robotics teams' }).click();
+  await planner.getByRole('button', { name: /Larger group/ }).click();
+  await planner.getByRole('button', { name: 'Independent practice' }).click();
+  await expect(planner.getByRole('button', { name: 'Robotics teams' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(planner.getByRole('button', { name: /Larger group/ })).toHaveAttribute('aria-pressed', 'true');
+  await expect(planner.getByRole('button', { name: 'Independent practice' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(planner.locator('[data-pilot-summary]')).toHaveText('Robotics teams · Larger group');
+  await expect(planner.locator('[data-pilot-question]')).toContainText('comparable part');
+
+  const trigger = planner.getByRole('button', { name: 'Draft a Discussion Note' });
+  await trigger.click();
+  const modal = page.getByRole('dialog');
+  await expect(modal.getByLabel('Area of Interest')).toHaveValue('Robotics Team');
+  const note = modal.getByLabel('Brief Note or Context');
+  await expect(note).toHaveValue(/Audience: Robotics teams/);
+  await expect(note).toHaveValue(/41\+ participants; capacity to be confirmed/);
+  await expect(note).toHaveValue(/Independent practice/);
+  await expect(modal).toContainText('does not send messages directly');
+  await page.keyboard.press('Escape');
+  await expect(modal).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+test('platform evaluation uses technical topic and does not retain another audience draft', async ({ page }) => {
+  await page.goto('/partners');
+  const planner = page.locator('[data-pilot-planner]');
+  await planner.getByRole('button', { name: 'CAD platform teams' }).click();
+  await planner.getByRole('button', { name: 'Help requests' }).click();
+  await planner.getByRole('button', { name: 'Draft a Discussion Note' }).click();
+  const modal = page.getByRole('dialog');
+  await expect(modal.getByLabel('Area of Interest')).toHaveValue('Technical Alignment');
+  await expect(modal.getByLabel('Brief Note or Context')).toHaveValue(/Audience: CAD platform teams/);
+  await expect(modal.getByLabel('Brief Note or Context')).toHaveValue(/Count support requests/);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Draft an Inquiry Note', exact: true }).click();
+  await expect(page.getByRole('dialog').getByLabel('Area of Interest')).toHaveValue('General Inquiry');
+  await expect(page.getByRole('dialog').getByLabel('Brief Note or Context')).toBeEmpty();
+});
+
 for (const width of [320, 375, 768, 1440]) {
-  test('pilot planner stays within Partners page at ' + width + 'px', async ({ page }) => {
+  test('pilot choices remain keyboard-accessible and within the page at ' + width + 'px', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/partners');
-    await expect(page.locator('[data-pilot-planner]')).toBeVisible();
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    const slider = page.getByRole('slider', { name: 'Learners' });
-    await slider.focus();
-    await expect(slider).toBeFocused();
+    const planner = page.locator('[data-pilot-planner]');
+    await expect(planner).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const option = planner.getByRole('button', { name: 'Robotics teams' });
+    await option.focus();
+    await page.keyboard.press('Enter');
+    await expect(option).toHaveAttribute('aria-pressed', 'true');
+    await expect(option).toBeFocused();
   });
 }

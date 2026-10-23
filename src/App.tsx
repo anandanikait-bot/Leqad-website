@@ -17,6 +17,7 @@ export default function App() {
   const isHomePage = location.pathname === '/';
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [contactTopic, setContactTopic] = useState('Technical Alignment');
+  const [contactDraft, setContactDraft] = useState('');
 
   useEffect(() => {
     const destination = legacyDestination(location.hash);
@@ -31,8 +32,9 @@ export default function App() {
     setIsContactOpen(false);
   }, [location.pathname]);
 
-  const handleOpenContact = (topic?: string) => {
-    if (topic) setContactTopic(topic);
+  const handleOpenContact = (topic?: string, draftMessage?: string) => {
+    setContactTopic(topic || 'General Inquiry');
+    setContactDraft(draftMessage || '');
     setIsContactOpen(true);
   };
 
@@ -50,7 +52,7 @@ export default function App() {
         </Routes>
       </main>
       {!isHomePage && <SiteFooter />}
-      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultTopic={contactTopic} />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultTopic={contactTopic} defaultMessage={contactDraft} />
     </div>
   );
 }

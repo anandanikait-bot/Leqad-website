@@ -16,18 +16,20 @@ interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultTopic?: string;
+  defaultMessage?: string;
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({
   isOpen,
   onClose,
   defaultTopic = 'Technical Alignment',
+  defaultMessage = '',
 }) => {
   const [topic, setTopic] = useState(defaultTopic);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [organization, setOrganization] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(defaultMessage);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState<string | null>(null);
 
@@ -39,6 +41,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     if (isOpen) {
       previousActiveElement.current = document.activeElement as HTMLElement | null;
       setTopic(CONTACT_TOPICS.has(defaultTopic) ? defaultTopic : 'General Inquiry');
+      setMessage(defaultMessage);
       setCopied(false);
       setCopyError(null);
 
@@ -57,7 +60,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         previousActiveElement.current?.focus?.();
       };
     }
-  }, [isOpen, defaultTopic]);
+  }, [isOpen, defaultTopic, defaultMessage]);
 
   // Trap focus & handle Escape key
   useEffect(() => {
