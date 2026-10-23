@@ -1,184 +1,104 @@
 import React, { useState } from 'react';
-import { Monitor, Compass, AlertTriangle, CheckCircle, Clock, Zap, ArrowRight } from 'lucide-react';
 
-interface MetricItem {
+type Comparison = {
   id: string;
-  category: string;
-  title: string;
-  traditional: {
-    label: string;
-    description: string;
-    metric: string;
-    impact: 'negative' | 'neutral';
-  };
-  leqad: {
-    label: string;
-    description: string;
-    metric: string;
-    impact: 'positive';
-  };
-}
+  label: string;
+  question: string;
+  tutorial: string;
+  approach: string;
+};
 
-const COMPARISON_DATA: MetricItem[] = [
+const comparisons: Comparison[] = [
   {
     id: 'context',
-    category: 'Spatial Focus',
-    title: 'Context Switching & Screen Real Estate',
-    traditional: {
-      label: 'Desynchronized Dual-Window Workflow',
-      description: 'Switching constantly between YouTube or LMS tutorials and CAD. Students lose coordinate bearings every time they change focus.',
-      metric: '40% time spent switching windows',
-      impact: 'negative',
-    },
-    leqad: {
-      label: 'Integrated In-Workflow Scaffolding',
-      description: 'Step-by-step guidance docks right alongside the model canvas. The learner keeps hands on the mouse and eyes on geometry.',
-      metric: 'Zero window-switch latency',
-      impact: 'positive',
-    },
+    label: 'Learning context',
+    question: 'Where does the learner find the next step?',
+    tutorial: 'Video and written tutorials commonly explain steps in a separate page or window.',
+    approach: 'Leqad explores contextual hints for supported controls. Its separate website demo illustrates this idea.',
   },
   {
-    id: 'constraints',
-    category: 'Constraint Logic',
-    title: 'Silent Failures & Red Solver Errors',
-    traditional: {
-      label: 'Cryptic Over-Constraint Crashes',
-      description: 'A misplaced dimension or conflicting coincidence turns the sketch red with no clear explanation of which relation caused the lock.',
-      metric: 'Top driver of beginner abandonment',
-      impact: 'negative',
-    },
-    leqad: {
-      label: 'Contextual Mechanical Rationale',
-      description: 'Tiered hints explain degrees of freedom and geometric dependencies before learners commit irreversible constraint conflicts.',
-      metric: 'Proactive constraint comprehension',
-      impact: 'positive',
-    },
+    id: 'tools',
+    label: 'Finding tools',
+    question: 'What happens when the learner cannot find a command?',
+    tutorial: 'Learners can replay a lesson or search documentation for the command.',
+    approach: 'The extension prototype provides local highlights for supported interface controls; it does not recognize every CAD interface.',
   },
   {
-    id: 'retention',
-    category: 'Knowledge Retention',
-    title: 'Passive Mimicry vs. Parametric Intent',
-    traditional: {
-      label: 'Rote Coordinate Copying',
-      description: 'Learners copy exact coordinate values without understanding why datums, bilateral symmetry, or design intent matter.',
-      metric: 'Low transfer to original parts',
-      impact: 'negative',
-    },
-    leqad: {
-      label: 'First-Principles Understanding',
-      description: 'Every step highlights the engineering "Why?" behind datum planes, wall thickness, and draft angles for physical manufacturing.',
-      metric: 'Lasting mechanical design intuition',
-      impact: 'positive',
-    },
+    id: 'reasoning',
+    label: 'Design reasoning',
+    question: 'How does a learner understand a modeling choice?',
+    tutorial: 'Tutorials can explain why a plane, constraint, or dimension was selected.',
+    approach: 'Guided hints connect individual steps to basic CAD concepts and encourage users to think through their decisions.',
   },
   {
-    id: 'velocity',
-    category: 'Onboarding Velocity',
-    title: 'Time to First Verified Physical Part',
-    traditional: {
-      label: 'Lengthy Video Pausing & Rewinding',
-      description: 'New modelers pause video every 15 seconds to locate obscured toolbar icons, stretching simple 5-minute sketches into an hour.',
-      metric: '~45 minutes average first part',
-      impact: 'negative',
-    },
-    leqad: {
-      label: 'Active Guided Execution',
-      description: 'Targeted control highlighting points toward the required tool instantly, keeping cognitive load focused on geometry creation.',
-      metric: '< 5 minutes to first extruded solid',
-      impact: 'positive',
-    },
+    id: 'evaluation',
+    label: 'Learning evidence',
+    question: 'What evidence would show the guidance is useful?',
+    tutorial: 'A comparison could measure how learners complete defined tasks with a conventional tutorial.',
+    approach: 'A future evaluation could compare matched tasks, support requests, and independent practice; no learning gains have been established.',
   },
 ];
 
 export const InteractivePedagogyMatrix: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>('context');
-
-  const activeItem = COMPARISON_DATA.find((item) => item.id === activeTab) || COMPARISON_DATA[0];
+  const [activeId, setActiveId] = useState(comparisons[0].id);
+  const active = comparisons.find(item => item.id === activeId) ?? comparisons[0];
 
   return (
-    <section className="bg-white rounded-2xl border border-[#D9DDD9] p-6 sm:p-8 space-y-6 shadow-xs">
+    <section className="space-y-5 rounded-2xl border border-[#D9DDD9] bg-white p-6 sm:p-8" aria-labelledby="learning-approaches-heading">
       <div className="max-w-3xl space-y-2">
-        <span className="font-mono text-xs uppercase tracking-wider text-[#B74B21] font-medium">
-          Pedagogy Comparison
+        <span className="font-mono text-xs font-medium uppercase tracking-wider text-[#B74B21]">
+          Learning approaches
         </span>
-        <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#0E2943]">
-          Why video tutorials fail CAD beginners
-        </h3>
-        <p className="text-sm text-[#55616B] leading-relaxed">
-          Parametric modeling requires active mechanical reasoning. Compare traditional tutorial videos against guided in-workflow practice.
+        <h2 id="learning-approaches-heading" className="text-xl font-semibold tracking-tight text-[#0E2943] sm:text-2xl">
+          Different ways to practice CAD
+        </h2>
+        <p className="text-sm leading-relaxed text-[#55616B]">
+          Tutorials and guided practice can complement one another. Explore the intended difference,
+          not a claim of measured superiority.
         </p>
       </div>
 
-      {/* Segmented Interactive Control */}
-      <div className="flex flex-wrap gap-2 border-b border-[#D9DDD9] pb-3">
-        {COMPARISON_DATA.map((item) => {
-          const isSelected = item.id === activeTab;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors cursor-pointer flex items-center gap-1.5 ${
-                isSelected
-                  ? 'bg-[#0E2943] text-white shadow-xs'
-                  : 'bg-[#FAF8F4] text-[#55616B] hover:text-[#0E2943] hover:bg-[#F5EFE7] border border-[#D9DDD9]'
-              }`}
-            >
-              <span>{item.category}</span>
-            </button>
-          );
-        })}
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Compare learning topics">
+        {comparisons.map(item => (
+          <button
+            type="button"
+            key={item.id}
+            aria-pressed={activeId === item.id}
+            onClick={() => setActiveId(item.id)}
+            className={`min-h-11 cursor-pointer rounded-md border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] ${
+              activeId === item.id
+                ? 'border-[#0E2943] bg-[#0E2943] text-white'
+                : 'border-[#D9DDD9] bg-[#FAF8F4] text-[#55616B] hover:bg-[#F5EFE7]'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
 
-      {/* Active Comparison Card Side-by-Side */}
-      <div className="space-y-3">
-        <h4 className="text-base font-semibold text-[#0E2943] tracking-tight">
-          {activeItem.title}
-        </h4>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
-          {/* Traditional Method */}
-          <div className="bg-[#FAF8F4] rounded-xl p-5 border border-[#D9DDD9] space-y-3 flex flex-col justify-between">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-[#55616B] font-medium">Standard Tutorial Video</span>
-                <span className="text-[#994020] flex items-center gap-1 font-medium">
-                  <AlertTriangle className="w-3.5 h-3.5" /> High Friction
-                </span>
-              </div>
-              <h5 className="text-sm font-semibold text-[#0E2943]">
-                {activeItem.traditional.label}
-              </h5>
-              <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                {activeItem.traditional.description}
-              </p>
-            </div>
-            <div className="pt-2.5 border-t border-[#D9DDD9] text-xs text-[#55616B]">
-              Outcome: <strong className="text-[#0E2943]">{activeItem.traditional.metric}</strong>
-            </div>
+      <div className="space-y-4">
+        <h3 className="text-base font-semibold text-[#0E2943]" data-comparison-question>
+          {active.question}
+        </h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2 rounded-xl border border-[#D9DDD9] bg-[#FAF8F4] p-5">
+            <h4 className="text-sm font-semibold text-[#0E2943]">Traditional tutorial</h4>
+            <p className="text-sm leading-relaxed text-[#55616B]" data-comparison-tutorial>
+              {active.tutorial}
+            </p>
           </div>
-
-          {/* Leqad Method */}
-          <div className="bg-white rounded-xl p-5 border border-[#B74B21]/40 space-y-3 flex flex-col justify-between shadow-2xs">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-[#B74B21] font-semibold">Leqad In-Workflow Guidance</span>
-                <span className="text-emerald-700 flex items-center gap-1 font-medium">
-                  <CheckCircle className="w-3.5 h-3.5" /> Context-Aware
-                </span>
-              </div>
-              <h5 className="text-sm font-semibold text-[#0E2943]">
-                {activeItem.leqad.label}
-              </h5>
-              <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                {activeItem.leqad.description}
-              </p>
-            </div>
-            <div className="pt-2.5 border-t border-[#D9DDD9] text-xs text-[#55616B]">
-              Outcome: <strong className="text-[#B74B21]">{activeItem.leqad.metric}</strong>
-            </div>
+          <div className="space-y-2 rounded-xl border border-[#B74B21]/30 bg-white p-5">
+            <h4 className="text-sm font-semibold text-[#0E2943]">Leqad's prototype direction</h4>
+            <p className="text-sm leading-relaxed text-[#55616B]" data-comparison-leqad>
+              {active.approach}
+            </p>
           </div>
         </div>
       </div>
+      <p className="text-xs leading-relaxed text-[#55616B]">
+        Illustrative comparison only. No verified improvements in completion time, retention, or
+        instructor workload are claimed.
+      </p>
     </section>
   );
 };
