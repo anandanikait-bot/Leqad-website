@@ -194,7 +194,7 @@ const HWF_CSS = `
 
 export default function HalftoneWordmarkFooter({
   wordmark = "leqad",
-  logoSrc = "/assets/brand/leqad-approved.png",
+  logoSrc = "/assets/brand/leqad-official-symbol-dark-v1.svg",
   label = "Halden Studio",
   meta = "©2026 · Oslo / Lisbon",
   columns = DEFAULT_COLUMNS,

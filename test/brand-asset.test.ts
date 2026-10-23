@@ -1,24 +1,24 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
 
-test('approved logo source is intact and the navbar derivative supports 3x display density', () => {
-  const source = readFileSync(new URL('../public/assets/brand/leqad-approved.png', import.meta.url));
-  assert.equal(createHash('sha256').update(source).digest('hex'), 'ca9cb8ffd5c6643db19756cbd4d2e71b02565283a0d0a21227655336957c17e1');
-  const navbar = readFileSync(new URL('../public/assets/brand/leqad-navbar.png', import.meta.url));
-  assert.equal(navbar.readUInt32BE(16), 144);
-  assert.equal(navbar.readUInt32BE(20), 144);
-  assert.ok(navbar.length < 50_000);
-});
+function brandSvg(name: string): string {
+  return readFileSync(new URL(`../public/assets/brand/leqad-official-${name}-v1.svg`, import.meta.url), 'utf8');
+}
 
-test('browser tab favicon embeds original approved navbar pixels, without editing the source asset', () => {
-  const navbar = readFileSync(new URL('../public/assets/brand/leqad-navbar.png', import.meta.url));
-  const svg = readFileSync(new URL('../public/assets/brand/leqad-tab-v1.svg', import.meta.url), 'utf8');
-  const image = svg.match(/data:image\/png;base64,([A-Za-z0-9+/=]+)/);
-  assert.ok(image, 'favicon must embed the exact approved navbar PNG');
-  assert.deepEqual(Buffer.from(image[1], 'base64'), navbar);
-  assert.match(svg, /prefers-color-scheme: dark/);
-  assert.match(svg, /prefers-color-scheme: light/);
-  assert.match(svg, /feColorMatrix/);
+test('official artwork is vector and transparent with exact brand palette', () => {
+  const light = brandSvg('horizontal-light');
+  const dark = brandSvg('horizontal-dark');
+  const lightSymbol = brandSvg('symbol-light');
+  const darkSymbol = brandSvg('symbol-dark');
+  for (const source of [light, dark, lightSymbol, darkSymbol]) {
+    assert.match(source, /<svg /);
+    assert.match(source, /<path /);
+    assert.match(source, /fill="#793327"/); // Hay's Russet
+    assert.doesNotMatch(source, /<image|data:image|feColorMatrix|<rect/);
+  }
+  assert.match(light, /fill="#0E2943"/);
+  assert.match(dark, /fill="#F5EFE7"/);
+  assert.match(light, /viewBox="275 120 1625 470"/);
+  assert.match(lightSymbol, /viewBox="280 119 476 470"/);
 });
