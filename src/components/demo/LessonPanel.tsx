@@ -223,7 +223,6 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <span className="font-mono text-[10px] uppercase tracking-wider text-[#55616B]">
               {step.category}
             </span>
-            <span className="text-xs text-[#55616B]">{step.stepNumber} / {totalSteps}</span>
           </div>
 
           {/* Step Title */}

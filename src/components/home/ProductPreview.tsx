@@ -3,8 +3,8 @@ import { ButtonLink } from '../shared/Button';
 import { ArrowRight } from 'lucide-react';
 
 export const ProductPreview: React.FC = () => (
-  <section id="product-preview" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-    <div data-parallax-anchor className="rounded-2xl border border-[#D9DDD9] bg-white p-3 shadow-sm sm:p-5">
+  <section id="product-preview" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
+    <div data-parallax-anchor className="rounded-2xl border border-[#D9DDD9] bg-white p-3 sm:p-4 shadow-xs">
       <img
         data-parallax-travel="12" data-parallax-mobile-travel="6"
         src="/assets/cad-lesson-preview.png"
@@ -13,9 +13,9 @@ export const ProductPreview: React.FC = () => (
         height={534}
         loading="lazy"
         decoding="async"
-        className="block h-auto w-full rounded-lg border border-[#D9DDD9]"
+        className="block h-auto w-full rounded-xl"
       />
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-1">
         <p className="text-sm text-[#55616B]">A preview of the illustrated lesson. Try the walkthrough on the demo page.</p>
         <ButtonLink to="/demo" variant="rust" size="sm" icon={<ArrowRight className="h-4 w-4" />}>Explore Full Demo</ButtonLink>
       </div>

@@ -3,6 +3,7 @@ import { SectionHeading } from '../shared/SectionHeading';
 import { ProductPreview } from '../home/ProductPreview';
 import { HowItWorks } from '../home/HowItWorks';
 import { CurrentProductAndVision } from '../home/CurrentProductAndVision';
+import { InteractivePedagogyMatrix } from './InteractivePedagogyMatrix';
 import { ButtonLink } from '../shared/Button';
 import { ArrowRight } from 'lucide-react';
 
@@ -65,7 +66,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
       {/* 3. How It Works: Guided lessons, contextual hints, learning by doing */}
       <HowItWorks />
 
-      {/* 4 & 5. What Exists Today & Future Vision */}
+      {/* 4. Pedagogical Matrix: In-Workflow Learning vs Passive Tutorials */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <InteractivePedagogyMatrix />
+      </section>
+
+
+      {/* 6 & 7. What Exists Today & Future Vision */}
       <CurrentProductAndVision />
 
       {/* Partnership & Educational Collaboration */}
