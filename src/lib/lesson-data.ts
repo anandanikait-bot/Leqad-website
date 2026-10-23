@@ -76,7 +76,7 @@ export const LESSON_STEPS: LessonStep[] = [
       'The origin is the point where the X and Y axes cross. Start your rectangle there.',
       'Move diagonally and place the opposite corner. The blue outline means the lesson has not yet applied exact dimensions.'
     ],
-    whyExplanation: 'Starting at the origin gives your rectangle a consistent position. You'll choose its exact size next.',
+    whyExplanation: 'Starting at the origin gives your rectangle a consistent position. Choose its exact size next.',
     recognizedControlId: 'tool-rectangle',
     recognizedControlLabel: 'Corner Rectangle (G)',
     geometryState: 'rectangle_drawn',
