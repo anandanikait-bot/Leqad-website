@@ -1,0 +1,34 @@
+{
+  "base": "de6720162f1675e2a80451cc2a2e6057dd85efea",
+  "branch": "feat/approved-typography-branding",
+  "typescript": "pass",
+  "build": "pass",
+  "unit": {
+    "passed": 24,
+    "failed": 0
+  },
+  "browser": {
+    "passed": 93,
+    "failed": 0
+  },
+  "responsive": {
+    "cases": 20,
+    "widths": [
+      320,
+      375,
+      768,
+      1024,
+      1440
+    ],
+    "errors": []
+  },
+  "accessibility": {
+    "scans": 35,
+    "violations": 0,
+    "manualReview": "contrast-review.json"
+  },
+  "fontLoadFinalMaxCLS": 0.00320001220703125,
+  "visualReview": "No blocking issue; matches approved A/A.",
+  "merged": false,
+  "deployed": false
+}
