@@ -16,7 +16,7 @@ export const ProductPreview: React.FC = () => (
         className="block h-auto w-full rounded-lg border border-[#D9DDD9]"
       />
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-[#55616B]">A preview of the illustrated lesson. Try the walkthrough on the demo page.</p>
+        <p className="text-sm text-[#55616B]">Illustrated website demo · Not a live CAD workspace or a screenshot of the extension.</p>
         <ButtonLink to="/demo" variant="rust" size="sm" icon={<ArrowRight className="h-4 w-4" />}>Explore Full Demo</ButtonLink>
       </div>
     </div>
