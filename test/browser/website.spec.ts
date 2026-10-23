@@ -37,8 +37,9 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
   for (const path of ['/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page.locator('footer canvas')).toHaveCount(1);
-    await expect(page.locator('footer').getByText('LEQAD / CAD LEARNING')).toBeVisible();
-    await expect(page.locator('footer').getByText('© 2026 Leqad · In-workflow CAD education')).toBeVisible();
+    await expect(page.locator('footer').getByText('LEQAD / CAD LEARNING')).toHaveCount(0);
+    await expect(page.locator('footer').getByText('© 2026 Leqad', { exact: true })).toBeVisible();
+    await expect(page.locator('footer').getByText('Leqad is independently developed and is not affiliated with or endorsed by Onshape.')).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link')).toHaveCount(3);
     await expect(page.locator('footer').getByText('CURRICULUM /')).toHaveCount(0);
   }
@@ -122,7 +123,7 @@ test('About contains a static preview instead of a second live lesson', async ({
   await page.goto('/about');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/CAD guidance, right where you design/);
   await expect(page.getByRole('button', { name: 'Start sketch', exact: true })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Explore Full Demo', exact: true })).toHaveAttribute('href', '/demo');
+  await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo', exact: true })).toHaveAttribute('href', '/demo');
 });
 
 test('clean links, old hash replacement, refreshes and browser history work', async ({ page }) => {
@@ -252,7 +253,7 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
   await expect(page.getByLabel('Extrude 1 settings')).toBeVisible();
   await page.getByRole('button', { name: 'View Top' }).click();
   await expect(page.getByTestId('solid-top-view')).toBeVisible();
-  await page.getByRole('button', { name: 'View Isometric' }).click();
+  await page.getByRole('button', { name: 'View Iso (Isometric)', exact: true }).click();
   await expect(page.getByTestId('extruded-solid')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });

@@ -167,10 +167,11 @@ Message: ${message.trim() || '[No message entered]'}
             <Info className="w-4 h-4 text-[#B74B21] flex-shrink-0 mt-0.5" />
             <div className="space-y-1 text-[#55616B] leading-relaxed">
               <strong className="text-[#0E2943] font-medium block">
-                Draft-Only Inquiry Helper
+                Save a draft for later
               </strong>
               <span>
-                This form prepares a formatted note for you. It does not send messages directly from the browser. Fill in your details below and click <strong>Copy Inquiry Note</strong> to paste into your preferred email client.
+                A public contact email is not available yet. This helper does not send messages directly.
+                Use <strong>Copy Inquiry Note</strong> to keep a draft for later.
               </span>
             </div>
           </div>
@@ -254,9 +255,9 @@ Message: ${message.trim() || '[No message entered]'}
 
             {/* Feedback alert when copied */}
             {copied && (
-              <div className="p-2.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-center gap-2 animate-fadeIn">
+              <div role="status" className="p-2.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-center gap-2 animate-fadeIn">
                 <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Inquiry note copied to clipboard. You can now paste this into an email to send to the team.</span>
+                <span>Inquiry note copied to clipboard for later use. Nothing has been sent.</span>
               </div>
             )}
 

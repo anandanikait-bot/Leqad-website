@@ -103,7 +103,7 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
         </h2>
         <p className="text-sm sm:text-base leading-relaxed text-[#55616B]">
           Choose a setting, group size, and question worth investigating. This creates a
-          discussion outline—not predicted savings, success rates, a formal proposal, or an agreed pilot.
+          discussion outline for a possible evaluation.
         </p>
       </div>
 
@@ -137,7 +137,7 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
                 className={choiceClass(group === id)}
               >
                 <span className="block font-medium">{groupSizes[id].label}</span>
-                <span className="mt-1 block text-xs opacity-80">{groupSizes[id].description}</span>
+                <span className="mt-1 block text-xs">{groupSizes[id].description}</span>
               </button>
             ))}
           </div>
@@ -191,24 +191,23 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
         </div>
 
         <p className="text-xs leading-relaxed text-[#55616B]">
-          No participants, results, timelines, learning benefits, privacy guarantees, or partner
-          arrangements are assumed. Task design, platform authorization, and appropriate
-          participant safeguards would need separate agreement.
+          This is a planning aid. An evaluation would need agreed tasks, participant consent,
+          and measurement methods.
         </p>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#D9DDD9] pt-5">
         <p className="max-w-lg text-xs sm:text-sm text-[#55616B]">
-          This outline can be placed into a draft inquiry. It is not sent automatically.
+          Keep this outline in a draft note. Nothing is sent.
         </p>
         <Button
           type="button"
-          variant="rust"
+          variant="outline"
           size="md"
           onClick={() => onOpenContact(selectedAudience.topic, draft)}
           icon={<ArrowRight className="w-4 h-4" />}
         >
-          Draft a Discussion Note
+          Draft an Inquiry Note
         </Button>
       </div>
     </section>

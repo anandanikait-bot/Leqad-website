@@ -11,7 +11,7 @@ export const BRAND_COLORS = {
 };
 
 export const LEGAL_DISCLAIMER =
-  'Leqad is an independent early-stage CAD education project. This website demonstrates the learning experience and is not an official product or endorsement of any CAD platform.';
+  'Leqad is independently developed and is not affiliated with or endorsed by Onshape.';
 
 export const DEMO_VERIFICATION_DISCLAIMER =
   'Interactive illustration — not a live CAD connection. Demo step completed without inspecting a real CAD model.';

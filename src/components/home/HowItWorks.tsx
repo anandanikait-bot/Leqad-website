@@ -7,14 +7,14 @@ export const HowItWorks: React.FC = () => {
     {
       title: 'Follow guided steps',
       description:
-        'Practice structured CAD exercises that introduce modeling actions one step at a time.',
+        'Practice a guided first-sketch exercise, one modeling action at a time.',
       icon: <MonitorPlay className="w-5 h-5 text-[#B74B21]" />,
       number: '01',
     },
     {
       title: 'Get hints when stuck',
       description:
-        'Use hints and local highlights for supported interface controls and concepts; they do not inspect geometry.',
+        'Reveal a hint or highlight a supported tool when you need a pointer.',
       icon: <HelpCircle className="w-5 h-5 text-[#B74B21]" />,
       number: '02',
     },
@@ -33,7 +33,6 @@ export const HowItWorks: React.FC = () => {
         <SectionHeading
           eyebrow="How It Works"
           title="Practice, hints, and the reasoning behind each step."
-          description="The extension prototype explores contextual help for supported controls. The separate demo lets you try the lesson in a simulated workspace."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">

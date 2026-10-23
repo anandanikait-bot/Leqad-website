@@ -2,13 +2,13 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert';
 import { LEGAL_DISCLAIMER, DEMO_VERIFICATION_DISCLAIMER } from '../src/lib/constants.js';
 
-describe('Platform Neutrality & Disclaimers (Cleanup Section 3 & 8)', () => {
-  test('Legal disclaimer is completely platform neutral and mentions no specific vendor', () => {
+describe('Platform identity and simulation boundaries', () => {
+  test('Legal disclaimer names the target platform without implying affiliation', () => {
     assert.strictEqual(
       LEGAL_DISCLAIMER,
-      'Leqad is an independent early-stage CAD education project. This website demonstrates the learning experience and is not an official product or endorsement of any CAD platform.'
+      'Leqad is independently developed and is not affiliated with or endorsed by Onshape.'
     );
-    assert.ok(!LEGAL_DISCLAIMER.toLowerCase().includes('onshape'));
+    assert.ok(LEGAL_DISCLAIMER.includes('not affiliated with or endorsed by Onshape'));
   });
 
   test('Demo verification disclaimer clarifies simulation without real CAD inspection', () => {

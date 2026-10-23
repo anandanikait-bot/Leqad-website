@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonLink } from '../shared/Button';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { CadArtwork3D } from './CadArtwork3D';
@@ -72,7 +71,7 @@ export const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-xl mx-auto">
-            Leqad is developing guided lessons and contextual hints alongside browser-based CAD, helping beginners understand each step as they design. The separate website demo illustrates the approach.
+            Leqad is a browser-extension learning assistant prototype, starting with Onshape. Practice a guided first-sketch exercise with step-by-step hints and explanations in the interactive demo.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}

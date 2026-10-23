@@ -519,7 +519,7 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
           }}
           className="pointer-events-auto bg-[#0E2943]/85 hover:bg-[#15385B] text-[#F5EFE7] border border-[#F5EFE7]/20 hover:border-[#F5EFE7]/40 px-2.5 py-1 rounded-md font-mono text-[10px] font-medium transition-all flex items-center gap-1.5 cursor-pointer shadow-xs focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#F5EFE7]"
           title="Switch between 2D sketch and 3D extruded prism"
-          aria-label={isExtruded ? "Switch to 2D Sketch" : "Switch to 3D Extrusion"}
+          aria-label={isExtruded ? "3D Extrude: switch to 2D Sketch" : "2D Sketch: switch to 3D Extrusion"}
         >
           {isExtruded ? (
             <>

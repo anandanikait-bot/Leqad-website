@@ -11,7 +11,7 @@ import {
   Sparkles,
   Award
 } from 'lucide-react';
-import { Button } from '../shared/Button';
+import { Button, ButtonLink } from '../shared/Button';
 import { DimensionInput } from './DimensionInput';
 
 interface LessonPanelProps {
@@ -181,13 +181,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               Restart walkthrough
             </Button>
 
-            {/* Conservative clarification */}
-            <div className="flex items-start gap-1.5 text-[10px] text-[#55616B] bg-[#F5EFE7]/60 p-2.5 rounded-md border border-[#D9DDD9]/60 leading-relaxed font-mono">
-              <Info className="w-3.5 h-3.5 text-[#55616B] flex-shrink-0 mt-0.5" />
-              <span>
-                The walkthrough records actions inside the illustration only; it does not inspect, save, or verify a real CAD model.
-              </span>
-            </div>
+            <ButtonLink to="/about" variant="outline" size="md" className="w-full justify-center">
+              Learn About Leqad
+            </ButtonLink>
           </div>
         </div>
       </div>

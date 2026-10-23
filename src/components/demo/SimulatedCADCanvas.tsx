@@ -281,7 +281,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         <span className="text-xs text-[#55616B]">{isExtruding ? 'Extrude 1' : isSketchActive ? 'Sketch 1' : 'Reference planes'}</span>
         <div role="group" aria-label="Model view" className="flex gap-1 text-[11px] font-mono">
           {(['top', 'iso', 'front', 'right'] as const).map(view => (
-            <button type="button" key={view} aria-label={`View ${view === 'iso' ? 'Isometric' : view[0].toUpperCase() + view.slice(1)}`}
+            <button type="button" key={view} aria-label={`View ${view === 'iso' ? 'Iso (Isometric)' : view[0].toUpperCase() + view.slice(1)}`}
               aria-pressed={viewOrientation === view} onClick={() => setViewOrientation(view)}
               className={`rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-[#B74B21] ${viewOrientation === view ? 'bg-[#0E2943] text-white' : 'text-[#55616B] hover:bg-[#FAF8F4]'}`}>
               {view === 'iso' ? 'Iso' : view[0].toUpperCase() + view.slice(1)}
@@ -383,11 +383,11 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               )}
             </button>
 
-            <div className="px-2 py-1 rounded text-[#55616B]/60 flex items-center gap-1.5">
+            <div className="px-2 py-1 rounded text-[#55616B] flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9DDD9]" />
               <span>Front Plane (XZ)</span>
             </div>
-            <div className="px-2 py-1 rounded text-[#55616B]/60 flex items-center gap-1.5">
+            <div className="px-2 py-1 rounded text-[#55616B] flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9DDD9]" />
               <span>Right Plane (YZ)</span>
             </div>
@@ -572,7 +572,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
       </div>
       <p role="status" className="min-h-10 border-t border-[#D9DDD9] bg-white px-3 py-2.5 text-xs leading-relaxed text-[#55616B]">
-        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace · not connected to live CAD'}
+        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace'}
       </p>
     </div>
   );

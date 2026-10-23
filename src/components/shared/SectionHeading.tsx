@@ -19,7 +19,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
     <div className={`space-y-3 ${align === 'center' ? 'text-center mx-auto max-w-3xl' : 'max-w-2xl'} ${className}`}>
       {eyebrow && (
         <div className="inline-flex items-center gap-2">
-          <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#B74B21] bg-[#B74B21]/10 px-2.5 py-0.5 rounded-xs border border-[#B74B21]/20">
+          <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#9C3F1B] bg-[#B74B21]/10 px-2.5 py-0.5 rounded-xs border border-[#B74B21]/20">
             {eyebrow}
           </span>
         </div>

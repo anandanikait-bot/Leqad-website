@@ -22,10 +22,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
 
           <div className="space-y-4 text-base sm:text-lg text-[#55616B] leading-relaxed">
             <p>
-              Leqad explores step-by-step CAD instruction and hints beside the design workspace, so beginners can practice a tool and understand when to use it.
-            </p>
-            <p>
-              The early browser extension provides local guidance for supported controls. The website's interactive lesson is a separate illustration, not a connection to a live CAD model.
+              Leqad is an independent browser-extension prototype for guided CAD practice, starting with Onshape. It explores instructions beside the workspace and explanations of key modeling decisions.
             </p>
           </div>
 
@@ -49,13 +46,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
         </div>
       </section>
 
-      {/* 2. Product Preview: CAD workspace & teaching panel */}
+      {/* The preview is a screenshot of this website's demonstration. */}
       <section className="space-y-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            eyebrow="Product Preview"
+            eyebrow="Interactive Demo Preview"
             title="A closer look at guided CAD learning."
-            description="The image below shows the illustrated website lesson—not a screenshot of the live extension or an active CAD connection."
           />
         </div>
         <ProductPreview />
@@ -76,7 +72,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
 
           <div className="relative z-10 max-w-3xl space-y-4">
             <span className="font-mono text-xs uppercase tracking-wider text-[#F5EFE7]/75 font-medium">
-              Collaboration & Testing
+              Collaboration
             </span>
 
             <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
@@ -101,7 +97,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
                 onClick={() => onOpenContact('Educational Pilot')}
                 className="inline-flex min-h-11 items-center rounded-md text-sm font-medium text-white/80 hover:text-white underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer"
               >
-                Draft an education inquiry note →
+                Draft an Inquiry Note
               </button>
             </div>
           </div>

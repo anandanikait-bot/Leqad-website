@@ -7,6 +7,6 @@ export const DemoPage: React.FC = () => (
     <div className="rounded-2xl border border-[#D9DDD9] bg-white p-2.5 shadow-sm sm:p-4">
       <DemoWorkbench initialStepIndex={0} isHeroPreview={false} enableKeyboardShortcuts={true} />
     </div>
-    <p className="mt-3 text-center text-xs leading-relaxed text-[#55616B]">Interactive illustration · Not connected to live CAD.</p>
+    <p className="mt-3 text-center text-xs leading-relaxed text-[#55616B]">Simulation · Not connected to live CAD</p>
   </section>
 );
