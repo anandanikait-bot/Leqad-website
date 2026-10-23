@@ -42,23 +42,28 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative flex w-full flex-1 flex-col justify-center py-10 sm:py-12 lg:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center overflow-hidden px-5 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-14">
       {/* Background subtle technical grid */}
       <SonarHeroGrid />
 
       {/* Two-Column Split Layout (50% / 50% on desktop) */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
         {/* Left Side — Content (col-span-6 on lg screens: 50% width) */}
-        <div className="lg:col-span-6 space-y-6 text-center">
-          {/* Main Headline with Cycling Serif Phrase */}
+        <div className="space-y-7 text-left lg:col-span-6">
+          {/* Editorial hierarchy: a quiet signal above the main message. */}
+          <div className="flex items-center gap-3 font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-[#55616B] sm:text-xs">
+            <span className="h-px w-7 bg-[#B74B21]" aria-hidden="true" />
+            CAD learning / first sketch
+          </div>
+          {/* The existing dynamic line remains screen-reader visible and motion-safe. */}
           <div className="space-y-1">
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#0E2943] leading-[1.12]">
+            <h1 className="text-[clamp(2.8rem,5vw,4.7rem)] font-semibold tracking-[-0.055em] text-[#0E2943] leading-[1.02]">
               Learn CAD by
             </h1>
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
-            <div className="h-[5.5rem] sm:h-[6.5rem] lg:h-[8rem] flex items-center justify-center">
+            <div className="flex min-h-[6.25rem] items-center justify-start sm:min-h-[7rem] lg:min-h-[8.75rem]">
               <span
-                className={`font-serif italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
+                className={`font-serif text-[clamp(1.65rem,3.4vw,3.45rem)] text-[#0E2943] leading-[1.11] tracking-[-0.045em] transition-all duration-400 ease-out inline-block ${
                   isTransitioning
                     ? 'opacity-0 blur-md translate-y-2'
                     : 'opacity-100 blur-none translate-y-0'
@@ -70,12 +75,12 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Description */}
-          <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-xl mx-auto">
+          <p className="max-w-[31rem] text-base leading-relaxed text-[#55616B] sm:text-lg">
             Leqad is a browser-extension learning assistant prototype, starting with Onshape. Practice a guided first-sketch exercise with step-by-step hints and explanations in the interactive demo.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
+          <div className="flex flex-col items-stretch gap-3.5 pt-2 sm:flex-row sm:items-center sm:justify-start">
             <MetallicButton
               to="/demo"
               label="Explore Interactive Demo"
@@ -93,10 +98,10 @@ export const Hero: React.FC = () => {
 
             <Link
               to="/about"
-              className="text-sm font-medium text-[#55616B] hover:text-[#0E2943] py-2.5 px-4 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#D9DDD9] bg-white hover:bg-[#F5EFE7]/50 shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
+              className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-semibold text-[#0E2943] underline decoration-[#B74B21]/35 underline-offset-4 transition-colors hover:decoration-[#B74B21] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
             >
               <span>Learn About Leqad</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#55616B]" />
+              <ArrowRight className="h-3.5 w-3.5 text-[#B74B21] transition-transform motion-safe:group-hover:translate-x-1" />
             </Link>
           </div>
 
@@ -104,9 +109,13 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Right Side — Interactive 3D Artwork (col-span-6 on lg screens: 50% width) */}
-        <div className="lg:col-span-6 w-full flex justify-center lg:justify-end">
-          <div className="w-full max-w-[560px]">
+        <div className="flex w-full justify-center lg:col-span-6 lg:justify-end">
+          <div className="w-full max-w-[560px] space-y-3">
             <CadArtwork3D />
+            <div className="flex items-center justify-between gap-4 px-1 font-mono text-[10px] uppercase tracking-[0.1em] text-[#55616B]">
+              <span>01 / Learn through geometry</span>
+              <span className="hidden sm:inline">Illustrative model · not live CAD</span>
+            </div>
           </div>
         </div>
       </div>
