@@ -4,45 +4,33 @@ interface BrandLogoProps {
   className?: string;
   symbolOnly?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  /** Background for this logo: default is the website's light navbar. */
+  surface?: 'light' | 'dark';
 }
 
 export const BrandLogo: React.FC<BrandLogoProps> = ({
   className = '',
   symbolOnly = false,
   size = 'md',
+  surface = 'light',
 }) => {
-  const sizeMap = {
-    sm: { symbol: 'w-7 h-7', text: 'text-lg' },
-    md: { symbol: 'w-11 h-11 md:w-12 md:h-12', text: 'text-xl' },
-    lg: { symbol: 'w-12 h-12', text: 'text-2xl' },
-  };
-
-  const currentSize = sizeMap[size];
-
+  const height = {
+    sm: 'h-8',
+    md: 'h-11 md:h-12',
+    lg: 'h-14 md:h-16',
+  }[size];
+  const asset = symbolOnly ? 'symbol' : 'horizontal';
+  // Always render the approved lockup as ONE image: no duplicate text label,
+  // anti-aliased raster scaling, blending filter, or background frame.
+  const src = `/assets/brand/leqad-official-${asset}-${surface}-v1.svg`;
   return (
-    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      {/* Approved Leqad emblem, presented without an extra border or frame. */}
-      <div
-        className={`${currentSize.symbol} shrink-0 flex items-center justify-center`}
-        title="Leqad — In-Workflow CAD Education"
-      >
-        <img
-          src="/assets/brand/leqad-navbar.png"
-          alt="Leqad logo"
-          className="block w-full h-full object-contain mix-blend-multiply"
-          width="144"
-          height="144"
-        />
-      </div>
-
-      {!symbolOnly && (
-        <div className="flex items-baseline gap-1.5">
-          <span className={`font-semibold tracking-tight text-[#0E2943] ${currentSize.text} leading-none`}>
-            Leqad
-          </span>
-
-        </div>
-      )}
-    </div>
+    <img
+      src={src}
+      alt="Leqad logo"
+      width={symbolOnly ? 476 : 1625}
+      height={470}
+      draggable={false}
+      className={`block w-auto max-w-full ${height} object-contain select-none ${className}`}
+    />
   );
 };

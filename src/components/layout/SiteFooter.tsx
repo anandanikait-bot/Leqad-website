@@ -9,11 +9,11 @@ export const SiteFooter: React.FC = () => (
       <div className="max-w-md space-y-3">
         {/* Source asset retained for assistive technology; visible artwork is drawn below. */}
         <img
-          src="/assets/brand/leqad-approved.png"
+          src="/assets/brand/leqad-official-symbol-dark-v1.svg"
           alt="Leqad CAD education mark"
           className="sr-only"
-          width="1254"
-          height="1254"
+          width="476"
+          height="470"
           loading="lazy"
           decoding="async"
         />
@@ -35,12 +35,12 @@ export const SiteFooter: React.FC = () => (
       <HalftoneWordmarkFooter
         as="div"
         wordmark="leqad"
-        logoSrc="/assets/brand/leqad-approved.png"
+        logoSrc="/assets/brand/leqad-official-symbol-dark-v1.svg"
         label=""
         meta=""
         columns={[]}
         backToTop={false}
-        palette={{ background: '#0E2943', ink: '#F5EFE7', warm: '#B74B21' }}
+        palette={{ background: '#0E2943', ink: '#F5EFE7', warm: '#793327' }}
         grain={0.25}
         dotGap={7}
         height="clamp(220px, 20vw, 270px)"

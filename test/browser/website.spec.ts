@@ -16,15 +16,18 @@ test('landing contains only the hero and its CTA links', async ({ page }) => {
   await expect(page.locator('main').getByRole('link', { name: 'Learn About Leqad' })).toHaveAttribute('href', '/about');
 });
 
-test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header', async ({ page }) => {
-  for (const [width, expectedSize] of [[375, 44], [1440, 48]] as const) {
+test('official horizontal brand remains prominent in unchanged 64px navbar', async ({ page }) => {
+  for (const [width, expectedHeight] of [[320, 44], [375, 44], [1440, 48]] as const) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/about');
     const img = page.locator('header img[alt="Leqad logo"]');
     const imageBox = await img.boundingBox();
     expect(imageBox).not.toBeNull();
-    expect(imageBox!.width).toBe(expectedSize);
-    expect(imageBox!.height).toBe(expectedSize);
+    expect(imageBox!.height).toBe(expectedHeight);
+    // The new approved symbol + entire wordmark is intentionally wider than
+    // the old 44px square emblem; it must stay legible and not overflow.
+    expect(imageBox!.width).toBeGreaterThan(expectedHeight * 3);
+    expect(imageBox!.width).toBeLessThan(expectedHeight * 4);
     const headerBox = await page.locator('header').boundingBox();
     expect(headerBox).not.toBeNull();
     expect(headerBox!.height).toBe(65); // 64px content + 1px bottom border
@@ -57,15 +60,15 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-tab-v1.svg');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
     await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
       await expect(page.locator('footer')).toHaveCount(0);
     } else {
-      await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-navbar.png');
-      await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'multiply');
-      await expect(page.locator('footer img[alt="Leqad CAD education mark"]')).toHaveAttribute('src', '/assets/brand/leqad-approved.png');
+      await expect(page.locator('header img[alt="Leqad logo"]')).toHaveAttribute('src', '/assets/brand/leqad-official-horizontal-light-v1.svg');
+      await expect(page.locator('header img[alt="Leqad logo"]')).toHaveCSS('mix-blend-mode', 'normal');
+      await expect(page.locator('footer img[alt="Leqad CAD education mark"]')).toHaveAttribute('src', '/assets/brand/leqad-official-symbol-dark-v1.svg');
     }
   }
 });
@@ -87,21 +90,23 @@ test('homepage prerender contains correct social preview and serves the actual i
 
 test('tab icon uses the approved geometry on both light and dark themes', async ({ page }) => {
   await page.goto('/');
-  const res = await page.request.get('/assets/brand/leqad-tab-v1.svg');
+  const res = await page.request.get('/assets/brand/leqad-official-favicon-v1.svg');
   expect(res.status()).toBe(200);
   expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
   const source = await res.text();
   expect(source).toContain('prefers-color-scheme: dark');
-  expect(source).toContain('prefers-color-scheme: light');
-  expect(source).toContain('data:image/png;base64,');
-  expect(source).toContain('feColorMatrix');
+  expect(source).toContain('#0E2943');
+  expect(source).toContain('#F5EFE7');
+  expect(source).toContain('fill="#793327"');
+  expect(source).toContain('<path');
+  expect(source).not.toContain('feColorMatrix');
 });
 
 test('favicon actually renders legibly at 16px with transparent corners', async ({ page }) => {
   await page.goto('/');
   const pixels = await page.evaluate(async () => {
     const image = new Image();
-    image.src = '/assets/brand/leqad-tab-v1.svg';
+    image.src = '/assets/brand/leqad-official-favicon-v1.svg';
     await image.decode();
     const canvas = document.createElement('canvas');
     canvas.width = 16;
