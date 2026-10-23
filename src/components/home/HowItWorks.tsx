@@ -5,23 +5,23 @@ import { MonitorPlay, HelpCircle, Compass } from 'lucide-react';
 export const HowItWorks: React.FC = () => {
   const steps = [
     {
-      title: 'Learn in Context',
+      title: 'Follow guided steps',
       description:
-        'Guidance appears directly beside your 3D canvas so you never have to switch back and forth between a tutorial video and your own model.',
+        'Practice structured CAD exercises that introduce modeling actions one step at a time.',
       icon: <MonitorPlay className="w-5 h-5 text-[#B74B21]" />,
       number: '01',
     },
     {
-      title: 'Get Guided Help',
+      title: 'Get hints when stuck',
       description:
-        'Tiered hints and recognized tool highlights point you toward the next action when you get stuck, without doing the work for you.',
+        'Use hints and local highlights for supported interface controls and concepts; they do not inspect geometry.',
       icon: <HelpCircle className="w-5 h-5 text-[#B74B21]" />,
       number: '02',
     },
     {
-      title: 'Build Independently',
+      title: 'Understand the reasoning',
       description:
-        'Understand coordinate datums, parametric dimensions, and constraint logic so you can confidently model your own original parts.',
+        'Learn why reference planes, dimensions, constraints, and modeling choices matter.',
       icon: <Compass className="w-5 h-5 text-[#B74B21]" />,
       number: '03',
     },
@@ -32,8 +32,8 @@ export const HowItWorks: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <SectionHeading
           eyebrow="How It Works"
-          title="Guidance that works alongside you."
-          description="Designed to teach parametric CAD principles through direct practice inside the modeling environment."
+          title="Practice, hints, and the reasoning behind each step."
+          description="The extension prototype explores contextual help for supported controls. The separate demo lets you try the lesson in a simulated workspace."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
