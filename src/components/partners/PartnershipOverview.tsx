@@ -3,6 +3,7 @@ import { SectionHeading } from '../shared/SectionHeading';
 import { Button } from '../shared/Button';
 import { ArrowRight, ShieldCheck, School, Cpu, TrendingUp } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../../lib/constants';
+import { InteractivePilotConfigurator } from './InteractivePilotConfigurator';
 
 interface PartnershipOverviewProps {
   onOpenContact: (defaultTopic?: string) => void;
@@ -181,7 +182,10 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         </div>
       </div>
 
-      {/* 5. Clear Status & Independent Project Notice */}
+      {/* 5. Optional, clearly hypothetical pilot scope calculator */}
+      <InteractivePilotConfigurator onOpenContact={onOpenContact} />
+
+      {/* 6. Clear Status & Independent Project Notice */}
       <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D9DDD9] space-y-4">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#B74B21]" />
@@ -211,7 +215,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         </p>
       </div>
 
-      {/* 6. Professional Call to Action */}
+      {/* 7. Professional Call to Action */}
       <div data-parallax-anchor className="relative isolate overflow-hidden text-center py-10 px-6 bg-[#0E2943] text-white rounded-2xl space-y-5">
         {/* Independent background layers move at different rates, never the CTA. */}
         <div aria-hidden="true" data-parallax-travel="20" data-parallax-mobile-travel="12" className="pointer-events-none absolute -inset-6 -z-10 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px]" />
