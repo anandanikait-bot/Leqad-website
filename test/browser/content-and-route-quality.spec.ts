@@ -61,6 +61,20 @@ for (const width of [320, 375, 768, 1024, 1440]) {
   });
 }
 
+test('About comparison remains interactive without fabricated performance claims', async ({ page }) => {
+  await page.goto('/about');
+  const section = page.getByRole('region', { name: 'Different ways to practice CAD' });
+  await expect(section).toBeVisible();
+  await expect(section).not.toContainText(/40% time|zero window-switch latency|top driver of beginner abandonment|45 minutes average|< 5 minutes|lasting mechanical design intuition/i);
+  const choices = section.getByRole('group', { name: 'Compare learning topics' });
+  const focus = choices.getByRole('button', { name: 'Learning evidence' });
+  await focus.focus();
+  await page.keyboard.press('Enter');
+  await expect(focus).toHaveAttribute('aria-pressed', 'true');
+  await expect(section.locator('[data-comparison-question]')).toContainText('what evidence');
+  await expect(section.locator('[data-comparison-leqad]')).toContainText('no learning gains have been established');
+});
+
 test('lesson explains a simulated CAD process without universal or verified claims', async ({ page }) => {
   await page.goto('/demo');
   const panel = page.locator('main');
