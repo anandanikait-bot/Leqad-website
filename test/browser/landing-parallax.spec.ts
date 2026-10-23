@@ -138,5 +138,5 @@ test('About reduces decoration and avoids repeated conversion prompts', async ({
     .toHaveAttribute('data-parallax-travel', '4');
   await expect(page.getByRole('link', { name: 'Launch Interactive Demo' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Explore Full Demo' })).toHaveAttribute('href', '/demo');
-  await expect(page.getByRole('heading', { name: /Exploring collaboration with CAD teams and educators/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Interested in evaluating guided CAD learning/ })).toBeVisible();
 });
