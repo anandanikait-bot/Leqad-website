@@ -184,7 +184,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
           <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
 
-          {/* Extrude starts a real feature preview, not a silent advance. */}
+          {/* Extrude starts a distinct simulated feature preview, not a silent advance. */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -572,7 +572,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
       </div>
       <p role="status" className="min-h-10 border-t border-[#D9DDD9] bg-white px-3 py-2.5 text-xs leading-relaxed text-[#55616B]">
-        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace'}
+        {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace · not connected to live CAD'}
       </p>
     </div>
   );
