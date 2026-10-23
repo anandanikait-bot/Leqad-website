@@ -9,165 +9,146 @@ interface PartnershipOverviewProps {
   onOpenContact: (defaultTopic?: string, draftMessage?: string) => void;
 }
 
-export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpenContact }) => {
-  return (
-    <div className="min-h-screen py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-14 animate-fadeIn">
-      {/* 1. Header & Overview */}
-      <div className="max-w-3xl space-y-4">
-        <span className="font-mono text-xs uppercase tracking-wider text-[#B74B21] font-medium">
-          For Platform Teams & Educators
-        </span>
+const inquiryLinkClass =
+  'inline-flex min-h-11 items-center rounded-md text-sm font-medium text-[#B74B21] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] cursor-pointer';
 
-        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0E2943] leading-[1.16]">
-          Building a better learning experience for CAD.
-        </h1>
+export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpenContact }) => (
+  <div className="mx-auto min-h-screen max-w-7xl space-y-12 px-4 py-10 animate-fadeIn sm:space-y-14 sm:px-6 sm:py-14 lg:px-8">
+    <section className="max-w-3xl space-y-5">
+      <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#B74B21]">
+        For educators and CAD platform teams
+      </span>
+      <h1 className="text-3xl font-semibold leading-tight tracking-tight text-[#0E2943] sm:text-4xl">
+        Explore CAD learning together.
+      </h1>
+      <p className="text-base leading-relaxed text-[#55616B] sm:text-lg">
+        Leqad is an independent early-stage project exploring guided lessons and contextual
+        hints alongside browser-based CAD. We welcome conversations about technical fit,
+        educational evaluation, and possible future distribution.
+      </p>
+      <Button
+        variant="rust"
+        size="lg"
+        onClick={() => onOpenContact('General Inquiry')}
+        icon={<ArrowRight className="h-4 w-4" />}
+      >
+        Draft an Inquiry Note
+      </Button>
+    </section>
 
-        <p className="text-base sm:text-lg text-[#55616B] leading-relaxed">
-          Leqad is exploring in-workflow guidance to help beginners learn browser-based CAD through practice, rather than switching between the model and a tutorial.
-        </p>
+    <section className="space-y-6 rounded-2xl border border-[#D9DDD9] bg-white p-6 sm:p-8">
+      <SectionHeading
+        eyebrow="The learning challenge"
+        title="From following tutorials to modeling independently."
+        description="Beginners may know which button a tutorial uses but still struggle to choose tools, set dimensions, or explain their decisions on a new part."
+      />
+      <p className="max-w-3xl text-sm leading-relaxed text-[#55616B]">
+        Leqad explores guided practice for those early steps. Whether it improves
+        learning or reduces instructor workload remains a question for future evaluation.
+      </p>
+    </section>
 
-        <div className="pt-1 flex items-center gap-4">
-          <Button
-            variant="rust"
-            size="lg"
-            onClick={() => onOpenContact('General Inquiry')}
-            icon={<ArrowRight className="w-4 h-4" />}
-          >
-            Draft an Inquiry Note
-          </Button>
+    <section className="space-y-6 rounded-2xl border border-[#D9DDD9] bg-[#FAF8F4] p-6 sm:p-8">
+      <SectionHeading
+        eyebrow="Current prototype"
+        title="What the early version can illustrate."
+        description="The extension prototype provides guidance around supported interface controls. The independent website demo illustrates an eight-step sketch-to-solid lesson."
+      />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-2 rounded-xl border border-[#D9DDD9] bg-white p-5">
+          <h3 className="font-semibold text-[#0E2943]">Highlight supported tools</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">
+            Local visual cues can point to supported controls; this is not universal tool recognition.
+          </p>
+        </div>
+        <div className="space-y-2 rounded-xl border border-[#D9DDD9] bg-white p-5">
+          <h3 className="font-semibold text-[#0E2943]">Offer hints and explanations</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">
+            Guided steps explain actions and concepts such as reference planes, dimensions, and constraints.
+          </p>
+        </div>
+        <div className="space-y-2 rounded-xl border border-[#D9DDD9] bg-white p-5">
+          <h3 className="font-semibold text-[#0E2943]">Practice with a separate demo</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">
+            The interactive website lesson simulates sketching and extrusion without reading or changing a live CAD model.
+          </p>
         </div>
       </div>
+    </section>
 
-      {/* 2. The Core Problem & Opportunity */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D9DDD9] space-y-6 shadow-xs">
-        <SectionHeading
-          eyebrow="The Challenge"
-          title="The gap between watching tutorials and designing original parts."
-          description="Learning CAD often means switching repeatedly between video guides and an open document. When instructions stop matching what the student is building, frustration stalls progress."
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-1">
-          <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <h3 className="text-base font-semibold text-[#0E2943]">High Onboarding Friction</h3>
-            <p className="text-sm text-[#55616B] leading-relaxed">
-              New users get overwhelmed by complex tool ribbons and silent constraint conflicts during their first hours in professional CAD.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <h3 className="text-base font-semibold text-[#0E2943]">Heavy Instructor Workload</h3>
-            <p className="text-sm text-[#55616B] leading-relaxed">
-              Educators and robotics mentors spend hours triaging basic misclicks rather than coaching higher-level mechanical design thinking.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-xl bg-[#FAF8F4] border border-[#D9DDD9] space-y-2">
-            <h3 className="text-base font-semibold text-[#0E2943]">Passive vs. Active Learning</h3>
-            <p className="text-sm text-[#55616B] leading-relaxed">
-              Following a tutorial is different from designing independently. Learners benefit from guided practice that explains choices and constraints.
-            </p>
-          </div>
-        </div>
+    <section className="space-y-6">
+      <SectionHeading
+        eyebrow="Possible collaboration"
+        title="Three conversations worth having."
+        description="These are ideas for discussion, not partnerships or integrations already agreed upon."
+      />
+      <div className="grid gap-5 md:grid-cols-3">
+        <article className="space-y-3 rounded-xl border border-[#D9DDD9] bg-white p-6">
+          <Cpu className="h-5 w-5 text-[#B74B21]" aria-hidden="true" />
+          <h3 className="text-base font-semibold text-[#0E2943]">Technical compatibility</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">
+            Discuss approved extension capabilities, developer interfaces, and any integration constraints.
+          </p>
+          <button type="button" onClick={() => onOpenContact('Technical Alignment')} className={inquiryLinkClass}>
+            Discuss technical fit →
+          </button>
+        </article>
+        <article className="space-y-3 rounded-xl border border-[#D9DDD9] bg-white p-6">
+          <School className="h-5 w-5 text-[#B74B21]" aria-hidden="true" />
+          <h3 className="text-base font-semibold text-[#0E2943]">Educational evaluation</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">
+            Explore a small, consent-aware study of learning tasks and useful forms of guidance.
+          </p>
+          <button type="button" onClick={() => onOpenContact('Educational Pilot')} className={inquiryLinkClass}>
+            Discuss evaluation →
+          </button>
+        </article>
+        <article className="space-y-3 rounded-xl border border-[#D9DDD9] bg-white p-6">
+          <TrendingUp className="h-5 w-5 text-[#B74B21]" aria-hidden="true" />
+          <h3 className="text-base font-semibold text-[#0E2943]">Future commercial models</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">
+            Consider licensing or distribution possibilities only after technical and educational value is established.
+          </p>
+          <button type="button" onClick={() => onOpenContact('Commercial Exploration')} className={inquiryLinkClass}>
+            Discuss commercial options →
+          </button>
+        </article>
       </div>
+    </section>
 
-      {/* 3. Collaboration Framework */}
-      <div className="space-y-6">
-        <SectionHeading
-          eyebrow="Collaboration Framework"
-          title="Three areas for exploration."
-          description="We are open to phased collaboration grounded in technical compatibility and measurable educational outcomes."
-        />
+    <InteractivePilotConfigurator onOpenContact={onOpenContact} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3 shadow-xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-9 h-9 rounded-lg bg-[#FAF8F4] border border-[#0E2943]/10 flex items-center justify-center text-[#B74B21]">
-                <Cpu className="w-4.5 h-4.5" />
-              </div>
-              <h3 className="text-base font-semibold text-[#0E2943]">1. Technical Alignment</h3>
-              <p className="text-sm text-[#55616B] leading-relaxed">
-                Explore supported extension surfaces, relevant platform APIs, and security requirements before proposing any deeper integration.
-              </p>
-            </div>
-            <button
-              onClick={() => onOpenContact('Technical Alignment')}
-              className="inline-flex min-h-11 items-center text-sm font-medium text-[#B74B21] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] cursor-pointer pt-2"
-            >
-              Discuss technical alignment →
-            </button>
-          </div>
+    <section className="space-y-3 border-t border-[#D9DDD9] pt-7">
+      <h2 className="text-lg font-semibold text-[#0E2943]">Current project status</h2>
+      <p className="max-w-4xl text-sm leading-relaxed text-[#55616B]">
+        Leqad currently has an experimental browser-extension prototype and a separate, interactive
+        eight-step website demonstration. Automated tests check website behavior and interactions;
+        they do not establish student outcomes, deployment readiness, or successful platform integration.
+      </p>
+      <p className="max-w-4xl text-xs leading-relaxed text-[#55616B]">{LEGAL_DISCLAIMER}</p>
+    </section>
 
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3 shadow-xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-9 h-9 rounded-lg bg-[#FAF8F4] border border-[#0E2943]/10 flex items-center justify-center text-[#B74B21]">
-                <School className="w-4.5 h-4.5" />
-              </div>
-              <h3 className="text-base font-semibold text-[#0E2943]">2. Educational Evaluation</h3>
-              <p className="text-sm text-[#55616B] leading-relaxed">
-                Consider small educational evaluations measuring time-to-first-part, common errors, and student confidence if partners are interested.
-              </p>
-            </div>
-            <button
-              onClick={() => onOpenContact('Educational Pilot')}
-              className="inline-flex min-h-11 items-center text-sm font-medium text-[#B74B21] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] cursor-pointer pt-2"
-            >
-              Discuss classroom pilots →
-            </button>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl border border-[#D9DDD9] space-y-3 shadow-xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-9 h-9 rounded-lg bg-[#FAF8F4] border border-[#0E2943]/10 flex items-center justify-center text-[#B74B21]">
-                <TrendingUp className="w-4.5 h-4.5" />
-              </div>
-              <h3 className="text-base font-semibold text-[#0E2943]">3. Commercial Exploration</h3>
-              <p className="text-sm text-[#55616B] leading-relaxed">
-                Explore licensing, distribution, or onboarding models only if technical fit and educational value are established.
-              </p>
-            </div>
-            <button
-              onClick={() => onOpenContact('Commercial Exploration')}
-              className="inline-flex min-h-11 items-center text-sm font-medium text-[#B74B21] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] cursor-pointer pt-2"
-            >
-              Discuss distribution paths →
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* 4. Optional Evaluation Planner */}
-      <InteractivePilotConfigurator onOpenContact={onOpenContact} />
-
-      {/* 5. Clear Status & Independent Project Notice */}
-      <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D9DDD9] space-y-3">
-        <h3 className="text-sm font-semibold text-[#0E2943]">Project Standing & Platform Independence</h3>
-        <p className="text-xs text-[#55616B] leading-relaxed">
-          {LEGAL_DISCLAIMER}
-        </p>
-      </div>
-
-      {/* 6. Professional Call to Action */}
-      <div data-parallax-anchor className="relative isolate overflow-hidden text-center py-10 px-6 bg-[#0E2943] text-white rounded-2xl space-y-5">
-        {/* Independent background layers move at different rates, never the CTA. */}
-        <div aria-hidden="true" data-parallax-travel="20" data-parallax-mobile-travel="12" className="pointer-events-none absolute -inset-6 -z-10 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px]" />
-        <div aria-hidden="true" data-parallax-travel="8" data-parallax-mobile-travel="4" data-parallax-direction="-1" className="pointer-events-none absolute -inset-6 -z-10 opacity-[0.035] bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px]" />
-        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#F5EFE7]">
-          Let's explore what's possible.
+    <section data-parallax-anchor className="relative isolate overflow-hidden rounded-2xl bg-[#0E2943] px-6 py-10 text-center text-white">
+      <div aria-hidden="true" data-parallax-travel="20" data-parallax-mobile-travel="12"
+        className="pointer-events-none absolute -inset-6 -z-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] opacity-[0.06]" />
+      <div aria-hidden="true" data-parallax-travel="8" data-parallax-mobile-travel="4"
+        data-parallax-direction="-1"
+        className="pointer-events-none absolute -inset-6 -z-10 bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] opacity-[0.035]" />
+      <div className="relative z-10 mx-auto max-w-xl space-y-4">
+        <h2 className="text-xl font-semibold tracking-tight text-[#F5EFE7] sm:text-2xl">
+          Start an exploratory conversation.
         </h2>
-        <p className="max-w-xl mx-auto text-sm sm:text-base text-white/80 leading-relaxed">
-          Whether you lead platform partnerships, teach mechanical engineering, or mentor robotics students, we welcome an initial exploratory conversation.
+        <p className="text-sm leading-relaxed text-white/80">
+          Tell us about your CAD teaching or platform context. The inquiry helper prepares a note for you to send.
         </p>
-        <div>
-          <Button
-            variant="rust"
-            size="lg"
-            onClick={() => onOpenContact('General Inquiry')}
-            icon={<ArrowRight className="w-4 h-4" />}
-          >
-            Draft a Collaboration Note
-          </Button>
-        </div>
+        <Button
+          variant="rust" size="lg"
+          onClick={() => onOpenContact('General Inquiry')}
+          icon={<ArrowRight className="h-4 w-4" />}
+        >
+          Draft a Collaboration Note
+        </Button>
       </div>
-    </div>
-  );
-};
+    </section>
+  </div>
+);

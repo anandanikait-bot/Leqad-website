@@ -57,9 +57,9 @@ export const Hero: React.FC = () => {
               Learn CAD by
             </h1>
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
-            <div className="h-[4.25rem] sm:h-[5.25rem] lg:h-[6.25rem] flex items-center justify-center">
+            <div className="h-[5.5rem] sm:h-[6.5rem] lg:h-[8rem] flex items-center justify-center">
               <span
-                className={`font-serif italic text-2xl sm:text-3xl lg:text-[40px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
+                className={`font-serif italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
                   isTransitioning
                     ? 'opacity-0 blur-md translate-y-2'
                     : 'opacity-100 blur-none translate-y-0'
@@ -71,12 +71,12 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Description */}
-          <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-lg mx-auto">
-            Leqad helps you learn CAD by building. Follow guided lessons, find the right tools, and understand why each design step matters.
+          <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-xl mx-auto">
+            Leqad is developing guided lessons and contextual hints alongside browser-based CAD, helping beginners understand each step as they design. The separate website demo illustrates the approach.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
             <MetallicButton
               to="/demo"
               label="Explore Interactive Demo"
@@ -94,7 +94,7 @@ export const Hero: React.FC = () => {
 
             <Link
               to="/about"
-              className="text-sm font-medium text-[#55616B] hover:text-[#0E2943] py-2.5 px-4 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#0E2943]/15 bg-white hover:bg-[#FAF8F4] hover:border-[#0E2943]/30 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
+              className="text-sm font-medium text-[#55616B] hover:text-[#0E2943] py-2.5 px-4 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-2 border border-[#D9DDD9] bg-white hover:bg-[#F5EFE7]/50 shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
             >
               <span>Learn About Leqad</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#55616B]" />

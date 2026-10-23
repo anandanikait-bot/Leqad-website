@@ -20,7 +20,7 @@ export const SiteFooter: React.FC = () => (
           LEQAD <span className="text-[#B74B21]">/</span> <span className="text-[#F5EFE7]/65">CAD LEARNING</span>
         </div>
         <p className="max-w-sm text-sm leading-relaxed text-[#F5EFE7]/75">
-          Learn CAD by building. Guided lessons and contextual help inside engineering workflows.
+          Learn CAD by building. Exploring guided lessons and contextual help for beginner CAD practice.
         </p>
       </div>
       <nav aria-label="Footer navigation" className="sm:justify-self-end">

@@ -30,9 +30,9 @@ test('Partners hero and closing inquiries select General Inquiry, never a blank 
 test('Partners individual collaboration buttons preselect their matching topics', async ({ page }) => {
   await page.goto('/partners');
   const options: Array<{ name: RegExp; expected: string }> = [
-    { name: /Discuss technical alignment/i, expected: 'Technical Alignment' },
-    { name: /Discuss classroom pilots/i, expected: 'Educational Pilot' },
-    { name: /Discuss distribution paths/i, expected: 'Commercial Exploration' },
+    { name: /Discuss technical fit/i, expected: 'Technical Alignment' },
+    { name: /Discuss evaluation/i, expected: 'Educational Pilot' },
+    { name: /Discuss commercial options/i, expected: 'Commercial Exploration' },
   ];
   for (const { name, expected } of options) {
     const trigger = page.getByRole('button', { name });
