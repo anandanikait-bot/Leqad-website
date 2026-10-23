@@ -22,7 +22,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
 
           <div className="space-y-4 text-base sm:text-lg text-[#55616B] leading-relaxed">
             <p>
-              Leqad is an independent browser-extension prototype for guided CAD practice, starting with Onshape. Follow instructions beside the workspace and learn why each modeling decision matters.
+              Leqad is an independent browser-extension prototype for guided CAD practice, starting with Onshape. It explores instructions beside the workspace and explanations of key modeling decisions.
             </p>
           </div>
 

@@ -255,9 +255,9 @@ Message: ${message.trim() || '[No message entered]'}
 
             {/* Feedback alert when copied */}
             {copied && (
-              <div className="p-2.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-center gap-2 animate-fadeIn">
+              <div role="status" className="p-2.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-center gap-2 animate-fadeIn">
                 <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Inquiry note copied to clipboard. You can now paste this into an email to send to the team.</span>
+                <span>Inquiry note copied to clipboard for later use. Nothing has been sent.</span>
               </div>
             )}
 

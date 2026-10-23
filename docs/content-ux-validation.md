@@ -8,7 +8,7 @@ Based on `main` at `c932e3da69647291af61c403687141b6aa093dc5`, including merged 
 - About identifies the static website screenshot as **Interactive Demo Preview**. Product Status explains the distinction between the extension and eight-step website simulation, including the outstanding live-platform validation. Repeated disclaimers and public automated-testing copy were removed.
 - Current capabilities use three concise points; future work is framed once as planned. Marketing no longer suggests a library of completed exercises.
 - Partners focuses on technical compatibility and educational evaluation, with commercial possibilities mentioned briefly. The existing planner remains optional, collapsed by default, and uses a secondary drafting action. Unsupported instructor-workload/outcome claims and repeated contact buttons were removed.
-- The owner explicitly deferred email integration while creating a project address. There is no install link, signup backend, `mailto:` address, or delivery claim. **Draft an Inquiry Note** consistently opens the existing clipboard helper, which clearly states that a public email is not yet available and nothing is sent. Partners has one prominent drafting action. A future working contact action can use **Contact Leqad** once an address is approved.
+- The owner explicitly deferred email integration while creating a project address. There is no install link, signup backend, `mailto:` address, or delivery claim. **Draft an Inquiry Note** consistently opens the existing clipboard helper, which clearly states that a public email is not yet available and nothing is sent. Partners has one prominent drafting action under **Prepare an inquiry**. A future working contact action can use **Contact Leqad** once an address is approved.
 - Demo completion offers **Learn About Leqad** in place of a repeated disclaimer. The short visible **Simulation · Not connected to live CAD** clarification remains; a duplicate canvas notice is shortened. Lesson state, drawing, dimensions, extrusion, cancellation, and restart logic are unchanged.
 - Footer retains the approved symbol/halftone artwork. Redundant text branding is removed, the early-stage description is accurate, and copyright is visually separate from the concise Onshape-independence statement.
 - Accessibility checks identified low contrast in small eyebrow/planner/plane-label text and accessible names that omitted visible toggle labels. The fixes use existing palette shades and label-only changes; no CAD geometry or interaction code changed.
@@ -86,3 +86,14 @@ Set `CHROMIUM_PATH` if Chromium is elsewhere, and `SCREENSHOT_ORIGIN` if the loc
 - Local command results are not GitHub Actions results. Remote CI must be checked on the pull request; API access in this environment has previously been blocked.
 
 The branch was pushed successfully. Creating the draft PR with `gh pr create --draft` failed with `Post "https://api.github.com/graphql": Forbidden`. **No live PR was created, and GitHub Actions results could not be retrieved.** The prepared [PR description](content-ux-pr.md) and [GitHub PR creation form](https://github.com/anandanikait-bot/Leqad-website/pull/new/polish/final-content-ux) are available for review. This access failure does not affect the completed local checks or the pushed changes.
+
+
+## Pre-merge copy review follow-up
+
+The inquiry section now reads **Prepare an inquiry** while the public email remains unavailable. About, Product Status, and the technical-compatibility description explicitly describe prototype exploration/evaluation rather than established live functionality. Product Status continues to state that live Onshape compatibility is unverified.
+
+The clipboard confirmation now reads **Inquiry note copied to clipboard for later use. Nothing has been sent.** It has a screen-reader status announcement, and the existing clipboard test verifies that confirmation along with the actual copied topic/message and absence of submission requests.
+
+The follow-up was checked with TypeScript, all 25 unit tests, production build/prerender, and the 23 affected contact, content/routing, and planner browser tests. The earlier complete 93-test browser run is recorded above; no CAD behavior changed in this follow-up. Responsive screenshots were refreshed at all five widths.
+
+[Desktop copied-note confirmation](screenshots/content-ux/review-dialog-desktop.png) · [Mobile copied-note confirmation](screenshots/content-ux/review-dialog-mobile.png).

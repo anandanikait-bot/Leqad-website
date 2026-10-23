@@ -16,7 +16,7 @@ export const CurrentProductAndVision: React.FC = () => (
           </span>
           <h3 className="text-xl font-semibold text-[#0E2943]">First-sketch guidance</h3>
           <p className="text-sm leading-relaxed text-[#55616B]">
-            The browser extension provides local guidance for starting a sketch in Onshape.
+            The browser-extension prototype explores local guidance for starting a sketch in Onshape.
             The website demo is a separate eight-step simulation of sketching and extrusion,
             including the preview shown above.
           </p>

@@ -43,6 +43,7 @@ test('inquiry topics remain selectable, copy the actual note, and never submit a
     await dialog.getByLabel('Area of Interest').selectOption(topic);
     await dialog.getByLabel('Brief Note or Context').fill('Discuss a first-sketch evaluation.');
     await dialog.getByRole('button', { name: 'Copy Inquiry Note' }).click();
+    await expect(dialog.getByRole('status')).toContainText('Inquiry note copied to clipboard for later use. Nothing has been sent.');
     const note = await page.evaluate(() => navigator.clipboard.readText());
     expect(note).toContain('Topic: ' + topic);
     expect(note).toContain('Discuss a first-sketch evaluation.');

@@ -38,7 +38,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
           <Cpu className="h-5 w-5 text-[#B74B21]" aria-hidden="true" />
           <h3 className="text-base font-semibold text-[#0E2943]">Technical compatibility</h3>
           <p className="text-sm leading-relaxed text-[#55616B]">
-            Validate supported Onshape controls, extension behavior, and the interfaces
+            Evaluate Onshape control recognition, extension-prototype behavior, and the interfaces
             needed for reliable guidance.
           </p>
         </article>
@@ -77,7 +77,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         className="pointer-events-none absolute -inset-6 -z-10 bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] opacity-[0.035]" />
       <div className="relative z-10 mx-auto max-w-xl space-y-4">
         <h2 className="text-xl font-semibold tracking-tight text-[#F5EFE7] sm:text-2xl">
-          Contact Leqad
+          Prepare an inquiry
         </h2>
         <p className="text-sm leading-relaxed text-white/80">
           A public contact email is not available yet. You can prepare a note to keep for later; nothing is sent.
