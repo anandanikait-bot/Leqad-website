@@ -41,10 +41,32 @@ jobs:
             if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
             sleep 1
           done
+          mkdir -p docs/screenshots/before-after
+          # Baselines are the last committed screenshots, not claims about today's live deployment.
+          for route in home demo about partners; do
+            for device in desktop mobile; do
+              original="docs/screenshots/${route}-${device}.png"
+              if [ -f "$original" ]; then
+                cp "$original" "docs/screenshots/before-after/before-${route}-${device}.png"
+              fi
+            done
+          done
           npm run screenshots
+          for route in home demo about partners; do
+            for device in desktop mobile; do
+              cp "docs/screenshots/${route}-${device}.png" "docs/screenshots/before-after/after-${route}-${device}.png"
+            done
+          done
           npm run screenshots:demo
           npx tsx scripts/capture-metallic-cta.ts
           npx tsx scripts/capture-parallax-states.ts
+      - name: Upload before-and-after page screenshots
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase2-before-after-pages
+          path: docs/screenshots/before-after/
+          if-no-files-found: error
       - name: Upload layered parallax screenshots and scroll measurements
         if: success()
         uses: actions/upload-artifact@v4
