@@ -17,16 +17,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-5">
           <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0E2943] leading-tight">
-            Learn CAD by building, <br className="hidden sm:inline" />
-            not just watching.
+            CAD guidance, right where you design.
           </h1>
 
           <div className="space-y-4 text-base sm:text-lg text-[#55616B] leading-relaxed">
             <p>
-              CAD is easier to learn when you can practice each step yourself. Tutorials explain the tools, but it can be difficult to connect those lessons to what you are building.
+              Leqad explores step-by-step CAD instruction and hints beside the design workspace, so beginners can practice a tool and understand when to use it.
             </p>
             <p>
-              <strong>Leqad explores guided CAD learning alongside the workspace.</strong> Try the interactive sketch-to-solid demo, or learn how the extension prototype introduces contextual cues.
+              The early browser extension provides local guidance for supported controls. The website's interactive lesson is a separate illustration, not a connection to a live CAD model.
             </p>
           </div>
 
@@ -55,8 +54,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Product Preview"
-            title="A teaching panel inside your workspace."
-            description="The prototype explores contextual guidance beside a CAD workspace; the website demo illustrates the experience without connecting to a live model."
+            title="A closer look at guided CAD learning."
+            description="The image below shows the illustrated website lesson—not a screenshot of the live extension or an active CAD connection."
           />
         </div>
         <ProductPreview />
@@ -81,11 +80,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
             </span>
 
             <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
-              Exploring collaboration with CAD teams and educators.
+              Interested in evaluating guided CAD learning?
             </h2>
 
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-              We welcome conversations about evaluating guided CAD practice with educators and platform teams. Geometry-aware feedback remains a future direction.
+              We welcome exploratory conversations with educators and CAD platform teams about technical fit and useful learning evaluations.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
