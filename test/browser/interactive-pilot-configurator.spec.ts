@@ -4,7 +4,12 @@ test('pilot planner presents questions rather than fabricated outcome promises',
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/partners');
+  const disclosure = page.locator('[data-evaluation-disclosure]');
+  await expect(disclosure).not.toHaveAttribute('open', '');
   const planner = page.locator('[data-pilot-planner]');
+  await expect(planner).toBeHidden();
+  await disclosure.locator('summary').click();
+  await expect(disclosure).toHaveAttribute('open', '');
   await expect(planner.getByRole('heading', { name: 'Outline a potential CAD learning evaluation' })).toBeVisible();
   await expect(planner.locator('[data-pilot-summary]')).toHaveText('Engineering courses · Small group');
   await expect(planner.locator('[data-pilot-question]')).toContainText('first-part task');
@@ -16,7 +21,12 @@ test('pilot planner presents questions rather than fabricated outcome promises',
 
 test('audience, group and focus update output and carry into the actual draft', async ({ page }) => {
   await page.goto('/partners');
+  const disclosure = page.locator('[data-evaluation-disclosure]');
+  await expect(disclosure).not.toHaveAttribute('open', '');
   const planner = page.locator('[data-pilot-planner]');
+  await expect(planner).toBeHidden();
+  await disclosure.locator('summary').click();
+  await expect(disclosure).toHaveAttribute('open', '');
   await planner.getByRole('button', { name: 'Robotics teams' }).click();
   await planner.getByRole('button', { name: /Larger group/ }).click();
   await planner.getByRole('button', { name: 'Independent practice' }).click();
@@ -42,7 +52,12 @@ test('audience, group and focus update output and carry into the actual draft', 
 
 test('platform evaluation uses technical topic and does not retain another audience draft', async ({ page }) => {
   await page.goto('/partners');
+  const disclosure = page.locator('[data-evaluation-disclosure]');
+  await expect(disclosure).not.toHaveAttribute('open', '');
   const planner = page.locator('[data-pilot-planner]');
+  await expect(planner).toBeHidden();
+  await disclosure.locator('summary').click();
+  await expect(disclosure).toHaveAttribute('open', '');
   await planner.getByRole('button', { name: 'CAD platform teams' }).click();
   await planner.getByRole('button', { name: 'Help requests' }).click();
   await planner.getByRole('button', { name: 'Draft a Discussion Note' }).click();
@@ -60,7 +75,14 @@ for (const width of [320, 375, 768, 1440]) {
   test('pilot choices remain keyboard-accessible and within the page at ' + width + 'px', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/partners');
+    const disclosure = page.locator('[data-evaluation-disclosure]');
+    await expect(disclosure).not.toHaveAttribute('open', '');
     const planner = page.locator('[data-pilot-planner]');
+    await expect(planner).toBeHidden();
+    const summary = disclosure.locator('summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(disclosure).toHaveAttribute('open', '');
     await expect(planner).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const option = planner.getByRole('button', { name: 'Robotics teams' });

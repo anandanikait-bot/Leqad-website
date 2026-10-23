@@ -4,7 +4,7 @@ import HalftoneWordmarkFooter from '@/components/ui/halftone-wordmark-footer';
 
 export const SiteFooter: React.FC = () => (
   <footer className="w-full overflow-x-hidden bg-[#0E2943] text-[#F5EFE7]">
-    <div className="mx-auto grid w-full max-w-7xl gap-9 px-5 pt-12 pb-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12 sm:px-8 sm:pt-14 lg:pt-16">
+    <div className="mx-auto grid w-full max-w-7xl gap-9 px-5 pt-10 pb-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12 sm:px-8 sm:pt-12">
       <div className="max-w-md space-y-3">
         {/* Source asset retained for assistive technology; visible artwork is drawn below. */}
         <img
@@ -45,7 +45,7 @@ export const SiteFooter: React.FC = () => (
         palette={{ background: '#0E2943', ink: '#F5EFE7', warm: '#B74B21' }}
         grain={0.25}
         dotGap={7}
-        height="clamp(220px, 24vw, 310px)"
+        height="clamp(220px, 20vw, 270px)"
         crop={0}
       />
     </div>

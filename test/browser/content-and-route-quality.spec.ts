@@ -45,7 +45,8 @@ for (const width of [320, 375, 768, 1024, 1440]) {
         await expect(page.locator('#product-preview img')).toHaveAttribute('src', '/assets/cad-lesson-preview.png');
       }
       if (route === '/partners') {
-        await expect(page.locator('[data-pilot-planner]')).toBeVisible();
+        await expect(page.locator('[data-evaluation-disclosure]')).not.toHaveAttribute('open', '');
+        await expect(page.locator('[data-pilot-planner]')).toBeHidden();
       }
       if (route === '/demo') {
         await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
@@ -62,18 +63,12 @@ for (const width of [320, 375, 768, 1024, 1440]) {
   });
 }
 
-test('About comparison remains interactive without fabricated performance claims', async ({ page }) => {
+test('About retains a concise explanation without redundant comparison cards', async ({ page }) => {
   await page.goto('/about');
-  const section = page.getByRole('region', { name: 'Different ways to practice CAD' });
-  await expect(section).toBeVisible();
-  await expect(section).not.toContainText(/40% time|zero window-switch latency|top driver of beginner abandonment|45 minutes average|< 5 minutes|lasting mechanical design intuition/i);
-  const choices = section.getByRole('group', { name: 'Compare learning topics' });
-  const focus = choices.getByRole('button', { name: 'Learning evidence' });
-  await focus.focus();
-  await page.keyboard.press('Enter');
-  await expect(focus).toHaveAttribute('aria-pressed', 'true');
-  await expect(section.locator('[data-comparison-question]')).toContainText(/what evidence/i);
-  await expect(section.locator('[data-comparison-leqad]')).toContainText('no learning gains have been established');
+  await expect(page.locator('#how-it-works')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Different ways to practice CAD' })).toHaveCount(0);
+  await expect(page.locator('[data-comparison-question]')).toHaveCount(0);
+  await expect(page.locator('main')).not.toContainText(/40% time|zero window-switch latency|45 minutes average|lasting mechanical design intuition/i);
 });
 
 test('lesson explains a simulated CAD process without universal or verified claims', async ({ page }) => {

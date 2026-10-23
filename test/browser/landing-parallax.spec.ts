@@ -49,7 +49,16 @@ for (const route of ['/about', '/partners']) {
         top: element.parentElement!.getBoundingClientRect().top + scrollY,
         height: element.parentElement!.getBoundingClientRect().height,
       }));
-      await page.evaluate(() => scrollBy(0, 240));
+      // A layer near the end of the page may already be at the maximum
+      // scroll position. Scroll toward whichever direction has room, then
+      // verify actual scroll movement before asserting parallax movement.
+      const scroll = await page.evaluate(() => ({
+        start: window.scrollY,
+        max: Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
+      }));
+      const delta = scroll.max - scroll.start >= 180 ? 240 : -240;
+      await page.evaluate(amount => window.scrollBy(0, amount), delta);
+      await expect.poll(() => page.evaluate(() => window.scrollY)).not.toBe(scroll.start);
       await expect.poll(() => layer.evaluate(element => getComputedStyle(element).transform)).not.toBe(before.transform);
       const after = await layer.evaluate(element => ({
         y: new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
