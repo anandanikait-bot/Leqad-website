@@ -28,7 +28,7 @@ test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header'
     const headerBox = await page.locator('header').boundingBox();
     expect(headerBox).not.toBeNull();
     expect(headerBox!.height).toBe(65); // 64px content + 1px bottom border
-    await expect(page.locator('main h1')).toContainText('Learn CAD by building');
+    await expect(page.locator('main h1')).toContainText('CAD guidance, right where you design');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
@@ -120,7 +120,7 @@ test('favicon actually renders legibly at 16px with transparent corners', async 
 
 test('About contains a static preview instead of a second live lesson', async ({ page }) => {
   await page.goto('/about');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Learn CAD by building/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/CAD guidance, right where you design/);
   await expect(page.getByRole('button', { name: 'Start sketch', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Explore Full Demo', exact: true })).toHaveAttribute('href', '/demo');
 });
