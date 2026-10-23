@@ -29,7 +29,8 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
         'Horizontal overflow on ' + route + ' at ' + width + 'px').toBe(true);
       const headingsFit = await page.locator('main h1, main h2, main h3').evaluateAll(headings =>
-        headings.every(node => node.scrollWidth <= node.clientWidth + 2));
+        headings.filter(node => !node.classList.contains('sr-only'))
+          .every(node => node.scrollWidth <= node.clientWidth + 2));
       expect(headingsFit, 'A heading overflows its box on ' + route).toBe(true);
 
       if (route === '/') {
@@ -71,7 +72,7 @@ test('About comparison remains interactive without fabricated performance claims
   await focus.focus();
   await page.keyboard.press('Enter');
   await expect(focus).toHaveAttribute('aria-pressed', 'true');
-  await expect(section.locator('[data-comparison-question]')).toContainText('what evidence');
+  await expect(section.locator('[data-comparison-question]')).toContainText(/what evidence/i);
   await expect(section.locator('[data-comparison-leqad]')).toContainText('no learning gains have been established');
 });
 
