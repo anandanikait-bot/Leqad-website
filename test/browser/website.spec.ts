@@ -57,7 +57,7 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-official-symbol-light-v1.svg');
+    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
     await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
@@ -87,11 +87,13 @@ test('homepage prerender contains correct social preview and serves the actual i
 
 test('tab icon uses the approved geometry on both light and dark themes', async ({ page }) => {
   await page.goto('/');
-  const res = await page.request.get('/assets/brand/leqad-official-symbol-light-v1.svg');
+  const res = await page.request.get('/assets/brand/leqad-official-favicon-v1.svg');
   expect(res.status()).toBe(200);
   expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
   const source = await res.text();
-  expect(source).toContain('fill="#0E2943"');
+  expect(source).toContain('prefers-color-scheme: dark');
+  expect(source).toContain('#0E2943');
+  expect(source).toContain('#F5EFE7');
   expect(source).toContain('fill="#793327"');
   expect(source).toContain('<path');
   expect(source).not.toContain('feColorMatrix');
@@ -101,7 +103,7 @@ test('favicon actually renders legibly at 16px with transparent corners', async 
   await page.goto('/');
   const pixels = await page.evaluate(async () => {
     const image = new Image();
-    image.src = '/assets/brand/leqad-official-symbol-light-v1.svg';
+    image.src = '/assets/brand/leqad-official-favicon-v1.svg';
     await image.decode();
     const canvas = document.createElement('canvas');
     canvas.width = 16;
