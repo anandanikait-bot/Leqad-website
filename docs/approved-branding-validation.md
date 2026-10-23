@@ -75,3 +75,5 @@ AXE_SOURCE_PATH=/path/to/axe-core/axe.min.js node scripts/audit-content-accessib
 The accessibility script writes its existing content-UX report location; this review's fresh result is copied into `screenshots/approved-branding/accessibility.json`.
 
 No merge or deployment was performed. Production/CDN font timing and hosting behavior remain for post-approval deployment verification.
+
+GitHub branch push succeeded. PR creation was blocked by `Post "https://api.github.com/graphql": Forbidden`; [prepared PR description and creation link](approved-branding-pr.md). No PR was created automatically.

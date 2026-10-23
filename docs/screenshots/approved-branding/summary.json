@@ -30,5 +30,10 @@
   "fontLoadFinalMaxCLS": 0.00320001220703125,
   "visualReview": "No blocking issue; matches approved A/A.",
   "merged": false,
-  "deployed": false
+  "deployed": false,
+  "pr": {
+    "created": false,
+    "reason": "GitHub API Forbidden",
+    "createUrl": "https://github.com/anandanikait-bot/Leqad-website/pull/new/feat/approved-typography-branding"
+  }
 }
