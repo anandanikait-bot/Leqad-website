@@ -77,6 +77,7 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
     'I would like to discuss a possible Leqad evaluation. This is only an exploratory outline.',
     'Audience: ' + selectedAudience.label,
     'Indicative group: ' + selectedGroup.description,
+    'Evaluation focus: ' + selectedQuestion.label,
     'Evaluation question: ' + selectedQuestion.question,
     'Possible baseline: ' + selectedQuestion.baseline,
     'Possible comparison: ' + selectedQuestion.observation,
