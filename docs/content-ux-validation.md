@@ -84,3 +84,5 @@ Set `CHROMIUM_PATH` if Chromium is elsewhere, and `SCREENSHOT_ORIGIN` if the loc
 - Builder information and a privacy page remain omitted pending separately verified/approved content.
 - Hosted routing and the deployed version were not tested during this task. No deployment occurred; the existing [hosting verification checklist](hosting.md) applies after an authorized deployment.
 - Local command results are not GitHub Actions results. Remote CI must be checked on the pull request; API access in this environment has previously been blocked.
+
+The branch was pushed successfully. Creating the draft PR with `gh pr create --draft` failed with `Post "https://api.github.com/graphql": Forbidden`. **No live PR was created, and GitHub Actions results could not be retrieved.** The prepared [PR description](content-ux-pr.md) and [GitHub PR creation form](https://github.com/anandanikait-bot/Leqad-website/pull/new/polish/final-content-ux) are available for review. This access failure does not affect the completed local checks or the pushed changes.
