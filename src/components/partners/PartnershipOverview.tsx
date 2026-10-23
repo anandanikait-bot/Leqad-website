@@ -6,7 +6,7 @@ import { LEGAL_DISCLAIMER } from '../../lib/constants';
 import { InteractivePilotConfigurator } from './InteractivePilotConfigurator';
 
 interface PartnershipOverviewProps {
-  onOpenContact: (defaultTopic?: string) => void;
+  onOpenContact: (defaultTopic?: string, draftMessage?: string) => void;
 }
 
 export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpenContact }) => {
