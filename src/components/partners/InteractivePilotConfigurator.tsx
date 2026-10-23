@@ -2,148 +2,215 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '../shared/Button';
 
+type AudienceId = 'university' | 'robotics' | 'platform';
+type GroupId = 'small' | 'medium' | 'large';
+type QuestionId = 'firstPart' | 'helpRequests' | 'independence';
+
 interface InteractivePilotConfiguratorProps {
-  onOpenContact: (topic?: string) => void;
+  onOpenContact: (topic?: string, draftMessage?: string) => void;
 }
 
-/**
- * A planning aid, not an efficacy or cost calculator. All displayed
- * quantities are arithmetic based solely on visitor-selected inputs.
- */
-export const InteractivePilotConfigurator: React.FC<InteractivePilotConfiguratorProps> = ({
-  onOpenContact,
-}) => {
-  const [participants, setParticipants] = useState(12);
-  const [sessions, setSessions] = useState(4);
-  const [minutesPerSession, setMinutesPerSession] = useState(60);
+const audiences: Record<AudienceId, { label: string; description: string; topic: string }> = {
+  university: {
+    label: 'Engineering courses',
+    description: 'A university or college course introducing parametric CAD.',
+    topic: 'Educational Pilot',
+  },
+  robotics: {
+    label: 'Robotics teams',
+    description: 'A robotics club or build team onboarding new CAD learners.',
+    topic: 'Robotics Team',
+  },
+  platform: {
+    label: 'CAD platform teams',
+    description: 'A CAD software team exploring supported onboarding experiences.',
+    topic: 'Technical Alignment',
+  },
+};
 
-  const contactHours = (sessions * minutesPerSession) / 60;
-  const participantHours = participants * contactHours;
-  const format = (value: number) => new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 1,
-  }).format(value);
+const groupSizes: Record<GroupId, { label: string; description: string }> = {
+  small: { label: 'Small group', description: '4–15 participants' },
+  medium: { label: 'Medium group', description: '16–40 participants' },
+  large: { label: 'Larger group', description: '41+ participants; capacity to be confirmed' },
+};
+
+const questions: Record<QuestionId, {
+  label: string;
+  question: string;
+  baseline: string;
+  observation: string;
+}> = {
+  firstPart: {
+    label: 'Time to first part',
+    question: 'How long does it take a learner to complete a defined first-part task?',
+    baseline: 'Record the task, starting knowledge, and completion time without Leqad guidance.',
+    observation: 'Use a comparable task with guided practice and compare observed completion times.',
+  },
+  helpRequests: {
+    label: 'Help requests',
+    question: 'Which CAD steps lead learners to request instructor help?',
+    baseline: 'Count support requests during a defined introductory CAD exercise.',
+    observation: 'Track the same type of requests during guided practice; compare only with appropriate context.',
+  },
+  independence: {
+    label: 'Independent practice',
+    question: 'Can learners apply the concepts to a different, comparable part without step-by-step prompts?',
+    baseline: 'Document what learners can model independently before guided practice.',
+    observation: 'Review a comparable follow-up task with an agreed rubric, not a predicted pass rate.',
+  },
+};
+
+/**
+ * This is a conversation planner, not a pilot feasibility, ROI, learning-gains,
+ * privacy-certification or cost-savings calculator. No outcomes are implied.
+ */
+export const InteractivePilotConfigurator: React.FC<InteractivePilotConfiguratorProps> = ({ onOpenContact }) => {
+  const [audience, setAudience] = useState<AudienceId>('university');
+  const [group, setGroup] = useState<GroupId>('small');
+  const [focus, setFocus] = useState<QuestionId>('firstPart');
+
+  const selectedAudience = audiences[audience];
+  const selectedGroup = groupSizes[group];
+  const selectedQuestion = questions[focus];
+
+  const draft = [
+    'I would like to discuss a possible Leqad evaluation. This is only an exploratory outline.',
+    'Audience: ' + selectedAudience.label,
+    'Indicative group: ' + selectedGroup.description,
+    'Evaluation question: ' + selectedQuestion.question,
+    'Possible baseline: ' + selectedQuestion.baseline,
+    'Possible comparison: ' + selectedQuestion.observation,
+    'We would need to agree on task design, permissions, consent where appropriate, and measurement methods before any evaluation.',
+  ].join('\n');
+
+  const choiceClass = (selected: boolean) =>
+    'min-h-11 w-full rounded-lg border px-4 py-3 text-left text-sm transition-colors cursor-pointer ' +
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] ' +
+    (selected
+      ? 'border-[#B74B21] bg-[#F5EFE7] text-[#0E2943] ring-1 ring-[#B74B21]/30'
+      : 'border-[#D9DDD9] bg-white text-[#55616B] hover:border-[#B74B21]/60 hover:bg-[#FAF8F4]');
 
   return (
     <section
-      aria-labelledby="pilot-planner-heading"
-      className="rounded-2xl border border-[#D9DDD9] bg-white p-6 sm:p-8 space-y-6"
       data-pilot-planner
+      aria-labelledby="pilot-planner-heading"
+      className="rounded-2xl border border-[#D9DDD9] bg-white p-6 sm:p-8 space-y-7"
     >
-      <div className="max-w-2xl space-y-3">
+      <div className="max-w-3xl space-y-3">
         <span className="font-mono text-xs font-medium uppercase tracking-wider text-[#B74B21]">
-          Optional planning aid
+          Optional exploration
         </span>
         <h2 id="pilot-planner-heading" className="text-xl sm:text-2xl font-semibold tracking-tight text-[#0E2943]">
-          Sketch an educational pilot
+          Outline a potential CAD learning evaluation
         </h2>
         <p className="text-sm sm:text-base leading-relaxed text-[#55616B]">
-          Adjust a hypothetical classroom trial to understand its instructional scope.
-          These are planning quantities, not predicted learning gains, costs, or a committed pilot.
+          Choose a setting, group size, and question worth investigating. This creates a
+          discussion outline—not predicted savings, success rates, a formal proposal, or an agreed pilot.
         </p>
       </div>
 
-      <div className="grid gap-7 md:grid-cols-2">
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="pilot-participants" className="text-sm font-medium text-[#0E2943]">
-                Learners
-              </label>
-              <output htmlFor="pilot-participants" className="font-mono text-sm text-[#0E2943]" data-pilot-participants>
-                {participants}
-              </output>
-            </div>
-            <input
-              id="pilot-participants"
-              type="range"
-              min={4}
-              max={40}
-              step={1}
-              value={participants}
-              onChange={(event) => setParticipants(Number(event.target.value))}
-              className="w-full accent-[#B74B21] cursor-pointer"
-            />
-            <p className="text-xs text-[#55616B]">Between 4 and 40 learners.</p>
+      <div className="space-y-6">
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-semibold text-[#0E2943]">1. Who might evaluate it?</legend>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {(Object.keys(audiences) as AudienceId[]).map((id) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={audience === id}
+                onClick={() => setAudience(id)}
+                className={choiceClass(audience === id)}
+              >
+                {audiences[id].label}
+              </button>
+            ))}
           </div>
+        </fieldset>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="pilot-sessions" className="text-sm font-medium text-[#0E2943]">
-                Sessions
-              </label>
-              <output htmlFor="pilot-sessions" className="font-mono text-sm text-[#0E2943]" data-pilot-sessions>
-                {sessions}
-              </output>
-            </div>
-            <input
-              id="pilot-sessions"
-              type="range"
-              min={1}
-              max={8}
-              step={1}
-              value={sessions}
-              onChange={(event) => setSessions(Number(event.target.value))}
-              className="w-full accent-[#B74B21] cursor-pointer"
-            />
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-semibold text-[#0E2943]">2. What size group?</legend>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {(Object.keys(groupSizes) as GroupId[]).map((id) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={group === id}
+                onClick={() => setGroup(id)}
+                className={choiceClass(group === id)}
+              >
+                <span className="block font-medium">{groupSizes[id].label}</span>
+                <span className="mt-1 block text-xs opacity-80">{groupSizes[id].description}</span>
+              </button>
+            ))}
           </div>
+        </fieldset>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="pilot-duration" className="text-sm font-medium text-[#0E2943]">
-                Minutes per session
-              </label>
-              <output htmlFor="pilot-duration" className="font-mono text-sm text-[#0E2943]" data-pilot-duration>
-                {minutesPerSession}
-              </output>
-            </div>
-            <input
-              id="pilot-duration"
-              type="range"
-              min={30}
-              max={120}
-              step={15}
-              value={minutesPerSession}
-              onChange={(event) => setMinutesPerSession(Number(event.target.value))}
-              className="w-full accent-[#B74B21] cursor-pointer"
-            />
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-semibold text-[#0E2943]">3. What should be measured?</legend>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {(Object.keys(questions) as QuestionId[]).map((id) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={focus === id}
+                onClick={() => setFocus(id)}
+                className={choiceClass(focus === id)}
+              >
+                {questions[id].label}
+              </button>
+            ))}
           </div>
-        </div>
+        </fieldset>
+      </div>
 
-        <div className="rounded-xl border border-[#D9DDD9] bg-[#FAF8F4] p-5 space-y-5">
-          <h3 className="text-base font-semibold text-[#0E2943]">Illustrative scope</h3>
-          <dl className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
-            <div>
-              <dt className="text-xs text-[#55616B]">Scheduled instruction</dt>
-              <dd className="font-mono text-2xl font-semibold text-[#0E2943]" data-pilot-contact-hours>
-                {format(contactHours)} hours
-              </dd>
-            </div>
-            <div>
-              <dt className="text-xs text-[#55616B]">Combined learner attendance</dt>
-              <dd className="font-mono text-2xl font-semibold text-[#0E2943]" data-pilot-participant-hours>
-                {format(participantHours)} learner-hours
-              </dd>
-            </div>
-          </dl>
-          <p className="text-xs leading-relaxed text-[#55616B]">
-            Learner-hours = learners × sessions × session duration. This excludes preparation,
-            recruitment, assessment, and any actual learning outcome.
+      <div className="rounded-xl border border-[#D9DDD9] bg-[#FAF8F4] p-5 sm:p-6 space-y-5">
+        <div className="space-y-2">
+          <span className="font-mono text-xs font-medium uppercase tracking-wider text-[#B74B21]">
+            Exploratory outline
+          </span>
+          <h3 className="text-base sm:text-lg font-semibold text-[#0E2943]" data-pilot-summary>
+            {selectedAudience.label} · {selectedGroup.label}
+          </h3>
+          <p className="text-sm text-[#55616B]">{selectedAudience.description}</p>
+          <p className="text-sm font-medium text-[#0E2943]" data-pilot-question aria-live="polite">
+            {selectedQuestion.question}
           </p>
         </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg border border-[#D9DDD9] bg-white p-4 space-y-2">
+            <h4 className="text-sm font-semibold text-[#0E2943]">Possible baseline</h4>
+            <p className="text-sm leading-relaxed text-[#55616B]" data-pilot-baseline>
+              {selectedQuestion.baseline}
+            </p>
+          </div>
+          <div className="rounded-lg border border-[#D9DDD9] bg-white p-4 space-y-2">
+            <h4 className="text-sm font-semibold text-[#0E2943]">Possible comparison</h4>
+            <p className="text-sm leading-relaxed text-[#55616B]" data-pilot-comparison>
+              {selectedQuestion.observation}
+            </p>
+          </div>
+        </div>
+
+        <p className="text-xs leading-relaxed text-[#55616B]">
+          No participants, results, timelines, learning benefits, privacy guarantees, or partner
+          arrangements are assumed. Task design, platform authorization, and appropriate
+          participant safeguards would need separate agreement.
+        </p>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#D9DDD9] pt-5">
         <p className="max-w-lg text-xs sm:text-sm text-[#55616B]">
-          A pilot would require partner agreement and a separate evaluation plan.
+          This outline can be placed into a draft inquiry. It is not sent automatically.
         </p>
         <Button
           type="button"
           variant="rust"
           size="md"
-          onClick={() => onOpenContact('Educational Pilot')}
+          onClick={() => onOpenContact(selectedAudience.topic, draft)}
           icon={<ArrowRight className="w-4 h-4" />}
         >
-          Draft a Pilot Inquiry
+          Draft a Discussion Note
         </Button>
       </div>
     </section>
