@@ -95,12 +95,9 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
     <section
       data-pilot-planner
       aria-labelledby="pilot-planner-heading"
-      className="rounded-2xl border border-[#D9DDD9] bg-white p-6 sm:p-8 space-y-7"
+      className="space-y-7"
     >
       <div className="max-w-3xl space-y-3">
-        <span className="font-mono text-xs font-medium uppercase tracking-wider text-[#B74B21]">
-          Optional exploration
-        </span>
         <h2 id="pilot-planner-heading" className="text-xl sm:text-2xl font-semibold tracking-tight text-[#0E2943]">
           Outline a potential CAD learning evaluation
         </h2>
