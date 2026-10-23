@@ -31,9 +31,9 @@ test('audience, group and focus update output and carry into the actual draft', 
   const modal = page.getByRole('dialog');
   await expect(modal.getByLabel('Area of Interest')).toHaveValue('Robotics Team');
   const note = modal.getByLabel('Brief Note or Context');
-  await expect(note).toContainText('Audience: Robotics teams');
-  await expect(note).toContainText('41+ participants; capacity to be confirmed');
-  await expect(note).toContainText('Independent practice');
+  await expect(note).toHaveValue(/Audience: Robotics teams/);
+  await expect(note).toHaveValue(/41\+ participants; capacity to be confirmed/);
+  await expect(note).toHaveValue(/Independent practice/);
   await expect(modal).toContainText('does not send messages directly');
   await page.keyboard.press('Escape');
   await expect(modal).toHaveCount(0);
@@ -48,8 +48,8 @@ test('platform evaluation uses technical topic and does not retain another audie
   await planner.getByRole('button', { name: 'Draft a Discussion Note' }).click();
   const modal = page.getByRole('dialog');
   await expect(modal.getByLabel('Area of Interest')).toHaveValue('Technical Alignment');
-  await expect(modal.getByLabel('Brief Note or Context')).toContainText('Audience: CAD platform teams');
-  await expect(modal.getByLabel('Brief Note or Context')).toContainText('Count support requests');
+  await expect(modal.getByLabel('Brief Note or Context')).toHaveValue(/Audience: CAD platform teams/);
+  await expect(modal.getByLabel('Brief Note or Context')).toHaveValue(/Count support requests/);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Draft an Inquiry Note', exact: true }).click();
   await expect(page.getByRole('dialog').getByLabel('Area of Interest')).toHaveValue('General Inquiry');
