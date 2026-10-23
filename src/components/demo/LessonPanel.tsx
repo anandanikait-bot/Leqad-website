@@ -135,7 +135,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 You've completed the interactive walkthrough.
               </h2>
               <p className="text-xs sm:text-sm text-[#55616B] leading-relaxed">
-                You've built a dimensioned {widthMm} × {heightMm} mm sketch and created a solid plate using Extrude in this guided simulation.
+                In this simulated lesson, you dimensioned a {widthMm} × {heightMm} mm sketch and confirmed an extruded plate. No part was created in a connected CAD application.
               </p>
             </div>
 
@@ -185,7 +185,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <div className="flex items-start gap-1.5 text-[10px] text-[#55616B] bg-[#F5EFE7]/60 p-2.5 rounded-md border border-[#D9DDD9]/60 leading-relaxed font-mono">
               <Info className="w-3.5 h-3.5 text-[#55616B] flex-shrink-0 mt-0.5" />
               <span>
-                This interactive illustration is not connected to a live CAD model and does not verify actual design work.
+                The walkthrough records actions inside the illustration only; it does not inspect, save, or verify a real CAD model.
               </span>
             </div>
           </div>
@@ -223,6 +223,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <span className="font-mono text-[10px] uppercase tracking-wider text-[#55616B]">
               {step.category}
             </span>
+            <span className="text-xs text-[#55616B]">{step.stepNumber} / {totalSteps}</span>
           </div>
 
           {/* Step Title */}
