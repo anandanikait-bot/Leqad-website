@@ -16,15 +16,18 @@ test('landing contains only the hero and its CTA links', async ({ page }) => {
   await expect(page.locator('main').getByRole('link', { name: 'Learn About Leqad' })).toHaveAttribute('href', '/about');
 });
 
-test('header icon is 44px on mobile, 48px on desktop with unchanged 64px header', async ({ page }) => {
-  for (const [width, expectedSize] of [[375, 44], [1440, 48]] as const) {
+test('official horizontal brand remains prominent in unchanged 64px navbar', async ({ page }) => {
+  for (const [width, expectedHeight] of [[320, 44], [375, 44], [1440, 48]] as const) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/about');
     const img = page.locator('header img[alt="Leqad logo"]');
     const imageBox = await img.boundingBox();
     expect(imageBox).not.toBeNull();
-    expect(imageBox!.width).toBe(expectedSize);
-    expect(imageBox!.height).toBe(expectedSize);
+    expect(imageBox!.height).toBe(expectedHeight);
+    // The new approved symbol + entire wordmark is intentionally wider than
+    // the old 44px square emblem; it must stay legible and not overflow.
+    expect(imageBox!.width).toBeGreaterThan(expectedHeight * 3);
+    expect(imageBox!.width).toBeLessThan(expectedHeight * 4);
     const headerBox = await page.locator('header').boundingBox();
     expect(headerBox).not.toBeNull();
     expect(headerBox!.height).toBe(65); // 64px content + 1px bottom border
