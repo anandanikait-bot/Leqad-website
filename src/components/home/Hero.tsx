@@ -72,7 +72,7 @@ export const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="text-base sm:text-lg text-[#55616B] leading-relaxed max-w-xl mx-auto">
-            Leqad helps you learn CAD by building. Follow guided lessons, find the right tools, and understand why each design step matters.
+            Leqad is developing guided lessons and contextual hints alongside browser-based CAD, helping beginners understand each step as they design. The separate website demo illustrates the approach.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
