@@ -1,9 +1,9 @@
 import type { PageRoute } from '../types';
 
 export const PUBLIC_ROUTES: { path: string; page: PageRoute; title: string; ogTitle: string; description: string }[] = [
-  { path: '/', page: 'home', title: 'Leqad', ogTitle: 'Leqad — Learn CAD by Building', description: 'Explore Leqad, an early-stage CAD education project. Learn through guided lessons, contextual tool hints, and an interactive CAD illustration.' },
+  { path: '/', page: 'home', title: 'Leqad', ogTitle: 'Leqad — Learn CAD by Building', description: 'Leqad is developing guided lessons and contextual hints alongside browser-based CAD for beginners. The website demo is a separate illustration.' },
   { path: '/demo', page: 'demo', title: 'Leqad Demo', ogTitle: 'Interactive CAD Walkthrough — Leqad', description: 'Try an eight-step illustrated CAD lesson: select a plane, sketch a rectangle, edit dimensions, and preview an extrusion. An interactive simulation, not a live CAD connection.' },
-  { path: '/about', page: 'about', title: 'About Leqad', ogTitle: 'About Leqad — Guided CAD Education', description: 'Discover the idea behind Leqad: CAD lessons and contextual guidance inside the design workflow. See the current prototype and plans for future development.' },
+  { path: '/about', page: 'about', title: 'About Leqad', ogTitle: 'About Leqad — Guided CAD Education', description: 'Learn about Leqad's guided CAD teaching prototype, illustrated demo, and potential future development.' },
   { path: '/partners', page: 'partners', title: 'Leqad Partners', ogTitle: 'For Partners & Educators — Leqad', description: 'Explore educational collaboration and technical alignment with Leqad, an independent early-stage CAD learning project for engineering educators and platforms.' },
 ];
 
