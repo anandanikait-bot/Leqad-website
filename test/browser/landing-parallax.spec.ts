@@ -1,34 +1,45 @@
 import { test, expect } from '@playwright/test';
 
 for (const width of [320, 375, 768, 1024, 1440]) {
-  test(`homepage stays centered and artwork remains reachable at ${width}px`, async ({ page }) => {
+  test(`editorial homepage aligns copy and keeps its CAD artwork reachable at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator('header, footer')).toHaveCount(0);
+
     const heading = page.getByRole('heading', { name: 'Learn CAD by', exact: true });
-    await expect(heading).toHaveCSS('text-align', 'center');
-    await expect(page.locator('main p').first()).toHaveCSS('text-align', 'center');
+    await expect(heading).toHaveCSS('text-align', 'left');
+    await expect(page.locator('main p').first()).toHaveCSS('text-align', 'left');
     const hero = (await page.locator('main > section').boundingBox())!;
     expect(hero.y).toBe(0);
+
     const column = (await heading.locator('..').locator('..').boundingBox())!;
     const links = await page.locator('main a').all();
-    const first = (await links[0].boundingBox())!;
-    const last = (await links[1].boundingBox())!;
-    // Allow subpixel rounding introduced by the decorative 3D CTA transform.
-    expect(Math.abs((first.x + last.x + last.width) / 2 - (column.x + column.width / 2))).toBeLessThan(3);
+    expect(links.length).toBe(2);
+    const primary = (await links[0].boundingBox())!;
+    const secondary = (await links[1].boundingBox())!;
+    // Editorial CTA row begins at the text column, not the old center line.
+    expect(Math.abs(primary.x - column.x)).toBeLessThan(5);
+    expect(Math.abs(secondary.x - column.x) < 5 ||
+      secondary.x >= primary.x + primary.width - 2).toBe(true);
+    expect(primary.height).toBeGreaterThanOrEqual(40);
+    expect(secondary.height).toBeGreaterThanOrEqual(40);
+
     const artwork = page.getByLabel('Interactive 3D CAD Geometry Visualization', { exact: true });
     const box = (await artwork.boundingBox())!;
     if (width >= 1024) {
-      expect(box.x).toBeGreaterThan(column.x + column.width - 1);
-      expect(Math.abs(box.y + box.height / 2 - (column.y + column.height / 2))).toBeLessThan(2);
+      expect(box.x).toBeGreaterThanOrEqual(column.x + column.width - 1);
+      expect(box.y).toBeGreaterThanOrEqual(hero.y);
+      expect(box.y + box.height).toBeLessThanOrEqual(hero.y + hero.height + 2);
       expect(hero.height).toBe(900);
-    } else expect(box.y).toBeGreaterThanOrEqual(last.y + last.height);
+    } else {
+      expect(box.y).toBeGreaterThanOrEqual(secondary.y + secondary.height);
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await artwork.scrollIntoViewIfNeeded();
     await artwork.click();
-    // The existing hero interaction changes the 3D/2D view on a tap/click.
+    // The hero interaction still changes the 3D/2D view on click.
     await expect(artwork).toContainText('2D SKETCH');
   });
 }
