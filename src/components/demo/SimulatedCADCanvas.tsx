@@ -152,10 +152,10 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   // Highlight check
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
+  // The CAD workspace is not independently scrollable: keep wheel/trackpad
+  // events available to Lenis while pointer events still drive sketching.
+  // Reserve data-lenis-prevent for scrollable overlays such as dialogs.
   return (
-    // This workspace is not an independent scroll container: allow Lenis to
-    // handle page-level wheel and trackpad scrolling while pointer events still
-    // drive sketch interactions. Reserve data-lenis-prevent for scrollable dialogs.
     <div className="relative flex h-full min-h-[420px] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:min-h-[480px] lg:min-h-[clamp(500px,62svh,720px)]">
       {/* CAD Application Ribbon Toolbar */}
       <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
