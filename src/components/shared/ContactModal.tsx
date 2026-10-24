@@ -151,9 +151,15 @@ Message: ${message.trim() || '[No message entered]'}
         }),
         signal: controller.signal,
       });
+      if (submissionController.current !== controller) return;
+      if (response.status === 429) {
+        setSubmitError('Too many inquiries have been submitted. Please try again later. Your draft is kept, or you can email Leqad support directly.');
+        return;
+      }
       const result = await response.json().catch(() => null);
       if (submissionController.current !== controller) return;
-      if (!response.ok || result?.ok !== true) {
+      // Match Formspree's official server success schema; never follow `next`.
+      if (!response.ok || typeof result?.next !== 'string' || 'errors' in result || 'error' in result) {
         throw new Error('Submission was not accepted');
       }
       setSubmitted(true);

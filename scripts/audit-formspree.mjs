@@ -8,7 +8,7 @@ try{
  for(const width of [320,375,768,1024,1440])for(const state of ['ready','success','error']){
   const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
   const page=await context.newPage();
-  await page.route('https://formspree.io/f/xoeevqpq',r=>r.fulfill({status:state==='error'?429:200,contentType:'application/json',body:state==='error'?'{"errors":[{"message":"Rate limited"}]}':'{"ok":true}'}));
+  await page.route('https://formspree.io/f/xoeevqpq',r=>r.fulfill({status:state==='error'?429:200,contentType:'application/json',body:state==='error'?'{"errors":[{"message":"Rate limited"}]}':'{"next":"/thanks"}'}));
   await page.goto((process.env.SCREENSHOT_ORIGIN||'http://127.0.0.1:4173')+'/partners');
   await page.getByRole('button',{name:'Contact Leqad',exact:true}).click();
   await page.evaluate(()=>document.fonts.ready);

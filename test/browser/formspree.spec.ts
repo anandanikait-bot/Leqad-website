@@ -16,7 +16,7 @@ test('Formspree receives the complete inquiry once and success waits for accepta
     requests.push(route.request().postDataJSON());
     expect(route.request().headers().accept).toBe('application/json');
     await gate;
-    await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    await route.fulfill({ status: 200, contentType: 'application/json', body: '{"next":"/thanks"}' });
   });
   await openForm(page);
   await page.getByRole('button', { name: 'Send inquiry', exact: true }).click();
@@ -33,11 +33,12 @@ for (const status of [422,429,500]) {
     let attempts = 0;
     await page.route(endpoint, route => {
       attempts++;
-      return route.fulfill({status:attempts===1?status:200,contentType:'application/json',body:attempts===1?'{"errors":[{"message":"Request rejected"}]}':'{"ok":true}'});
+      return route.fulfill({status:attempts===1?status:200,contentType:'application/json',body:attempts===1?'{"errors":[{"message":"Request rejected"}]}':'{"next":"/thanks"}'});
     });
     await openForm(page);
     await page.getByRole('button', { name: 'Send inquiry', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Your draft is kept');
+    if (status === 429) await expect(page.getByRole('alert')).toContainText('Please try again later');
     await expect(page.getByRole('dialog').getByRole('status')).toHaveCount(0);
     await expect(page.getByLabel('Brief Note or Context')).toHaveValue('A question & details.');
     await expect(page.getByLabel('Work / School Email')).toHaveValue('ada@example.org');
@@ -68,3 +69,13 @@ test('required email and message block incomplete submissions', async ({ page })
   await page.getByRole('button', { name: 'Send inquiry', exact: true }).click();
   expect(attempts).toBe(0);
 });
+
+for (const body of ['{"ok":true}', '{"next":false}', '{"next":"/thanks","errors":[{"message":"Rejected"}]}']) {
+  test(`unexpected or contradictory JSON is rejected: ${body}`, async ({page}) => {
+    await page.route(endpoint, r => r.fulfill({status:200,contentType:'application/json',body}));
+    await openForm(page);
+    await page.getByRole('button',{name:'Send inquiry',exact:true}).click();
+    await expect(page.getByRole('alert')).toContainText('Your draft is kept');
+    await expect(page.getByRole('dialog').getByRole('status')).toHaveCount(0);
+  });
+}
