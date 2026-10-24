@@ -252,7 +252,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
                   active
                     ? 'border-[#0E2943] bg-[#0E2943] text-white'
                     : completed
-                      ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
+                      ? 'border-[#D9DDD9] bg-[#F5EFE7] text-[#0E2943]'
                       : 'border-[#D9DDD9] bg-white text-[#55616B] hover:bg-[#FAF8F4]'
                 }`}
               >
@@ -261,7 +261,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
               </button>
             );
           })}
-          {isWalkthroughComplete && <span className="inline-flex items-center gap-1.5 text-xs text-emerald-700"><CheckCircle2 className="h-4 w-4" /> Walkthrough complete</span>}
+          {isWalkthroughComplete && <span className="inline-flex items-center gap-1.5 text-xs text-[#793327]"><CheckCircle2 className="h-4 w-4" /> Walkthrough complete</span>}
         </nav>
       )}
 

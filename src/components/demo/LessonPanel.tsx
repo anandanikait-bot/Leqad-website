@@ -110,12 +110,12 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
         {/* Panel Window Header */}
         <div className="bg-[#0E2943] text-white px-4 py-3 flex items-center justify-between border-b border-[#0E2943]/30">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#F5EFE7]" />
             <span className="font-mono text-[11px] font-medium tracking-wider uppercase text-[#F5EFE7]">
               Walkthrough Complete
             </span>
           </div>
-          <span className="font-mono text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-xs border border-emerald-400/30">
+          <span className="font-mono text-[10px] bg-[#F5EFE7]/15 text-[#F5EFE7] px-2 py-0.5 rounded-xs border border-[#F5EFE7]/30">
             8 / 8 STEPS
           </span>
         </div>
@@ -123,12 +123,12 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
         {/* Completion Body Content */}
         <div className="p-5 sm:p-6 space-y-5 flex-1 flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-[#F5EFE7] border border-[#D9DDD9] text-[#793327] flex items-center justify-center">
               <Award className="w-6 h-6" />
             </div>
 
             <div className="space-y-1.5">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[#B74B21] font-semibold">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[#793327] font-semibold">
                 Interactive Walkthrough
               </span>
               <h2 className="text-xl font-bold text-[#0E2943] tracking-tight leading-snug">
@@ -146,23 +146,23 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               </div>
               <ul className="space-y-1 text-[#55616B]">
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#793327] flex-shrink-0" />
                   <span>Top Plane (XY) reference datum selection</span>
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#793327] flex-shrink-0" />
                   <span>Entering 2D sketch-editing mode</span>
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#793327] flex-shrink-0" />
                   <span>Corner Rectangle anchored to Origin (0,0)</span>
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#793327] flex-shrink-0" />
                   <span>Parametric dimensioning ({widthMm} mm × {heightMm} mm)</span>
                 </li>
                 <li className="flex items-center gap-1.5 text-[#0E2943]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#793327] flex-shrink-0" />
                   <span>Solid extrusion preview and confirmed 3D plate</span>
                 </li>
               </ul>
@@ -195,7 +195,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
       {/* Panel Window Header */}
       <div className="bg-[#0E2943] text-white px-4 py-3 flex items-center justify-between border-b border-[#0E2943]/30">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#B74B21]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#793327]" />
           <span className="font-mono text-[11px] font-medium tracking-wider uppercase text-[#F5EFE7]">
             Leqad Teaching Panel
           </span>
@@ -233,9 +233,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
           </p>
 
           {/* One clear primary action; extra help stays secondary. */}
-          <div className="space-y-3 rounded-xl border border-[#B74B21]/25 bg-[#FAF8F4] p-3.5 sm:p-4">
+          <div className="space-y-3 rounded-xl border border-[#793327]/25 bg-[#FAF8F4] p-3.5 sm:p-4">
             <div>
-              <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[#B74B21]">Do this next</p>
+              <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[#793327]">Do this next</p>
               <p className="text-sm font-medium leading-relaxed text-[#0E2943]">{step.recommendedAction.replace('40 mm × 30 mm', `${widthMm} mm × ${heightMm} mm`).replace('40 × 30 mm', `${widthMm} × ${heightMm} mm`)}</p>
             </div>
             {step.stepNumber === 5 && canEditDimensions && !isStepActionCompleted && (
@@ -252,7 +252,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             <Button
               variant="rust"
               size="md"
-              className={`w-full justify-center ${isHighlightingControl && step.stepNumber === 8 ? 'ring-2 ring-[#B74B21] ring-offset-2' : ''}`}
+              className={`w-full justify-center ${isHighlightingControl && step.stepNumber === 8 ? 'ring-2 ring-[#793327] ring-offset-2' : ''}`}
               onClick={handlePrimaryAction}
               disabled={!canPerformCurrentAction}
             >
@@ -265,7 +265,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               <button
                 type="button"
                 onClick={onToggleHighlight}
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#55616B] underline decoration-[#D9DDD9] underline-offset-4 transition-colors hover:text-[#B74B21] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#55616B] underline decoration-[#D9DDD9] underline-offset-4 transition-colors hover:text-[#793327] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
                 aria-pressed={isHighlightingControl}
               >
                 {isHighlightingControl ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
@@ -282,9 +282,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               <button
                 onClick={handleRevealNextHint}
                 disabled={revealedHints >= step.hints.length}
-                className="text-xs font-medium inline-flex items-center gap-1 text-[#0E2943] hover:text-[#B74B21] disabled:text-[#55616B]/60 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="text-xs font-medium inline-flex items-center gap-1 text-[#0E2943] hover:text-[#793327] disabled:text-[#55616B]/60 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
-                <HelpCircle className="w-3.5 h-3.5 text-[#B74B21]" />
+                <HelpCircle className="w-3.5 h-3.5 text-[#793327]" />
                 <span>
                   {revealedHints === 0
                     ? 'Get a hint'
@@ -297,7 +297,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
               <button
                 onClick={() => setShowWhy(!showWhy)}
                 className={`text-xs font-medium inline-flex items-center gap-1 transition-colors cursor-pointer ${
-                  showWhy ? 'text-[#B74B21]' : 'text-[#55616B] hover:text-[#0E2943]'
+                  showWhy ? 'text-[#793327]' : 'text-[#55616B] hover:text-[#0E2943]'
                 }`}
               >
                 <Info className="w-3.5 h-3.5" />
@@ -311,9 +311,9 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
                 {step.hints.slice(0, revealedHints).map((hintText, idx) => (
                   <div
                     key={idx}
-                    className="bg-[#FAF8F4] border-l-2 border-[#B74B21] pl-3 pr-2 py-1.5 text-xs text-[#0E2943] leading-relaxed rounded-r-md"
+                    className="bg-[#FAF8F4] border-l-2 border-[#793327] pl-3 pr-2 py-1.5 text-xs text-[#0E2943] leading-relaxed rounded-r-md"
                   >
-                    <span className="font-mono text-[10px] text-[#B74B21] font-semibold mr-1.5">
+                    <span className="font-mono text-[10px] text-[#793327] font-semibold mr-1.5">
                       HINT {idx + 1}:
                     </span>
                     {hintText.replace('40 mm', `${widthMm} mm`).replace('30 mm', `${heightMm} mm`)}
@@ -326,7 +326,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
             {showWhy && (
               <div className="bg-[#EDF1F3] border border-[#0E2943]/20 rounded-md p-2.5 text-xs text-[#0E2943] space-y-1 animate-fadeIn">
                 <div className="font-mono text-[10px] uppercase text-[#0E2943] font-semibold flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-[#B74B21]" />
+                  <Sparkles className="w-3 h-3 text-[#793327]" />
                   Engineering Concept
                 </div>
                 <p className="text-[#55616B] leading-relaxed">

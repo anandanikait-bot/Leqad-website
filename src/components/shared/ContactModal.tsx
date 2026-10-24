@@ -205,7 +205,7 @@ Message: ${message.trim() || '[No message entered]'}
         {/* Modal Header */}
         <div className="bg-[#FAF8F4] px-6 py-4 border-b border-[#D9DDD9] flex items-center justify-between flex-shrink-0">
           <div>
-            <span className="font-mono text-[10px] uppercase font-bold text-[#B74B21] tracking-wider">
+            <span className="font-mono text-[10px] uppercase font-bold text-[#793327] tracking-wider">
               Partnerships & Collaboration
             </span>
             <h3 id="modal-title" className="text-base font-bold text-[#0E2943]">
@@ -225,7 +225,7 @@ Message: ${message.trim() || '[No message entered]'}
         <div className="p-6 space-y-4 overflow-y-auto flex-1">
           {/* Clear, honest delivery notice per Section 8 */}
           <div className="bg-[#FAF8F4] rounded-lg p-3.5 border border-[#D9DDD9] flex items-start gap-2.5 text-xs text-[#0E2943]">
-            <Info className="w-4 h-4 text-[#B74B21] flex-shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 text-[#793327] flex-shrink-0 mt-0.5" />
             <div className="space-y-1 text-[#55616B] leading-relaxed">
               <strong className="text-[#0E2943] font-medium block">
                 Send an inquiry to Leqad support
@@ -238,8 +238,8 @@ Message: ${message.trim() || '[No message entered]'}
 
           <form action={contactConfig.endpoint} method="POST" onSubmit={handleSubmit} aria-busy={submitting} className="space-y-3.5 text-xs sm:text-sm">
             <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
-            {submitted && <p role="status" className="rounded-md bg-emerald-50 p-3 text-sm text-emerald-800">Inquiry submitted to Leqad support.</p>}
-            {submitError && <div role="alert" className="rounded-md bg-rose-50 p-3 text-sm text-rose-800">{submitError} <a className="underline" href={`mailto:${contactConfig.email}`}>Email Leqad support</a></div>}
+            {submitted && <p role="status" className="rounded-md bg-[#F5EFE7] p-3 text-sm text-[#0E2943]">Inquiry submitted to Leqad support.</p>}
+            {submitError && <div role="alert" className="rounded-md bg-[#F7EEEC] p-3 text-sm text-[#793327]">{submitError} <a className="underline" href={`mailto:${contactConfig.email}`}>Email Leqad support</a></div>}
             <div className="space-y-1">
               <label htmlFor="contact-topic" className="font-mono text-xs font-semibold text-[#0E2943]">
                 Area of Interest
@@ -323,18 +323,18 @@ Message: ${message.trim() || '[No message entered]'}
 
             {/* Feedback alert when copied */}
             {copied && (
-              <div role="status" className="p-2.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-center gap-2 animate-fadeIn">
-                <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <div role="status" className="p-2.5 rounded-md bg-[#F5EFE7] text-[#0E2943] border border-[#D9DDD9] text-xs flex items-center gap-2 animate-fadeIn">
+                <Check className="w-4 h-4 text-[#793327] flex-shrink-0" />
                 <span>Inquiry note copied to clipboard.</span>
               </div>
             )}
 
             {copyError && (
-              <div className="p-2.5 rounded-md bg-rose-50 text-rose-800 border border-rose-200 text-xs">
+              <div className="p-2.5 rounded-md bg-[#F7EEEC] text-[#793327] border border-[#B6887E] text-xs">
                 <p role="alert">{copyError}</p>
                 <label htmlFor="contact-complete-draft" className="mt-3 block font-semibold">Complete inquiry text</label>
                 <textarea ref={fallbackRef} id="contact-complete-draft" readOnly value={draftText} rows={8}
-                  className="mt-1 w-full rounded-md border border-rose-300 bg-white p-3 text-sm text-[#0E2943] focus-visible:outline-2 focus-visible:outline-[#0E2943]" />
+                  className="mt-1 w-full rounded-md border border-[#B6887E] bg-white p-3 text-sm text-[#0E2943] focus-visible:outline-2 focus-visible:outline-[#0E2943]" />
                 <Button type="button" variant="secondary" size="sm" className="mt-2 min-h-11"
                   onClick={() => { fallbackRef.current?.focus(); fallbackRef.current?.select(); }}>Select All</Button>
               </div>

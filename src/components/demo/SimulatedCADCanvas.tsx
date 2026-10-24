@@ -175,13 +175,13 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
             } ${
               isTargetHighlighted('tool-sketch')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
+                ? 'ring-2 ring-[#793327] ring-offset-1 ring-offset-white'
                 : ''
             }`}
             title="Sketch tool: Click to enter sketch mode on Top Plane"
             aria-label="Sketch tool" disabled={!canStartSketch}
           >
-            <Layers className="w-3.5 h-3.5 text-[#B74B21]" />
+            <Layers className="w-3.5 h-3.5 text-[#793327]" />
             <span className="hidden sm:inline">Sketch</span>
           </button>
 
@@ -199,7 +199,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 : 'hover:bg-[#FAF8F4] text-[#55616B]'
             } ${
               isTargetHighlighted('tool-extrude')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
+                ? 'ring-2 ring-[#793327] ring-offset-1 ring-offset-white'
                 : ''
             }`}
             title="Extrude: Start a Solid / New / Blind preview"
@@ -225,7 +225,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
             } ${
               isTargetHighlighted('tool-rectangle')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
+                ? 'ring-2 ring-[#793327] ring-offset-1 ring-offset-white'
                 : ''
             }`}
             title="Corner Rectangle (G): select the origin, then the opposite corner"
@@ -248,7 +248,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 : 'hover:bg-[#FAF8F4] text-[#0E2943] border border-transparent hover:border-[#D9DDD9]'
             } ${
               isTargetHighlighted('tool-dimension')
-                ? 'ring-2 ring-[#B74B21] ring-offset-1 ring-offset-white'
+                ? 'ring-2 ring-[#793327] ring-offset-1 ring-offset-white'
                 : ''
             }`}
             title="Apply the current sketch dimensions"
@@ -286,7 +286,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           {(['top', 'iso', 'front', 'right'] as const).map(view => (
             <button type="button" key={view} aria-label={`View ${view === 'iso' ? 'Iso (Isometric)' : view[0].toUpperCase() + view.slice(1)}`}
               aria-pressed={viewOrientation === view} onClick={() => setViewOrientation(view)}
-              className={`min-h-10 rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-[#B74B21] ${viewOrientation === view ? 'bg-[#0E2943] text-white' : 'text-[#55616B] hover:bg-[#FAF8F4]'}`}>
+              className={`min-h-10 rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-[#793327] ${viewOrientation === view ? 'bg-[#0E2943] text-white' : 'text-[#55616B] hover:bg-[#FAF8F4]'}`}>
               {view === 'iso' ? 'Iso' : view[0].toUpperCase() + view.slice(1)}
             </button>
           ))}
@@ -296,7 +296,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         {isSketchActive && !isSketchAccepted && (
           <div className="border-b border-[#D9DDD9] bg-white px-3 py-2 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#B74B21]" />
+              <span className="w-2 h-2 rounded-full bg-[#793327]" />
               <strong className="text-[#0E2943]">Sketch 1</strong>
               <span className="text-[#55616B] text-[11px]">(Top Plane)</span>
             </div>
@@ -310,11 +310,11 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 }}
                 className={`disabled:opacity-35 disabled:cursor-not-allowed flex h-10 w-10 items-center justify-center rounded transition-all cursor-pointer ${
                   currentStepIndex === 5
-                    ? 'bg-emerald-600 text-white ring-2 ring-emerald-500 ring-offset-1'
-                    : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                    ? 'bg-[#793327] text-white ring-2 ring-[#793327] ring-offset-1'
+                    : 'bg-[#F5EFE7] text-[#793327] hover:bg-[#EDE1DB]'
                 } ${
                   isTargetHighlighted('tool-accept-sketch')
-                    ? 'ring-2 ring-[#B74B21] ring-offset-1'
+                    ? 'ring-2 ring-[#793327] ring-offset-1'
                     : ''
                 }`}
                 title="Accept Sketch (Green Checkmark) — Commit Sketch 1"
@@ -328,7 +328,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   e.stopPropagation();
                   onResetSketch?.();
                 }}
-                className="flex h-10 w-10 items-center justify-center rounded bg-rose-50 text-rose-700 transition-colors hover:bg-rose-100 cursor-pointer"
+                className="flex h-10 w-10 items-center justify-center rounded bg-[#F7EEEC] text-[#793327] transition-colors hover:bg-[#F1E1DD] cursor-pointer"
                 title="Cancel Sketch mode"
                 aria-label="Cancel Sketch"
               >
@@ -340,7 +340,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
       {isExtrudePreview && <div role="group" aria-label="Extrude 1 settings" className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[#D9DDD9] bg-white px-3 py-3">
         <div className="max-w-48"><DimensionInput label="Depth (mm)" value={extrudeDepthMm} min={1} max={50} onChange={onDepthChange} onValidityChange={onDepthValidityChange} /></div>
-        <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude" className="mb-1 rounded px-2 py-2 text-xs text-[#55616B] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-[#B74B21]">Cancel</button>
+        <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude" className="mb-1 rounded px-2 py-2 text-xs text-[#55616B] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-[#793327]">Cancel</button>
       </div>}
       {/* Main CAD Canvas Area */}
       <div className={`relative flex min-h-[320px] min-w-0 flex-1 overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
@@ -365,24 +365,24 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               }}
               className={`w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${
                 currentStepIndex === 1 && !isPlaneSelected
-                  ? 'bg-[#B74B21]/15 text-[#B74B21] font-semibold border border-[#B74B21]/30'
+                  ? 'bg-[#793327]/15 text-[#793327] font-semibold border border-[#793327]/30'
                   : isPlaneSelected
                   ? 'text-[#0E2943] font-medium bg-[#F5EFE7]'
                   : 'text-[#55616B] hover:bg-[#FAF8F4]'
               } ${
                 isTargetHighlighted('tool-top-plane')
-                  ? 'ring-2 ring-[#B74B21] ring-offset-1'
+                  ? 'ring-2 ring-[#793327] ring-offset-1'
                   : ''
               }`}
               title="Top Plane (XY Datum) — Click to select datum"
               aria-label="Top Plane feature item" disabled={currentStepIndex !== 1 || sketchStatus !== 'not-started'}
             >
               <div className="flex items-center gap-1.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${isPlaneSelected ? 'bg-[#0E2943]' : 'bg-[#B74B21]'}`} />
+                <span className={`w-1.5 h-1.5 rounded-full ${isPlaneSelected ? 'bg-[#0E2943]' : 'bg-[#793327]'}`} />
                 <span>Top Plane (XY)</span>
               </div>
               {currentStepIndex === 1 && !isPlaneSelected && (
-                <span className="text-[9px] uppercase px-1 bg-[#B74B21] text-white rounded">Select</span>
+                <span className="text-[9px] uppercase px-1 bg-[#793327] text-white rounded">Select</span>
               )}
             </button>
 
@@ -399,24 +399,24 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             {isSketchActive && (
               <div className={`mt-2 pt-2 border-t border-[#D9DDD9] px-2 py-1 rounded flex items-center justify-between ${
                 isSketchAccepted
-                  ? 'bg-emerald-50 text-emerald-900 font-medium border border-emerald-200'
+                  ? 'bg-[#F5EFE7] text-[#0E2943] font-medium border border-[#D9DDD9]'
                   : 'bg-[#F5EFE7] text-[#0E2943] font-semibold'
               }`}>
                 <div className="flex items-center gap-1.5">
-                  <Layers className="w-3 h-3 text-[#B74B21]" />
+                  <Layers className="w-3 h-3 text-[#793327]" />
                   <span>Sketch 1</span>
                 </div>
                 {isSketchAccepted ? (
-                  <Check className="w-3 h-3 text-emerald-600" />
+                  <Check className="w-3 h-3 text-[#793327]" />
                 ) : (
-                  <span className="text-[9px] text-[#B74B21] uppercase">Editing</span>
+                  <span className="text-[9px] text-[#793327] uppercase">Editing</span>
                 )}
               </div>
             )}
             {isExtruding && (
-              <div className={`mt-1 px-2 py-1 rounded flex items-center justify-between font-semibold ${isSolidCreated ? 'bg-emerald-50 text-emerald-900' : 'bg-[#F5EFE7] text-[#0E2943]'}`}>
-                <span className="inline-flex items-center gap-1.5"><Box className="w-3 h-3 text-[#B74B21]" />Extrude 1</span>
-                {isSolidCreated ? <Check className="h-3 w-3 text-emerald-700" /> : <span className="text-[9px] text-[#B74B21]">PREVIEW</span>}
+              <div className={`mt-1 px-2 py-1 rounded flex items-center justify-between font-semibold ${isSolidCreated ? 'bg-[#F5EFE7] text-[#0E2943]' : 'bg-[#F5EFE7] text-[#0E2943]'}`}>
+                <span className="inline-flex items-center gap-1.5"><Box className="w-3 h-3 text-[#793327]" />Extrude 1</span>
+                {isSolidCreated ? <Check className="h-3 w-3 text-[#793327]" /> : <span className="text-[9px] text-[#793327]">PREVIEW</span>}
               </div>
             )}
             {isSolidCreated && (
@@ -456,7 +456,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               cx="0"
               cy="0"
               r="4.5"
-              fill="#B74B21"
+              fill="#793327"
               className="cursor-pointer"
             />
             <circle
@@ -464,12 +464,12 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               cy="0"
               r="9"
               fill="none"
-              stroke="#B74B21"
+              stroke="#793327"
               strokeWidth="1.25"
               strokeDasharray="3 2"
               className="cursor-pointer"
             />
-            <text x="8" y="-7" fill="#B74B21" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
+            <text x="8" y="-7" fill="#793327" fontSize="10" fontFamily="IBM Plex Mono" fontWeight="600">
               (0,0) Origin
             </text>
 
@@ -495,8 +495,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 points="-60,0 80,45 160,-35 20,-80"
                 role="button" aria-disabled={currentStepIndex !== 1} tabIndex={currentStepIndex === 1 ? 0 : -1} aria-label="Select Top Plane in viewport"
                 onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onTriggerAction('select-top-plane'); } }}
-                fill={isPlaneSelected ? 'rgba(183, 75, 33, 0.14)' : 'rgba(14, 41, 67, 0.05)'}
-                stroke={isPlaneSelected ? '#B74B21' : '#0E2943'}
+                fill={isPlaneSelected ? 'rgba(121, 51, 39, 0.14)' : 'rgba(14, 41, 67, 0.05)'}
+                stroke={isPlaneSelected ? '#793327' : '#0E2943'}
                 strokeWidth={isPlaneSelected ? '2.5' : '1'}
                 strokeDasharray={isPlaneSelected ? 'none' : '4 3'}
                 className="cursor-pointer transition-all"
@@ -511,7 +511,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             </g>
           )}
 
-          {canDraw && rectangleArmed && originSet && <rect role="img" aria-label="Rectangle drawing preview" x="0" y={-rectanglePreview.height * 3} width={rectanglePreview.width * 3} height={rectanglePreview.height * 3} fill="rgba(183,75,33,.06)" stroke="#B74B21" strokeWidth="1.5" strokeDasharray="4 3" pointerEvents="none" />}
+          {canDraw && rectangleArmed && originSet && <rect role="img" aria-label="Rectangle drawing preview" x="0" y={-rectanglePreview.height * 3} width={rectanglePreview.width * 3} height={rectanglePreview.height * 3} fill="rgba(121, 51, 39,.06)" stroke="#793327" strokeWidth="1.5" strokeDasharray="4 3" pointerEvents="none" />}
           {/* Drawing is driven by editable sketch dimensions. */}
           {isRectangleDrawn && !isExtruding && (
             <g data-testid="sketch-profile" aria-label={`Rectangle ${widthMm} by ${heightMm} millimeters`}>
@@ -520,14 +520,14 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   fill="rgba(14, 41, 67, 0.15)" stroke="none" />
               )}
               <rect x="0" y={-heightUnits} width={widthUnits} height={heightUnits}
-                fill={isSketchAccepted ? 'transparent' : 'rgba(183,75,33,0.04)'}
-                stroke={isDimensioned ? '#0E2943' : '#B74B21'}
+                fill={isSketchAccepted ? 'transparent' : 'rgba(121, 51, 39,0.04)'}
+                stroke={isDimensioned ? '#0E2943' : '#793327'}
                 strokeWidth={isDimensioned ? 2.5 : 2} className="transition-colors duration-200 cursor-pointer"
                 onClick={event => { event.stopPropagation(); if (currentStepIndex === 4 && !isDimensioned) onTriggerAction('apply-dimensions'); }} />
-              <circle cx="0" cy="0" r="3.5" fill="#B74B21" />
-              <circle cx={widthUnits} cy={-heightUnits} r="3.5" fill={isDimensioned ? '#0E2943' : '#B74B21'} />
-              <circle cx={widthUnits} cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#B74B21'} />
-              <circle cx="0" cy={-heightUnits} r="3" fill={isDimensioned ? '#0E2943' : '#B74B21'} />
+              <circle cx="0" cy="0" r="3.5" fill="#793327" />
+              <circle cx={widthUnits} cy={-heightUnits} r="3.5" fill={isDimensioned ? '#0E2943' : '#793327'} />
+              <circle cx={widthUnits} cy="0" r="3" fill={isDimensioned ? '#0E2943' : '#793327'} />
+              <circle cx="0" cy={-heightUnits} r="3" fill={isDimensioned ? '#0E2943' : '#793327'} />
 
             </g>
           )}
@@ -566,8 +566,8 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                 strokeWidth="0.75"
                 strokeDasharray="3 3"
               />
-              <circle cx={svgCursor.x} cy={svgCursor.y} r="2.5" fill="#B74B21" />
-              <circle cx={svgCursor.x} cy={svgCursor.y} r="5.5" fill="none" stroke="#B74B21" strokeWidth="1" strokeDasharray="2 2" />
+              <circle cx={svgCursor.x} cy={svgCursor.y} r="2.5" fill="#793327" />
+              <circle cx={svgCursor.x} cy={svgCursor.y} r="5.5" fill="none" stroke="#793327" strokeWidth="1" strokeDasharray="2 2" />
 
             </g>
           )}
