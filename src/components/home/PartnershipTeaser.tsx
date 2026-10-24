@@ -18,7 +18,7 @@ export const PartnershipTeaser: React.FC<PartnershipTeaserProps> = ({
         <div className="bg-[#FAF8F4] rounded-2xl p-8 sm:p-12 border border-[#D9DDD9] space-y-8">
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-2">
-              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#B74B21] bg-[#B74B21]/10 px-2.5 py-1 rounded-sm border border-[#B74B21]/20">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#793327] bg-[#793327]/10 px-2.5 py-1 rounded-sm border border-[#793327]/20">
                 Collaboration & Research
               </span>
             </div>
@@ -35,7 +35,7 @@ export const PartnershipTeaser: React.FC<PartnershipTeaserProps> = ({
           {/* 3 Quick Pillar Points */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2">
-              <div className="w-8 h-8 rounded-md bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
+              <div className="w-8 h-8 rounded-md bg-[#F5EFE7] flex items-center justify-center text-[#793327]">
                 <Cpu className="w-4 h-4" />
               </div>
               <h4 className="text-sm font-semibold text-[#0E2943]">Platform Integration</h4>
@@ -45,7 +45,7 @@ export const PartnershipTeaser: React.FC<PartnershipTeaserProps> = ({
             </div>
 
             <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2">
-              <div className="w-8 h-8 rounded-md bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
+              <div className="w-8 h-8 rounded-md bg-[#F5EFE7] flex items-center justify-center text-[#793327]">
                 <School className="w-4 h-4" />
               </div>
               <h4 className="text-sm font-semibold text-[#0E2943]">Classroom Pilots</h4>
@@ -55,7 +55,7 @@ export const PartnershipTeaser: React.FC<PartnershipTeaserProps> = ({
             </div>
 
             <div className="bg-white p-5 rounded-xl border border-[#D9DDD9] space-y-2">
-              <div className="w-8 h-8 rounded-md bg-[#F5EFE7] flex items-center justify-center text-[#B74B21]">
+              <div className="w-8 h-8 rounded-md bg-[#F5EFE7] flex items-center justify-center text-[#793327]">
                 <TrendingUp className="w-4 h-4" />
               </div>
               <h4 className="text-sm font-semibold text-[#0E2943]">Commercial Potential</h4>

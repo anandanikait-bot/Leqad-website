@@ -48,7 +48,7 @@ function buttonClasses(variant: NonNullable<ButtonProps['variant']>, size: NonNu
     primary:
       'bg-[#0E2943] text-white hover:bg-[#163859] active:bg-[#0A1F33] shadow-xs',
     rust:
-      'bg-[#B74B21] text-white hover:bg-[#9C3F1B] active:bg-[#823315] shadow-xs',
+      'bg-[#793327] text-white hover:bg-[#62281F] active:bg-[#54221A] shadow-xs',
     secondary:
       'bg-white text-[#0E2943] border border-[#D9DDD9] hover:bg-[#FAF8F4] hover:border-[#55616B]/40 active:bg-[#F5EFE7] shadow-2xs',
     outline:

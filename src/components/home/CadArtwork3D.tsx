@@ -179,7 +179,7 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       const axisZ = project(0, 0, axisLen);
 
       // X Axis (Red/Rust)
-      ctx.strokeStyle = 'rgba(183, 75, 33, 0.7)';
+      ctx.strokeStyle = 'rgba(121, 51, 39, 0.7)';
       ctx.lineWidth = 1.75;
       ctx.beginPath();
       ctx.moveTo(o.px, o.py);
@@ -311,7 +311,7 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       // 7. Technical Dimension Annotations (40 mm x 30 mm)
       ctx.save();
       ctx.font = '10px monospace';
-      ctx.fillStyle = '#B74B21';
+      ctx.fillStyle = '#793327';
 
       // Width dimension (40 mm along X edge between vertex 3 and 2)
       const p3 = projectedV[3];
@@ -330,13 +330,13 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       if (currH > 8) {
         const midX3 = (p1.px + projectedV[5].px) * 0.5 + 24;
         const midY3 = (p1.py + projectedV[5].py) * 0.5;
-        ctx.fillStyle = '#B74B21';
+        ctx.fillStyle = '#793327';
         ctx.fillText('22 mm [EXT]', midX3, midY3);
       }
 
       // Corner datum dots
       [projectedV[0], projectedV[1], projectedV[2], projectedV[3]].forEach((pt) => {
-        ctx.fillStyle = '#B74B21';
+        ctx.fillStyle = '#793327';
         ctx.beginPath();
         ctx.arc(pt.px, pt.py, 2.5, 0, Math.PI * 2);
         ctx.fill();
@@ -498,7 +498,7 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       {/* Top Header Overlay Bar */}
       <div className="absolute top-3.5 left-4 right-4 flex items-center justify-between pointer-events-none text-xs gap-2">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="w-2 h-2 rounded-full bg-[#B74B21] animate-pulse flex-shrink-0" />
+          <span className="w-2 h-2 rounded-full bg-[#793327] animate-pulse flex-shrink-0" />
           <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-wider text-[#F5EFE7] uppercase truncate">
             FORM STUDY / 001
           </span>
@@ -522,12 +522,12 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
         >
           {isExtruded ? (
             <>
-              <Box className="w-3 h-3 text-[#B74B21]" />
+              <Box className="w-3 h-3 text-[#793327]" />
               <span>3D EXTRUDE</span>
             </>
           ) : (
             <>
-              <Layers className="w-3 h-3 text-emerald-400" />
+              <Layers className="w-3 h-3 text-[#F5EFE7]" />
               <span>2D SKETCH</span>
             </>
           )}
@@ -538,13 +538,13 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       <div className="absolute bottom-3.5 left-3.5 right-3.5 flex flex-wrap items-center justify-between pointer-events-none text-[10px] sm:text-[11px] font-mono text-[#F5EFE7]/70 gap-2">
         {/* Subtle Disclaimer */}
         <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] text-[#F5EFE7]/60">
-          <Info className="w-3 h-3 text-[#B74B21] flex-shrink-0" />
+          <Info className="w-3 h-3 text-[#793327] flex-shrink-0" />
           <span>Concept visualization · Not live CAD</span>
         </div>
 
         {/* Interaction Label */}
         <div className="bg-[#0E2943]/85 border border-[#F5EFE7]/20 px-2 sm:px-2.5 py-1 rounded-md text-[9px] sm:text-[10px] tracking-wide text-[#F5EFE7] flex items-center gap-1.5 shadow-xs ml-auto">
-          <Rotate3d className="w-3 h-3 text-[#B74B21] flex-shrink-0" />
+          <Rotate3d className="w-3 h-3 text-[#793327] flex-shrink-0" />
           <span>DRAG TO ROTATE · TAP TO SWITCH VIEW</span>
         </div>
       </div>
