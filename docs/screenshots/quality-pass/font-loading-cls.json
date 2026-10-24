@@ -1,0 +1,1706 @@
+[
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 568
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 2116
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 720
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1600
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 708
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.007255593333333333,
+    "shifts": [
+      {
+        "value": 0.007255593333333333,
+        "time": 1726.8999999910593,
+        "sources": [
+          {
+            "tag": "SECTION",
+            "text": "Possible collaborationTechnical fit. Useful learning evidenc"
+          },
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Evaluate Onshape control recognition, extension-prototype be"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1700
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 788
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 1476
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.00005084765625,
+    "shifts": [
+      {
+        "value": 0.00005084765625,
+        "time": 630.5,
+        "sources": [
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 640
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.0002944518229166667,
+    "shifts": [
+      {
+        "value": 0.00024360416666666668,
+        "time": 1439.2000000029802,
+        "sources": [
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "tag": "SPAN",
+            "text": "Explore Interactive Demo"
+          }
+        ]
+      },
+      {
+        "value": 0.00005084765625,
+        "time": 1847.2999999970198,
+        "sources": [
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1492
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 908
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 2276
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 664
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.008661328125,
+    "shifts": [
+      {
+        "value": 0.008661328125,
+        "time": 1331.7999999970198,
+        "sources": [
+          {
+            "tag": "SECTION",
+            "text": "Possible collaborationTechnical fit. Useful learning evidenc"
+          },
+          {
+            "text": "Explore CAD learning together."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1372
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 1028
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 2008
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.00004941936728395062,
+    "shifts": [
+      {
+        "value": 0.00004941936728395062,
+        "time": 944.2000000029802,
+        "sources": [
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 716
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1852
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 524
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0.0008636741355613426,
+    "shifts": [
+      {
+        "value": 0.0008636741355613426,
+        "time": 1131.2999999970198,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "text": "See the first sketch take shape."
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          },
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1204
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 556
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.0033077343750000003,
+    "shifts": [
+      {
+        "value": 0.0033077343750000003,
+        "time": 970.2000000029802,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          },
+          {
+            "tag": "ASIDE",
+            "text": "An exploratory first stepStart with a question worth testing"
+          },
+          {
+            "text": "Discuss a learning task, check technical feasibility, and ag"
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 1024
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0.0248,
+    "shifts": [
+      {
+        "value": 0.0248,
+        "time": 1022.6999999880791,
+        "sources": [
+          {
+            "tag": "FOOTER",
+            "text": "An early learning-assistant prototype for guided CAD practic"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 1188
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 1404
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 484
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.00026041599999999997,
+    "shifts": [
+      {
+        "value": 0.00026041599999999997,
+        "time": 1073.5,
+        "sources": [
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "tag": "SPAN",
+            "text": "Explore Interactive Demo"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 968
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 476
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 932
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 304
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 872
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 404
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 920
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.00005084765625,
+    "shifts": [
+      {
+        "value": 0.00005084765625,
+        "time": 362.09999999403954,
+        "sources": [
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 376
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 988
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 312
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 884
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 212
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 796
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 272
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 712
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.00004941936728395062,
+    "shifts": [
+      {
+        "value": 0.00004941936728395062,
+        "time": 449.40000000596046,
+        "sources": [
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 412
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 792
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 368
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 668
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 348
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 536
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 268
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 604
+  }
+]

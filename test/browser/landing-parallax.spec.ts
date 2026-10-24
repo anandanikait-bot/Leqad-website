@@ -8,7 +8,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator('header, footer')).toHaveCount(0);
 
-    const heading = page.getByRole('heading', { name: 'Learn CAD by', exact: true });
+    const heading = page.getByRole('heading', { name: 'Learn CAD by building.', exact: true });
     await expect(heading).toHaveCSS('text-align', 'left');
     const rotatingPhrase = page.locator('main span.font-serif');
     await expect(rotatingPhrase).toHaveCSS('font-style', 'italic');

@@ -349,6 +349,7 @@ class MetallicShaderMount {
   private canvas: HTMLCanvasElement;
   private parent: HTMLElement;
   private locations: Record<string, WebGLUniformLocation | null> = {};
+  private buffer: WebGLBuffer | null = null;
   private rafId: number | null = null;
   private lastRenderTime = 0;
   private currentFrame = 0;
@@ -388,10 +389,18 @@ class MetallicShaderMount {
 
     const vertex = createShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
     const fragment = createShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-    if (!vertex || !fragment) return;
+    if (!vertex || !fragment) {
+      if (vertex) gl.deleteShader(vertex);
+      if (fragment) gl.deleteShader(fragment);
+      return;
+    }
 
     const program = gl.createProgram();
-    if (!program) return;
+    if (!program) {
+      gl.deleteShader(vertex);
+      gl.deleteShader(fragment);
+      return;
+    }
     gl.attachShader(program, vertex);
     gl.attachShader(program, fragment);
     gl.linkProgram(program);
@@ -407,6 +416,7 @@ class MetallicShaderMount {
     this.program = program;
 
     const buffer = gl.createBuffer();
+    this.buffer = buffer;
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(
       gl.ARRAY_BUFFER,
@@ -461,17 +471,28 @@ class MetallicShaderMount {
   }
 
   private setupObservers() {
+    document.addEventListener("visibilitychange", this.handleVisibilityChange);
     this.resizeObserver = new ResizeObserver(() => this.handleResize());
     this.resizeObserver.observe(this.parent);
 
     if (typeof IntersectionObserver !== "undefined") {
       this.intersectionObserver = new IntersectionObserver(([entry]) => {
         this.isInViewport = entry?.isIntersecting ?? true;
-        if (this.isInViewport && this.speed !== 0) this.requestRender();
+        this.handleVisibilityChange();
       });
       this.intersectionObserver.observe(this.parent);
     }
   }
+
+  private handleVisibilityChange = () => {
+    if (document.hidden || !this.isInViewport) {
+      if (this.rafId !== null) cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    } else {
+      this.lastRenderTime = performance.now();
+      this.renderFrame(this.lastRenderTime);
+    }
+  };
 
   private handleResize = () => {
     const gl = this.gl;
@@ -533,7 +554,7 @@ class MetallicShaderMount {
 
   private renderFrame = (currentTime: number) => {
     const gl = this.gl;
-    if (!gl || !this.program || this.disposed) return;
+    if (!gl || !this.program || this.disposed || document.hidden || !this.isInViewport) return;
 
     const dt = currentTime - this.lastRenderTime;
     this.lastRenderTime = currentTime;
@@ -567,6 +588,7 @@ class MetallicShaderMount {
   };
 
   private requestRender = () => {
+    if (this.disposed || document.hidden || !this.isInViewport) return;
     if (this.rafId !== null) cancelAnimationFrame(this.rafId);
     this.rafId = requestAnimationFrame(this.renderFrame);
   };
@@ -598,10 +620,13 @@ class MetallicShaderMount {
     this.disposed = true;
     if (this.rafId !== null) cancelAnimationFrame(this.rafId);
     this.rafId = null;
+    document.removeEventListener("visibilitychange", this.handleVisibilityChange);
     this.resizeObserver?.disconnect();
     this.resizeObserver = null;
     this.intersectionObserver?.disconnect();
     this.intersectionObserver = null;
+    if (this.gl && this.buffer) this.gl.deleteBuffer(this.buffer);
+    this.buffer = null;
     if (this.gl && this.program) this.gl.deleteProgram(this.program);
     this.gl = null;
     this.program = null;

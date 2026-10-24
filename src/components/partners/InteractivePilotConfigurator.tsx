@@ -1,3 +1,4 @@
+import { inquiryActionLabel } from '../../lib/contact';
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '../shared/Button';
@@ -207,7 +208,7 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
           onClick={() => onOpenContact(selectedAudience.topic, draft)}
           icon={<ArrowRight className="w-4 h-4" />}
         >
-          Draft an Inquiry Note
+          {inquiryActionLabel}
         </Button>
       </div>
     </section>

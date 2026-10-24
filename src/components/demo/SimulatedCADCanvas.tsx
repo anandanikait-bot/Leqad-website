@@ -153,18 +153,18 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
   return (
-    <div data-lenis-prevent className="relative w-full h-full min-h-[420px] lg:min-h-[520px] bg-[#EDF1F3] rounded-xl border border-[#D9DDD9] flex flex-col overflow-hidden select-none shadow-sm">
+    <div data-lenis-prevent className="relative flex h-full min-h-[420px] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:min-h-[480px] lg:min-h-[clamp(500px,62svh,720px)]">
       {/* CAD Application Ribbon Toolbar */}
-      <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed min-h-11 bg-white border-b border-[#D9DDD9] px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-xs text-[#0E2943] z-20">
+      <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
         {/* Left CAD Toolbar */}
-        <div className="flex items-center gap-1 overflow-x-auto py-1">
+        <div className="flex min-w-0 max-w-full items-center gap-1 overflow-x-auto py-1">
           {/* Sketch tool (Step 3: Start Sketch) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               onTriggerAction('start-sketch');
             }}
-            className={`px-2.5 py-1.5 rounded flex items-center gap-1.5 font-medium transition-all cursor-pointer ${
+            className={`flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded px-2.5 py-1.5 font-medium transition-all cursor-pointer ${
               currentStepIndex === 2 && !isSketchActive
                 ? 'bg-[#0E2943] text-white shadow-xs'
                 : isSketchActive
@@ -190,7 +190,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               onTriggerAction('start-extrude');
             }}
-            className={`px-2 py-1.5 rounded flex items-center gap-1 transition-all cursor-pointer ${
+            className={`flex min-h-11 min-w-11 items-center justify-center gap-1 rounded px-2 py-1.5 transition-all cursor-pointer ${
               currentStepIndex === 6
                 ? 'bg-[#0E2943] text-white'
                 : 'hover:bg-[#FAF8F4] text-[#55616B]'
@@ -214,7 +214,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               if (canDraw) { setRectangleArmed(true); setOriginSet(false); }
             }}
-            className={`p-1.5 rounded transition-all cursor-pointer relative ${
+            className={`relative flex min-h-11 min-w-11 items-center justify-center rounded p-1.5 transition-all cursor-pointer ${
               currentStepIndex === 3 && !isRectangleDrawn
                 ? 'bg-[#0E2943] text-white'
                 : isRectangleDrawn
@@ -237,7 +237,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               onTriggerAction('apply-dimensions');
             }}
-            className={`p-1.5 rounded transition-all cursor-pointer relative ${
+            className={`relative flex min-h-11 min-w-11 items-center justify-center rounded p-1.5 transition-all cursor-pointer ${
               currentStepIndex === 4 && !isDimensioned
                 ? 'bg-[#0E2943] text-white'
                 : isDimensioned
@@ -260,7 +260,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         </div>
 
         {/* Right Info: Coordinate Readout */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+        <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2 sm:gap-3">
           <div className="font-mono whitespace-nowrap text-[11px] text-[#55616B] flex items-center gap-1.5 sm:gap-2 bg-[#F5EFE7] px-2 sm:px-2.5 py-1 rounded border border-[#D9DDD9] shadow-2xs">
             <span>
               X: <strong className="text-[#0E2943]">{cursorPos.x >= 0 ? `+${cursorPos.x.toFixed(1)}` : cursorPos.x.toFixed(1)}</strong>
@@ -283,7 +283,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           {(['top', 'iso', 'front', 'right'] as const).map(view => (
             <button type="button" key={view} aria-label={`View ${view === 'iso' ? 'Iso (Isometric)' : view[0].toUpperCase() + view.slice(1)}`}
               aria-pressed={viewOrientation === view} onClick={() => setViewOrientation(view)}
-              className={`rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-[#B74B21] ${viewOrientation === view ? 'bg-[#0E2943] text-white' : 'text-[#55616B] hover:bg-[#FAF8F4]'}`}>
+              className={`min-h-10 rounded px-2 py-1 focus-visible:outline-2 focus-visible:outline-[#B74B21] ${viewOrientation === view ? 'bg-[#0E2943] text-white' : 'text-[#55616B] hover:bg-[#FAF8F4]'}`}>
               {view === 'iso' ? 'Iso' : view[0].toUpperCase() + view.slice(1)}
             </button>
           ))}
@@ -305,7 +305,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   e.stopPropagation();
                   onTriggerAction('finish-sketch');
                 }}
-                className={`disabled:opacity-35 disabled:cursor-not-allowed w-6 h-6 rounded flex items-center justify-center transition-all cursor-pointer ${
+                className={`disabled:opacity-35 disabled:cursor-not-allowed flex h-10 w-10 items-center justify-center rounded transition-all cursor-pointer ${
                   currentStepIndex === 5
                     ? 'bg-emerald-600 text-white ring-2 ring-emerald-500 ring-offset-1'
                     : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
@@ -325,7 +325,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
                   e.stopPropagation();
                   onResetSketch?.();
                 }}
-                className="w-6 h-6 rounded flex items-center justify-center bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors cursor-pointer"
+                className="flex h-10 w-10 items-center justify-center rounded bg-rose-50 text-rose-700 transition-colors hover:bg-rose-100 cursor-pointer"
                 title="Cancel Sketch mode"
                 aria-label="Cancel Sketch"
               >
@@ -340,7 +340,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude" className="mb-1 rounded px-2 py-2 text-xs text-[#55616B] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-[#B74B21]">Cancel</button>
       </div>}
       {/* Main CAD Canvas Area */}
-      <div className={`relative flex-1 flex overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
+      <div className={`relative flex min-h-[320px] min-w-0 flex-1 overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
         {/* Left Feature Tree Panel */}
         <div className="hidden sm:flex flex-col w-44 bg-white/95 backdrop-blur-xs border-r border-[#D9DDD9] text-xs z-10 flex-shrink-0">
           <div className="p-2 border-b border-[#D9DDD9] font-mono text-[10px] uppercase font-semibold text-[#55616B] flex items-center justify-between">
@@ -433,7 +433,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           onPointerDown={handleDrawingClick}
           role="group" aria-label="CAD drawing viewport"
           onPointerLeave={handleMouseLeave}
-          className="w-full min-w-0 h-[380px] lg:h-[440px] cursor-crosshair relative touch-pan-y"
+          className="relative block h-full min-h-[320px] min-w-0 flex-1 cursor-crosshair touch-pan-y"
           viewBox={isSketchActive ? '-85 -285 350 380' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}

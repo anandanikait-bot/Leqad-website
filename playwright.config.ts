@@ -8,19 +8,22 @@ const defaultChromium = [
   '/ms-playwright/chromium_headless_shell-1247/chrome-headless-shell-linux64/chrome-headless-shell',
 ].find(p => p && existsSync(p));
 
+const origin = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:4173';
+const port = new URL(origin).port || '4173';
+
 export default defineConfig({
   testDir: './test/browser',
   timeout: 30_000,
   expect: { timeout: 5_000 },
   workers: 2,
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: origin,
     launchOptions: { executablePath: process.env.CHROMIUM_PATH || defaultChromium, args: ['--no-sandbox'] },
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: 'PORT=4173 npm start',
-    url: 'http://127.0.0.1:4173',
+    command: `PORT=${port} npm start`,
+    url: origin,
     reuseExistingServer: !process.env.CI,
   },
 });

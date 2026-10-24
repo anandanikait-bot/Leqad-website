@@ -36,7 +36,7 @@ test('audience, group and focus update output and carry into the actual draft', 
   await expect(planner.locator('[data-pilot-summary]')).toHaveText('Robotics teams · Larger group');
   await expect(planner.locator('[data-pilot-question]')).toContainText('comparable part');
 
-  const trigger = planner.getByRole('button', { name: 'Draft an Inquiry Note' });
+  const trigger = planner.getByRole('button', { name: 'Contact Leqad' });
   await trigger.click();
   const modal = page.getByRole('dialog');
   await expect(modal.getByLabel('Area of Interest')).toHaveValue('Robotics Team');
@@ -44,7 +44,7 @@ test('audience, group and focus update output and carry into the actual draft', 
   await expect(note).toHaveValue(/Audience: Robotics teams/);
   await expect(note).toHaveValue(/41\+ participants; capacity to be confirmed/);
   await expect(note).toHaveValue(/Independent practice/);
-  await expect(modal).toContainText('does not send messages directly');
+  await expect(modal).toContainText('Nothing is sent by this website.');
   await page.keyboard.press('Escape');
   await expect(modal).toHaveCount(0);
   await expect(trigger).toBeFocused();
@@ -60,13 +60,13 @@ test('platform evaluation uses technical topic and does not retain another audie
   await expect(disclosure).toHaveAttribute('open', '');
   await planner.getByRole('button', { name: 'CAD platform teams' }).click();
   await planner.getByRole('button', { name: 'Help requests' }).click();
-  await planner.getByRole('button', { name: 'Draft an Inquiry Note' }).click();
+  await planner.getByRole('button', { name: 'Contact Leqad' }).click();
   const modal = page.getByRole('dialog');
   await expect(modal.getByLabel('Area of Interest')).toHaveValue('Technical Alignment');
   await expect(modal.getByLabel('Brief Note or Context')).toHaveValue(/Audience: CAD platform teams/);
   await expect(modal.getByLabel('Brief Note or Context')).toHaveValue(/Count support requests/);
   await page.keyboard.press('Escape');
-  await page.locator('[data-parallax-anchor]').getByRole('button', { name: 'Draft an Inquiry Note', exact: true }).click();
+  await page.locator('[data-parallax-anchor]').getByRole('button', { name: 'Contact Leqad', exact: true }).click();
   await expect(page.getByRole('dialog').getByLabel('Area of Interest')).toHaveValue('General Inquiry');
   await expect(page.getByRole('dialog').getByLabel('Brief Note or Context')).toBeEmpty();
 });

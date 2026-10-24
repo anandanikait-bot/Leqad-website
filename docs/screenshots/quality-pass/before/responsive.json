@@ -1,0 +1,227 @@
+[
+  {
+    "width": 320,
+    "route": "/",
+    "overflow": false,
+    "headings": [
+      "Learn CAD by"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 320,
+    "route": "/demo",
+    "overflow": false,
+    "headings": [
+      "Interactive CAD walkthrough"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 320,
+    "route": "/about",
+    "overflow": false,
+    "headings": [
+      "CAD guidance, right where you design."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 320,
+    "route": "/partners",
+    "overflow": false,
+    "headings": [
+      "Explore CAD learning together."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 320,
+    "route": "/quality-pass-missing",
+    "overflow": false,
+    "headings": [
+      "Page not found"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 375,
+    "route": "/",
+    "overflow": false,
+    "headings": [
+      "Learn CAD by"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 375,
+    "route": "/demo",
+    "overflow": false,
+    "headings": [
+      "Interactive CAD walkthrough"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 375,
+    "route": "/about",
+    "overflow": false,
+    "headings": [
+      "CAD guidance, right where you design."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 375,
+    "route": "/partners",
+    "overflow": false,
+    "headings": [
+      "Explore CAD learning together."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 375,
+    "route": "/quality-pass-missing",
+    "overflow": false,
+    "headings": [
+      "Page not found"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 768,
+    "route": "/",
+    "overflow": false,
+    "headings": [
+      "Learn CAD by"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 768,
+    "route": "/demo",
+    "overflow": false,
+    "headings": [
+      "Interactive CAD walkthrough"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 768,
+    "route": "/about",
+    "overflow": false,
+    "headings": [
+      "CAD guidance, right where you design."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 768,
+    "route": "/partners",
+    "overflow": false,
+    "headings": [
+      "Explore CAD learning together."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 768,
+    "route": "/quality-pass-missing",
+    "overflow": false,
+    "headings": [
+      "Page not found"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1024,
+    "route": "/",
+    "overflow": false,
+    "headings": [
+      "Learn CAD by"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1024,
+    "route": "/demo",
+    "overflow": false,
+    "headings": [
+      "Interactive CAD walkthrough"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1024,
+    "route": "/about",
+    "overflow": false,
+    "headings": [
+      "CAD guidance, right where you design."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1024,
+    "route": "/partners",
+    "overflow": false,
+    "headings": [
+      "Explore CAD learning together."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1024,
+    "route": "/quality-pass-missing",
+    "overflow": false,
+    "headings": [
+      "Page not found"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1440,
+    "route": "/",
+    "overflow": false,
+    "headings": [
+      "Learn CAD by"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1440,
+    "route": "/demo",
+    "overflow": false,
+    "headings": [
+      "Interactive CAD walkthrough"
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1440,
+    "route": "/about",
+    "overflow": false,
+    "headings": [
+      "CAD guidance, right where you design."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1440,
+    "route": "/partners",
+    "overflow": false,
+    "headings": [
+      "Explore CAD learning together."
+    ],
+    "fonts": "loaded"
+  },
+  {
+    "width": 1440,
+    "route": "/quality-pass-missing",
+    "overflow": false,
+    "headings": [
+      "Page not found"
+    ],
+    "fonts": "loaded"
+  }
+]

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Copy, Check, Info } from 'lucide-react';
 import { Button } from './Button';
+import { contactConfig } from '../../lib/contact';
 
 // The contact UI drafts a note rather than submitting it. Every entry point
 // must resolve to one of the actual select values to avoid a blank topic.
@@ -25,23 +26,34 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   defaultTopic = 'Technical Alignment',
   defaultMessage = '',
 }) => {
-  const [topic, setTopic] = useState(defaultTopic);
+  // Keep separate drafts for each entry context, including planner prefills.
+  // Closing a dialog must never discard the visitor's edits.
+  const draftKey = JSON.stringify([defaultTopic, defaultMessage]);
+  const [drafts, setDrafts] = useState<Record<string, { topic: string; message: string }>>({});
+  const draft = drafts[draftKey] ?? {
+    topic: CONTACT_TOPICS.has(defaultTopic) ? defaultTopic : 'General Inquiry',
+    message: defaultMessage,
+  };
+  const { topic, message } = draft;
+  const updateDraft = (changes: Partial<typeof draft>) => {
+    setDrafts(current => ({ ...current, [draftKey]: { ...draft, ...changes } }));
+    setCopied(false);
+  };
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [organization, setOrganization] = useState('');
-  const [message, setMessage] = useState(defaultMessage);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState<string | null>(null);
 
+  const fallbackRef = useRef<HTMLTextAreaElement | null>(null);
+  const copyTimer = useRef<number | undefined>(undefined);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
-  // Sync default topic and reset state when modal opens
+  // Restore focus and scrolling without resetting the draft.
   useEffect(() => {
     if (isOpen) {
       previousActiveElement.current = document.activeElement as HTMLElement | null;
-      setTopic(CONTACT_TOPICS.has(defaultTopic) ? defaultTopic : 'General Inquiry');
-      setMessage(defaultMessage);
       setCopied(false);
       setCopyError(null);
 
@@ -56,6 +68,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
       return () => {
         window.clearTimeout(focusTimeout);
+        window.clearTimeout(copyTimer.current);
         document.body.style.overflow = originalOverflow;
         previousActiveElement.current?.focus?.();
       };
@@ -75,17 +88,17 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
       if (e.key === 'Tab' && modalRef.current) {
         const focusables = modalRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
         );
         if (focusables.length === 0) return;
 
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
 
-        if (e.shiftKey && document.activeElement === first) {
+        if (e.shiftKey && (document.activeElement === first || !modalRef.current.contains(document.activeElement))) {
           e.preventDefault();
           last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
+        } else if (!e.shiftKey && (document.activeElement === last || !modalRef.current.contains(document.activeElement))) {
           e.preventDefault();
           first.focus();
         }
@@ -98,34 +111,28 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleCopyNote = async () => {
-    setCopyError(null);
-    const draftText = `--- Leqad Partnership Inquiry ---
+  const draftText = `--- Leqad Partnership Inquiry ---
 Topic: ${topic}
 Name: ${name.trim() || '[Not specified]'}
 Email: ${email.trim() || '[Not specified]'}
 Organization: ${organization.trim() || '[Not specified]'}
 Message: ${message.trim() || '[No message entered]'}
 ---------------------------------`;
+  const mailto = contactConfig.email
+    ? `mailto:${contactConfig.email}?subject=${encodeURIComponent(`Leqad inquiry: ${topic}`)}&body=${encodeURIComponent(draftText)}`
+    : null;
 
+  const handleCopyNote = async () => {
+    setCopyError(null);
+    setCopied(false);
+    window.clearTimeout(copyTimer.current);
     try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(draftText);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = draftText;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        const success = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        if (!success) throw new Error('Clipboard copy was rejected');
-      }
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(draftText);
       setCopied(true);
-      setTimeout(() => setCopied(false), 4000);
+      copyTimer.current = window.setTimeout(() => setCopied(false), 4000);
     } catch {
-      setCopyError('Unable to copy automatically. Please select and copy your text manually.');
+      setCopyError('Unable to copy automatically. Select all of the inquiry below, then use your device’s Copy command or Ctrl+C (Command+C on Mac).');
     }
   };
 
@@ -148,12 +155,12 @@ Message: ${message.trim() || '[No message entered]'}
               Partnerships & Collaboration
             </span>
             <h3 id="modal-title" className="text-base font-bold text-[#0E2943]">
-              Prepare an Inquiry Note
+              {mailto ? 'Contact Leqad' : 'Prepare an Inquiry Note'}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-md text-[#55616B] hover:text-[#0E2943] hover:bg-[#F5EFE7] transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-[#55616B] hover:text-[#0E2943] hover:bg-[#F5EFE7] transition-colors cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -167,16 +174,18 @@ Message: ${message.trim() || '[No message entered]'}
             <Info className="w-4 h-4 text-[#B74B21] flex-shrink-0 mt-0.5" />
             <div className="space-y-1 text-[#55616B] leading-relaxed">
               <strong className="text-[#0E2943] font-medium block">
-                Save a draft for later
+                {mailto ? 'Open a draft in your email app' : 'Save a draft for later'}
               </strong>
               <span>
-                A public contact email is not available yet. This helper does not send messages directly.
-                Use <strong>Copy Inquiry Note</strong> to keep a draft for later.
+                {mailto
+                  ? 'Open your email app to review and send your inquiry to Leqad support. Nothing is sent by this website.'
+                  : <>A public contact email is not available yet. This helper does not send messages directly.
+                    Use <strong>Copy Inquiry Note</strong> to keep a draft for later.</>}
               </span>
             </div>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); handleCopyNote(); }} className="space-y-3.5 text-xs sm:text-sm">
+          <form onSubmit={(e) => { e.preventDefault(); if (mailto) window.location.href = mailto; else void handleCopyNote(); }} className="space-y-3.5 text-xs sm:text-sm">
             <div className="space-y-1">
               <label htmlFor="contact-topic" className="font-mono text-xs font-semibold text-[#0E2943]">
                 Area of Interest
@@ -184,7 +193,7 @@ Message: ${message.trim() || '[No message entered]'}
               <select
                 id="contact-topic"
                 value={topic}
-                onChange={(e) => setTopic(e.target.value)}
+                onChange={(e) => updateDraft({ topic: e.target.value })}
                 className="w-full px-3 py-2 rounded-md border border-[#D9DDD9] bg-[#FAF8F4] text-[#0E2943] focus:outline-hidden focus:ring-2 focus:ring-[#0E2943]"
               >
                 <option value="Technical Alignment">Technical Alignment & Platform Fit</option>
@@ -205,7 +214,7 @@ Message: ${message.trim() || '[No message entered]'}
                   type="text"
                   placeholder="Ada Lovelace"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => { setName(e.target.value); setCopied(false); }}
                   className="w-full px-3 py-2 rounded-md border border-[#D9DDD9] bg-[#FAF8F4] text-[#0E2943] placeholder-[#55616B]/50 focus:outline-hidden focus:ring-2 focus:ring-[#0E2943]"
                 />
               </div>
@@ -219,7 +228,7 @@ Message: ${message.trim() || '[No message entered]'}
                   type="email"
                   placeholder="ada@institution.edu"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value); setCopied(false); }}
                   className="w-full px-3 py-2 rounded-md border border-[#D9DDD9] bg-[#FAF8F4] text-[#0E2943] placeholder-[#55616B]/50 focus:outline-hidden focus:ring-2 focus:ring-[#0E2943]"
                 />
               </div>
@@ -234,7 +243,7 @@ Message: ${message.trim() || '[No message entered]'}
                 type="text"
                 placeholder="e.g. Oakridge Robotics / University CAD Lab"
                 value={organization}
-                onChange={(e) => setOrganization(e.target.value)}
+                onChange={(e) => { setOrganization(e.target.value); setCopied(false); }}
                 className="w-full px-3 py-2 rounded-md border border-[#D9DDD9] bg-[#FAF8F4] text-[#0E2943] placeholder-[#55616B]/50 focus:outline-hidden focus:ring-2 focus:ring-[#0E2943]"
               />
             </div>
@@ -248,7 +257,7 @@ Message: ${message.trim() || '[No message entered]'}
                 rows={3}
                 placeholder="Tell us about your student group, CAD platform, or what you would like to explore..."
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) => updateDraft({ message: e.target.value })}
                 className="w-full px-3 py-2 rounded-md border border-[#D9DDD9] bg-[#FAF8F4] text-[#0E2943] placeholder-[#55616B]/50 focus:outline-hidden focus:ring-2 focus:ring-[#0E2943]"
               />
             </div>
@@ -263,28 +272,35 @@ Message: ${message.trim() || '[No message entered]'}
 
             {copyError && (
               <div className="p-2.5 rounded-md bg-rose-50 text-rose-800 border border-rose-200 text-xs">
-                {copyError}
+                <p role="alert">{copyError}</p>
+                <label htmlFor="contact-complete-draft" className="mt-3 block font-semibold">Complete inquiry text</label>
+                <textarea ref={fallbackRef} id="contact-complete-draft" readOnly value={draftText} rows={8}
+                  className="mt-1 w-full rounded-md border border-rose-300 bg-white p-3 text-sm text-[#0E2943] focus-visible:outline-2 focus-visible:outline-[#0E2943]" />
+                <Button type="button" variant="secondary" size="sm" className="mt-2 min-h-11"
+                  onClick={() => { fallbackRef.current?.focus(); fallbackRef.current?.select(); }}>Select All</Button>
               </div>
             )}
 
             {/* Actions Bar */}
-            <div className="pt-3 flex items-center justify-end gap-2 border-t border-[#D9DDD9]">
+            <div className="pt-3 flex flex-wrap items-center justify-end gap-2 border-t border-[#D9DDD9]">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-2 text-xs font-medium text-[#55616B] hover:text-[#0E2943] cursor-pointer"
+                className="min-h-11 rounded-md px-3 py-2 focus-visible:outline-2 focus-visible:outline-[#0E2943] text-xs font-medium text-[#55616B] hover:text-[#0E2943] cursor-pointer"
               >
                 Close
               </button>
               <Button
-                type="button"
-                variant="rust"
+                type={mailto ? "button" : "submit"}
+                variant={mailto ? "secondary" : "rust"}
                 size="sm"
-                onClick={handleCopyNote}
+                className="min-h-11"
+                onClick={mailto ? handleCopyNote : undefined}
                 icon={copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               >
                 {copied ? 'Copied to Clipboard' : 'Copy Inquiry Note'}
               </Button>
+              {mailto && <Button type="submit" variant="rust" size="sm" className="min-h-11">Open Email App</Button>}
             </div>
           </form>
         </div>

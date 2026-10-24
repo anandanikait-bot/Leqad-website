@@ -1,3 +1,4 @@
+import { inquiryActionLabel } from '../../lib/contact';
 import React from 'react';
 import { SectionHeading } from '../shared/SectionHeading';
 import { ProductPreview } from '../home/ProductPreview';
@@ -37,9 +38,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
             </div>
           </div>
           <aside className="flex flex-col justify-end gap-3 border-l-2 border-[#B74B21]/60 pl-5 lg:col-span-4 lg:mb-1 lg:self-end">
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#9C3F1B]">01 / In the browser</span>
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#9C3F1B]">Learning by doing</span>
             <p className="max-w-xs text-base font-semibold leading-snug text-[#0E2943]">Start with one sketch. Learn why each decision matters.</p>
-            <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">The eight-step website demo is an illustration of the approach, not a live CAD connection.</p>
+            <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">AI is making it easier than ever to create. Leqad aims to make it easier to understand what you create.</p>
           </aside>
         </div>
       </section>
@@ -61,6 +62,22 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
       {/* Current prototype and future direction */}
       <CurrentProductAndVision />
 
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-labelledby="founder-origin">
+        <div className="max-w-3xl space-y-5">
+          <h2 id="founder-origin" className="text-[clamp(1.7rem,3vw,2.7rem)] font-semibold leading-[1.13] tracking-[-0.04em] text-[#0E2943]">
+            Where Leqad started
+          </h2>
+          <p className="text-base leading-relaxed text-[#55616B] sm:text-lg">
+            Leqad grew from challenges encountered while learning and teaching CAD.
+            Its founder has experience in high-school robotics and leads and helps train newer robotics students.
+          </p>
+          <p className="text-base leading-relaxed text-[#55616B] sm:text-lg">
+            The mission is to make technical learning more approachable and effective,
+            so students understand what they build and become more independent with engineering tools.
+          </p>
+        </div>
+      </section>
+
       {/* Partnership & Educational Collaboration */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div data-parallax-anchor className="bg-[#0E2943] rounded-2xl p-7 sm:p-10 text-white relative overflow-hidden">
@@ -73,7 +90,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
               Collaboration
             </span>
 
-            <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
               Interested in evaluating guided CAD learning?
             </h2>
 
@@ -95,7 +112,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
                 onClick={() => onOpenContact('Educational Pilot')}
                 className="inline-flex min-h-11 items-center rounded-md text-sm font-medium text-white/80 hover:text-white underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer"
               >
-                Draft an Inquiry Note
+                {inquiryActionLabel}
               </button>
             </div>
           </div>

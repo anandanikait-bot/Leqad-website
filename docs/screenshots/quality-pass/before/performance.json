@@ -1,0 +1,111 @@
+[
+  {
+    "sample": 0,
+    "visible": {
+      "cls": 0.000054910408093278464,
+      "longTasks": [
+        110
+      ],
+      "frames": 987,
+      "fontStatus": "loaded",
+      "fonts": [
+        {
+          "name": "instrument-serif-latin-400-italic-DKMiL14s.woff2",
+          "duration": 69.5,
+          "transferSize": 22428
+        },
+        {
+          "name": "ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2",
+          "duration": 69.59999999403954,
+          "transferSize": 15920
+        },
+        {
+          "name": "ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2",
+          "duration": 67.29999999701977,
+          "transferSize": 15008
+        },
+        {
+          "name": "ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2",
+          "duration": 67.40000000596046,
+          "transferSize": 15188
+        }
+      ]
+    },
+    "offscreenRafCallbacksOver3s": 432
+  },
+  {
+    "sample": 1,
+    "visible": {
+      "cls": 0.000054910408093278464,
+      "longTasks": [
+        70,
+        56,
+        267,
+        62,
+        147
+      ],
+      "frames": 773,
+      "fontStatus": "loaded",
+      "fonts": [
+        {
+          "name": "instrument-serif-latin-400-italic-DKMiL14s.woff2",
+          "duration": 67.80000001192093,
+          "transferSize": 22428
+        },
+        {
+          "name": "ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2",
+          "duration": 67.5,
+          "transferSize": 15920
+        },
+        {
+          "name": "ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2",
+          "duration": 67.40000000596046,
+          "transferSize": 15008
+        },
+        {
+          "name": "ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2",
+          "duration": 67.3999999910593,
+          "transferSize": 15188
+        }
+      ]
+    },
+    "offscreenRafCallbacksOver3s": 474
+  },
+  {
+    "sample": 2,
+    "visible": {
+      "cls": 0.000054910408093278464,
+      "longTasks": [
+        70,
+        73,
+        264,
+        50
+      ],
+      "frames": 855,
+      "fontStatus": "loaded",
+      "fonts": [
+        {
+          "name": "instrument-serif-latin-400-italic-DKMiL14s.woff2",
+          "duration": 140,
+          "transferSize": 22428
+        },
+        {
+          "name": "ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2",
+          "duration": 138.29999999701977,
+          "transferSize": 15920
+        },
+        {
+          "name": "ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2",
+          "duration": 138.20000000298023,
+          "transferSize": 15008
+        },
+        {
+          "name": "ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2",
+          "duration": 142.70000000298023,
+          "transferSize": 15188
+        }
+      ]
+    },
+    "offscreenRafCallbacksOver3s": 459
+  }
+]
