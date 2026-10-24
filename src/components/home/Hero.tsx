@@ -81,7 +81,7 @@ export const Hero: React.FC = () => {
               to="/demo"
               label="Explore Interactive Demo"
               shape="rounded"
-              className="w-full sm:w-[270px] shrink-0"
+              className="w-full sm:w-[270px] lg:w-[230px] xl:w-[270px] shrink-0"
               baseColor="#B74B21"
               sheenColor="#F5EFE799"
               bandCount={3}
@@ -95,7 +95,7 @@ export const Hero: React.FC = () => {
 
             <Link
               to="/about"
-              className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-[#0E2943] underline decoration-[#B74B21]/35 underline-offset-4 transition-colors hover:decoration-[#B74B21] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
+              className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-3 text-sm font-semibold text-[#0E2943] underline decoration-[#B74B21]/35 underline-offset-4 transition-colors hover:decoration-[#B74B21] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
             >
               <span>Learn About Leqad</span>
               <ArrowRight className="h-3.5 w-3.5 text-[#B74B21] transition-transform motion-safe:group-hover:translate-x-1" />
