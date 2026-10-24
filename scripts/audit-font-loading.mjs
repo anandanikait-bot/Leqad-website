@@ -16,5 +16,5 @@ try{
   results.push({mode,width,route,fontDelayMs:delay,cls,...data});
   console.log(mode,width,route,delay,'CLS',cls.toFixed(5));await context.close();
  }
-}finally{await browser.close();await writeFile('docs/screenshots/approved-branding/font-loading-cls.json',JSON.stringify(results,null,2)+'\n');}
+}finally{await browser.close();await writeFile(process.env.FONT_AUDIT_OUTPUT || 'docs/screenshots/approved-branding/font-loading-cls.json',JSON.stringify(results,null,2)+'\n');}
 console.log('Maximum CLS:',Math.max(...results.map(x=>x.cls)));expect(results.every(x=>x.cls<.1)).toBe(true);

@@ -1,3 +1,4 @@
+import { contactConfig, inquiryActionLabel } from '../../lib/contact';
 import React from 'react';
 import { SectionHeading } from '../shared/SectionHeading';
 import { Button } from '../shared/Button';
@@ -45,10 +46,9 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
 
     <section id="collaboration-areas" className="scroll-mt-24 space-y-8">
       <SectionHeading
-        eyebrow="Possible collaboration"
         title="Technical fit. Useful learning evidence."
       />
-      <div className="grid gap-0 border-y border-[#D9DDD9] md:grid-cols-2 md:divide-x md:divide-[#D9DDD9]">
+      <div className="grid gap-0 border-b border-[#D9DDD9] md:grid-cols-2 md:divide-x md:divide-[#D9DDD9]">
         <article className="space-y-4 py-7 md:pr-8">
           <div className="flex items-center justify-between">
             <Cpu className="h-5 w-5 text-[#B74B21]" aria-hidden="true" />
@@ -78,8 +78,8 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
     </section>
 
     <section className="space-y-7" aria-label="Possible collaboration sequence">
-      <SectionHeading eyebrow="A practical starting point" title="Start with one useful question." />
-      <ol className="grid gap-6 border-y border-[#D9DDD9] py-7 sm:grid-cols-3 sm:gap-8">
+      <SectionHeading title="Start with one useful question." />
+      <ol className="grid gap-6 border-b border-[#D9DDD9] py-7 sm:grid-cols-3 sm:gap-8">
         <li className="space-y-2">
           <span className="font-mono text-xs font-semibold tracking-[0.14em] text-[#9C3F1B]">01 / DISCUSS</span>
           <h3 className="text-lg font-semibold text-[#0E2943]">Define a learning task</h3>
@@ -118,18 +118,18 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         data-parallax-direction="-1"
         className="pointer-events-none absolute -inset-6 -z-10 bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] opacity-[0.035]" />
       <div className="relative z-10 mx-auto max-w-xl space-y-4">
-        <h2 className="text-xl font-semibold tracking-tight text-[#F5EFE7] sm:text-2xl">
-          Prepare an inquiry
+        <h2 className="text-2xl font-semibold tracking-tight text-[#F5EFE7] sm:text-3xl">
+          {contactConfig.email ? 'Contact Leqad' : 'Prepare an inquiry'}
         </h2>
         <p className="text-sm leading-relaxed text-white/80">
-          A public contact email is not available yet. You can prepare a note to keep for later; nothing is sent.
+          {contactConfig.email ? 'Prepare your inquiry, then review and send it in your email app.' : 'A public contact email is not available yet. You can prepare a note to keep for later; nothing is sent.'}
         </p>
         <Button
           variant="rust" size="lg"
           onClick={() => onOpenContact('General Inquiry')}
           icon={<ArrowRight className="h-4 w-4" />}
         >
-          Draft an Inquiry Note
+          {inquiryActionLabel}
         </Button>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { BrandLogo } from '../shared/BrandLogo';
 import { Menu, X } from 'lucide-react';
@@ -12,7 +12,26 @@ const navigation = [
 
 export const SiteHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname, key: routeKey } = useLocation();
+  const menuToggle = useRef<HTMLButtonElement>(null);
+  useEffect(() => { setMobileMenuOpen(false); }, [routeKey]);
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const dismiss = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      setMobileMenuOpen(false);
+      menuToggle.current?.focus();
+    };
+    window.addEventListener('keydown', dismiss);
+    return () => window.removeEventListener('keydown', dismiss);
+  }, [mobileMenuOpen]);
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => { if (desktop.matches) setMobileMenuOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FAF8F4]/95 backdrop-blur-md border-b border-[#D9DDD9]">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:bg-white focus:p-3">Skip to content</a>
@@ -43,7 +62,7 @@ export const SiteHeader: React.FC = () => {
             </NavLink>
           ))}
         </nav>
-        <button type="button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden flex h-11 w-11 items-center justify-center rounded-lg text-[#0E2943] hover:bg-[#F5EFE7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]" aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation">
+        <button ref={menuToggle} type="button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden flex h-11 w-11 items-center justify-center rounded-lg text-[#0E2943] hover:bg-[#F5EFE7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]" aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation">
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>

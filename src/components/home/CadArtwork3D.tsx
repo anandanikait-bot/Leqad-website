@@ -151,7 +151,6 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       };
 
       // 1. Draw Ground Plane CAD Grid (Ivory tone, faint)
-      ctx.save();
       ctx.strokeStyle = 'rgba(245, 239, 231, 0.07)';
       ctx.lineWidth = 1;
       const gridSize = 70;

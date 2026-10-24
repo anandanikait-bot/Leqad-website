@@ -274,7 +274,7 @@ test('prerendered public content and metadata work with JavaScript disabled', as
   const page = await context.newPage();
   const ogTitles = new Set<string>();
   for (const path of ['/', '/demo', '/about', '/partners']) {
-    const response = await page.goto(`http://127.0.0.1:4173${path}`);
+    const response = await page.goto(path);
     expect(response?.status()).toBe(200);
     await expect(page.locator('header')).toHaveCount(path === '/' ? 0 : 1);
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
@@ -358,7 +358,7 @@ test('reduced-motion artwork settles without an endless animation loop', async (
       return original.apply(this, args);
     };
   });
-  await page.goto('http://127.0.0.1:4173/');
+  await page.goto('/');
   const canvas = page.locator('[aria-label="Interactive 3D CAD Geometry Visualization"] canvas');
   await expect(canvas).toHaveAttribute('data-frames', /\d+/);
   await page.evaluate(() => document.fonts.ready);
@@ -412,7 +412,7 @@ test('footer animation also stops when reduced motion is enabled at runtime', as
 test('mobile navigation and native touch scrolling remain usable', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 375, height: 900 }, isMobile: true, hasTouch: true });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4173/');
+  await page.goto('/');
   await page.getByRole('link', { name: 'Explore Interactive Demo', exact: true }).tap();
   await expect(page).toHaveURL(/\/demo$/);
   await page.getByRole('button', { name: 'Open navigation menu', exact: true }).tap();

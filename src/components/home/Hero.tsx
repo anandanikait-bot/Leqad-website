@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { CadArtwork3D } from './CadArtwork3D';
 import { SonarHeroGrid } from './SonarHeroGrid';
+import { BrandLogo } from '../shared/BrandLogo';
 
 // Render the default CTA during SSR as well as on the client.
 // WebGL initialization still happens only in MetallicButton's browser effect.
@@ -17,27 +18,35 @@ const CYCLING_PHRASES = [
 export const Hero: React.FC = () => {
   const [phraseIndex, setPhraseIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-  // Cycle phrases every 4 seconds with smooth blur transition & proper timer cleanup
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let intervalId: number | undefined;
     let timeoutId: number | undefined;
 
-    const intervalId = window.setInterval(() => {
-      // Step 1: Blur out
-      setIsTransitioning(true);
+    const stopCycling = () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(timeoutId);
+    };
+    const updateMotion = () => {
+      stopCycling();
+      setIsTransitioning(false);
+      setPhraseIndex(0);
+      if (motionPreference.matches) return;
 
-      // Step 2: Swap phrase & blur back in
-      timeoutId = window.setTimeout(() => {
-        setPhraseIndex((prev) => (prev + 1) % CYCLING_PHRASES.length);
-        setIsTransitioning(false);
-      }, 400);
-    }, 4000);
+      intervalId = window.setInterval(() => {
+        setIsTransitioning(true);
+        timeoutId = window.setTimeout(() => {
+          setPhraseIndex((prev) => (prev + 1) % CYCLING_PHRASES.length);
+          setIsTransitioning(false);
+        }, 400);
+      }, 4000);
+    };
 
+    updateMotion();
+    motionPreference.addEventListener('change', updateMotion);
     return () => {
-      clearInterval(intervalId);
-      if (timeoutId) clearTimeout(timeoutId);
+      stopCycling();
+      motionPreference.removeEventListener('change', updateMotion);
     };
   }, []);
 
@@ -50,16 +59,17 @@ export const Hero: React.FC = () => {
       <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
         {/* Left Side — Content (col-span-6 on lg screens: 50% width) */}
         <div className="space-y-7 text-left lg:col-span-6">
-          {/* Keep the rotating serif headline as the sole hero accent. */}
-          {/* The existing dynamic line remains screen-reader visible and motion-safe. */}
+          <BrandLogo size="sm" />
+          {/* One stable heading name; the rotating phrase is a visual accent. */}
           <div className="space-y-1">
-            <h1 className="text-[clamp(2.8rem,5vw,4.7rem)] font-semibold tracking-[-0.055em] text-[#0E2943] leading-[1.02]">
+            <h1 aria-label="Learn CAD by building." className="text-[clamp(2.8rem,5vw,4.7rem)] font-semibold tracking-[-0.055em] text-[#0E2943] leading-[1.02]">
               Learn CAD by
             </h1>
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
             <div className="flex min-h-[6.25rem] items-center justify-start sm:min-h-[7rem] lg:min-h-[8.75rem]">
               <span
-                className={`font-serif hero-rotating-phrase italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
+                aria-hidden="true"
+                className={`font-serif hero-rotating-phrase italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight motion-reduce:transition-none transition-all duration-400 ease-out inline-block ${
                   isTransitioning
                     ? 'opacity-0 blur-md translate-y-2'
                     : 'opacity-100 blur-none translate-y-0'
@@ -72,7 +82,7 @@ export const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="max-w-[31rem] text-base leading-relaxed text-[#55616B] sm:text-lg">
-            Leqad is a browser-extension learning assistant prototype, starting with Onshape. Practice a guided first-sketch exercise with step-by-step hints and explanations in the interactive demo.
+            Leqad is a browser-extension learning assistant in development, starting with Onshape. Try guided first-sketch practice in a separate website simulation.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}
