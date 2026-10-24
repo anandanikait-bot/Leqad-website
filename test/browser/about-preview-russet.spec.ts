@@ -19,7 +19,7 @@ test('About preview renders the current navy/ivory/russet illustration, not a fa
     canvas.height = img.naturalHeight;
     const ctx = canvas.getContext('2d')!;
     ctx.drawImage(img, 0, 0);
-    return [...ctx.getImageData(950, 390, 1, 1).data];
+    return [...ctx.getImageData(850, 390, 1, 1).data];
   });
   expect(buttonPixel).toEqual([121, 51, 39, 255]);
 

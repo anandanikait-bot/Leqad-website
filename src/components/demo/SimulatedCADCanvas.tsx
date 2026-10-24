@@ -429,7 +429,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           SVG CAD Canvas:
           Sketch mode frames the origin near the vertical center with the upper-right
           quadrant visible for a full-size 50 × 40 mm rectangle and dimensions.
-          Grid lines extend beyond both viewBoxes to prevent blank bands on tall screens.
+          Grid lines extend beyond all viewBoxes to prevent blank bands on tall screens.
           Clicking empty space or grid lines does NOT advance.
           Only clicking actual interactive entities triggers simulated actions.
         */}
@@ -440,7 +440,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           role="group" aria-label="CAD drawing viewport"
           onPointerLeave={handleMouseLeave}
           className="relative block h-full min-h-[320px] min-w-0 flex-1 cursor-crosshair touch-pan-y"
-          viewBox={isSketchActive ? '-85 -175 350 310' : '-100 -140 350 280'}
+          viewBox={isExtruding ? '-85 -285 350 380' : isSketchActive ? '-85 -175 350 310' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}
           <g stroke={isExtruding ? '#F5EFE7' : '#0E2943'} strokeOpacity="0.08" strokeWidth="1" pointerEvents="none">
