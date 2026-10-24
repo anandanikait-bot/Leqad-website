@@ -77,9 +77,8 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
       </p>
     </section>
 
-    <section className="space-y-7" aria-labelledby="evaluation-steps-heading">
+    <section className="space-y-7" aria-label="Possible collaboration sequence">
       <SectionHeading eyebrow="A practical starting point" title="Start with one useful question." />
-      <h2 id="evaluation-steps-heading" className="sr-only">Possible collaboration sequence</h2>
       <ol className="grid gap-6 border-y border-[#D9DDD9] py-7 sm:grid-cols-3 sm:gap-8">
         <li className="space-y-2">
           <span className="font-mono text-xs font-semibold tracking-[0.14em] text-[#9C3F1B]">01 / DISCUSS</span>
