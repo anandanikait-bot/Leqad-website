@@ -133,6 +133,14 @@ body {
   letter-spacing: -0.035em;
   line-height: 1.22;
 }
+/* Preserve the original rotating headline's italic serif, without changing site typography. */
+.hero-rotating-phrase {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+}
 :is(nav, button, a) { font-family: var(--font-sans); }
 .font-mono { font-family: var(--font-mono); letter-spacing: 0.035em; }
 /* The rotating hero copy keeps its reserved space at the narrowest width. */

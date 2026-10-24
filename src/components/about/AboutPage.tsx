@@ -12,37 +12,35 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
   return (
-    <div className="py-10 sm:py-14 space-y-12 sm:space-y-14 animate-fadeIn">
-      {/* 1. What is Leqad? Clear explanation in plain English */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl space-y-5">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0E2943] leading-tight">
-            CAD guidance, right where you design.
-          </h1>
-
-          <div className="space-y-4 text-base sm:text-lg text-[#55616B] leading-relaxed">
-            <p>
-              Leqad is an independent browser-extension prototype for guided CAD practice, starting with Onshape. It explores instructions beside the workspace and explanations of key modeling decisions.
+    <div className="space-y-14 py-12 sm:space-y-20 sm:py-16 animate-fadeIn">
+      {/* Editorial introduction, using Leqad's own lesson artwork and scope. */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 border-b border-[#D9DDD9] pb-12 lg:grid-cols-12 lg:gap-16 lg:pb-16">
+          <div className="space-y-6 lg:col-span-8">
+            <div className="flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#9C3F1B]">
+              <span className="h-px w-7 bg-[#B74B21]" aria-hidden="true" />
+              About / Leqad
+            </div>
+            <h1 className="max-w-4xl text-[clamp(2.3rem,4.5vw,4.4rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#0E2943]">
+              CAD guidance, right where you design.
+            </h1>
+            <p className="max-w-2xl text-base leading-relaxed text-[#55616B] sm:text-lg">
+              Leqad is an independent browser-extension prototype exploring contextual CAD lessons, starting with Onshape. The goal is to help learners understand their modeling decisions as they practice.
             </p>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <ButtonLink variant="rust" size="md" to="/demo" icon={<ArrowRight className="h-4 w-4" />}>
+                Explore Interactive Demo
+              </ButtonLink>
+              <ButtonLink variant="outline" size="md" to="/partners">
+                For Partners & Educators
+              </ButtonLink>
+            </div>
           </div>
-
-          <div className="pt-2 flex flex-wrap items-center gap-4">
-            <ButtonLink
-              variant="rust"
-              size="md"
-              to="/demo"
-              icon={<ArrowRight className="w-4 h-4" />}
-            >
-              Explore Interactive Demo
-            </ButtonLink>
-            <ButtonLink
-              variant="outline"
-              size="md"
-              to="/partners"
-            >
-              For Partners & Educators
-            </ButtonLink>
-          </div>
+          <aside className="flex flex-col justify-end gap-3 border-l-2 border-[#B74B21]/60 pl-5 lg:col-span-4 lg:mb-1 lg:self-end">
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#9C3F1B]">01 / In the browser</span>
+            <p className="max-w-xs text-base font-semibold leading-snug text-[#0E2943]">Start with one sketch. Learn why each decision matters.</p>
+            <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">The eight-step website demo is an illustration of the approach, not a live CAD connection.</p>
+          </aside>
         </div>
       </section>
 
@@ -51,7 +49,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Interactive Demo Preview"
-            title="A closer look at guided CAD learning."
+            title="See the first sketch take shape."
           />
         </div>
         <ProductPreview />
@@ -90,7 +88,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
                 to="/partners"
                 icon={<ArrowRight className="w-4 h-4" />}
               >
-                View Partnership Overview
+                Explore Partnerships
               </ButtonLink>
               <button
                 type="button"
