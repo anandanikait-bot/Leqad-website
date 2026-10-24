@@ -16,6 +16,4 @@ Validation: clean npm ci, TypeScript, ESLint, production build, 24 unit tests an
 
 [Audit matrix, evidence, screenshots and limitations](docs/website-ux-quality-audit.md)
 
-The owner-approved Formspree endpoint now accepts direct submissions from the React dialog. Pending, accepted and failure states preserve the draft and prevent duplicate clicks. Forwarding to `anandanikait@gmail.com` follows the owner’s Formspree settings and needs a real post-deployment check. Native screen-reader listening, installed Edge/Chrome browser chrome, deployed-host checks, and exact-commit remote CI remain unverified. No merge or deployment.
-
-[Formspree implementation and validation](formspree-integration.md). Tests mock the external service rather than creating real inquiries.
+Remaining: the owner-approved support destination is now configured as `anandanikait@gmail.com`; the site opens an email draft, and actual sending is handled by the visitor’s email app. Native screen-reader listening, installed Edge/Chrome browser chrome, deployed-host checks, and exact-commit remote CI remain unverified. No merge or deployment.
