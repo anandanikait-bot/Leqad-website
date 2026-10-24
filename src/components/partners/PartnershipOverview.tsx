@@ -122,7 +122,7 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
           {contactConfig.email ? 'Contact Leqad' : 'Prepare an inquiry'}
         </h2>
         <p className="text-sm leading-relaxed text-white/80">
-          {contactConfig.email ? 'Prepare your inquiry, then review and send it in your email app.' : 'A public contact email is not available yet. You can prepare a note to keep for later; nothing is sent.'}
+          {contactConfig.email ? 'Send your inquiry directly to Leqad support.' : 'A public contact email is not available yet. You can prepare a note to keep for later; nothing is sent.'}
         </p>
         <Button
           variant="rust" size="lg"

@@ -44,7 +44,7 @@ test('audience, group and focus update output and carry into the actual draft', 
   await expect(note).toHaveValue(/Audience: Robotics teams/);
   await expect(note).toHaveValue(/41\+ participants; capacity to be confirmed/);
   await expect(note).toHaveValue(/Independent practice/);
-  await expect(modal).toContainText('Nothing is sent by this website.');
+  await expect(modal).toContainText('Your inquiry is submitted through Formspree');
   await page.keyboard.press('Escape');
   await expect(modal).toHaveCount(0);
   await expect(trigger).toBeFocused();
