@@ -29,8 +29,11 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       secondary.x >= primary.x + primary.width - 2).toBe(true);
     expect(primary.height).toBeGreaterThanOrEqual(44);
     expect(secondary.height).toBeGreaterThanOrEqual(44);
-    // Both hero CTAs share the same 8px rectangular corners and 44px height.
-    expect(Math.abs(primary.height - secondary.height)).toBeLessThanOrEqual(1);
+    // Assert actual CSS heights, not GPU-transformed bounding boxes on the metallic CTA.
+    // The latter can differ slightly during its 3D perspective transition.
+    await expect(page.locator('[data-metallic-cta] a[aria-label="Explore Interactive Demo"]')).toHaveCSS('height', '44px');
+    await expect(page.getByRole('link', { name: 'Learn About Leqad' })).toHaveCSS('height', '44px');
+    expect(Math.abs(primary.height - secondary.height)).toBeLessThanOrEqual(2);
     await expect(page.locator('[data-metallic-cta] a[aria-label="Explore Interactive Demo"]')).toHaveCSS('border-radius', '8px');
     await expect(page.locator('[data-metallic-face]')).toHaveCSS('border-radius', '8px');
     await expect(page.locator('[data-metallic-rim]')).toHaveCSS('border-radius', '8px');
@@ -180,4 +183,38 @@ test('About reduces decoration and avoids repeated conversion prompts', async ({
   await expect(page.getByRole('link', { name: 'Launch Interactive Demo' })).toHaveCount(0);
   await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo' })).toHaveAttribute('href', '/demo');
   await expect(page.getByRole('heading', { name: /Interested in evaluating guided CAD learning/ })).toBeVisible();
+});
+
+test('desktop navigation underlines hovered, focused, and active pages', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/about');
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  const active = nav.getByRole('link', { name: 'About' });
+  const demo = nav.getByRole('link', { name: 'Interactive Demo' });
+  await expect(active).toHaveAttribute('aria-current', 'page');
+  const underlineScale = (link: typeof active) =>
+    link.evaluate(node => getComputedStyle(node, '::before').scale);
+  const initialScale = await underlineScale(demo);
+  expect(await underlineScale(active)).not.toBe(initialScale);
+  await demo.hover();
+  await expect.poll(() => underlineScale(demo)).not.toBe(initialScale);
+  await demo.click();
+  await expect(nav.getByRole('link', { name: 'Interactive Demo' })).toHaveAttribute('aria-current', 'page');
+});
+
+test('mobile menu shows the active route and closes after navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/about');
+  const toggle = page.getByRole('button', { name: 'Open navigation menu' });
+  await toggle.click();
+  const mobileNav = page.getByRole('navigation', { name: 'Mobile navigation' });
+  await expect(mobileNav).toBeVisible();
+  await expect(mobileNav.getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'page');
+  await mobileNav.getByRole('link', { name: 'For Partners' }).click();
+  await expect(mobileNav).toHaveCount(0);
+  await expect(page).toHaveURL(/\/partners$/);
+  await page.getByRole('button', { name: 'Open navigation menu' }).click();
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation' })
+    .getByRole('link', { name: 'For Partners' })).toHaveAttribute('aria-current', 'page');
 });
