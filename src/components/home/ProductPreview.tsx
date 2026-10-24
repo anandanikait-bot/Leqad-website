@@ -7,7 +7,7 @@ export const ProductPreview: React.FC = () => (
     <div data-parallax-anchor className="rounded-2xl border border-[#D9DDD9] bg-white p-3 shadow-sm sm:p-5">
       <img
         data-parallax-travel="12" data-parallax-mobile-travel="6"
-        src="/assets/cad-lesson-preview.png"
+        src="/assets/cad-lesson-preview-russet.svg"
         alt="Leqad interactive demo preview: an illustrated CAD reference plane beside the first-sketch teaching panel."
         width={1182}
         height={534}
