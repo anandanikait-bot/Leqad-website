@@ -12,6 +12,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     await expect(heading).toHaveCSS('text-align', 'left');
     const rotatingPhrase = page.locator('main span.font-serif');
     await expect(rotatingPhrase).toHaveCSS('font-style', 'italic');
+    await expect(rotatingPhrase).toHaveCSS('font-family', /Instrument Serif/);
     await expect(rotatingPhrase).toHaveText('building, not just watching.');
     await expect(page.locator('main p').first()).toHaveCSS('text-align', 'left');
     const hero = (await page.locator('main > section').boundingBox())!;
