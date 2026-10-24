@@ -50,11 +50,7 @@ export const Hero: React.FC = () => {
       <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
         {/* Left Side — Content (col-span-6 on lg screens: 50% width) */}
         <div className="space-y-7 text-left lg:col-span-6">
-          {/* Editorial hierarchy: a quiet signal above the main message. */}
-          <div className="flex items-center gap-3 font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-[#55616B] sm:text-xs">
-            <span className="h-px w-7 bg-[#B74B21]" aria-hidden="true" />
-            CAD learning / first sketch
-          </div>
+          {/* Keep the rotating serif headline as the sole hero accent. */}
           {/* The existing dynamic line remains screen-reader visible and motion-safe. */}
           <div className="space-y-1">
             <h1 className="text-[clamp(2.8rem,5vw,4.7rem)] font-semibold tracking-[-0.055em] text-[#0E2943] leading-[1.02]">
@@ -63,7 +59,7 @@ export const Hero: React.FC = () => {
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
             <div className="flex min-h-[6.25rem] items-center justify-start sm:min-h-[7rem] lg:min-h-[8.75rem]">
               <span
-                className={`font-serif text-[clamp(1.65rem,3.4vw,3.45rem)] text-[#0E2943] leading-[1.11] tracking-[-0.045em] transition-all duration-400 ease-out inline-block ${
+                className={`font-serif italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
                   isTransitioning
                     ? 'opacity-0 blur-md translate-y-2'
                     : 'opacity-100 blur-none translate-y-0'
@@ -104,18 +100,12 @@ export const Hero: React.FC = () => {
               <ArrowRight className="h-3.5 w-3.5 text-[#B74B21] transition-transform motion-safe:group-hover:translate-x-1" />
             </Link>
           </div>
-
-
         </div>
 
         {/* Right Side — Interactive 3D Artwork (col-span-6 on lg screens: 50% width) */}
         <div className="flex w-full justify-center lg:col-span-6 lg:justify-end">
-          <div className="w-full max-w-[560px] space-y-3">
+          <div className="w-full max-w-[560px]">
             <CadArtwork3D />
-            <div className="flex items-center justify-between gap-4 px-1 font-mono text-[10px] uppercase tracking-[0.1em] text-[#55616B]">
-              <span>01 / Learn through geometry</span>
-              <span className="hidden sm:inline">Illustrative model · not live CAD</span>
-            </div>
           </div>
         </div>
       </div>
