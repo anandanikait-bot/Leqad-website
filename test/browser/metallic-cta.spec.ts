@@ -5,7 +5,7 @@ test('homepage uses the Leqad metallic CTA by default', async ({ page }) => {
   const wrapper = page.locator('[data-metallic-cta]');
   await expect(wrapper).toBeVisible();
   await expect(wrapper).toHaveAttribute('data-theme', 'leqad');
-  await expect(wrapper.locator('[data-metallic-face]')).toHaveCSS('background-image', /183, 75, 33/);
+  await expect(wrapper.locator('[data-metallic-face]')).toHaveCSS('background-image', /121, 51, 39/);
   await expect(wrapper.getByRole('link', { name: 'Explore Interactive Demo', exact: true })).toHaveAttribute('href', '/demo');
   await expect(page.getByRole('link', { name: 'Explore Interactive Demo', exact: true })).toHaveCount(1);
   await expect(page.locator('header, footer')).toHaveCount(0);
@@ -25,7 +25,7 @@ test('rust metallic rim moves while idle without hovering', async ({ page }) => 
     getComputedStyle(node).getPropertyValue('--leqad-rim-angle').trim());
   const first = await angle();
   await expect.poll(angle, { timeout: 3000 }).not.toBe(first);
-  await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /183, 75, 33/);
+  await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /121, 51, 39/);
   await expect(button.getByRole('link', { name: 'Explore Interactive Demo' })).toHaveAttribute('href', '/demo');
 });
 
@@ -69,7 +69,7 @@ test('WebGL2-disabled browsers still display a static rust CTA that navigates', 
   const button = page.locator('[data-metallic-cta]');
   await expect(button).toHaveAttribute('data-shader-status', 'fallback');
   await expect(button.locator('canvas')).toHaveCount(0);
-  await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /183, 75, 33/);
+  await expect(button.locator('[data-metallic-face]')).toHaveCSS('background-image', /121, 51, 39/);
   const link = button.getByRole('link', { name: 'Explore Interactive Demo' });
   await expect(link).toBeVisible();
   await link.click();
