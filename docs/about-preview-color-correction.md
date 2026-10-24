@@ -28,7 +28,7 @@ When the live demo's UI substantially changes, replace this static preview with 
 
 The About page preview is **a static screenshot**, not a second CAD instance. To avoid visitors clicking on pictured controls and assuming the site is broken:
 
-- A visible caption explicitly says "Screenshot preview — not an interactive CAD window."
+- A visible caption explicitly says "Static screenshot — select to try the interactive demo."
 - The **whole image is a link** to `/demo`, with a bottom-right "Open interactive demo" affordance. Clicking even a pictured fake CAD control therefore leads to the real interactive lesson.
 - The existing separate "Explore Interactive Demo" button remains a second clear entry point.
 - The screenshot link has its own descriptive accessible name, visible keyboard focus, and Enter-to-open semantics. The image alt text makes its static nature clear.
