@@ -46,11 +46,11 @@ try {
     await page.locator('[data-pilot-planner]').getByRole('button',{name:'Contact Leqad'}).click();
     await page.getByLabel('Area of Interest').focus();
     await scan('/partners draft dialog');
-    await page.getByRole('button',{name:'Open Email App'}).focus();
+    await page.getByRole('button',{name:'Send inquiry'}).focus();
     await page.keyboard.press('Tab');
     if (!(await page.getByRole('button',{name:'Close dialog'}).evaluate(el=>el===document.activeElement))) throw Error('Forward dialog focus trap failed');
     await page.keyboard.press('Shift+Tab');
-    if (!(await page.getByRole('button',{name:'Open Email App'}).evaluate(el=>el===document.activeElement))) throw Error('Reverse dialog focus trap failed');
+    if (!(await page.getByRole('button',{name:'Send inquiry'}).evaluate(el=>el===document.activeElement))) throw Error('Reverse dialog focus trap failed');
     await page.keyboard.press('Escape');
     await page.close();
   }

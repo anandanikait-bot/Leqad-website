@@ -63,7 +63,7 @@ test('dialog traps keyboard focus in both directions and restores its opener', a
   await opener.click();
   const dialog = page.getByRole('dialog');
   const close = dialog.getByRole('button', { name: 'Close dialog' });
-  const lastAction = dialog.getByRole('button', { name: 'Open Email App' });
+  const lastAction = dialog.getByRole('button', { name: 'Send inquiry' });
   await close.focus();
   await page.keyboard.press('Shift+Tab');
   await expect(lastAction).toBeFocused();
@@ -82,33 +82,4 @@ test('clipboard unavailable uses manual recovery without a success claim', async
   await page.getByRole('button', { name: 'Copy Inquiry Note' }).click();
   await expect(page.getByLabel('Complete inquiry text')).toHaveValue(/Message: Manual copy/);
   await expect(page.getByRole('dialog').getByRole('status')).toHaveCount(0);
-});
-
-test('support action validates email and opens the approved destination with the complete note', async ({ page }) => {
-  await page.goto('/partners');
-  await page.getByRole('button', { name: 'Contact Leqad', exact: true }).click();
-  const dialog = page.getByRole('dialog');
-  await dialog.getByLabel('Your Name').fill('Ada');
-  await dialog.getByLabel('Brief Note or Context').fill('A question & details.');
-  const email = dialog.getByLabel('Work / School Email');
-  await expect(dialog).toContainText('Leqad support');
-  await expect(dialog.getByRole('status')).toHaveCount(0);
-  const client = await page.context().newCDPSession(page);
-  await client.send('Page.enable');
-  const intents: string[] = [];
-  client.on('Page.frameRequestedNavigation', event => {
-    if (event.url.startsWith('mailto:')) intents.push(event.url);
-  });
-  await email.fill('invalid');
-  await dialog.getByRole('button', { name: 'Open Email App' }).click();
-  expect(await email.evaluate((el: HTMLInputElement) => el.checkValidity())).toBe(false);
-  expect(intents).toEqual([]);
-  await email.fill('ada@example.org');
-  await dialog.getByRole('button', { name: 'Open Email App' }).click();
-  await expect.poll(() => intents.length).toBe(1);
-  const destination = new URL(intents[0]);
-  expect(destination.pathname).toBe('anandanikait@gmail.com');
-  expect(destination.searchParams.get('subject')).toBe('Leqad inquiry: General Inquiry');
-  expect(destination.searchParams.get('body')).toContain('Name: Ada\nEmail: ada@example.org');
-  expect(destination.searchParams.get('body')).toContain('Message: A question & details.');
 });

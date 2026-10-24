@@ -3,7 +3,7 @@ import { X, Copy, Check, Info } from 'lucide-react';
 import { Button } from './Button';
 import { contactConfig } from '../../lib/contact';
 
-// The contact UI drafts a note rather than submitting it. Every entry point
+// Every entry point
 // must resolve to one of the actual select values to avoid a blank topic.
 const CONTACT_TOPICS = new Set([
   'Technical Alignment',
@@ -45,6 +45,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState<string | null>(null);
 
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const submissionController = useRef<AbortController | null>(null);
+
   const fallbackRef = useRef<HTMLTextAreaElement | null>(null);
   const copyTimer = useRef<number | undefined>(undefined);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -56,6 +61,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       previousActiveElement.current = document.activeElement as HTMLElement | null;
       setCopied(false);
       setCopyError(null);
+      setSubmitting(false);
+      setSubmitted(false);
+      setSubmitError(null);
 
       // Lock background scrolling
       const originalOverflow = document.body.style.overflow;
@@ -67,6 +75,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       }, 50);
 
       return () => {
+        submissionController.current?.abort();
+        submissionController.current = null;
         window.clearTimeout(focusTimeout);
         window.clearTimeout(copyTimer.current);
         document.body.style.overflow = originalOverflow;
@@ -118,9 +128,47 @@ Email: ${email.trim() || '[Not specified]'}
 Organization: ${organization.trim() || '[Not specified]'}
 Message: ${message.trim() || '[No message entered]'}
 ---------------------------------`;
-  const mailto = contactConfig.email
-    ? `mailto:${contactConfig.email}?subject=${encodeURIComponent(`Leqad inquiry: ${topic}`)}&body=${encodeURIComponent(draftText)}`
-    : null;
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (submissionController.current || submitted) return;
+    const form = event.currentTarget;
+    if (!form.reportValidity()) return;
+    const controller = new AbortController();
+    submissionController.current = controller;
+    setSubmitting(true);
+    setSubmitError(null);
+    setCopyError(null);
+    setCopied(false);
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch(contactConfig.endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(), email: email.trim(), organization: organization.trim(),
+          topic, message: message.trim(), _subject: `Leqad inquiry: ${topic}`,
+          _gotcha: (form.elements.namedItem('_gotcha') as HTMLInputElement | null)?.value || '',
+        }),
+        signal: controller.signal,
+      });
+      const result = await response.json().catch(() => null);
+      if (submissionController.current !== controller) return;
+      if (!response.ok || result?.ok !== true) {
+        throw new Error('Submission was not accepted');
+      }
+      setSubmitted(true);
+    } catch {
+      if (submissionController.current === controller) {
+        setSubmitError('We could not confirm your submission. Your draft is kept. Please try again, or email Leqad support directly.');
+      }
+    } finally {
+      window.clearTimeout(timeout);
+      if (submissionController.current === controller) {
+        submissionController.current = null;
+        setSubmitting(false);
+      }
+    }
+  };
 
   const handleCopyNote = async () => {
     setCopyError(null);
@@ -155,7 +203,7 @@ Message: ${message.trim() || '[No message entered]'}
               Partnerships & Collaboration
             </span>
             <h3 id="modal-title" className="text-base font-bold text-[#0E2943]">
-              {mailto ? 'Contact Leqad' : 'Prepare an Inquiry Note'}
+              Contact Leqad
             </h3>
           </div>
           <button
@@ -174,24 +222,25 @@ Message: ${message.trim() || '[No message entered]'}
             <Info className="w-4 h-4 text-[#B74B21] flex-shrink-0 mt-0.5" />
             <div className="space-y-1 text-[#55616B] leading-relaxed">
               <strong className="text-[#0E2943] font-medium block">
-                {mailto ? 'Open a draft in your email app' : 'Save a draft for later'}
+                Send an inquiry to Leqad support
               </strong>
               <span>
-                {mailto
-                  ? 'Open your email app to review and send your inquiry to Leqad support. Nothing is sent by this website.'
-                  : <>A public contact email is not available yet. This helper does not send messages directly.
-                    Use <strong>Copy Inquiry Note</strong> to keep a draft for later.</>}
+                Your inquiry is submitted through Formspree to Leqad support. Your email is used to reply.
               </span>
             </div>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); if (mailto) window.location.href = mailto; else void handleCopyNote(); }} className="space-y-3.5 text-xs sm:text-sm">
+          <form action={contactConfig.endpoint} method="POST" onSubmit={handleSubmit} aria-busy={submitting} className="space-y-3.5 text-xs sm:text-sm">
+            <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+            {submitted && <p role="status" className="rounded-md bg-emerald-50 p-3 text-sm text-emerald-800">Inquiry submitted to Leqad support.</p>}
+            {submitError && <div role="alert" className="rounded-md bg-rose-50 p-3 text-sm text-rose-800">{submitError} <a className="underline" href={`mailto:${contactConfig.email}`}>Email Leqad support</a></div>}
             <div className="space-y-1">
               <label htmlFor="contact-topic" className="font-mono text-xs font-semibold text-[#0E2943]">
                 Area of Interest
               </label>
               <select
                 id="contact-topic"
+                  name="topic" disabled={submitting || submitted}
                 value={topic}
                 onChange={(e) => updateDraft({ topic: e.target.value })}
                 className="w-full px-3 py-2 rounded-md border border-[#D9DDD9] bg-[#FAF8F4] text-[#0E2943] focus:outline-hidden focus:ring-2 focus:ring-[#0E2943]"
@@ -211,6 +260,7 @@ Message: ${message.trim() || '[No message entered]'}
                 </label>
                 <input
                   id="contact-name"
+                  name="name" disabled={submitting || submitted}
                   type="text"
                   placeholder="Ada Lovelace"
                   value={name}
@@ -225,7 +275,8 @@ Message: ${message.trim() || '[No message entered]'}
                 </label>
                 <input
                   id="contact-email"
-                  type="email"
+                  name="email" disabled={submitting || submitted}
+                  type="email" required maxLength={254}
                   placeholder="ada@institution.edu"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setCopied(false); }}
@@ -240,6 +291,7 @@ Message: ${message.trim() || '[No message entered]'}
               </label>
               <input
                 id="contact-organization"
+                  name="organization" disabled={submitting || submitted}
                 type="text"
                 placeholder="e.g. Oakridge Robotics / University CAD Lab"
                 value={organization}
@@ -254,7 +306,8 @@ Message: ${message.trim() || '[No message entered]'}
               </label>
               <textarea
                 id="contact-message"
-                rows={3}
+                  name="message" disabled={submitting || submitted}
+                rows={3} required maxLength={5000}
                 placeholder="Tell us about your student group, CAD platform, or what you would like to explore..."
                 value={message}
                 onChange={(e) => updateDraft({ message: e.target.value })}
@@ -266,7 +319,7 @@ Message: ${message.trim() || '[No message entered]'}
             {copied && (
               <div role="status" className="p-2.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs flex items-center gap-2 animate-fadeIn">
                 <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Inquiry note copied to clipboard for later use. Nothing has been sent.</span>
+                <span>Inquiry note copied to clipboard.</span>
               </div>
             )}
 
@@ -291,16 +344,16 @@ Message: ${message.trim() || '[No message entered]'}
                 Close
               </button>
               <Button
-                type={mailto ? "button" : "submit"}
-                variant={mailto ? "secondary" : "rust"}
+                type="button"
+                variant="secondary"
                 size="sm"
                 className="min-h-11"
-                onClick={mailto ? handleCopyNote : undefined}
+                onClick={handleCopyNote}
                 icon={copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               >
                 {copied ? 'Copied to Clipboard' : 'Copy Inquiry Note'}
               </Button>
-              {mailto && <Button type="submit" variant="rust" size="sm" className="min-h-11">Open Email App</Button>}
+              <Button type="submit" variant="rust" size="sm" className="min-h-11" disabled={submitting || submitted}>{submitting ? 'Sending…' : submitted ? 'Submitted' : 'Send inquiry'}</Button>
             </div>
           </form>
         </div>

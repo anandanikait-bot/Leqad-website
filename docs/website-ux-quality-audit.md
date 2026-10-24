@@ -79,3 +79,7 @@ GitHub PR creation returned `Post "https://api.github.com/graphql": Forbidden`. 
 The owner has now approved `anandanikait@gmail.com` as the Leqad support destination. This resolves the missing-address item above. Contact entry points now say Contact Leqad, and the primary dialog action opens a populated email draft addressed to that account. The website identifies the recipient as Leqad support and does not claim delivery. The visitor must send through their email app.
 
 Validation passed: TypeScript, ESLint, 24 unit tests, build, the 110-test existing browser suite, and one new browser regression that checks invalid email blocking and the actual outgoing mailto recipient, subject and message. All 48 accessibility scans report zero violations. [Current support dialog at 375px](screenshots/support-email/dialog-375.png) and [validation evidence](screenshots/support-email/validation.json). Actual mailbox delivery remains unverified.
+
+## Formspree follow-up
+
+The owner supplied `https://formspree.io/f/xoeevqpq` and authorized direct submission. This supersedes the mailto-only flow above. The React dialog now sends requests to Formspree, reports service acceptance, and retains drafts on failure. Copy is a secondary action. See [the integration and account-verification notes](formspree-integration.md). No real inquiry was sent during automated validation and no deployment was performed.
