@@ -35,12 +35,12 @@ export const SiteHeader: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-[#FAF8F4]/95 backdrop-blur-md border-b border-[#D9DDD9]">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:bg-white focus:p-3">Skip to content</a>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="mx-auto flex h-16 w-full max-w-[1600px] min-w-0 items-center justify-between gap-4 px-4 sm:px-5 lg:px-6 2xl:px-8">
         <Link to="/" onClick={() => setMobileMenuOpen(false)} className="focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] rounded-md transition-opacity hover:opacity-90" aria-label="Leqad Home">
           <BrandLogo size="md" className="h-[49.28px] md:h-[53.76px]" />
         </Link>
         {/* Underline grows from the center on hover or keyboard focus, and stays visible for the active page. */}
-        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-8 text-sm font-medium">
+        <nav aria-label="Main navigation" className="hidden items-center gap-5 text-sm font-medium lg:flex xl:gap-8">
           {navigation.map(({ to, label }) => (
             <NavLink
               key={to}

@@ -5,7 +5,7 @@ import { LEGAL_DISCLAIMER } from '../../lib/constants';
 
 export const SiteFooter: React.FC = () => (
   <footer className="w-full overflow-x-hidden bg-[#0E2943] text-[#F5EFE7]">
-    <div className="mx-auto grid w-full max-w-7xl gap-9 px-5 pt-10 pb-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12 sm:px-8 sm:pt-12">
+    <div className="mx-auto grid w-full max-w-[1600px] min-w-0 gap-9 px-4 pt-10 pb-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12 sm:px-5 sm:pt-12 lg:px-6 2xl:px-8">
       <div className="max-w-md space-y-3">
         {/* Source asset retained for assistive technology; visible artwork is drawn below. */}
         <img
@@ -49,7 +49,7 @@ export const SiteFooter: React.FC = () => (
     </div>
 
     <div className="px-5 pt-2 pb-4 sm:px-8 sm:pb-5">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-[#F5EFE7]/60 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:text-[11px]">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-[#F5EFE7]/60 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:text-[11px]">
         <span className="shrink-0 text-[#F5EFE7]/85">© 2026 Leqad</span>
         <span className="max-w-md sm:text-right">{LEGAL_DISCLAIMER}</span>
       </div>
