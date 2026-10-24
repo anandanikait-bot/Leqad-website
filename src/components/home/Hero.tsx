@@ -59,7 +59,7 @@ export const Hero: React.FC = () => {
             {/* Reserved fixed vertical height so text transitions never shift CTA buttons */}
             <div className="flex min-h-[6.25rem] items-center justify-start sm:min-h-[7rem] lg:min-h-[8.75rem]">
               <span
-                className={`font-serif italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
+                className={`font-serif hero-rotating-phrase italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight transition-all duration-400 ease-out inline-block ${
                   isTransitioning
                     ? 'opacity-0 blur-md translate-y-2'
                     : 'opacity-100 blur-none translate-y-0'
