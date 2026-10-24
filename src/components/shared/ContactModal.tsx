@@ -178,7 +178,7 @@ Message: ${message.trim() || '[No message entered]'}
               </strong>
               <span>
                 {mailto
-                  ? 'Open your email app to review and send your inquiry. Nothing is sent by this website.'
+                  ? 'Open your email app to review and send your inquiry to Leqad support. Nothing is sent by this website.'
                   : <>A public contact email is not available yet. This helper does not send messages directly.
                     Use <strong>Copy Inquiry Note</strong> to keep a draft for later.</>}
               </span>

@@ -73,3 +73,9 @@ The owner-approved contact address is still absent. Configure `contactConfig.ema
 The PR workflow now includes this feature branch on push so the exact committed revision can run remotely. Local passing checks do not establish remote CI status. Before publishing, verify all deep-link refreshes, fonts, SVGs, social metadata, contact behavior, demo and mobile layouts on the permitted deployment URL. No deployment was performed during this task.
 
 GitHub PR creation returned `Post "https://api.github.com/graphql": Forbidden`. The implementation branch is pushed, with a [prepared PR description and creation link](website-ux-quality-pr.md). Remote CI and deployment checks remain NOT VERIFIED.
+
+## Approved support email follow-up
+
+The owner has now approved `anandanikait@gmail.com` as the Leqad support destination. This resolves the missing-address item above. Contact entry points now say Contact Leqad, and the primary dialog action opens a populated email draft addressed to that account. The website identifies the recipient as Leqad support and does not claim delivery. The visitor must send through their email app.
+
+Validation passed: TypeScript, ESLint, 24 unit tests, build, the 110-test existing browser suite, and one new browser regression that checks invalid email blocking and the actual outgoing mailto recipient, subject and message. All 48 accessibility scans report zero violations. [Current support dialog at 375px](screenshots/support-email/dialog-375.png) and [validation evidence](screenshots/support-email/validation.json). Actual mailbox delivery remains unverified.

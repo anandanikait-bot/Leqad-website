@@ -292,7 +292,7 @@
     "needsReview": [
       {
         "id": "color-contrast",
-        "nodes": 2
+        "nodes": 3
       }
     ]
   },
@@ -407,7 +407,7 @@
     "needsReview": [
       {
         "id": "color-contrast",
-        "nodes": 2
+        "nodes": 3
       }
     ]
   },
@@ -510,7 +510,7 @@
     "needsReview": [
       {
         "id": "color-contrast",
-        "nodes": 2
+        "nodes": 3
       }
     ]
   },

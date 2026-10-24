@@ -16,4 +16,4 @@ Validation: clean npm ci, TypeScript, ESLint, production build, 24 unit tests an
 
 [Audit matrix, evidence, screenshots and limitations](docs/website-ux-quality-audit.md)
 
-Remaining: an owner-approved public email is still needed, so contact remains draft-only. Native screen-reader listening, installed Edge/Chrome browser chrome, deployed-host checks, and exact-commit remote CI remain unverified. No merge or deployment.
+Remaining: the owner-approved support destination is now configured as `anandanikait@gmail.com`; the site opens an email draft, and actual sending is handled by the visitor’s email app. Native screen-reader listening, installed Edge/Chrome browser chrome, deployed-host checks, and exact-commit remote CI remain unverified. No merge or deployment.

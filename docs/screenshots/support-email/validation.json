@@ -1,0 +1,13 @@
+{
+  "approvedDestination": "anandanikait@gmail.com",
+  "deliveryMethod": "mailto email draft",
+  "automaticSending": false,
+  "typescript": "pass",
+  "eslint": "pass",
+  "unitTestsPassed": 24,
+  "existingBrowserSuitePassed": 110,
+  "newMailtoRegressionPassed": 1,
+  "axeScans": 48,
+  "axeViolations": 0,
+  "actualEmailDeliveryVerified": false
+}

@@ -1,4 +1,4 @@
-// Set only after the owner approves a public project address. Until then the
-// inquiry helper remains draft-only; message delivery is a launch blocker.
-export const contactConfig: { email: string | null } = { email: null };
+// Owner-approved Leqad support destination. The website opens an email draft;
+// delivery is handled by the visitor's email app.
+export const contactConfig: { email: string | null } = { email: 'anandanikait@gmail.com' };
 export const inquiryActionLabel = contactConfig.email ? 'Contact Leqad' : 'Draft an Inquiry Note';
