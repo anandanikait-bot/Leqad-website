@@ -115,7 +115,10 @@ for (const route of ['/about', '/partners']) {
     await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'Interactive Demo', exact: true }).click();
     await expect(page.locator('[data-parallax-travel]')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
-    expect(await page.locator('[data-lenis-prevent]').first().evaluate(element => getComputedStyle(element).transform)).toBe('none');
+    // The demo should not be a parallax layer or a Lenis-excluded scroll region.
+    await expect(page.locator('[data-lenis-prevent]')).toHaveCount(0);
+    expect(await page.getByRole('group', { name: 'CAD drawing viewport', exact: true })
+      .evaluate(element => getComputedStyle(element).transform)).toBe('none');
   });
 }
 
