@@ -45,7 +45,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
         </div>
       </section>
 
-      {/* The preview is a screenshot of this website's demonstration. */}
+      {/* The preview is an editorial CAD diagram linking to a separate interactive simulation. */}
       <section className="space-y-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
