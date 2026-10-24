@@ -27,8 +27,15 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     expect(Math.abs(primary.x - column.x)).toBeLessThan(5);
     expect(Math.abs(secondary.x - column.x) < 5 ||
       secondary.x >= primary.x + primary.width - 2).toBe(true);
-    expect(primary.height).toBeGreaterThanOrEqual(40);
-    expect(secondary.height).toBeGreaterThanOrEqual(40);
+    expect(primary.height).toBeGreaterThanOrEqual(44);
+    expect(secondary.height).toBeGreaterThanOrEqual(44);
+    // Both hero CTAs share the same 8px rectangular corners and 44px height.
+    expect(Math.abs(primary.height - secondary.height)).toBeLessThanOrEqual(1);
+    await expect(page.locator('[data-metallic-cta] a[aria-label="Explore Interactive Demo"]')).toHaveCSS('border-radius', '8px');
+    await expect(page.locator('[data-metallic-face]')).toHaveCSS('border-radius', '8px');
+    await expect(page.locator('[data-metallic-rim]')).toHaveCSS('border-radius', '8px');
+    await expect(page.locator('.metallic-button-canvas')).toHaveCSS('border-radius', '8px');
+    await expect(page.getByRole('link', { name: 'Learn About Leqad' })).toHaveCSS('border-radius', '8px');
 
     const artwork = page.getByLabel('Interactive 3D CAD Geometry Visualization', { exact: true });
     const box = (await artwork.boundingBox())!;

@@ -654,6 +654,7 @@ interface MetallicButtonProps {
   label?: string;
   onClick?: () => void;
   viewMode?: "text" | "icon";
+  shape?: "pill" | "rounded";
   className?: string;
   baseColor?: string;
   sheenColor?: string;
@@ -674,6 +675,7 @@ export function MetallicButton({
   label = "Get Started",
   onClick,
   viewMode = "text",
+  shape = "pill",
   className = "",
   baseColor = "#B74B21",
   sheenColor = "#F5EFE799",
@@ -730,8 +732,10 @@ export function MetallicButton({
   reducedMotionRef.current = reducedMotion;
 
   const isIcon = viewMode === "icon";
-  const shellSize = isIcon ? "h-12 w-12" : "h-12 w-full";
-  const faceSize = isIcon ? "h-11 w-11" : "h-11 w-[calc(100%-4px)]";
+  // Rounded-rectangle mode is opt-in: existing CTA usages remain unchanged.
+  const radius = shape === "rounded" ? "rounded-lg" : "rounded-full";
+  const shellSize = isIcon ? "h-12 w-12" : shape === "rounded" ? "h-11 w-full" : "h-12 w-full";
+  const faceSize = isIcon ? "h-11 w-11" : shape === "rounded" ? "h-10 w-[calc(100%-4px)]" : "h-11 w-[calc(100%-4px)]";
   const pressShift = isPressed
     ? "translate-y-px scale-[0.98]"
     : "translate-y-0 scale-100";
@@ -773,7 +777,7 @@ export function MetallicButton({
           position: absolute !important;
           top: 0 !important;
           left: 0 !important;
-          border-radius: 100px !important;
+          border-radius: inherit !important;
         }
         @keyframes metallic-button-ripple {
           0% {
@@ -899,7 +903,7 @@ export function MetallicButton({
           >
             <div
               data-metallic-face
-              className={`m-0.5 rounded-full bg-[linear-gradient(180deg,#C85A2D_0%,#B74B21_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
+              className={`m-0.5 ${radius} bg-[linear-gradient(180deg,#C85A2D_0%,#B74B21_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
             />
           </div>
 
@@ -907,7 +911,7 @@ export function MetallicButton({
             className={`absolute top-0 left-0 z-20 translate-z-2.5 transform-3d ${shellSize} ${pressShift} ${SETTLE}`}
           >
             <div
-              className={`rounded-full bg-transparent ${shellSize} ${SHADOW_SHIFT} ${
+              className={`${radius} bg-transparent ${shellSize} ${SHADOW_SHIFT} ${
                 isPressed
                   ? RIM_PRESSED
                   : isHovered
@@ -917,7 +921,7 @@ export function MetallicButton({
             >
               <div
                 ref={surfaceRef}
-                className={`metallic-button-canvas relative overflow-hidden rounded-full ${shellSize}`}
+                className={`metallic-button-canvas relative overflow-hidden ${radius} ${shellSize}`}
               />
             </div>
           </div>
@@ -927,7 +931,7 @@ export function MetallicButton({
           <span
             data-metallic-rim
             aria-hidden="true"
-            className="leqad-metallic-rim pointer-events-none absolute inset-0 z-[25] rounded-full p-[2px]"
+            className={`leqad-metallic-rim pointer-events-none absolute inset-0 z-[25] ${radius} p-[2px]`}
           />
 
           <Link
@@ -940,7 +944,7 @@ export function MetallicButton({
             onPointerUp={() => setIsPressed(false)}
             onPointerCancel={() => setIsPressed(false)}
             aria-label={label}
-            className={`absolute top-0 left-0 z-40 translate-z-6.25 cursor-pointer overflow-hidden rounded-full border-none bg-transparent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B74B21] transform-3d ${shellSize}`}
+            className={`absolute top-0 left-0 z-40 translate-z-6.25 cursor-pointer overflow-hidden ${radius} border-none bg-transparent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B74B21] transform-3d ${shellSize}`}
           >
             {ripples.map((ripple) => (
               <span
