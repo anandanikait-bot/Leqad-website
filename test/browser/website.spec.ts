@@ -290,7 +290,7 @@ test('prerendered public content and metadata work with JavaScript disabled', as
   await context.close();
 });
 
-test('Lenis respects reduced motion and leaves CAD wheel events native', async ({ page }) => {
+test('Lenis respects reduced motion and does not isolate the CAD demo from scrolling', async ({ page }) => {
   await page.goto('/about');
   await expect(page.locator('html')).toHaveClass(/lenis/);
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -298,12 +298,9 @@ test('Lenis respects reduced motion and leaves CAD wheel events native', async (
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await expect(page.locator('html')).toHaveClass(/lenis/);
   await page.goto('/demo');
-  const prevented = await page.locator('[data-lenis-prevent]').first().evaluate(element => {
-    const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 100 });
-    element.dispatchEvent(event);
-    return event.defaultPrevented;
-  });
-  expect(prevented).toBe(false);
+  // Only independently scrollable overlays (such as the contact dialog)
+  // should opt out of Lenis, not the full CAD demo.
+  await expect(page.locator('[data-lenis-prevent]')).toHaveCount(0);
   await page.goto('/about');
   await page.mouse.move(100, 400);
   await page.mouse.wheel(0, 500);
@@ -338,7 +335,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       }
       if (route === '/demo' && width < 1024) {
         const panel = await page.getByText('Leqad Teaching Panel', { exact: true }).boundingBox();
-        const workspace = await page.locator('[data-lenis-prevent]').first().boundingBox();
+        const workspace = await page.getByRole('toolbar', { name: 'CAD tools' }).boundingBox();
         expect(panel!.y).toBeLessThan(workspace!.y);
       }
       expect(errors).toEqual([]);
