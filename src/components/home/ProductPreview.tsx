@@ -9,9 +9,8 @@ export const ProductPreview: React.FC = () => (
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <p className="inline-flex items-center gap-2 text-xs font-medium text-[#55616B]">
           <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
-          Screenshot preview — not an interactive CAD window
+          Static screenshot — select to try the interactive demo
         </p>
-        <span className="text-xs text-[#55616B]">Select the image to try the demo</span>
       </div>
       <Link
         to="/demo"
@@ -36,7 +35,7 @@ export const ProductPreview: React.FC = () => (
         </span>
       </Link>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-[#55616B]">Static preview of the 8-step first-sketch exercise</p>
+        <p className="text-sm text-[#55616B]">First-sketch exercise · 8 guided steps</p>
         <ButtonLink to="/demo" variant="rust" size="sm" icon={<ArrowRight className="h-4 w-4" />}>Explore Interactive Demo</ButtonLink>
       </div>
     </div>
