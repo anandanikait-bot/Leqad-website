@@ -39,7 +39,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen min-h-dvh flex flex-col bg-[#FAF8F4] text-[#0E2943] selection:bg-[#B74B21]/15 selection:text-[#0E2943]">
+    <div className="min-h-screen min-h-dvh flex flex-col bg-[#FAF8F4] text-[#0E2943] selection:bg-[#793327]/15 selection:text-[#0E2943]">
       <ScrollManager />
       {!isHomePage && <SiteHeader />}
       <main id="main-content" className={isHomePage ? 'flex flex-1 flex-col' : 'flex-1'}>

@@ -666,13 +666,13 @@ const SHADOW_SHIFT =
   "transition-[box-shadow] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]";
 
 const RIM_PRESSED =
-  "shadow-[0_0_0_1px_rgba(183,75,33,0.55),0_1px_2px_rgba(183,75,33,0.14)]";
+  "shadow-[0_0_0_1px_rgba(121, 51, 39,0.55),0_1px_2px_rgba(121, 51, 39,0.14)]";
 const RIM_HOVERED =
-  "shadow-[0_0_0_1px_rgba(183,75,33,0.55),0_5px_12px_rgba(183,75,33,0.22)]";
+  "shadow-[0_0_0_1px_rgba(121, 51, 39,0.55),0_5px_12px_rgba(121, 51, 39,0.22)]";
 const RIM_RESTING =
-  "shadow-[0_0_0_1px_rgba(183,75,33,0.35),0_3px_8px_rgba(183,75,33,0.14)]";
+  "shadow-[0_0_0_1px_rgba(121, 51, 39,0.35),0_3px_8px_rgba(121, 51, 39,0.14)]";
 const FACE_PRESSED =
-  "shadow-[inset_0_2px_4px_rgba(183,75,33,0.4)]";
+  "shadow-[inset_0_2px_4px_rgba(121, 51, 39,0.4)]";
 
 interface MetallicButtonProps {
   to: string;
@@ -702,7 +702,7 @@ export function MetallicButton({
   viewMode = "text",
   shape = "pill",
   className = "",
-  baseColor = "#B74B21",
+  baseColor = "#793327",
   sheenColor = "#F5EFE799",
   bandCount = 3,
   edgeBlur = 0.7,
@@ -916,7 +916,7 @@ export function MetallicButton({
               />
             ) : (
               <span
-                className={`text-sm font-medium whitespace-nowrap text-[#F5EFE7] [text-shadow:0px_1px_2px_rgba(183,75,33,0.35)] ${SETTLE}`}
+                className={`text-sm font-medium whitespace-nowrap text-[#F5EFE7] [text-shadow:0px_1px_2px_rgba(121, 51, 39,0.35)] ${SETTLE}`}
               >
                 {label}
               </span>
@@ -928,7 +928,7 @@ export function MetallicButton({
           >
             <div
               data-metallic-face
-              className={`m-0.5 ${radius} bg-[linear-gradient(180deg,#C85A2D_0%,#B74B21_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
+              className={`m-0.5 ${radius} bg-[linear-gradient(180deg,#A55E4F_0%,#793327_100%)] ${faceSize} ${SHADOW_SHIFT} ${isPressed ? FACE_PRESSED : "shadow-none"}`}
             />
           </div>
 
@@ -969,12 +969,12 @@ export function MetallicButton({
             onPointerUp={() => setIsPressed(false)}
             onPointerCancel={() => setIsPressed(false)}
             aria-label={label}
-            className={`absolute top-0 left-0 z-40 translate-z-6.25 cursor-pointer overflow-hidden ${radius} border-none bg-transparent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B74B21] transform-3d ${shellSize}`}
+            className={`absolute top-0 left-0 z-40 translate-z-6.25 cursor-pointer overflow-hidden ${radius} border-none bg-transparent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#793327] transform-3d ${shellSize}`}
           >
             {ripples.map((ripple) => (
               <span
                 key={ripple.id}
-                className="pointer-events-none absolute size-5 rounded-full bg-[radial-gradient(circle,rgba(245,239,231,0.28)_0%,rgba(183,75,33,0)_70%)] animate-[metallic-button-ripple_0.6s_ease-out]"
+                className="pointer-events-none absolute size-5 rounded-full bg-[radial-gradient(circle,rgba(245,239,231,0.28)_0%,rgba(121, 51, 39,0)_70%)] animate-[metallic-button-ripple_0.6s_ease-out]"
                 style={{
                   left: `${ripple.x}px`,
                   top: `${ripple.y}px`,

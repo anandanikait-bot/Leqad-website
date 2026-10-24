@@ -19,8 +19,10 @@
 @theme {
   --color-brand-navy: #0E2943;
   --color-brand-ivory: #F5EFE7;
-  --color-brand-rust: #B74B21;
-  --color-brand-rust-hover: #9c3f1b;
+  --color-brand-russet: #793327;
+  --color-brand-russet-hover: #62281F;
+  --color-brand-rust: #793327;
+  --color-brand-rust-hover: #62281F;
   --color-near-white: #FAF8F4;
   --color-surface: #FFFFFF;
   --color-muted-border: #D9DDD9;
@@ -72,7 +74,7 @@ body {
     linear-gradient(to bottom, rgba(14, 41, 67, 0.035) 1px, transparent 1px);
 }
 
-/* The CTA uses the original Leqad rust face and a slow copper/ivory metal rim.
+/* The CTA uses official Hay's Russet with a subtle russet/ivory metallic rim.
    Register the angle so the border's light travels even without hovering. */
 @property --leqad-rim-angle {
   syntax: "<angle>";
@@ -87,14 +89,14 @@ body {
 .leqad-metallic-rim {
   background: conic-gradient(
     from var(--leqad-rim-angle),
-    #8C3619 0deg,
-    #B74B21 64deg,
-    #E6A477 100deg,
+    #52231C 0deg,
+    #793327 64deg,
+    #BD8C7C 100deg,
     #F5EFE7 124deg,
-    #CB6B3D 149deg,
-    #8C3619 240deg,
-    #D48A60 315deg,
-    #8C3619 360deg
+    #A76759 149deg,
+    #52231C 240deg,
+    #B07A6D 315deg,
+    #52231C 360deg
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;

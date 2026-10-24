@@ -1,8 +1,9 @@
 export const BRAND_COLORS = {
   navy: '#0E2943',
   ivory: '#F5EFE7',
-  rust: '#B74B21',
-  rustHover: '#9C3F1B',
+  russet: '#793327',
+  rust: '#793327',
+  rustHover: '#62281F',
   nearWhite: '#FAF8F4',
   surface: '#FFFFFF',
   mutedBorder: '#D9DDD9',

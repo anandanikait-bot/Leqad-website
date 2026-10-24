@@ -37,7 +37,7 @@ export function PlateModel({ dimensions, view, confirmed, labelSize = 14 }: {
           <polygon points={polygon([0, 1, 5, 4])} fill="#F5EFE7" fillOpacity=".25" vectorEffect="non-scaling-stroke" />
           <polygon points={polygon([0, 3, 7, 4])} fill="#F5EFE7" fillOpacity=".42" vectorEffect="non-scaling-stroke" />
           <polygon points={polygon([4, 5, 6, 7])} fill="#F5EFE7" fillOpacity={confirmed ? '.62' : '.5'} vectorEffect="non-scaling-stroke" />
-          {!confirmed && <polygon points={polygon([0, 1, 2, 3])} fill="none" stroke="#B74B21" strokeDasharray="4 4" strokeOpacity=".65" />}
+          {!confirmed && <polygon points={polygon([0, 1, 2, 3])} fill="none" stroke="#793327" strokeDasharray="4 4" strokeOpacity=".65" />}
         </> : <polygon points={polygon(view === 'top' ? [4, 5, 6, 7] : view === 'front' ? [0, 1, 5, 4] : [0, 3, 7, 4])} fill="#F5EFE7" fillOpacity=".48" vectorEffect="non-scaling-stroke" />}
       </g>
       <g pointerEvents="none" fontFamily="IBM Plex Mono" fontSize={labelSize} fill="#F5EFE7" stroke="#0E2943" strokeWidth="3" paintOrder="stroke">

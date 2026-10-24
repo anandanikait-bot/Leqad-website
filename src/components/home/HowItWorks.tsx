@@ -38,10 +38,10 @@ export const HowItWorks: React.FC = () => {
             const Icon = step.icon;
             return (
               <li key={step.number} className="grid grid-cols-[3.25rem_minmax(0,1fr)] gap-4 py-6 sm:grid-cols-[4rem_minmax(0,1fr)] sm:gap-6 sm:py-8">
-                <span className="pt-1 font-mono text-sm font-semibold tracking-wide text-[#B74B21]" aria-hidden="true">{step.number}</span>
+                <span className="pt-1 font-mono text-sm font-semibold tracking-wide text-[#793327]" aria-hidden="true">{step.number}</span>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <Icon className="h-5 w-5 shrink-0 text-[#B74B21]" aria-hidden="true" />
+                    <Icon className="h-5 w-5 shrink-0 text-[#793327]" aria-hidden="true" />
                     <h3 className="text-xl font-semibold tracking-tight text-[#0E2943] sm:text-2xl">{step.title}</h3>
                   </div>
                   <p className="max-w-xl text-sm leading-relaxed text-[#55616B] sm:text-base">{step.description}</p>

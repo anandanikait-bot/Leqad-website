@@ -49,7 +49,7 @@ export const SiteHeader: React.FC = () => {
               className={({ isActive }) =>
                 `relative inline-flex h-11 items-center justify-center px-0.5 text-sm font-medium
                 before:pointer-events-none before:absolute before:inset-x-0 before:bottom-1
-                before:h-[2px] before:origin-center before:bg-[#B74B21]
+                before:h-[2px] before:origin-center before:bg-[#793327]
                 motion-safe:before:transition-transform motion-safe:before:duration-200 motion-safe:before:ease-out
                 hover:before:scale-x-100 focus-visible:before:scale-x-100
                 hover:text-[#0E2943] focus-visible:outline-2 focus-visible:outline-offset-2
@@ -77,7 +77,7 @@ export const SiteHeader: React.FC = () => {
               className={`flex min-h-11 items-center border-l-2 px-3 text-sm font-medium
                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]
                 ${pathname === to
-                  ? 'border-[#B74B21] bg-[#F5EFE7] text-[#0E2943]'
+                  ? 'border-[#793327] bg-[#F5EFE7] text-[#0E2943]'
                   : 'border-transparent text-[#55616B] hover:bg-[#F5EFE7] hover:text-[#0E2943]'}`}
             >
               {label}

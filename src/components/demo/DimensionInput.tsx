@@ -26,7 +26,7 @@ export function DimensionInput({ label, value, min, max, onChange, onValidityCha
         onValidityChange(ok);
         if (ok) onChange(n);
       }}
-      className="block w-full min-w-0 rounded-md border border-[#D9DDD9] bg-white px-2.5 py-2 font-mono text-[#0E2943] aria-invalid:border-[#B74B21] focus-visible:outline-2 focus-visible:outline-[#B74B21]" />
-    {!valid && <span id={errorId} className="block text-[11px] text-[#B74B21]">Enter {min}–{max} mm.</span>}
+      className="block w-full min-w-0 rounded-md border border-[#D9DDD9] bg-white px-2.5 py-2 font-mono text-[#0E2943] aria-invalid:border-[#793327] focus-visible:outline-2 focus-visible:outline-[#793327]" />
+    {!valid && <span id={errorId} className="block text-[11px] text-[#793327]">Enter {min}–{max} mm.</span>}
   </label>;
 }

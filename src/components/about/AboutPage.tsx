@@ -18,8 +18,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 border-b border-[#D9DDD9] pb-12 lg:grid-cols-12 lg:gap-16 lg:pb-16">
           <div className="space-y-6 lg:col-span-8">
-            <div className="flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#9C3F1B]">
-              <span className="h-px w-7 bg-[#B74B21]" aria-hidden="true" />
+            <div className="flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#62281F]">
+              <span className="h-px w-7 bg-[#793327]" aria-hidden="true" />
               About / Leqad
             </div>
             <h1 className="max-w-4xl text-[clamp(2.3rem,4.5vw,4.4rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#0E2943]">
@@ -37,8 +37,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
               </ButtonLink>
             </div>
           </div>
-          <aside className="flex flex-col justify-end gap-3 border-l-2 border-[#B74B21]/60 pl-5 lg:col-span-4 lg:mb-1 lg:self-end">
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#9C3F1B]">Learning by doing</span>
+          <aside className="flex flex-col justify-end gap-3 border-l-2 border-[#793327]/60 pl-5 lg:col-span-4 lg:mb-1 lg:self-end">
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#62281F]">Learning by doing</span>
             <p className="max-w-xs text-base font-semibold leading-snug text-[#0E2943]">Start with one sketch. Learn why each decision matters.</p>
             <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">AI is making it easier than ever to create. Leqad aims to make it easier to understand what you create.</p>
           </aside>
@@ -94,7 +94,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
               Interested in evaluating guided CAD learning?
             </h2>
 
-            <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+            <p className="text-sm sm:text-base text-[#F5EFE7]/80 leading-relaxed">
               We welcome exploratory conversations with educators and CAD platform teams about technical fit and useful learning evaluations.
             </p>
 

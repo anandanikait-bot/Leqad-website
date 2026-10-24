@@ -89,8 +89,8 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
     'min-h-11 w-full rounded-lg border px-4 py-3 text-left text-sm transition-colors cursor-pointer ' +
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] ' +
     (selected
-      ? 'border-[#B74B21] bg-[#F5EFE7] text-[#0E2943] ring-1 ring-[#B74B21]/30'
-      : 'border-[#D9DDD9] bg-white text-[#55616B] hover:border-[#B74B21]/60 hover:bg-[#FAF8F4]');
+      ? 'border-[#793327] bg-[#F5EFE7] text-[#0E2943] ring-1 ring-[#793327]/30'
+      : 'border-[#D9DDD9] bg-white text-[#55616B] hover:border-[#793327]/60 hover:bg-[#FAF8F4]');
 
   return (
     <section
@@ -164,7 +164,7 @@ export const InteractivePilotConfigurator: React.FC<InteractivePilotConfigurator
 
       <div className="rounded-xl border border-[#D9DDD9] bg-[#FAF8F4] p-5 sm:p-6 space-y-5">
         <div className="space-y-2">
-          <span className="font-mono text-xs font-medium uppercase tracking-wider text-[#B74B21]">
+          <span className="font-mono text-xs font-medium uppercase tracking-wider text-[#793327]">
             Exploratory outline
           </span>
           <h3 className="text-base sm:text-lg font-semibold text-[#0E2943]" data-pilot-summary>
