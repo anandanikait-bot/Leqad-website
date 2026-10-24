@@ -26,7 +26,12 @@ try {
       // Let native scroll events reach the existing Lenis subscription.
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const sample = () => layer.evaluate(element => {
-        const text = element.parentElement!.querySelector('p, h2')!;
+        // The About preview now wraps its image in an accessible link.
+        // Anchor measurements to the stable section, not the image's
+        // immediate parent, which may contain no text.
+        const text = element.closest('[data-parallax-anchor]')?.querySelector('p, h2')
+          ?? element.parentElement?.querySelector('p, h2');
+        if (!text) throw new Error('No stationary text reference for parallax layer');
         return {
           offset: new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
           textTop: text.getBoundingClientRect().top + scrollY,
