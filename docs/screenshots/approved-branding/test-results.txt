@@ -1,0 +1,327 @@
+## TypeScript
+
+> react-example@0.0.0 lint
+> tsc --noEmit
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+## Unit tests
+
+> react-example@0.0.0 test
+> tsx --test test/*.test.ts
+
+✔ official artwork is vector and transparent with exact brand palette (1.150511ms)
+▶ Lesson Data & Curriculum Alignment (Fix #4, Fix #5, Fix #6)
+  ✔ Contains exactly 8 approved steps in the correct sequence (1.000275ms)
+  ✔ Semantic action IDs are properly mapped to distinct operations (0.247492ms)
+  ✔ Consistent 40 mm x 30 mm rectangle dimensions across lesson descriptions (0.291518ms)
+  ✔ Top plane correctly refers to XY datum (Fix #6) (0.168563ms)
+✔ Lesson Data & Curriculum Alignment (Fix #4, Fix #5, Fix #6) (3.222408ms)
+▶ Demo State Machine & Separation of Navigation from Action Completion (Fix #2, Fix #3, Fix #8)
+  ✔ Jumping directly to Step 8 does NOT mark Steps 1-7 as completed (1.271313ms)
+  ✔ Visiting a step marks it visited, not completed (0.183496ms)
+  ✔ Sketch is not prematurely accepted when opening Step 6 (Fix #3) (0.316707ms)
+  ✔ Extrude preview is distinct from a committed solid (0.29219ms)
+  ✔ Reset returns all state to fresh initial state (Fix #8) (0.223967ms)
+✔ Demo State Machine & Separation of Navigation from Action Completion (Fix #2, Fix #3, Fix #8) (2.802286ms)
+▶ Legal & Educational Disclaimers (Fix #7, Fix #12)
+  ✔ Legal disclaimer states independent standing (0.30534ms)
+  ✔ Demo disclaimer states illustration without live CAD inspection (0.091127ms)
+✔ Legal & Educational Disclaimers (Fix #7, Fix #12) (0.552301ms)
+✔ plate vertices preserve edited sketch dimensions and extrusion depth in one closed model (1.090961ms)
+✔ Top, Front and Right views show the actual model proportions (1.0637ms)
+✔ isometric transition begins on the same planar profile and stays finite at limits (0.670859ms)
+▶ Platform identity and simulation boundaries
+  ✔ Legal disclaimer names the target platform without implying affiliation (0.878281ms)
+  ✔ Demo verification disclaimer clarifies simulation without real CAD inspection (0.190486ms)
+  ✔ Hash route resolver correctly maps route names (0.284768ms)
+  ✔ Inquiry draft note structure conforms to draft-only helper (0.205239ms)
+✔ Platform identity and simulation boundaries (2.949768ms)
+✔ production serves route-specific HTML, canonical redirects, and real missing-page statuses (88.340747ms)
+✔ known legacy hash URLs are replaced by their clean destinations (1.128207ms)
+✔ each public route has unique crawlable metadata and a route-specific browser title (1.903884ms)
+✔ homepage social image is branded and distinct from the interactive demo (0.374454ms)
+✔ unknown routes are excluded from indexing (0.207462ms)
+ℹ tests 24
+ℹ suites 4
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 431.289279
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+## Build
+
+> react-example@0.0.0 build
+> vite build && tsx scripts/prerender.ts
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 1703 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                              1.01 kB │ gzip:   0.54 kB
+dist/assets/ibm-plex-mono-latin-400-normal-CvHOgSBP.woff    13.14 kB
+dist/assets/ibm-plex-mono-latin-500-normal-CB9ihrfo.woff    13.15 kB
+dist/assets/ibm-plex-mono-latin-600-normal-DWFSQ4vo.woff    13.20 kB
+dist/assets/ibm-plex-mono-latin-700-normal-CNHXzs6v.woff    13.21 kB
+dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2   14.70 kB
+dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2   14.88 kB
+dist/assets/ibm-plex-mono-latin-700-normal-7sUh57Bg.woff2   14.90 kB
+dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2   15.62 kB
+dist/assets/index-DOWK8Zhv.css                              53.55 kB │ gzip:  10.23 kB
+dist/assets/index-B0KI0du0.js                              416.04 kB │ gzip: 127.53 kB
+
+✓ built in 357ms
+vite v8.3.5 building ssr environment for production...
+transforming...
+✓ 33 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/.prerender/entry-server.js  201.21 kB │ gzip: 48.29 kB
+
+✓ built in 58ms
+Prerendered / → index.html
+Prerendered /demo → demo/index.html
+Prerendered /about → about/index.html
+Prerendered /partners → partners/index.html
+Prerendered /404 → 404.html
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+## Browser tests
+
+> react-example@0.0.0 test:browser
+> playwright test
+
+
+Running 93 tests using 2 workers
+
+(node:63928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:63927) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 test/browser/about-partners-contact.spec.ts:3:1 › About education inquiry opens with a valid selected topic (1.4s)
+  ✓   3 test/browser/about-partners-contact.spec.ts:18:1 › Partners has one visible drafting action and clearly states contact availability (907ms)
+  ✓   1 test/browser/content-and-route-quality.spec.ts:6:3 › all pages render and refresh without errors at 320px (3.6s)
+  ✓   4 test/browser/about-partners-contact.spec.ts:33:1 › inquiry topics remain selectable, copy the actual note, and never submit a request (2.0s)
+  ✓   6 test/browser/about-partners-contact.spec.ts:59:5 › /about retains mobile readability and navigation at 320px (919ms)
+  ✓   5 test/browser/content-and-route-quality.spec.ts:6:3 › all pages render and refresh without errors at 375px (2.0s)
+  ✓   7 test/browser/about-partners-contact.spec.ts:59:5 › /about retains mobile readability and navigation at 375px (964ms)
+  ✓   9 test/browser/about-partners-contact.spec.ts:59:5 › /about retains mobile readability and navigation at 1440px (935ms)
+  ✓   8 test/browser/content-and-route-quality.spec.ts:6:3 › all pages render and refresh without errors at 768px (2.4s)
+  ✓  10 test/browser/about-partners-contact.spec.ts:59:5 › /partners retains mobile readability and navigation at 320px (838ms)
+  ✓  12 test/browser/about-partners-contact.spec.ts:59:5 › /partners retains mobile readability and navigation at 375px (1.0s)
+  ✓  13 test/browser/about-partners-contact.spec.ts:59:5 › /partners retains mobile readability and navigation at 1440px (855ms)
+  ✓  11 test/browser/content-and-route-quality.spec.ts:6:3 › all pages render and refresh without errors at 1024px (2.3s)
+  ✓  14 test/browser/hands-on.spec.ts:12:1 › rectangle tool arms drawing and requires two corners before completing the action (1.6s)
+  ✓  15 test/browser/content-and-route-quality.spec.ts:6:3 › all pages render and refresh without errors at 1440px (3.3s)
+  ✓  16 test/browser/hands-on.spec.ts:35:1 › viewport plane selection and guided rectangle alternative share the real lesson state (2.4s)
+  ✓  17 test/browser/content-and-route-quality.spec.ts:66:1 › About retains a concise explanation without redundant comparison cards (741ms)
+  ✓  19 test/browser/content-and-route-quality.spec.ts:74:1 › lesson explains a simulated CAD process without universal or verified claims (1.2s)
+  ✓  18 test/browser/hands-on.spec.ts:69:1 › returning to dimensions resets an abandoned invalid draft without leaving the action locked (1.7s)
+  ✓  20 test/browser/interactive-pilot-configurator.spec.ts:3:1 › pilot planner presents questions rather than fabricated outcome promises (898ms)
+  ✓  21 test/browser/hands-on.spec.ts:81:3 › largest sketch and depth remain visible and settings do not cover the model at 320px (1.5s)
+  ✓  22 test/browser/interactive-pilot-configurator.spec.ts:22:1 › audience, group and focus update output and carry into the actual draft (1.2s)
+  ✓  23 test/browser/hands-on.spec.ts:81:3 › largest sketch and depth remain visible and settings do not cover the model at 375px (1.4s)
+  ✓  24 test/browser/interactive-pilot-configurator.spec.ts:53:1 › platform evaluation uses technical topic and does not retain another audience draft (1.1s)
+  ✓  26 test/browser/interactive-pilot-configurator.spec.ts:75:3 › pilot choices remain keyboard-accessible and within the page at 320px (846ms)
+  ✓  25 test/browser/hands-on.spec.ts:81:3 › largest sketch and depth remain visible and settings do not cover the model at 768px (1.7s)
+  ✓  27 test/browser/interactive-pilot-configurator.spec.ts:75:3 › pilot choices remain keyboard-accessible and within the page at 375px (665ms)
+  ✓  29 test/browser/interactive-pilot-configurator.spec.ts:75:3 › pilot choices remain keyboard-accessible and within the page at 768px (805ms)
+  ✓  30 test/browser/interactive-pilot-configurator.spec.ts:75:3 › pilot choices remain keyboard-accessible and within the page at 1440px (747ms)
+  ✓  28 test/browser/hands-on.spec.ts:81:3 › largest sketch and depth remain visible and settings do not cover the model at 1024px (1.7s)
+  ✓  31 test/browser/landing-parallax.spec.ts:4:3 › homepage stays centered and artwork remains reachable at 320px (1.0s)
+  ✓  32 test/browser/hands-on.spec.ts:81:3 › largest sketch and depth remain visible and settings do not cover the model at 1440px (1.7s)
+  ✓  33 test/browser/landing-parallax.spec.ts:4:3 › homepage stays centered and artwork remains reachable at 375px (856ms)
+  ✓  35 test/browser/landing-parallax.spec.ts:4:3 › homepage stays centered and artwork remains reachable at 768px (916ms)
+  ✓  34 test/browser/hands-on.spec.ts:108:1 › drawing cancellation and sketch cancellation leave no completed geometry (1.7s)
+  ✓  36 test/browser/landing-parallax.spec.ts:4:3 › homepage stays centered and artwork remains reachable at 1024px (930ms)
+  ✓  38 test/browser/landing-parallax.spec.ts:4:3 › homepage stays centered and artwork remains reachable at 1440px (858ms)
+  ✓  37 test/browser/hands-on.spec.ts:128:1 › a mobile visitor can draw with two viewport taps (1.3s)
+  ✓  40 test/browser/metallic-cta.spec.ts:3:1 › homepage uses the Leqad metallic CTA by default (934ms)
+  ✓  41 test/browser/metallic-cta.spec.ts:14:1 › rust metallic rim moves while idle without hovering (1.0s)
+  ✓  39 test/browser/landing-parallax.spec.ts:37:3 › /about parallax moves only approved visual layers and disables at runtime (2.1s)
+  ✓  42 test/browser/metallic-cta.spec.ts:33:3 › default metallic CTA fits and navigates at 320px (1.2s)
+  ✓  43 test/browser/landing-parallax.spec.ts:37:3 › /partners parallax moves only approved visual layers and disables at runtime (2.0s)
+  ✓  44 test/browser/metallic-cta.spec.ts:33:3 › default metallic CTA fits and navigates at 375px (1.3s)
+  ✓  45 test/browser/landing-parallax.spec.ts:88:3 › /about decorative layers slide in opposite directions without moving CTA text (1.1s)
+  ✓  47 test/browser/landing-parallax.spec.ts:88:3 › /partners decorative layers slide in opposite directions without moving CTA text (1.4s)
+  ✓  46 test/browser/metallic-cta.spec.ts:33:3 › default metallic CTA fits and navigates at 768px (2.0s)
+  ✓  48 test/browser/landing-parallax.spec.ts:117:1 › layered movement is limited on narrow screens and leaves the demo untouched (1.3s)
+  ✓  49 test/browser/metallic-cta.spec.ts:33:3 › default metallic CTA fits and navigates at 1024px (1.9s)
+  ✓  50 test/browser/landing-parallax.spec.ts:130:1 › reduced-motion pages show complete, stationary visual layers on first load (1.4s)
+  ✓  52 test/browser/landing-parallax.spec.ts:143:1 › About reduces decoration and avoids repeated conversion prompts (948ms)
+  ✓  51 test/browser/metallic-cta.spec.ts:33:3 › default metallic CTA fits and navigates at 1440px (1.8s)
+  ✓  54 test/browser/metallic-cta.spec.ts:57:1 › WebGL2-disabled browsers still display a static rust CTA that navigates (1.4s)
+  ✓  53 test/browser/website.spec.ts:3:1 › landing contains only the hero and its CTA links (1.8s)
+  ✓  55 test/browser/metallic-cta.spec.ts:79:1 › reduced motion keeps the metallic CTA readable and navigable (1.3s)
+  ✓  56 test/browser/website.spec.ts:19:1 › official horizontal brand remains prominent in unchanged 64px navbar (1.7s)
+  ✓  57 test/browser/website.spec.ts:39:1 › only Demo, About and Partners have the halftone Leqad footer (1.4s)
+  ✓  58 test/browser/website.spec.ts:53:1 › approved brand logo, favicon, and unique browser title across routes (1.3s)
+  ✓  59 test/browser/website.spec.ts:76:1 › homepage prerender contains correct social preview and serves the actual image (1.0s)
+  ✓  60 test/browser/website.spec.ts:91:1 › tab icon uses the approved geometry on both light and dark themes (349ms)
+  ✓  61 test/browser/website.spec.ts:105:1 › favicon actually renders legibly at 16px with transparent corners (598ms)
+  ✓  62 test/browser/website.spec.ts:127:1 › About contains a static preview instead of a second live lesson (579ms)
+  ✓  63 test/browser/website.spec.ts:134:1 › clean links, old hash replacement, refreshes and browser history work (2.1s)
+  ✓  64 test/browser/website.spec.ts:157:1 › lesson actions, optional help, highlighting, completion and restart remain functional (3.2s)
+  ✓  65 test/browser/website.spec.ts:209:1 › editing dimensions resizes sketch and the accepted 3D plate (1.9s)
+  ✓  66 test/browser/website.spec.ts:237:1 › cancel extrusion returns to accepted sketch without inventing a solid (1.3s)
+  ✓  67 test/browser/website.spec.ts:250:1 › CAD feature preview has responsive view and depth controls (1.4s)
+  ✓  68 test/browser/website.spec.ts:266:1 › prerendered public content and metadata work with JavaScript disabled (820ms)
+  ✓  69 test/browser/website.spec.ts:293:1 › Lenis respects reduced motion and leaves CAD wheel events native (1.4s)
+  ✓  70 test/browser/website.spec.ts:318:5 › / fits 320px without overflow (693ms)
+  ✓  71 test/browser/website.spec.ts:318:5 › /demo fits 320px without overflow (695ms)
+  ✓  72 test/browser/website.spec.ts:318:5 › /about fits 320px without overflow (704ms)
+  ✓  73 test/browser/website.spec.ts:318:5 › /partners fits 320px without overflow (795ms)
+  ✓  74 test/browser/website.spec.ts:318:5 › / fits 375px without overflow (728ms)
+  ✓  75 test/browser/website.spec.ts:318:5 › /demo fits 375px without overflow (571ms)
+  ✓  76 test/browser/website.spec.ts:318:5 › /about fits 375px without overflow (674ms)
+  ✓  77 test/browser/website.spec.ts:318:5 › /partners fits 375px without overflow (606ms)
+  ✓  78 test/browser/website.spec.ts:318:5 › / fits 768px without overflow (663ms)
+  ✓  79 test/browser/website.spec.ts:318:5 › /demo fits 768px without overflow (754ms)
+  ✓  80 test/browser/website.spec.ts:318:5 › /about fits 768px without overflow (634ms)
+  ✓  81 test/browser/website.spec.ts:318:5 › /partners fits 768px without overflow (592ms)
+  ✓  82 test/browser/website.spec.ts:318:5 › / fits 1024px without overflow (865ms)
+  ✓  83 test/browser/website.spec.ts:318:5 › /demo fits 1024px without overflow (769ms)
+  ✓  84 test/browser/website.spec.ts:318:5 › /about fits 1024px without overflow (712ms)
+  ✓  85 test/browser/website.spec.ts:318:5 › /partners fits 1024px without overflow (696ms)
+  ✓  86 test/browser/website.spec.ts:318:5 › / fits 1440px without overflow (948ms)
+  ✓  87 test/browser/website.spec.ts:318:5 › /demo fits 1440px without overflow (619ms)
+  ✓  88 test/browser/website.spec.ts:318:5 › /about fits 1440px without overflow (952ms)
+  ✓  89 test/browser/website.spec.ts:318:5 › /partners fits 1440px without overflow (820ms)
+  ✓  90 test/browser/website.spec.ts:349:1 › reduced-motion artwork settles without an endless animation loop (903ms)
+  ✓  91 test/browser/website.spec.ts:373:1 › desktop halftone lettering has space above its ascenders (746ms)
+  ✓  92 test/browser/website.spec.ts:391:1 › footer animation also stops when reduced motion is enabled at runtime (1.1s)
+  ✓  93 test/browser/website.spec.ts:412:1 › mobile navigation and native touch scrolling remain usable (2.7s)
+
+  93 passed (1.3m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+## Responsive screenshots
+final 320 home OK
+final 320 about OK
+final 320 partners OK
+final 320 demo OK
+final 375 home OK
+final 375 about OK
+final 375 partners OK
+final 375 demo OK
+final 768 home OK
+final 768 about OK
+final 768 partners OK
+final 768 demo OK
+final 1024 home OK
+final 1024 about OK
+final 1024 partners OK
+final 1024 demo OK
+final 1440 home OK
+final 1440 about OK
+final 1440 partners OK
+final 1440 demo OK
+Completed 20 route/width/mode checks.
+
+## Font loading
+current 375 / 0 CLS 0.02328
+current 375 / 250 CLS 0.02328
+current 375 /about 0 CLS 0.00119
+current 375 /about 250 CLS 0.00067
+current 375 /partners 0 CLS 0.00051
+current 375 /partners 250 CLS 0.00051
+current 375 /demo 0 CLS 0.00003
+current 375 /demo 250 CLS 0.00003
+current 768 / 0 CLS 0.00268
+current 768 / 250 CLS 0.00268
+current 768 /about 0 CLS 0.00043
+current 768 /about 250 CLS 0.00091
+current 768 /partners 0 CLS 0.00046
+current 768 /partners 250 CLS 0.00025
+current 768 /demo 0 CLS 0.00002
+current 768 /demo 250 CLS 0.00001
+current 1440 / 0 CLS 0.00147
+current 1440 / 250 CLS 0.00147
+current 1440 /about 0 CLS 0.00055
+current 1440 /about 250 CLS 0.00024
+current 1440 /partners 0 CLS 0.00067
+current 1440 /partners 250 CLS 0.00067
+current 1440 /demo 0 CLS 0.00096
+current 1440 /demo 250 CLS 0.00096
+final 375 / 0 CLS 0.00000
+final 375 / 250 CLS 0.00000
+final 375 /about 0 CLS 0.00000
+final 375 /about 250 CLS 0.00000
+final 375 /partners 0 CLS 0.00000
+final 375 /partners 250 CLS 0.00021
+final 375 /demo 0 CLS 0.00000
+final 375 /demo 250 CLS 0.00003
+final 768 / 0 CLS 0.00000
+final 768 / 250 CLS 0.00320
+final 768 /about 0 CLS 0.00000
+final 768 /about 250 CLS 0.00013
+final 768 /partners 0 CLS 0.00000
+final 768 /partners 250 CLS 0.00000
+final 768 /demo 0 CLS 0.00000
+final 768 /demo 250 CLS 0.00003
+final 1440 / 0 CLS 0.00000
+final 1440 / 250 CLS 0.00179
+final 1440 /about 0 CLS 0.00000
+final 1440 /about 250 CLS 0.00008
+final 1440 /partners 0 CLS 0.00000
+final 1440 /partners 250 CLS 0.00004
+final 1440 /demo 0 CLS 0.00000
+final 1440 /demo 250 CLS 0.00074
+Maximum CLS: 0.023284322000000003
+
+## Accessibility
+320 / []
+320 /about []
+320 /partners []
+320 /demo []
+320 /demo completed via keyboard []
+320 /partners expanded planner []
+320 /partners draft dialog []
+375 / []
+375 /about []
+375 /partners []
+375 /demo []
+375 /demo completed via keyboard []
+375 /partners expanded planner []
+375 /partners draft dialog []
+768 / []
+768 /about []
+768 /partners []
+768 /demo []
+768 /demo completed via keyboard []
+768 /partners expanded planner []
+768 /partners draft dialog []
+1024 / []
+1024 /about []
+1024 /partners []
+1024 /demo []
+1024 /demo completed via keyboard []
+1024 /partners expanded planner []
+1024 /partners draft dialog []
+1440 / []
+1440 /about []
+1440 /partners []
+1440 /demo []
+1440 /demo completed via keyboard []
+1440 /partners expanded planner []
+1440 /partners draft dialog []

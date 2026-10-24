@@ -18,7 +18,7 @@ export const SiteHeader: React.FC = () => {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:bg-white focus:p-3">Skip to content</a>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link to="/" onClick={() => setMobileMenuOpen(false)} className="focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] rounded-md transition-opacity hover:opacity-90" aria-label="Leqad Home">
-          <BrandLogo size="md" />
+          <BrandLogo size="md" className="h-[49.28px] md:h-[53.76px]" />
         </Link>
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-8 text-sm font-medium">
           {navigation.map(({ to, label }) => (

@@ -1,0 +1,2340 @@
+[
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.023284322000000003,
+    "shifts": [
+      {
+        "value": 0.023284322000000003,
+        "time": 245,
+        "sources": [
+          {
+            "tag": "DIV",
+            "text": "Learn CAD bybuilding, not just watching.Leqad is a browser-e"
+          },
+          {
+            "tag": "DIV",
+            "text": "FORM STUDY / 001· 40 × 30 mm3D EXTRUDEConcept visualization "
+          },
+          {
+            "tag": "DIV",
+            "text": "Explore Interactive Demo"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      }
+    ],
+    "fcp": 244
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.023284322000000003,
+    "shifts": [
+      {
+        "value": 0.023284322000000003,
+        "time": 530.2999999970198,
+        "sources": [
+          {
+            "tag": "DIV",
+            "text": "Learn CAD bybuilding, not just watching.Leqad is a browser-e"
+          },
+          {
+            "tag": "DIV",
+            "text": "FORM STUDY / 001· 40 × 30 mm3D EXTRUDEConcept visualization "
+          },
+          {
+            "tag": "DIV",
+            "text": "Explore Interactive Demo"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      }
+    ],
+    "fcp": 280
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0.001189155333333333,
+    "shifts": [
+      {
+        "value": 0.001189155333333333,
+        "time": 287.79999999701977,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "text": "A closer look at guided CAD learning."
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 240
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0.0006694116666666666,
+    "shifts": [
+      {
+        "value": 0.0006694116666666666,
+        "time": 515.5999999940395,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 268
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0.00051072,
+    "shifts": [
+      {
+        "value": 0.00051072,
+        "time": 343.20000000298023,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          },
+          {
+            "text": "Technical compatibility"
+          },
+          {
+            "text": "Educational evaluation"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 300
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.00051072,
+    "shifts": [
+      {
+        "value": 0.00051072,
+        "time": 473.1000000089407,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          },
+          {
+            "text": "Technical compatibility"
+          },
+          {
+            "text": "Educational evaluation"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 220
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0.000025935,
+    "shifts": [
+      {
+        "value": 0.000025935,
+        "time": 279.20000000298023,
+        "sources": [
+          {
+            "tag": "SPAN",
+            "text": "Start walkthrough"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 204
+  },
+  {
+    "mode": "current",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0.000025935,
+    "shifts": [
+      {
+        "value": 0.000025935,
+        "time": 521.9000000059605,
+        "sources": [
+          {
+            "tag": "SPAN",
+            "text": "Start walkthrough"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 248
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.002675349812825521,
+    "shifts": [
+      {
+        "value": 0.002675349812825521,
+        "time": 308.40000000596046,
+        "sources": [
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "text": "Leqad is a browser-extension learning assistant prototype, s"
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "text": "Explore Interactive Demo"
+          },
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      }
+    ],
+    "fcp": 268
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.002675349812825521,
+    "shifts": [
+      {
+        "value": 0.002675349812825521,
+        "time": 582.5,
+        "sources": [
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "text": "Leqad is a browser-extension learning assistant prototype, s"
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "text": "Explore Interactive Demo"
+          },
+          {
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      }
+    ],
+    "fcp": 280
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0.00042522021484375,
+    "shifts": [
+      {
+        "value": 0.000250875,
+        "time": 283.70000000298023,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "text": "A closer look at guided CAD learning."
+          }
+        ]
+      },
+      {
+        "value": 0.00017434521484374998,
+        "time": 338.59999999403954,
+        "sources": [
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "A",
+            "text": "Explore Interactive Demo"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 284
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0.0009143561197916666,
+    "shifts": [
+      {
+        "value": 0.0009143561197916666,
+        "time": 545.9000000059605,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "text": "A closer look at guided CAD learning."
+          },
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "A",
+            "text": "Explore Interactive Demo"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 276
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0.000461171875,
+    "shifts": [
+      {
+        "value": 0.000461171875,
+        "time": 261.40000000596046,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          },
+          {
+            "text": "Outline a possible evaluation"
+          },
+          {
+            "text": "Technical compatibility"
+          },
+          {
+            "text": "Educational evaluation"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 224
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.000250875,
+    "shifts": [
+      {
+        "value": 0.000250875,
+        "time": 447.3999999910593,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 176
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0.00002424479166666667,
+    "shifts": [
+      {
+        "value": 0.00002424479166666667,
+        "time": 265.3999999910593,
+        "sources": [
+          {
+            "tag": "SPAN",
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "BUTTON",
+            "text": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 256
+  },
+  {
+    "mode": "current",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0.000012771809895833334,
+    "shifts": [
+      {
+        "value": 0.000012771809895833334,
+        "time": 527.2000000029802,
+        "sources": [
+          {
+            "tag": "SPAN",
+            "text": "Start walkthrough"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 256
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0.0014721063684534144,
+    "shifts": [
+      {
+        "value": 0.0014721063684534144,
+        "time": 316.8999999910593,
+        "sources": [
+          {
+            "text": "Leqad is a browser-extension learning assistant prototype, s"
+          },
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "text": "building, not just watching."
+          },
+          {
+            "tag": "SPAN",
+            "text": "building, not just watching."
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      }
+    ],
+    "fcp": 312
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.0014721063684534144,
+    "shifts": [
+      {
+        "value": 0.0014721063684534144,
+        "time": 549.4000000059605,
+        "sources": [
+          {
+            "text": "Leqad is a browser-extension learning assistant prototype, s"
+          },
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "text": "building, not just watching."
+          },
+          {
+            "tag": "SPAN",
+            "text": "building, not just watching."
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "Instrument Serif",
+        "weight": "400"
+      }
+    ],
+    "fcp": 296
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0.0005490277777777777,
+    "shifts": [
+      {
+        "value": 0.0005490277777777777,
+        "time": 344.09999999403954,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "text": "A closer look at guided CAD learning."
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          },
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 324
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0.00023866663049768518,
+    "shifts": [
+      {
+        "value": 0.00009848144531249999,
+        "time": 592.5,
+        "sources": [
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          },
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      },
+      {
+        "value": 0.0001401851851851852,
+        "time": 604.3999999910593,
+        "sources": [
+          {
+            "text": "CAD guidance, right where you design."
+          },
+          {
+            "text": "A closer look at guided CAD learning."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 344
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0.0006725021475332755,
+    "shifts": [
+      {
+        "value": 0.0006725021475332755,
+        "time": 390.8999999910593,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          },
+          {
+            "text": "Technical compatibility"
+          },
+          {
+            "text": "Educational evaluation"
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 340
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.0006725021475332755,
+    "shifts": [
+      {
+        "value": 0.0006725021475332755,
+        "time": 535,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          },
+          {
+            "text": "Technical fit. Useful learning evidence."
+          },
+          {
+            "text": "Technical compatibility"
+          },
+          {
+            "text": "Educational evaluation"
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 288
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0.0009646258921682098,
+    "shifts": [
+      {
+        "value": 0.0009646258921682098,
+        "time": 211.3999999910593,
+        "sources": [
+          {
+            "text": "Simulation · Not connected to live CAD"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "DETAILS",
+            "text": "Need help?Get a hintWhy?"
+          },
+          {
+            "tag": "NAV",
+            "text": "Interactive DemoAbout LeqadFor Partners"
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 196
+  },
+  {
+    "mode": "current",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0.0009646258921682098,
+    "shifts": [
+      {
+        "value": 0.0009646258921682098,
+        "time": 503.20000000298023,
+        "sources": [
+          {
+            "text": "Simulation · Not connected to live CAD"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "DETAILS",
+            "text": "Need help?Get a hintWhy?"
+          },
+          {
+            "tag": "NAV",
+            "text": "Interactive DemoAbout LeqadFor Partners"
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "DM Sans",
+        "weight": "400"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "500"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "600"
+      },
+      {
+        "family": "DM Sans",
+        "weight": "700"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 284
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 124
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 632
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 256
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 432
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 104
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.000211288,
+    "shifts": [
+      {
+        "value": 0.000211288,
+        "time": 289.5,
+        "sources": [
+          {
+            "text": "Explore CAD learning together."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 200
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 124
+  },
+  {
+    "mode": "final",
+    "width": 375,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0.00003090508333333333,
+    "shifts": [
+      {
+        "value": 0.00003090508333333333,
+        "time": 319.29999999701977,
+        "sources": [
+          {
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "SPAN",
+            "text": "Start walkthrough"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 268
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 120
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.00320001220703125,
+    "shifts": [
+      {
+        "value": 0.00320001220703125,
+        "time": 308.70000000298023,
+        "sources": [
+          {
+            "text": "Leqad is a browser-extension learning assistant prototype, s"
+          },
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "text": "building, not just watching."
+          },
+          {
+            "tag": "SPAN",
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 308
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 116
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0.00012671504720052084,
+    "shifts": [
+      {
+        "value": 0.00012671504720052084,
+        "time": 300.20000000298023,
+        "sources": [
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "A",
+            "text": "Explore Interactive Demo"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 252
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 144
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 256
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 228
+  },
+  {
+    "mode": "final",
+    "width": 768,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0.0000290316162109375,
+    "shifts": [
+      {
+        "value": 0.0000290316162109375,
+        "time": 292,
+        "sources": [
+          {
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "SPAN",
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "BUTTON",
+            "text": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 260
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 132
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/",
+    "fontDelayMs": 250,
+    "cls": 0.0017873095251012734,
+    "shifts": [
+      {
+        "value": 0.0017873095251012734,
+        "time": 325.70000000298023,
+        "sources": [
+          {
+            "text": "Leqad is a browser-extension learning assistant prototype, s"
+          },
+          {
+            "text": "Learn CAD by"
+          },
+          {
+            "text": "building, not just watching."
+          },
+          {
+            "tag": "SPAN",
+            "text": "building, not just watching."
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 348
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 148
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/about",
+    "fontDelayMs": 250,
+    "cls": 0.00007846724898726851,
+    "shifts": [
+      {
+        "value": 0.00007846724898726851,
+        "time": 399.3999999910593,
+        "sources": [
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          },
+          {
+            "tag": "A",
+            "text": "For Partners & Educators"
+          },
+          {
+            "tag": "svg",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 356
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 148
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/partners",
+    "fontDelayMs": 250,
+    "cls": 0.00003896484375,
+    "shifts": [
+      {
+        "value": 0.00003896484375,
+        "time": 314.30000001192093,
+        "sources": [
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      }
+    ],
+    "fcp": 244
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 0,
+    "cls": 0,
+    "shifts": [],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 168
+  },
+  {
+    "mode": "final",
+    "width": 1440,
+    "route": "/demo",
+    "fontDelayMs": 250,
+    "cls": 0.0007373014322916666,
+    "shifts": [
+      {
+        "value": 0.0007373014322916666,
+        "time": 315.20000000298023,
+        "sources": [
+          {
+            "tag": "BUTTON",
+            "text": "Start walkthrough"
+          },
+          {
+            "tag": "DETAILS",
+            "text": "Need help?Get a hintWhy?"
+          },
+          {
+            "tag": "NAV",
+            "text": "Interactive DemoAbout LeqadFor Partners"
+          },
+          {
+            "tag": "NAV",
+            "text": "HomeInteractive DemoAboutFor Partners"
+          },
+          {
+            "tag": "DIV",
+            "text": ""
+          }
+        ]
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "weight": "300 700"
+      },
+      {
+        "family": "Manrope",
+        "weight": "200 800"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "400"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "500"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "600"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weight": "700"
+      }
+    ],
+    "fcp": 276
+  }
+]

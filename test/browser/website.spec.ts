@@ -17,13 +17,13 @@ test('landing contains only the hero and its CTA links', async ({ page }) => {
 });
 
 test('official horizontal brand remains prominent in unchanged 64px navbar', async ({ page }) => {
-  for (const [width, expectedHeight] of [[320, 44], [375, 44], [1440, 48]] as const) {
+  for (const [width, expectedHeight] of [[320, 49.28], [375, 49.28], [768, 53.76], [1024, 53.76], [1440, 53.76]] as const) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/about');
     const img = page.locator('header img[alt="Leqad logo"]');
     const imageBox = await img.boundingBox();
     expect(imageBox).not.toBeNull();
-    expect(imageBox!.height).toBe(expectedHeight);
+    expect(imageBox!.height).toBeCloseTo(expectedHeight, 1); // Browser rounds to 1/64px.
     // The new approved symbol + entire wordmark is intentionally wider than
     // the old 44px square emblem; it must stay legible and not overflow.
     expect(imageBox!.width).toBeGreaterThan(expectedHeight * 3);
@@ -332,9 +332,9 @@ for (const width of [320, 375, 768, 1024, 1440]) {
         await canvas.scrollIntoViewIfNeeded();
         const box = await canvas.boundingBox();
         expect(box!.width).toBeLessThanOrEqual(width);
-        expect(box!.height).toBeGreaterThanOrEqual(220);
-        expect(box!.height).toBeLessThanOrEqual(310);
-        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toContain('70%');
+        expect(box!.height).toBeGreaterThanOrEqual(148);
+        expect(box!.height).toBeLessThanOrEqual(346);
+        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toContain('84%');
       }
       if (route === '/demo' && width < 1024) {
         const panel = await page.getByText('Leqad Teaching Panel', { exact: true }).boundingBox();

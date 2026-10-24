@@ -1,0 +1,838 @@
+{
+  "results": [
+    {
+      "mode": "final",
+      "width": 320,
+      "route": "home",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "logo": null,
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1000
+    },
+    {
+      "mode": "final",
+      "width": 320,
+      "route": "about",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 170.328125,
+        "height": 49.265625,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 4046
+    },
+    {
+      "mode": "final",
+      "width": 320,
+      "route": "partners",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 170.328125,
+        "height": 49.265625,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 2105
+    },
+    {
+      "mode": "final",
+      "width": 320,
+      "route": "demo",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 170.328125,
+        "height": 49.265625,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1679
+    },
+    {
+      "mode": "final",
+      "width": 375,
+      "route": "home",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "logo": null,
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1000
+    },
+    {
+      "mode": "final",
+      "width": 375,
+      "route": "about",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 170.328125,
+        "height": 49.265625,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 3857
+    },
+    {
+      "mode": "final",
+      "width": 375,
+      "route": "partners",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 170.328125,
+        "height": 49.265625,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 1987
+    },
+    {
+      "mode": "final",
+      "width": 375,
+      "route": "demo",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 170.328125,
+        "height": 49.265625,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1610
+    },
+    {
+      "mode": "final",
+      "width": 768,
+      "route": "home",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "logo": null,
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1000
+    },
+    {
+      "mode": "final",
+      "width": 768,
+      "route": "about",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 3181
+    },
+    {
+      "mode": "final",
+      "width": 768,
+      "route": "partners",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 1655
+    },
+    {
+      "mode": "final",
+      "width": 768,
+      "route": "demo",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1510
+    },
+    {
+      "mode": "final",
+      "width": 1024,
+      "route": "home",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "logo": null,
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1000
+    },
+    {
+      "mode": "final",
+      "width": 1024,
+      "route": "about",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 3268
+    },
+    {
+      "mode": "final",
+      "width": 1024,
+      "route": "partners",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 1700
+    },
+    {
+      "mode": "final",
+      "width": 1024,
+      "route": "demo",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1186
+    },
+    {
+      "mode": "final",
+      "width": 1440,
+      "route": "home",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "logo": null,
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1000
+    },
+    {
+      "mode": "final",
+      "width": 1440,
+      "route": "about",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 3418
+    },
+    {
+      "mode": "final",
+      "width": 1440,
+      "route": "partners",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        }
+      ],
+      "documentHeight": 1777
+    },
+    {
+      "mode": "final",
+      "width": 1440,
+      "route": "demo",
+      "overflow": false,
+      "clipped": [],
+      "headingFont": "\"Space Grotesk\", sans-serif",
+      "bodyFont": "Manrope, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "headerHeight": 65,
+      "logo": {
+        "width": 185.828125,
+        "height": 53.75,
+        "src": "/assets/brand/leqad-official-horizontal-light-v1.svg",
+        "naturalWidth": 300,
+        "naturalHeight": 87
+      },
+      "logoOverlapsNav": false,
+      "fonts": [
+        {
+          "family": "Space Grotesk",
+          "weight": "300 700"
+        },
+        {
+          "family": "Manrope",
+          "weight": "200 800"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "400"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "500"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "600"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": "700"
+        }
+      ],
+      "documentHeight": 1285
+    }
+  ],
+  "errors": []
+}

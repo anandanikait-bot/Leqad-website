@@ -1,0 +1,30 @@
+[
+  {
+    "family": "Space Grotesk",
+    "file": "SpaceGrotesk-variable-v1.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf",
+    "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
+    "axes": [
+      {
+        "tag": "wght",
+        "min": 300.0,
+        "max": 700.0
+      }
+    ],
+    "license": "OFL-1.1"
+  },
+  {
+    "family": "Manrope",
+    "file": "Manrope-variable-v1.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf",
+    "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+    "axes": [
+      {
+        "tag": "wght",
+        "min": 200.0,
+        "max": 800.0
+      }
+    ],
+    "license": "OFL-1.1"
+  }
+]

@@ -30,25 +30,25 @@ export const SiteFooter: React.FC = () => (
       </nav>
     </div>
 
-    {/* The approved logo and lowercase wordmark share one halftone composition. */}
+    {/* Sample the complete official SVG; never rebuild its wordmark using website fonts. */}
     <div className="mt-1">
       <HalftoneWordmarkFooter
         as="div"
-        wordmark="leqad"
-        logoSrc="/assets/brand/leqad-official-symbol-dark-v1.svg"
+        wordmark=""
+        lockupSrc="/assets/brand/leqad-official-horizontal-dark-v1.svg"
         label=""
         meta=""
         columns={[]}
         backToTop={false}
         palette={{ background: '#0E2943', ink: '#F5EFE7', warm: '#793327' }}
         grain={0.25}
-        dotGap={7}
-        height="clamp(220px, 20vw, 270px)"
+        dotGap={5}
+        height="clamp(148px, 24vw, 346px)"
         crop={0}
       />
     </div>
 
-    <div className="border-t border-[#F5EFE7]/10 px-5 py-4 sm:px-8 sm:py-5">
+    <div className="px-5 pt-2 pb-4 sm:px-8 sm:pb-5">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-[#F5EFE7]/60 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:text-[11px]">
         <span className="shrink-0 text-[#F5EFE7]/85">© 2026 Leqad</span>
         <span className="max-w-md sm:text-right">{LEGAL_DISCLAIMER}</span>

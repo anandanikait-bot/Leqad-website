@@ -40,6 +40,8 @@ export interface HalftoneWordmarkFooterProps {
   wordmark?: string
   /** Optional logo image asset path to render alongside the wordmark in halftone. */
   logoSrc?: string
+  /** Complete transparent SVG lockup; sampled as one image with its exact proportions. */
+  lockupSrc?: string
   /** Top-left studio line. */
   label?: string
   /** The muted line under it. */
@@ -152,7 +154,7 @@ const HWF_CSS = `
 /* The artwork gets its own space after the links and back-to-top control.
    Do not paint it behind interactive footer content. */
 .hwf-art { position: relative; width: 100%; height: var(--hwf-art-height); overflow: hidden; isolation: isolate; }
-.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); }
+.hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%); mask-image: linear-gradient(to bottom, #000 84%, transparent 100%); }
 .hwf-top {
   position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2.3vw, 24px); padding: clamp(18px, 2.7vw, 30px) clamp(20px, 3.4vw, 44px) clamp(18px, 2.6vw, 30px);
@@ -195,6 +197,7 @@ const HWF_CSS = `
 export default function HalftoneWordmarkFooter({
   wordmark = "leqad",
   logoSrc = "/assets/brand/leqad-official-symbol-dark-v1.svg",
+  lockupSrc,
   label = "Halden Studio",
   meta = "©2026 · Oslo / Lisbon",
   columns = DEFAULT_COLUMNS,
@@ -216,9 +219,9 @@ export default function HalftoneWordmarkFooter({
   const colors = { ...(PRESETS[preset] || PRESETS.night), ...(palette || {}) }
   const artRef = React.useRef(null as HTMLDivElement | null)
   const canvasRef = React.useRef(null as HTMLCanvasElement | null)
-  const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark, logoSrc })
-  opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark, logoSrc }
-  const key = [wordmark, logoSrc, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
+  const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark, logoSrc, lockupSrc })
+  opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark, logoSrc, lockupSrc }
+  const key = [wordmark, logoSrc, lockupSrc, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
 
   React.useEffect(() => {
     const art = artRef.current
@@ -247,9 +250,9 @@ export default function HalftoneWordmarkFooter({
     const warm = hwfHex(opts.current.colors.warm) || [121, 51, 39]
 
     let logoImg: HTMLImageElement | null = null
-    if (opts.current.logoSrc) {
+    if (opts.current.lockupSrc || opts.current.logoSrc) {
       logoImg = new Image()
-      logoImg.src = opts.current.logoSrc
+      logoImg.src = opts.current.lockupSrc || opts.current.logoSrc
       if (!logoImg.complete) {
         logoImg.onload = () => {
           if (alive) {
@@ -281,7 +284,25 @@ export default function HalftoneWordmarkFooter({
       const isMobile = w < 580
       const c = Math.max(0, Math.min(0.6, o.crop))
 
-      if (!hasLogo) {
+      if (o.lockupSrc && hasLogo) {
+        // The entire official symbol + wordmark share one source and one scale.
+        const ratio = 1625 / 470 // Exact viewBox of the official horizontal lockup.
+        const inset = isMobile ? 24 : Math.max(40, w * 0.08)
+        const availableHeight = Math.max(50, h - (isMobile ? 36 : 48))
+        const drawW = Math.min(w - inset * 2, availableHeight * ratio)
+        const drawH = drawW / ratio
+        m.drawImage(logoImg!, (w - drawW) / 2, (h - drawH) / 2, drawW, drawH)
+        const source = m.getImageData(0, 0, w, h)
+        for (let i = 0; i < source.data.length; i += 4) {
+          const r = source.data[i], g = source.data[i + 1], b = source.data[i + 2]
+          const accent = r > g * 1.5 && r < 180 && b < 100
+          source.data[i] = accent ? 255 : 0
+          source.data[i + 1] = 0
+          source.data[i + 2] = 0
+          // Keep original alpha: transparent counters and ivory strokes are geometry.
+        }
+        m.putImageData(source, 0, 0)
+      } else if (!hasLogo) {
         // Fallback when no logo is available: fit wordmark only
         const face = o.fontWeight + " 100px " + o.fontFamily
         m.font = face
@@ -423,7 +444,7 @@ export default function HalftoneWordmarkFooter({
       }
 
       const img = m.getImageData(0, 0, w, h).data
-      const gap = Math.max(3, o.dotGap)
+      const gap = o.lockupSrc && isMobile ? 3 : Math.max(3, o.dotGap)
       const cols = Math.ceil(w / gap)
       const rows = Math.ceil(h / gap)
       const tmp = []

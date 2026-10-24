@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Preload the two text faces used above the fold; same-origin files avoid a third-party font connection. -->
+    <link rel="preload" href="/assets/fonts/SpaceGrotesk-variable-v1.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/assets/fonts/Manrope-variable-v1.ttf" as="font" type="font/ttf" crossorigin />
     <!--route-head-->
     <!-- True vector brand icon; no raster embedding or blur/recolor filters. -->
     <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/brand/leqad-official-favicon-v1.svg" />
