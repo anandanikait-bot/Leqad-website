@@ -181,3 +181,37 @@ test('About reduces decoration and avoids repeated conversion prompts', async ({
   await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo' })).toHaveAttribute('href', '/demo');
   await expect(page.getByRole('heading', { name: /Interested in evaluating guided CAD learning/ })).toBeVisible();
 });
+
+test('desktop navigation underlines hovered, focused, and active pages', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/about');
+  const nav = page.getByRole('navigation', { name: 'Main navigation' });
+  const active = nav.getByRole('link', { name: 'About' });
+  const demo = nav.getByRole('link', { name: 'Interactive Demo' });
+  await expect(active).toHaveAttribute('aria-current', 'page');
+  const underlineScale = (link: typeof active) =>
+    link.evaluate(node => getComputedStyle(node, '::before').scale);
+  const initialScale = await underlineScale(demo);
+  expect(await underlineScale(active)).not.toBe(initialScale);
+  await demo.hover();
+  await expect.poll(() => underlineScale(demo)).not.toBe(initialScale);
+  await demo.click();
+  await expect(nav.getByRole('link', { name: 'Interactive Demo' })).toHaveAttribute('aria-current', 'page');
+});
+
+test('mobile menu shows the active route and closes after navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/about');
+  const toggle = page.getByRole('button', { name: 'Open navigation menu' });
+  await toggle.click();
+  const mobileNav = page.getByRole('navigation', { name: 'Mobile navigation' });
+  await expect(mobileNav).toBeVisible();
+  await expect(mobileNav.getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'page');
+  await mobileNav.getByRole('link', { name: 'For Partners' }).click();
+  await expect(mobileNav).toHaveCount(0);
+  await expect(page).toHaveURL(/\/partners$/);
+  await page.getByRole('button', { name: 'Open navigation menu' }).click();
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation' })
+    .getByRole('link', { name: 'For Partners' })).toHaveAttribute('aria-current', 'page');
+});
