@@ -106,7 +106,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   // Render Completed Walkthrough View (Fix #7)
   if (isDemoComplete) {
     return (
-      <div className="bg-white rounded-xl border border-[#D9DDD9] shadow-md flex flex-col overflow-hidden text-[#0E2943] animate-fadeIn">
+      <div className="bg-white rounded-xl border border-[#D9DDD9] shadow-md flex flex-col overflow-hidden text-[#0E2943] animate-fadeIn lg:h-full">
         {/* Panel Window Header */}
         <div className="bg-[#0E2943] text-white px-4 py-3 flex items-center justify-between border-b border-[#0E2943]/30">
           <div className="flex items-center gap-2">
@@ -191,7 +191,7 @@ export const LessonPanel: React.FC<LessonPanelProps> = ({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-[#D9DDD9] shadow-md flex flex-col overflow-hidden text-[#0E2943] transition-all">
+    <div className="bg-white rounded-xl border border-[#D9DDD9] shadow-md flex flex-col overflow-hidden text-[#0E2943] transition-all lg:h-full">
       {/* Panel Window Header */}
       <div className="bg-[#0E2943] text-white px-4 py-3 flex items-center justify-between border-b border-[#0E2943]/30">
         <div className="flex items-center gap-2">

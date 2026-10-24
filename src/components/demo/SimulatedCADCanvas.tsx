@@ -427,6 +427,9 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
 
         {/*
           SVG CAD Canvas:
+          Sketch mode frames the origin near the vertical center with the upper-right
+          quadrant visible for a full-size 50 × 40 mm rectangle and dimensions.
+          Grid lines extend beyond all viewBoxes to prevent blank bands on tall screens.
           Clicking empty space or grid lines does NOT advance.
           Only clicking actual interactive entities triggers simulated actions.
         */}
@@ -437,15 +440,15 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           role="group" aria-label="CAD drawing viewport"
           onPointerLeave={handleMouseLeave}
           className="relative block h-full min-h-[320px] min-w-0 flex-1 cursor-crosshair touch-pan-y"
-          viewBox={isSketchActive ? '-85 -285 350 380' : '-100 -140 350 280'}
+          viewBox={isExtruding ? '-85 -285 350 380' : isSketchActive ? '-85 -175 350 310' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}
           <g stroke={isExtruding ? '#F5EFE7' : '#0E2943'} strokeOpacity="0.08" strokeWidth="1" pointerEvents="none">
-            {[-200, -150, -100, -50, 0, 50, 100, 150, 200].map((pos) => (
-              <line key={`gx-${pos}`} x1={pos} y1="-180" x2={pos} y2="180" />
+            {[-200, -150, -100, -50, 0, 50, 100, 150, 200, 250, 300].map((pos) => (
+              <line key={`gx-${pos}`} x1={pos} y1="-250" x2={pos} y2="250" />
             ))}
-            {[-150, -100, -50, 0, 50, 100, 150].map((pos) => (
-              <line key={`gy-${pos}`} x1="-250" y1={pos} x2="250" y2={pos} />
+            {[-200, -150, -100, -50, 0, 50, 100, 150, 200].map((pos) => (
+              <line key={`gy-${pos}`} x1="-300" y1={pos} x2="350" y2={pos} />
             ))}
           </g>
 

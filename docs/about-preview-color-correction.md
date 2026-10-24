@@ -35,3 +35,11 @@ The About page preview is **a static screenshot**, not a second CAD instance. To
 - No duplicate interactive CAD component is mounted on the About page; the screenshot retains its original imagery and the functional lesson remains on `/demo`.
 
 Additional browser tests verify direct image clicks, keyboard navigation and mobile/desktop layouts.
+
+
+## Current illustrated preview (2026-10-24)
+The earlier raster screenshot became stale as the live CAD canvas evolved. The About section now references `/assets/cad-lesson-illustration.svg`: a crisp **static illustration** of the first-sketch drawing step, not a purported browser screenshot. Its navy `#0E2943`, ivory `#F5EFE7`, russet `#793327`, and neutral CAD workspace `#EDF1F3` match Leqad's palette. Conventional X and Y axis indicators remain red/green for CAD clarity.
+
+The text expressly says *Illustrated preview*, and the entire illustration links to the actual `/demo` route. Exactly one visible "Open interactive demo" cue overlays the image, with an understated caption below; no duplicate CTA button. The previous filtered SVG is retained as a historical asset but no longer used on this page. The live lesson is never simulated by the About page itself.
+
+The live demo's sketch-mode viewBox is separately corrected to keep the drawing origin near the vertical center at common mobile and desktop aspect ratios, with grid lines extending to every edge.
