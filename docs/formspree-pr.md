@@ -1,22 +1,17 @@
-# Send website inquiries directly through Formspree
+# Submit inquiries with the verified Formspree response contract
 
-Branch: `feat/formspree-inquiries`, based on latest main `3efe2ad`.
+Branch `fix/formspree-response-contract` targets latest main `7efe606`. The rebase completed without conflicts and includes the original unmerged Formspree integration.
 
-[Create the PR](https://github.com/anandanikait-bot/Leqad-website/pull/new/feat/formspree-inquiries)
+[Create the PR](https://github.com/anandanikait-bot/Leqad-website/pull/new/fix/formspree-response-contract)
 
-GitHub API PR creation returned `Post "https://api.github.com/graphql": Forbidden`. The branch is pushed; no PR was created automatically. Nothing was merged or deployed.
+Submit website inquiries directly to the owner-approved Formspree endpoint, with confirmation based on Formspree’s actual `{ next: string }` success schema. The previous `ok: true` assumption could report failure after acceptance. HTTP errors, malformed bodies, and error-bearing payloads remain failures; HTTP 429 now explicitly asks the visitor to try again later and retains the draft.
 
----
+Rebased onto main at `7efe606`, including the responsive and CAD scrolling fixes, without conflicts. This branch also includes the preceding Formspree integration because its feature branch has not been merged.
 
-Replace the email-app handoff with direct inquiry submission to the owner-provided Formspree endpoint. The existing React form sends all inquiry fields, prevents duplicate clicks while pending, and shows success only after Formspree accepts the request. Errors retain the draft and offer retry/direct-email fallback; copy recovery remains available.
+Validation includes TypeScript, ESLint, unit/build checks, the complete browser suite, and 15 mocked success/error/ready accessibility states. External requests are mocked to avoid creating test inquiries. Official response verification is pinned in the integration notes; live mailbox delivery is not claimed.
 
-No new dependencies or hosting backend are required. No website redesign, deployment, or merge.
+- [Official response references and integration notes](docs/formspree-integration.md)
+- [Error state](docs/screenshots/formspree/error-375.png)
+- [Success state](docs/screenshots/formspree/success-375.png)
 
-Validation includes TypeScript, ESLint, unit/build checks, all 127 browser tests, and 15 mocked ready/success/error accessibility and responsive states across five widths. The service is intercepted in tests so no real inquiries are created.
-
-- [Integration and validation](docs/formspree-integration.md)
-- [Mobile form](docs/screenshots/formspree/ready-375.png)
-- [Mocked success](docs/screenshots/formspree/success-375.png)
-- [Mocked error](docs/screenshots/formspree/error-375.png)
-
-After the approved deployment, verify one real submission in the intended private Formspree account and confirm Gmail notifications. Formspree account forwarding, live CORS/CSP and actual inbox delivery were not verified locally.
+No merge or deployment.

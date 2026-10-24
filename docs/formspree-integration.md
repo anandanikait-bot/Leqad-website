@@ -42,3 +42,5 @@ Verified against the official `@formspree/core` 4.0.0 distribution and Formspree
 The website requires an HTTP success plus that response shape, rejects error-bearing payloads and unexpected bodies, and stays in the dialog rather than navigating to `next`. HTTP 429 now explicitly asks visitors to try again later, preserves their draft and offers direct email. There is no automatic retry.
 
 Regression fixtures now use the verified `{ "next": "/thanks" }` format. The success and 429 tests failed against the prior implementation before the fix. Additional tests reject the former invented `ok`-only fixture, a non-string `next`, and success-shaped JSON containing errors. Verification used official source and mocked browser responses; it did not create a real inquiry or establish live Gmail delivery.
+
+Rebased validation on main `7efe606`: TypeScript, ESLint, build, 24 unit tests and all 136 browser tests passed. All 15 refreshed form-state accessibility/overflow checks passed. No conflicts required resolution. The screenshot fixtures now use the verified service response.
