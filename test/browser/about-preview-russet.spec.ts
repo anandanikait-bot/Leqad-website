@@ -1,17 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-test('About preview uses the updated Hay\'s Russet asset without becoming a live lesson', async ({ page }) => {
+test('About preview renders the current navy/ivory/russet illustration, not a fake live lesson', async ({ page }) => {
   await page.goto('/about');
 
   const preview = page.locator('#product-preview img');
   await preview.scrollIntoViewIfNeeded();
-  await expect(preview).toHaveAttribute('src', '/assets/cad-lesson-preview-russet.svg');
+  await expect(preview).toHaveAttribute('src', '/assets/cad-lesson-illustration.svg');
   await expect(preview).toHaveJSProperty('complete', true);
   await expect(preview).toHaveJSProperty('naturalWidth', 1182);
   await expect(preview).toHaveJSProperty('naturalHeight', 534);
 
-  // Sample an actual rendered pixel in the former orange CTA. This detects
-  // broken SVG filters or outdated assets, not only a matching file name.
+  // Sample a rendered pixel of the actual illustration, not merely its filename.
   const buttonPixel = await preview.evaluate(async image => {
     const img = image as HTMLImageElement;
     await img.decode();
@@ -20,7 +19,7 @@ test('About preview uses the updated Hay\'s Russet asset without becoming a live
     canvas.height = img.naturalHeight;
     const ctx = canvas.getContext('2d')!;
     ctx.drawImage(img, 0, 0);
-    return [...ctx.getImageData(950, 303, 1, 1).data];
+    return [...ctx.getImageData(950, 390, 1, 1).data];
   });
   expect(buttonPixel).toEqual([121, 51, 39, 255]);
 
@@ -28,19 +27,19 @@ test('About preview uses the updated Hay\'s Russet asset without becoming a live
   await expect(page.locator('#product-preview button')).toHaveCount(0);
   await expect(page.locator('#product-preview a[href="/demo"]')).toHaveCount(1);
   await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo' })).toHaveCount(0);
-  await expect(page.getByText('Static screenshot — select to try the interactive demo')).toBeVisible();
+  await expect(page.getByText('Illustrated preview — select to try the real demo')).toBeVisible();
   await expect(page.locator('#product-preview img')).toHaveAttribute(
-    'alt', /Static screenshot.*pictured controls are not interactive/
+    'alt', /Illustration of a 40 by 30 millimeter rectangle.*pictured controls are not interactive/
   );
 });
 
 for (const width of [320, 375, 768, 1440]) {
-  test(`About screenshot makes clear it is a preview and opens the real demo at ${width}px`, async ({ page }) => {
+  test(`About illustration makes clear it is a preview and opens the real demo at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/about');
     const region = page.locator('#product-preview');
     const screenshotLink = region.getByRole('link', {
-      name: 'Open the interactive CAD demo from this static screenshot', exact: true
+      name: 'Open the interactive CAD demo from this illustrated preview', exact: true
     });
     await screenshotLink.scrollIntoViewIfNeeded();
     await expect(screenshotLink).toBeVisible();
@@ -49,7 +48,7 @@ for (const width of [320, 375, 768, 1440]) {
       name: 'Start sketch', exact: true
     })).toHaveCount(0);
 
-    // Click on the part of the image where a fake CAD control is pictured:
+    // Click over the illustration, where the pictured (nonfunctional) controls appear:
     // it opens the real lesson instead of silently doing nothing.
     const bounds = await screenshotLink.boundingBox();
     expect(bounds).not.toBeNull();
@@ -59,10 +58,10 @@ for (const width of [320, 375, 768, 1440]) {
   });
 }
 
-test('the About screenshot link is keyboard operable with a visible focus indicator', async ({ page }) => {
+test('the About illustration link is keyboard operable with a visible focus indicator', async ({ page }) => {
   await page.goto('/about');
   const screenshotLink = page.getByRole('link', {
-    name: 'Open the interactive CAD demo from this static screenshot', exact: true
+    name: 'Open the interactive CAD demo from this illustrated preview', exact: true
   });
   await screenshotLink.focus();
   await expect(screenshotLink).toBeFocused();

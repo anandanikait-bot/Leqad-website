@@ -160,7 +160,7 @@ test('layered movement is limited on narrow screens and leaves the demo untouche
   const offset = await preview.evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42);
   expect(Math.abs(offset)).toBeLessThanOrEqual(6);
   // At 375px desktop navigation is collapsed; activate the screenshot link.
-  await page.locator('#product-preview').getByRole('link', { name: 'Open the interactive CAD demo from this static screenshot' }).click();
+  await page.locator('#product-preview').getByRole('link', { name: 'Open the interactive CAD demo from this illustrated preview' }).click();
   await expect(page.locator('[data-parallax-travel]')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Start walkthrough' })).toBeVisible();
 });
@@ -184,7 +184,7 @@ test('About reduces decoration and avoids repeated conversion prompts', async ({
   await expect(page.locator('[data-parallax-anchor]').last().locator('[data-parallax-direction="-1"]'))
     .toHaveAttribute('data-parallax-travel', '4');
   await expect(page.getByRole('link', { name: 'Launch Interactive Demo' })).toHaveCount(0);
-  await expect(page.locator('#product-preview').getByRole('link', { name: 'Open the interactive CAD demo from this static screenshot' })).toHaveAttribute('href', '/demo');
+  await expect(page.locator('#product-preview').getByRole('link', { name: 'Open the interactive CAD demo from this illustrated preview' })).toHaveAttribute('href', '/demo');
   await expect(page.getByRole('heading', { name: /Interested in evaluating guided CAD learning/ })).toBeVisible();
 });
 
