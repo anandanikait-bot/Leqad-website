@@ -9,7 +9,7 @@ test('About education inquiry opens with a valid selected topic', async ({ page 
   const topic = dialog.getByLabel('Area of Interest');
   await expect(topic).toHaveValue('Educational Pilot');
   await expect(topic).toBeFocused();
-  await expect(dialog).toContainText('Nothing is sent by this website.');
+  await expect(dialog).toContainText('Your inquiry is submitted through Formspree');
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
@@ -19,12 +19,12 @@ test('Partners has one visible drafting action and clearly states contact availa
   await page.goto('/partners');
   const trigger = page.getByRole('button', { name: 'Contact Leqad', exact: true });
   await expect(trigger).toBeVisible();
-  await expect(page.getByText('Prepare your inquiry, then review and send it in your email app.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Send your inquiry directly to Leqad support.', { exact: false })).toBeVisible();
   await trigger.focus();
   await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog');
   await expect(dialog.getByLabel('Area of Interest')).toHaveValue('General Inquiry');
-  await expect(dialog).toContainText('Nothing is sent by this website.');
+  await expect(dialog).toContainText('Your inquiry is submitted through Formspree');
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
@@ -43,7 +43,7 @@ test('inquiry topics remain selectable, copy the actual note, and never submit a
     await dialog.getByLabel('Area of Interest').selectOption(topic);
     await dialog.getByLabel('Brief Note or Context').fill('Discuss a first-sketch evaluation.');
     await dialog.getByRole('button', { name: 'Copy Inquiry Note' }).click();
-    await expect(dialog.getByRole('status')).toContainText('Inquiry note copied to clipboard for later use. Nothing has been sent.');
+    await expect(dialog.getByRole('status')).toContainText('Inquiry note copied to clipboard.');
     const note = await page.evaluate(() => navigator.clipboard.readText());
     expect(note).toContain('Topic: ' + topic);
     expect(note).toContain('Discuss a first-sketch evaluation.');

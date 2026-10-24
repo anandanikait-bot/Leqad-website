@@ -1,0 +1,182 @@
+[
+  {
+    "width": 320,
+    "state": "ready",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 4
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "success",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 5
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "state": "error",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "ready",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "success",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "state": "error",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 2
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "ready",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "success",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "state": "error",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "ready",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "success",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "state": "error",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "ready",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "success",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "state": "error",
+    "overflow": false,
+    "violations": [],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  }
+]

@@ -1,4 +1,4 @@
-// Owner-approved Leqad support destination. The website opens an email draft;
-// delivery is handled by the visitor's email app.
-export const contactConfig: { email: string | null } = { email: 'anandanikait@gmail.com' };
-export const inquiryActionLabel = contactConfig.email ? 'Contact Leqad' : 'Draft an Inquiry Note';
+// Owner-approved support destination and public Formspree form endpoint.
+// Delivery and private inbox access are managed in the owner's Formspree account.
+export const contactConfig = { email: 'anandanikait@gmail.com', endpoint: 'https://formspree.io/f/xoeevqpq' };
+export const inquiryActionLabel = 'Contact Leqad';
