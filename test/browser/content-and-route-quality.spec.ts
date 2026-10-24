@@ -42,7 +42,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       }
       if (route === '/about') {
         await expect(page.getByRole('heading', { level: 1 })).toHaveText('CAD guidance, right where you design.');
-        await expect(page.locator('#product-preview img')).toHaveAttribute('src', '/assets/cad-lesson-preview.png');
+        await expect(page.locator('#product-preview img')).toHaveAttribute('src', '/assets/cad-lesson-preview-russet.svg');
       }
       if (route === '/partners') {
         await expect(page.locator('[data-evaluation-disclosure]')).not.toHaveAttribute('open', '');
