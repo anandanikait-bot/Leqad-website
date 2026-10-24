@@ -26,7 +26,8 @@ test('About preview uses the updated Hay\'s Russet asset without becoming a live
 
   // The image is a navigation link, not another working CAD interface.
   await expect(page.locator('#product-preview button')).toHaveCount(0);
-  await expect(page.locator('#product-preview a[href="/demo"]')).toHaveCount(2);
+  await expect(page.locator('#product-preview a[href="/demo"]')).toHaveCount(1);
+  await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo' })).toHaveCount(0);
   await expect(page.getByText('Static screenshot — select to try the interactive demo')).toBeVisible();
   await expect(page.locator('#product-preview img')).toHaveAttribute(
     'alt', /Static screenshot.*pictured controls are not interactive/

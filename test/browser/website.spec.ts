@@ -128,7 +128,7 @@ test('About contains a static preview instead of a second live lesson', async ({
   await page.goto('/about');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/CAD guidance, right where you design/);
   await expect(page.getByRole('button', { name: 'Start sketch', exact: true })).toHaveCount(0);
-  await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo', exact: true })).toHaveAttribute('href', '/demo');
+  await expect(page.locator('#product-preview').getByRole('link', { name: 'Open the interactive CAD demo from this static screenshot', exact: true })).toHaveAttribute('href', '/demo');
 });
 
 test('clean links, old hash replacement, refreshes and browser history work', async ({ page }) => {

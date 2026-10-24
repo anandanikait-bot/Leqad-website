@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ButtonLink } from '../shared/Button';
 import { ArrowRight, Image as ImageIcon } from 'lucide-react';
 
 export const ProductPreview: React.FC = () => (
@@ -34,10 +33,7 @@ export const ProductPreview: React.FC = () => (
           </span>
         </span>
       </Link>
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-[#55616B]">First-sketch exercise · 8 guided steps</p>
-        <ButtonLink to="/demo" variant="rust" size="sm" icon={<ArrowRight className="h-4 w-4" />}>Explore Interactive Demo</ButtonLink>
-      </div>
+      <p className="mt-3 text-sm text-[#55616B]">First-sketch exercise · 8 guided steps</p>
     </div>
   </section>
 );
