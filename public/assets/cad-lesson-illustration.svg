@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1182" height="534" viewBox="0 0 1182 534">
+  <title>Leqad illustrated CAD lesson preview</title>
+  <desc>A static, clearly labeled illustration of step four of Leqad's first-sketch lesson: a 40 by 30 millimeter rectangle on the top plane with guidance beside it.</desc>
+  <defs>
+    <clipPath id="workspace"><rect x="183" y="58" width="587" height="445"/></clipPath>
+    <clipPath id="panel"><rect x="783" y="11" width="388" height="512" rx="11"/></clipPath>
+  </defs>
+  <rect x="0.5" y="0.5" width="1181" height="533" rx="12" fill="#FAF8F4" stroke="#D9DDD9"/>
+  <!-- Illustrated CAD workspace: restrained navigation and neutral engineering canvas. -->
+  <rect x="11" y="11" width="759" height="512" rx="10" fill="#FFFFFF" stroke="#D9DDD9"/>
+  <path d="M 12 58 H 770" stroke="#D9DDD9"/>
+  <rect x="24" y="19" width="104" height="30" rx="5" fill="#0E2943"/>
+  <path d="M 34 29 L 44 25 L 54 29 L 44 33 Z M 34 34 L 44 38 L 54 34" fill="none" stroke="#793327" stroke-width="1.5"/>
+  <text x="64" y="39" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="14">Sketch</text>
+  <path d="M 143 23 V 47 M 263 23 V 47" stroke="#D9DDD9"/>
+  <text x="159" y="39" fill="#55616B" font-family="Arial, Helvetica, sans-serif" font-size="13">Extrude</text>
+  <rect x="585" y="20" width="105" height="27" rx="4" fill="#F5EFE7" stroke="#D9DDD9"/>
+  <text x="596" y="38" fill="#0E2943" font-family="monospace" font-size="11">X: +0.0</text>
+  <text x="640" y="38" fill="#0E2943" font-family="monospace" font-size="11">Y: +0.0</text>
+  <rect x="699" y="20" width="62" height="27" rx="4" fill="#FFFFFF" stroke="#D9DDD9"/>
+  <text x="730" y="38" fill="#0E2943" text-anchor="middle" font-family="monospace" font-weight="700" font-size="12">Top (XY)</text>
+  <!-- Features tree mirrors the demo but reduces tiny decorative text. -->
+  <rect x="12" y="59" width="171" height="444" fill="#FFFFFF"/>
+  <path d="M 183 58 V 503 M 12 94 H 183" stroke="#D9DDD9"/>
+  <text x="25" y="81" font-family="monospace" font-size="11" fill="#55616B" font-weight="700">FEATURES</text>
+  <circle cx="28" cy="115" r="3" fill="#98A5B0"/>
+  <text x="39" y="119" font-family="monospace" font-size="12" fill="#55616B">Origin (0,0,0)</text>
+  <rect x="20" y="135" width="153" height="27" rx="4" fill="#F5EFE7"/>
+  <circle cx="28" cy="148" r="3" fill="#0E2943"/>
+  <text x="39" y="152" font-family="monospace" font-size="12" fill="#0E2943" font-weight="700">Top Plane (XY)</text>
+  <text x="27" y="184" font-family="monospace" font-size="12" fill="#75838E">Front Plane</text>
+  <text x="27" y="209" font-family="monospace" font-size="12" fill="#75838E">Right Plane</text>
+  <rect x="20" y="233" width="153" height="29" rx="4" fill="#F5EFE7"/>
+  <circle cx="29" cy="247" r="4" fill="#793327"/>
+  <text x="42" y="251" font-family="monospace" font-size="12" font-weight="700" fill="#0E2943">Sketch 1</text>
+  <rect x="183" y="58" width="587" height="445" fill="#EDF1F3"/>
+  <g clip-path="url(#workspace)" fill="none" stroke="#C6D1D8" stroke-width="1" opacity="0.78">
+    <line x1="206" y1="58" x2="206" y2="503"/>
+    <line x1="272" y1="58" x2="272" y2="503"/>
+    <line x1="338" y1="58" x2="338" y2="503"/>
+    <line x1="404" y1="58" x2="404" y2="503"/>
+    <line x1="470" y1="58" x2="470" y2="503"/>
+    <line x1="536" y1="58" x2="536" y2="503"/>
+    <line x1="602" y1="58" x2="602" y2="503"/>
+    <line x1="668" y1="58" x2="668" y2="503"/>
+    <line x1="734" y1="58" x2="734" y2="503"/>
+    <line x1="800" y1="58" x2="800" y2="503"/>
+    <line x1="183" y1="83" x2="771" y2="83"/>
+    <line x1="183" y1="146" x2="771" y2="146"/>
+    <line x1="183" y1="209" x2="771" y2="209"/>
+    <line x1="183" y1="272" x2="771" y2="272"/>
+    <line x1="183" y1="335" x2="771" y2="335"/>
+    <line x1="183" y1="398" x2="771" y2="398"/>
+    <line x1="183" y1="461" x2="771" y2="461"/>
+    <line x1="183" y1="524" x2="771" y2="524"/>
+  </g>
+  <text x="477" y="119" font-family="monospace" font-size="19" fill="#0E2943" font-weight="700" text-anchor="middle">Top Plane (XY)</text>
+  <!-- Properly framed drawing: origin is near center, full rectangle is visible. -->
+  <rect x="398" y="223" width="198" height="145" rx="1" fill="#0E2943" fill-opacity="0.07" stroke="#0E2943" stroke-width="3"/>
+  <line x1="398" y1="208" x2="596" y2="208" stroke="#55616B" stroke-width="1"/>
+  <line x1="398" y1="208" x2="398" y2="217" stroke="#55616B"/>
+  <line x1="596" y1="208" x2="596" y2="217" stroke="#55616B"/>
+  <text x="497" y="197" font-family="monospace" font-size="16" fill="#0E2943" text-anchor="middle">40 mm</text>
+  <line x1="618" y1="223" x2="618" y2="368" stroke="#55616B" stroke-width="1"/>
+  <path d="M608 223 H626 M608 368 H626" stroke="#55616B" fill="none"/>
+  <text x="633" y="300" font-family="monospace" font-size="16" fill="#0E2943">30 mm</text>
+  <circle cx="398" cy="368" r="9" fill="none" stroke="#793327" stroke-width="1.7" stroke-dasharray="4 3"/>
+  <circle cx="398" cy="368" r="4" fill="#793327"/>
+  <circle cx="596" cy="223" r="5" fill="#793327"/>
+  <path d="M398 368 H487" stroke="#E11D48" stroke-width="2.5"/>
+  <path d="M 489 368 L 480 364 L 480 372 Z" fill="#E11D48"/>
+  <text x="493" y="374" font-family="monospace" font-size="16" font-weight="700" fill="#E11D48">+X</text>
+  <path d="M398 368 V293" stroke="#10B981" stroke-width="2.5"/>
+  <path d="M 398 289 L 394 299 L 402 299 Z" fill="#10B981"/>
+  <text x="384" y="284" font-family="monospace" font-size="16" font-weight="700" fill="#10B981">+Y</text>
+  <text x="413" y="390" font-family="monospace" font-size="13" fill="#793327" font-weight="700">Origin (0,0)</text>
+  <path d="M11 502 H770" stroke="#D9DDD9"/>
+  <text x="24" y="516" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#55616B">Illustrated CAD workspace</text>
+  <!-- Teaching panel echoes the actual first-sketch flow. -->
+  <rect x="783.5" y="11.5" width="388" height="511" rx="11" fill="#FFFFFF" stroke="#D9DDD9"/>
+  <g clip-path="url(#panel)">
+    <rect x="783" y="11" width="389" height="55" fill="#0E2943"/>
+  </g>
+  <circle cx="807" cy="38" r="5" fill="#793327"/>
+  <text x="824" y="43" font-family="monospace" font-size="14" font-weight="700" fill="#FFFFFF">LEQAD TEACHING PANEL</text>
+  <rect x="1064" y="26" width="94" height="23" rx="3" fill="#24445F"/>
+  <text x="1111" y="42" font-family="monospace" font-size="12" fill="#FFFFFF" text-anchor="middle">STEP 04 / 08</text>
+  <text x="807" y="99" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#55616B">All steps</text>
+  <text x="1152" y="99" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#55616B">Restart</text>
+  <text x="807" y="133" font-family="monospace" font-size="11" fill="#55616B">FOUNDATIONS / FIRST SKETCH</text>
+  <text x="807" y="172" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#0E2943">Draw rectangle</text>
+  <text x="807" y="207" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#55616B">Choose Corner Rectangle, then draw</text>
+  <text x="807" y="229" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#55616B">from the origin to the opposite corner.</text>
+  <rect x="805" y="260" width="343" height="177" rx="10" fill="#FAF8F4" stroke="#D9DDD9"/>
+  <text x="823" y="291" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#793327">DO THIS NEXT</text>
+  <text x="823" y="324" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#0E2943">Click Corner Rectangle in the CAD</text>
+  <text x="823" y="346" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#0E2943">ribbon, then start at Origin (0,0).</text>
+  <rect x="823" y="367" width="307" height="46" rx="6" fill="#793327"/>
+  <text x="976" y="396" font-family="Arial, Helvetica, sans-serif" font-size="16" text-anchor="middle" font-weight="700" fill="#FFFFFF">Draw rectangle</text>
+  <text x="807" y="459" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#55616B">Need help?</text>
+  <path d="M805 483 H1150" stroke="#D9DDD9"/>
+  <text x="807" y="506" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#55616B">‹ Previous</text>
+</svg>
