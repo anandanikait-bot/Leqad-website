@@ -10,6 +10,9 @@ for (const width of [320, 375, 768, 1024, 1440]) {
 
     const heading = page.getByRole('heading', { name: 'Learn CAD by', exact: true });
     await expect(heading).toHaveCSS('text-align', 'left');
+    const rotatingPhrase = page.locator('main span.font-serif');
+    await expect(rotatingPhrase).toHaveCSS('font-style', 'italic');
+    await expect(rotatingPhrase).toHaveText('building, not just watching.');
     await expect(page.locator('main p').first()).toHaveCSS('text-align', 'left');
     const hero = (await page.locator('main > section').boundingBox())!;
     expect(hero.y).toBe(0);
@@ -43,6 +46,16 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     await expect(artwork).toContainText('2D SKETCH');
   });
 }
+
+test('homepage rotating serif headline continues cycling with motion enabled', async ({ page }) => {
+  await page.clock.install();
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const phrase = page.locator('main span.font-serif');
+  await expect(phrase).toHaveText('building, not just watching.');
+  await page.clock.runFor(4500);
+  await expect(phrase).toHaveText('designing with guidance.');
+});
 
 for (const route of ['/about', '/partners']) {
   test(`${route} parallax moves only approved visual layers and disables at runtime`, async ({ page }) => {
