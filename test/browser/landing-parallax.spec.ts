@@ -29,8 +29,11 @@ for (const width of [320, 375, 768, 1024, 1440]) {
       secondary.x >= primary.x + primary.width - 2).toBe(true);
     expect(primary.height).toBeGreaterThanOrEqual(44);
     expect(secondary.height).toBeGreaterThanOrEqual(44);
-    // Both hero CTAs share the same 8px rectangular corners and 44px height.
-    expect(Math.abs(primary.height - secondary.height)).toBeLessThanOrEqual(1);
+    // Assert actual CSS heights, not GPU-transformed bounding boxes on the metallic CTA.
+    // The latter can differ slightly during its 3D perspective transition.
+    await expect(page.locator('[data-metallic-cta] a[aria-label="Explore Interactive Demo"]')).toHaveCSS('height', '44px');
+    await expect(page.getByRole('link', { name: 'Learn About Leqad' })).toHaveCSS('height', '44px');
+    expect(Math.abs(primary.height - secondary.height)).toBeLessThanOrEqual(2);
     await expect(page.locator('[data-metallic-cta] a[aria-label="Explore Interactive Demo"]')).toHaveCSS('border-radius', '8px');
     await expect(page.locator('[data-metallic-face]')).toHaveCSS('border-radius', '8px');
     await expect(page.locator('[data-metallic-rim]')).toHaveCSS('border-radius', '8px');
