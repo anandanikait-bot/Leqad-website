@@ -22,3 +22,16 @@ Run unit, TypeScript, ESLint, build and full browser tests before merging.
 ## Future maintenance
 
 When the live demo's UI substantially changes, replace this static preview with a newly captured screenshot from the current build (see `scripts/capture-demo-states.ts`) rather than indefinitely accumulating image filters. The correction here is deliberately scoped to the stale About screenshot.
+
+
+## Avoiding confusion with the real interactive demo
+
+The About page preview is **a static screenshot**, not a second CAD instance. To avoid visitors clicking on pictured controls and assuming the site is broken:
+
+- A visible caption explicitly says "Screenshot preview — not an interactive CAD window."
+- The **whole image is a link** to `/demo`, with a bottom-right "Open interactive demo" affordance. Clicking even a pictured fake CAD control therefore leads to the real interactive lesson.
+- The existing separate "Explore Interactive Demo" button remains a second clear entry point.
+- The screenshot link has its own descriptive accessible name, visible keyboard focus, and Enter-to-open semantics. The image alt text makes its static nature clear.
+- No duplicate interactive CAD component is mounted on the About page; the screenshot retains its original imagery and the functional lesson remains on `/demo`.
+
+Additional browser tests verify direct image clicks, keyboard navigation and mobile/desktop layouts.
