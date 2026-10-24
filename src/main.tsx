@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { legacyDestination } from './lib/routes';
 import './index.css';
+import '@fontsource/instrument-serif/400-italic.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import '@fontsource/ibm-plex-mono/latin-500.css';
 import '@fontsource/ibm-plex-mono/latin-600.css';
