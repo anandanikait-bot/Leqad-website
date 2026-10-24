@@ -8,18 +8,18 @@ export const ProductPreview: React.FC = () => (
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <p className="inline-flex items-center gap-2 text-xs font-medium text-[#55616B]">
           <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
-          Static screenshot — select to try the interactive demo
+          Illustrated preview — select to try the real demo
         </p>
       </div>
       <Link
         to="/demo"
-        aria-label="Open the interactive CAD demo from this static screenshot"
+        aria-label="Open the interactive CAD demo from this illustrated preview"
         className="group relative block overflow-hidden rounded-lg border border-[#D9DDD9] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]"
       >
         <img
           data-parallax-travel="12" data-parallax-mobile-travel="6"
-          src="/assets/cad-lesson-preview-russet.svg"
-          alt="Static screenshot of the guided CAD sketch lesson and teaching panel. The pictured controls are not interactive."
+          src="/assets/cad-lesson-illustration.svg"
+          alt="Illustration of a 40 by 30 millimeter rectangle on a CAD sketch plane beside Leqad’s step-by-step teaching panel. The pictured controls are not interactive."
           width={1182}
           height={534}
           loading="lazy"
