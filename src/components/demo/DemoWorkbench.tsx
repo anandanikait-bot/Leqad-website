@@ -266,9 +266,9 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
       )}
 
       {/* Main CAD + Teaching Panel Layout */}
-      <div className="grid min-w-0 grid-cols-1 items-start gap-4 lg:items-stretch lg:grid-cols-[minmax(0,1fr)_minmax(320px,35%)] 2xl:grid-cols-[minmax(0,1fr)_minmax(360px,430px)]">
+      <div className="grid min-w-0 grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,35%)] 2xl:grid-cols-[minmax(0,1fr)_minmax(360px,430px)]">
         {/* Left/Main CAD Workspace Canvas (col-span-8 on desktop) */}
-        <div className="order-2 h-full min-w-0 lg:order-1">
+        <div className="order-2 min-w-0 lg:order-1">
           <SimulatedCADCanvas
             key={resetKey}
             step={currentStep}
@@ -294,7 +294,7 @@ export const DemoWorkbench: React.FC<DemoWorkbenchProps> = ({
         </div>
 
         {/* Right Leqad Teaching Panel (col-span-4 on desktop) */}
-        <div className="order-1 min-w-0 lg:order-2 lg:h-full">
+        <div className="order-1 min-w-0 lg:order-2">
           <LessonPanel
             step={currentStep}
             currentStepIndex={currentStepIndex}

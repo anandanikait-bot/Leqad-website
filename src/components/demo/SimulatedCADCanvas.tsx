@@ -152,11 +152,14 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   // Highlight check
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
+  // Fix a sketch-mode height regression: keep the complete workbench a predictable
+  // viewport-aware size. The drawing SVG flexes inside it and must not force
+  // the surrounding grid to grow when the sketch toolbar or viewBox changes.
   // The CAD workspace is not independently scrollable: keep wheel/trackpad
   // events available to Lenis while pointer events still drive sketching.
   // Reserve data-lenis-prevent for scrollable overlays such as dialogs.
   return (
-    <div className="relative flex h-full min-h-[420px] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:min-h-[480px] lg:min-h-[clamp(500px,62svh,720px)]">
+    <div className="relative flex h-[clamp(420px,62svh,520px)] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:h-[clamp(460px,63svh,560px)] lg:h-[clamp(480px,64svh,600px)]">
       {/* CAD Application Ribbon Toolbar */}
       <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
         {/* Left CAD Toolbar */}
@@ -439,7 +442,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           onPointerDown={handleDrawingClick}
           role="group" aria-label="CAD drawing viewport"
           onPointerLeave={handleMouseLeave}
-          className="relative block h-full min-h-[320px] min-w-0 flex-1 cursor-crosshair touch-pan-y"
+          className="relative block min-h-0 min-w-0 w-full flex-1 cursor-crosshair touch-pan-y"
           viewBox={isExtruding ? '-85 -285 350 380' : isSketchActive ? '-85 -175 350 310' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}
