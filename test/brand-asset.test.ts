@@ -36,3 +36,14 @@ test('logo presentations retain exact official paths and favicon already has dar
   const paths = (source: string) => [...source.matchAll(/<path[^>]*d="([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(paths(favicon), paths(symbol));
 });
+
+
+test('public browser favicon is an unchanged transparent copy of the approved symbol', () => {
+  const original = brandSvg('symbol-light');
+  const favicon = readFileSync(new URL('../public/favicon.svg', import.meta.url), 'utf8');
+  assert.equal(favicon, original, 'no new icon shapes or changed pixels');
+  assert.match(favicon, /viewBox="280 119 476 470"/);
+  assert.match(favicon, /fill="#0E2943"/);
+  assert.match(favicon, /fill="#793327"/);
+  assert.doesNotMatch(favicon, /#F5EFE7|#FFFFFF|#fff\b|<rect|<image|<filter|prefers-color-scheme/);
+});
