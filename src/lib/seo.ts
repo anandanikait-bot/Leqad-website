@@ -20,12 +20,12 @@ export function renderHead(pathname: string): string {
   const isDemo = route?.page === 'demo';
   // A versioned URL prompts social-card caches to request a fresh image after the
   // switch from the old ai.studio hostname. The file remains a real PNG.
-  const image = `${SITE_ORIGIN}/assets/${isDemo ? 'cad-lesson-preview.png' : 'leqad-home-share-v1.png'}?v=20261025`;
+  const image = `${SITE_ORIGIN}/assets/${isDemo ? 'cad-lesson-preview.png' : 'leqad-home-share-v2.png'}?v=20261025`;
   const imageAlt = isDemo
     ? 'Leqad interactive CAD lesson showing a sketch and contextual teaching panel.'
-    : 'Leqad homepage: Learn CAD by building, with an interactive 3D engineering illustration.';
-  const imageWidth = isDemo ? '1182' : '1440';
-  const imageHeight = isDemo ? '534' : '1000';
+    : 'Leqad — Learn CAD by building. A navy, ivory and russet CAD design concept illustration.';
+  const imageWidth = isDemo ? '1182' : '1200';
+  const imageHeight = isDemo ? '534' : '630';
   const tags = [
     `<title data-route-head>${escapeHtml(documentTitle)}</title>`,
     `<meta data-route-head name="description" content="${escapeHtml(description)}">`,
