@@ -79,23 +79,31 @@ test('sketch origin remains usable for precise two-point drawing after repositio
 });
 
 
+// Panels no longer force the CAD viewport to grow vertically. They remain
+// readable at their natural height instead of stretching to fill an empty row.
 for (const width of [1366, 1920]) {
-  test(`desktop lesson panel aligns with the tall CAD workspace at ${width}px`, async ({page}) => {
+  test(`teaching panel and drawing stay independently sized at ${width}px`, async ({page}) => {
     await page.setViewportSize({width,height:900});
     await page.goto('/demo');
+    const cad = page.getByRole('group', {name:'CAD drawing viewport',exact:true});
+    const getDimensions = () => page.evaluate(() => {
+      const viewport = document.querySelector('[aria-label="CAD drawing viewport"]')!;
+      const drawing = viewport.closest('div.rounded-xl')!.getBoundingClientRect();
+      const title = Array.from(document.querySelectorAll('span')).find(el => el.textContent?.trim() === 'Leqad Teaching Panel')!;
+      const panel = title.closest('div.rounded-xl')!.getBoundingClientRect();
+      return {cadHeight:drawing.height,panelHeight:panel.height};
+    });
+    const before = await getDimensions();
     for(const name of ['Start walkthrough','Select Top Plane','Start sketch']) {
       await page.getByRole('button',{name,exact:true}).click();
     }
-    const geometry = await page.evaluate(() => {
-      const viewport = document.querySelector('[aria-label="CAD drawing viewport"]')!;
-      const cad = viewport.closest('div.rounded-xl')!.getBoundingClientRect();
-      const title = Array.from(document.querySelectorAll('span')).find(el => el.textContent?.trim() === 'Leqad Teaching Panel')!;
-      const panel = title.closest('div.rounded-xl')!.getBoundingClientRect();
-      return {cadBottom:cad.bottom,panelBottom:panel.bottom,cadHeight:cad.height,panelHeight:panel.height};
-    });
-    expect(Math.abs(geometry.cadBottom-geometry.panelBottom)).toBeLessThanOrEqual(4);
-    expect(geometry.cadHeight).toBeGreaterThanOrEqual(500);
-    expect(geometry.panelHeight).toBeGreaterThanOrEqual(geometry.cadHeight-4);
+    await expect(cad).toBeVisible();
+    const after = await getDimensions();
+    expect(Math.abs(after.cadHeight-before.cadHeight)).toBeLessThanOrEqual(2);
+    expect(after.cadHeight).toBeGreaterThanOrEqual(480);
+    expect(after.cadHeight).toBeLessThanOrEqual(602);
+    expect(after.panelHeight).toBeGreaterThan(300);
+    expect(after.panelHeight).toBeLessThan(after.cadHeight);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth+1)).toBe(true);
   });
 }

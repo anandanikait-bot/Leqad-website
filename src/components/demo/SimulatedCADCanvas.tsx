@@ -152,13 +152,20 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   // Highlight check
   const isTargetHighlighted = (targetId: string) => highlightedTargetId === targetId;
 
+  // Toolbar and edit/status strips must have stable, content-sized flex rows.
+  // Without shrink-0, showing an extra strip could make the CAD viewport
+  // overlap the model-view buttons. The fixed-size status row also prevents
+  // a text update between drawing taps from shifting SVG screen coordinates.
+  // Fix a sketch-mode height regression: keep the complete workbench a predictable
+  // viewport-aware size. The drawing SVG flexes inside it and must not force
+  // the surrounding grid to grow when the sketch toolbar or viewBox changes.
   // The CAD workspace is not independently scrollable: keep wheel/trackpad
   // events available to Lenis while pointer events still drive sketching.
   // Reserve data-lenis-prevent for scrollable overlays such as dialogs.
   return (
-    <div className="relative flex h-full min-h-[420px] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:min-h-[480px] lg:min-h-[clamp(500px,62svh,720px)]">
+    <div className="relative flex h-[clamp(420px,62svh,520px)] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:h-[clamp(460px,63svh,560px)] lg:h-[clamp(480px,64svh,600px)]">
       {/* CAD Application Ribbon Toolbar */}
-      <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
+      <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex shrink-0 min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
         {/* Left CAD Toolbar */}
         <div className="flex min-w-0 max-w-full items-center gap-1 overflow-x-auto py-1">
           {/* Sketch tool (Step 3: Start Sketch) */}
@@ -280,7 +287,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         </div>
       </div>
 
-      {isExtruding && <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-3 py-2">
+      {isExtruding && <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-3 py-2">
         <span className="text-xs text-[#55616B]">{isExtruding ? 'Extrude 1' : isSketchActive ? 'Sketch 1' : 'Reference planes'}</span>
         <div role="group" aria-label="Model view" className="flex gap-1 text-[11px] font-mono">
           {(['top', 'iso', 'front', 'right'] as const).map(view => (
@@ -294,7 +301,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
       </div>}
         {/* Inline sketch controls keep the viewport clear. */}
         {isSketchActive && !isSketchAccepted && (
-          <div className="border-b border-[#D9DDD9] bg-white px-3 py-2 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+          <div className="shrink-0 border-b border-[#D9DDD9] bg-white px-3 py-2 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#793327]" />
               <strong className="text-[#0E2943]">Sketch 1</strong>
@@ -338,12 +345,12 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           </div>
         )}
 
-      {isExtrudePreview && <div role="group" aria-label="Extrude 1 settings" className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[#D9DDD9] bg-white px-3 py-3">
+      {isExtrudePreview && <div role="group" aria-label="Extrude 1 settings" className="grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[#D9DDD9] bg-white px-3 py-3">
         <div className="max-w-48"><DimensionInput label="Depth (mm)" value={extrudeDepthMm} min={1} max={50} onChange={onDepthChange} onValidityChange={onDepthValidityChange} /></div>
         <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude" className="mb-1 rounded px-2 py-2 text-xs text-[#55616B] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-[#793327]">Cancel</button>
       </div>}
       {/* Main CAD Canvas Area */}
-      <div className={`relative flex min-h-[320px] min-w-0 flex-1 overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
+      <div className={`relative flex min-h-0 min-w-0 flex-1 overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
         {/* Left Feature Tree Panel */}
         <div className="hidden sm:flex flex-col w-44 bg-white/95 backdrop-blur-xs border-r border-[#D9DDD9] text-xs z-10 flex-shrink-0">
           <div className="p-2 border-b border-[#D9DDD9] font-mono text-[10px] uppercase font-semibold text-[#55616B] flex items-center justify-between">
@@ -439,7 +446,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           onPointerDown={handleDrawingClick}
           role="group" aria-label="CAD drawing viewport"
           onPointerLeave={handleMouseLeave}
-          className="relative block h-full min-h-[320px] min-w-0 flex-1 cursor-crosshair touch-pan-y"
+          className="relative block min-h-0 min-w-0 w-full flex-1 cursor-crosshair touch-pan-y"
           viewBox={isExtruding ? '-85 -285 350 380' : isSketchActive ? '-85 -175 350 310' : '-100 -140 350 280'}
         >
           {/* Grid lines (Non-interactive) */}
@@ -577,7 +584,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         </svg>
 
       </div>
-      <p role="status" className="min-h-10 border-t border-[#D9DDD9] bg-white px-3 py-2.5 text-xs leading-relaxed text-[#55616B]">
+      <p role="status" className="h-14 shrink-0 overflow-hidden border-t border-[#D9DDD9] bg-white px-3 py-2 text-xs leading-[18px] text-[#55616B]">
         {isSolidCreated ? `Part 1 created · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isExtrudePreview ? `Extrude preview · ${widthMm} × ${heightMm} × ${extrudeDepthMm} mm` : isSketchAccepted ? 'Sketch accepted · Choose Extrude' : canDraw && rectangleArmed ? (originSet ? 'Choose the opposite corner above and to the right. Escape cancels drawing.' : 'Select the origin (0,0) to place the first corner.') : 'Illustrated CAD workspace'}
       </p>
     </div>
