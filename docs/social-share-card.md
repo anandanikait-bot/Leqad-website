@@ -13,7 +13,7 @@ The former Open Graph image was a screenshot of an animated homepage. It include
 ## Delivery
 - `scripts/generate-social-card.mjs` uses Resvg with the website's existing Space Grotesk and Manrope font assets to rasterize the exact SVG to `public/assets/leqad-home-share-v2.png`.
 - `npm run build` performs this step before Vite copies static assets into `dist/assets/`.
-- The PNG is generated and Git-ignored; its versioned URL is the stable social image. Do not regenerate by capturing the animated homepage.
+- The PNG is generated deterministically, then committed as an ordinary static asset. Production builds regenerate the PNG before Vite copies it to dist, and should yield the same design. Do not regenerate it by capturing the animated homepage.
 - Open Graph/Twitter tags must reference `https://leqad.com/assets/leqad-home-share-v2.png?v=20261025`, `image/png`, and dimensions `1200×630`.
 - The demo route intentionally retains its separate CAD lesson image.
 
@@ -21,3 +21,5 @@ The former Open Graph image was a screenshot of an animated homepage. It include
 Review the generated PNG visually, check TypeScript/lint/unit/build/browser tests, then publish the updated Cloud Run build. Confirm the image returns HTTP 200 and is publicly downloadable without authentication, including to social preview bots; check raw page source for `og:image` and canonical URL. Previously cached messaging previews may need a re-scrape.
 
 Github merge alone does not update the published AI Studio / Cloud Run service.
+
+The current source and PNG were reviewed at 1200×630 with the approved logo. A temporary GitHub Action used to synchronize the initial raster and package lock was removed before merge.
