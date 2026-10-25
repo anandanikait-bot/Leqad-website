@@ -17,7 +17,7 @@ test('landing contains only the hero and its CTA links', async ({ page }) => {
 });
 
 test('official horizontal brand remains prominent in unchanged 64px navbar', async ({ page }) => {
-  for (const [width, expectedHeight] of [[320, 52], [375, 52], [768, 54], [1024, 54], [1440, 54]] as const) {
+  for (const [width, expectedHeight] of [[320, 56], [375, 56], [768, 56], [1024, 56], [1440, 56]] as const) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/about');
     const img = page.locator('header img[alt="Leqad logo"]');
@@ -471,24 +471,37 @@ test('approved full Leqad wordmark stays sharp, readable and unclipped on all sc
     await expect(hero).toHaveAttribute('src', '/assets/brand/leqad-official-horizontal-light-v1.svg');
     const heroBox = await hero.boundingBox();
     expect(heroBox).not.toBeNull();
-    expect(heroBox!.height).toBeGreaterThanOrEqual(width >= 1024 ? 51 : width >= 640 ? 47 : 43);
+    expect(heroBox!.height).toBeCloseTo(width >= 1024 ? 64 : width >= 640 ? 60 : 56, 1);
     expect(heroBox!.width / heroBox!.height).toBeCloseTo(1625 / 470, 2);
     expect(heroBox!.x).toBeGreaterThanOrEqual(0);
     expect(heroBox!.x + heroBox!.width).toBeLessThanOrEqual(width + 1);
     await expect(hero).toHaveCSS('filter', 'none');
     await expect(hero).toHaveCSS('mix-blend-mode', 'normal');
+    await expect(hero).toHaveCSS('transform', 'none');
+    await expect(hero).toHaveCSS('opacity', '1');
     await page.goto('/about');
     const header = page.locator('header');
     const logo = header.getByRole('img', { name: 'Leqad logo' });
     const rect = await logo.boundingBox();
     expect(rect).not.toBeNull();
-    expect(rect!.height).toBeGreaterThanOrEqual(51);
+    expect(rect!.height).toBeCloseTo(56, 1);
     expect(rect!.width / rect!.height).toBeCloseTo(1625 / 470, 2);
     expect(rect!.x).toBeGreaterThanOrEqual(0);
     expect(rect!.x + rect!.width).toBeLessThanOrEqual(width + 1);
     await expect(header).toHaveCSS('background-color', 'rgb(250, 248, 244)');
     await expect(logo).toHaveCSS('filter', 'none');
     await expect(logo).toHaveCSS('mix-blend-mode', 'normal');
+    await expect(logo).toHaveCSS('transform', 'none');
+    await expect(logo).toHaveCSS('opacity', '1');
+    const link = header.getByRole('link', { name: 'Leqad Home' });
+    await expect(link).toHaveCSS('flex-shrink', '0');
+    const navToggle = header.getByRole('button', { name: 'Open navigation menu' });
+    if (width < 1024) {
+      const toggle = (await navToggle.boundingBox())!;
+      expect(rect!.x + rect!.width).toBeLessThanOrEqual(toggle.x - 4);
+    }
+    expect(rect!.y).toBeGreaterThanOrEqual(2);
+    expect(rect!.y + rect!.height).toBeLessThanOrEqual((await header.boundingBox())!.bottom - 2);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   }
 });
