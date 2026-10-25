@@ -75,16 +75,43 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
 
 test('homepage prerender contains correct social preview and serves the actual image', async ({ page }) => {
   await page.goto('/');
-  const preview = 'https://leqada.ai.studio/assets/leqad-home-share-v1.png';
+  const preview = 'https://leqad.com/assets/leqad-home-share-v1.png?v=20261025';
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', preview);
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', preview);
-  const response = await page.request.get('/assets/leqad-home-share-v1.png');
+  await expect(page.locator('meta[property="og:image:secure_url"]')).toHaveAttribute('content', preview);
+  await expect(page.locator('meta[property="og:image:type"]')).toHaveAttribute('content', 'image/png');
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+  await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', 'https://leqad.com/');
+  const response = await page.request.get('/assets/leqad-home-share-v1.png?v=20261025');
   expect(response.status()).toBe(200);
   expect(response.headers()['content-type']).toMatch(/^image\/png/);
+  const png = await response.body();
+  // Verify this URL returns actual image bytes and the declared dimensions,
+  // not an HTML fallback or a blank/unavailable social-preview endpoint.
+  expect([...png.subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
+  expect(png.readUInt32BE(16)).toBe(1440);
+  expect(png.readUInt32BE(20)).toBe(1000);
+  expect(png.length).toBeGreaterThan(50_000);
+  const rendered = await page.evaluate(async () => {
+    const image = new Image();
+    image.src = '/assets/leqad-home-share-v1.png?v=20261025';
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = 100;
+    canvas.height = 70;
+    const context = canvas.getContext('2d')!;
+    context.drawImage(image, 0, 0, 100, 70);
+    const pixels = context.getImageData(0, 0, 100, 70).data;
+    let colored = 0;
+    for(let i=0;i<pixels.length;i+=4) if(pixels[i]<210 || pixels[i+1]<210 || pixels[i+2]<210) colored++;
+    return {width:image.naturalWidth,height:image.naturalHeight,colored};
+  });
+  expect(rendered).toMatchObject({width: 1440,height: 1000});
+  expect(rendered.colored).toBeGreaterThan(500);
   await page.goto('/demo');
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     'content',
-    'https://leqada.ai.studio/assets/cad-lesson-preview.png',
+    'https://leqad.com/assets/cad-lesson-preview.png?v=20261025',
   );
 });
 
@@ -149,7 +176,7 @@ test('clean links, old hash replacement, refreshes and browser history work', as
   for (const route of ['demo', 'about', 'partners']) {
     await page.goto(`/?source=legacy#/${route}`);
     await expect(page).toHaveURL(new RegExp(`/${route}\\?source=legacy$`));
-    await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqada.ai.studio/${route}`);
+    await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqad.com/${route}`);
   }
   expect(errors).toEqual([]);
 });
@@ -279,7 +306,7 @@ test('prerendered public content and metadata work with JavaScript disabled', as
     await expect(page.locator('header')).toHaveCount(path === '/' ? 0 : 1);
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
     expect((await page.locator('main').innerText()).length).toBeGreaterThan(150);
-    await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqada.ai.studio${path}`);
+    await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://leqad.com${path}`);
     expect(await page.title()).toBe(titles[path]);
     const ogTitle = await page.locator('head meta[property="og:title"]').getAttribute('content');
     expect(ogTitle).toBeTruthy();

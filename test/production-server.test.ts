@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { request as httpRequest } from 'node:http';
 import { createApp } from '../server.mjs';
 
 test('production serves route-specific HTML, canonical redirects, and real missing-page statuses', async () => {
@@ -20,6 +21,32 @@ test('production serves route-specific HTML, canonical redirects, and real missi
   assert.ok(address && typeof address !== 'string');
   const origin = `http://127.0.0.1:${address.port}`;
   try {
+    // The production server canonicalizes only the known alternate hostnames.
+    // This can redirect the old ai.studio address if Google forwards its Host
+    // header to the same Cloud Run service; runtime verification is still needed.
+    // Native fetch may normalize/replace the Host header. Send an actual HTTP
+    // request so the server sees precisely the hostname being tested.
+    const requestFrom = (host: string, path: string) => new Promise<{ status: number; location?: string }>((resolve, reject) => {
+      const req = httpRequest({ hostname: '127.0.0.1', port: address.port, path, headers: { Host: host } }, res => {
+        res.resume();
+        res.once('end', () => resolve({ status: res.statusCode ?? 0, location: res.headers.location }));
+      });
+      req.once('error', reject);
+      req.end();
+    });
+    const oldDomain = await requestFrom('leqada.ai.studio', '/demo?ref=old');
+    assert.equal(oldDomain.status, 308);
+    assert.equal(oldDomain.location, 'https://leqad.com/demo?ref=old');
+
+    const wwwDomain = await requestFrom('www.leqad.com', '/about?ref=www');
+    assert.equal(wwwDomain.status, 308);
+    assert.equal(wwwDomain.location, 'https://leqad.com/about?ref=www');
+
+    const exactDomain = await requestFrom('leqad.com', '/demo');
+    assert.equal(exactDomain.status, 200);
+    const runAppHost = await requestFrom('leqad-123.us-west1.run.app', '/demo');
+    assert.equal(runAppHost.status, 200);
+
     const demo = await fetch(`${origin}/demo`);
     assert.equal(demo.status, 200);
     assert.match(await demo.text(), /CAD walkthrough/);

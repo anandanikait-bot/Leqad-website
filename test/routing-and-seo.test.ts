@@ -1,7 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { legacyDestination, PUBLIC_ROUTES } from '../src/lib/routes.js';
-import { renderHead } from '../src/lib/seo.js';
+import { renderHead, SITE_ORIGIN } from '../src/lib/seo.js';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 // These exercise production redirect/metadata functions, not a copied routing model.
 test('known legacy hash URLs are replaced by their clean destinations', () => {
@@ -22,12 +24,15 @@ test('each public route has unique crawlable metadata and a route-specific brows
   for (const route of PUBLIC_ROUTES) {
     const head = renderHead(route.path);
     assert.ok(head.includes(`<title data-route-head>${route.title}</title>`));
-    assert.ok(head.includes(`href="https://leqada.ai.studio${route.path === '/' ? '/' : route.path}"`));
+    assert.ok(head.includes(`href="https://leqad.com${route.path === '/' ? '/' : route.path}"`));
     assert.match(head, /property="og:url"/);
     const isDemo = route.path === '/demo';
     const imagePath = isDemo ? 'cad-lesson-preview.png' : 'leqad-home-share-v1.png';
-    assert.ok(head.includes(`property="og:image" content="https://leqada.ai.studio/assets/${imagePath}"`));
-    assert.ok(head.includes(`name="twitter:image" content="https://leqada.ai.studio/assets/${imagePath}"`));
+    assert.ok(head.includes(`property="og:image" content="https://leqad.com/assets/${imagePath}?v=20261025"`));
+    assert.ok(head.includes(`property="og:image:secure_url" content="https://leqad.com/assets/${imagePath}?v=20261025"`));
+    assert.ok(head.includes('property="og:image:type" content="image/png"'));
+    assert.ok(head.includes('name="twitter:card" content="summary_large_image"'));
+    assert.ok(head.includes(`name="twitter:image" content="https://leqad.com/assets/${imagePath}?v=20261025"`));
     assert.ok(head.includes(`property="og:image:width" content="${isDemo ? '1182' : '1440'}"`));
     assert.ok(head.includes(`property="og:image:height" content="${isDemo ? '534' : '1000'}"`));
     assert.match(head, /name="twitter:title"/);
@@ -52,4 +57,22 @@ test('homepage social image is branded and distinct from the interactive demo', 
 
 test('unknown routes are excluded from indexing', () => {
   assert.match(renderHead('/missing'), /name="robots" content="noindex/);
+});
+
+test('leqad.com is the single canonical public origin in head and crawler resources', () => {
+  assert.equal(SITE_ORIGIN, 'https://leqad.com');
+  const robots = readFileSync(resolve('public/robots.txt'), 'utf8');
+  const sitemap = readFileSync(resolve('public/sitemap.xml'), 'utf8');
+  assert.match(robots, /Sitemap: https:\/\/leqad\.com\/sitemap\.xml/);
+  for (const route of PUBLIC_ROUTES) {
+    const url = `https://leqad.com${route.path}`;
+    assert.ok(sitemap.includes(`<loc>${url}</loc>`));
+    const head = renderHead(route.path);
+    assert.ok(head.includes(`rel="canonical" href="${url}"`));
+    assert.ok(head.includes(`property="og:url" content="${url}"`));
+    assert.ok(head.includes('https://leqad.com/assets/'));
+    assert.ok(head.includes(`"url":"https://leqad.com/"`));
+    assert.ok(!head.includes('leqada.ai.studio'));
+  }
+  assert.doesNotMatch(robots + sitemap, /leqada\.ai\.studio/);
 });
