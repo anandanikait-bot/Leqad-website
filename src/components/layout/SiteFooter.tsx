@@ -35,7 +35,7 @@ export const SiteFooter: React.FC = () => (
       <HalftoneWordmarkFooter
         as="div"
         wordmark=""
-        lockupSrc="/assets/brand/leqad-official-horizontal-dark-v1.svg"
+        lockupSrc="/assets/brand/leqad-footer-wordmark-clean-v1.svg"
         label=""
         meta=""
         columns={[]}

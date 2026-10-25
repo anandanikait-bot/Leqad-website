@@ -59,3 +59,20 @@ test('adaptive favicon preserves the exact approved symbol and tight tab framing
   const [x, y, w, h] = [291, 126, 452, 452];
   assert.ok(294 > x && 740 < x + w && 133 > y && 571 < y + h);
 });
+
+test('footer-only vector keeps the official emblem, colors and letter shapes except straightened L', () => {
+  const original = brandSvg('horizontal-dark');
+  const footer = readFileSync(new URL('../public/assets/brand/leqad-footer-wordmark-clean-v1.svg', import.meta.url), 'utf8');
+  const originalPaths = [...original.matchAll(/<path[^>]*d="([^"]+)"/g)].map(match => match[1]);
+  const footerPaths = [...footer.matchAll(/<path[^>]*d="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(originalPaths.length, 2);
+  assert.equal(footerPaths.length, 2);
+  assert.equal(footerPaths[0], originalPaths[0].replace(
+    'M819,204 818,486 1001,486 1002,424 1000,422 891,423 889,421 890,206 889,204Z',
+    'M819,204 819,486 1002,486 1002,423 890,423 890,204Z'
+  ));
+  assert.equal(footerPaths[1], originalPaths[1]);
+  assert.match(footer, /fill="#F5EFE7"/);
+  assert.match(footer, /fill="#793327"/);
+  assert.match(footer, /viewBox="275 120 1625 470"/);
+});
