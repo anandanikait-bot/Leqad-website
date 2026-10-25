@@ -346,7 +346,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
         <button type="button" onClick={onCancelExtrude} aria-label="Cancel Extrude" className="mb-1 rounded px-2 py-2 text-xs text-[#55616B] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-[#793327]">Cancel</button>
       </div>}
       {/* Main CAD Canvas Area */}
-      <div className={`relative flex min-h-[320px] min-w-0 flex-1 overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
+      <div className={`relative flex min-h-0 min-w-0 flex-1 overflow-hidden transition-colors duration-200 ${isExtruding ? 'bg-[#0E2943]' : 'bg-[#EDF1F3]'}`}>
         {/* Left Feature Tree Panel */}
         <div className="hidden sm:flex flex-col w-44 bg-white/95 backdrop-blur-xs border-r border-[#D9DDD9] text-xs z-10 flex-shrink-0">
           <div className="p-2 border-b border-[#D9DDD9] font-mono text-[10px] uppercase font-semibold text-[#55616B] flex items-center justify-between">
