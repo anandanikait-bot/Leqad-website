@@ -60,7 +60,7 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg');
     await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
@@ -117,13 +117,16 @@ test('homepage prerender contains correct social preview and serves the actual i
 
 test('tab icon uses the approved geometry on both light and dark themes', async ({ page }) => {
   await page.goto('/');
-  const res = await page.request.get('/assets/brand/leqad-official-favicon-v1.svg');
+  const res = await page.request.get('/favicon.svg');
   expect(res.status()).toBe(200);
   expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
   const source = await res.text();
-  expect(source).toContain('prefers-color-scheme: dark');
+  // The address-bar preview must stay navy/russet with clear negative space
+  // on dark and light browser chrome. No recoloring of the approved logo.
+  expect(source).not.toContain('prefers-color-scheme: dark');
   expect(source).toContain('#0E2943');
-  expect(source).toContain('#F5EFE7');
+  expect(source).not.toContain('#F5EFE7');
+  expect(source).not.toContain('<rect');
   expect(source).toContain('fill="#793327"');
   expect(source).toContain('<path');
   expect(source).not.toContain('feColorMatrix');
@@ -133,7 +136,7 @@ test('favicon actually renders legibly at 16px with transparent corners', async 
   await page.goto('/');
   const pixels = await page.evaluate(async () => {
     const image = new Image();
-    image.src = '/assets/brand/leqad-official-favicon-v1.svg';
+    image.src = '/favicon.svg';
     await image.decode();
     const canvas = document.createElement('canvas');
     canvas.width = 16;
@@ -507,26 +510,50 @@ test('approved full Leqad wordmark stays sharp, readable and unclipped on all sc
   }
 });
 
-test('favicon fallbacks and Apple touch icon use the existing approved assets', async ({ page }) => {
-  await page.goto('/');
-  const iconLinks = page.locator('head link[rel="icon"]');
-  await expect(iconLinks).toHaveCount(3);
-  await expect(iconLinks.nth(2)).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
-  await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
-    'href', '/assets/brand/leqad-favicon-180-v1.png',
-  );
-  const cases = [
-    ['/assets/brand/leqad-favicon-16-v1.png', 16],
-    ['/assets/brand/leqad-favicon-32-v1.png', 32],
-    ['/assets/brand/leqad-favicon-180-v1.png', 180],
-  ] as const;
-  for (const [path, dimension] of cases) {
-    const response = await page.request.get(path);
-    expect(response.status()).toBe(200);
-    expect(response.headers()['content-type']).toMatch(/^image\/png/);
-    const bytes = await response.body();
-    expect([...bytes.subarray(0, 8)]).toEqual([137,80,78,71,13,10,26,10]);
-    expect(bytes.readUInt32BE(16)).toBe(dimension);
-    expect(bytes.readUInt32BE(20)).toBe(dimension);
+test('address-bar favicon is one crisp, transparent official symbol, not a white-background fallback', async ({ page }) => {
+  for (const route of ['/', '/demo', '/about', '/partners']) {
+    await page.goto(route);
+    const icons = page.locator('head link[rel="icon"]');
+    await expect(icons).toHaveCount(1);
+    await expect(icons).toHaveAttribute('href', '/favicon.svg');
+    await expect(icons).toHaveAttribute('type', 'image/svg+xml');
+    await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
+      'href', '/assets/brand/leqad-favicon-180-v1.png',
+    );
   }
+  const response = await page.request.get('/favicon.svg');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toMatch(/image\/svg\+xml/);
+  const symbol = await page.request.get('/assets/brand/leqad-official-symbol-light-v1.svg');
+  expect(await response.text()).toBe(await symbol.text());
+
+  const pixels = await page.evaluate(async () => {
+    const image = new Image();
+    image.src = '/favicon.svg';
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 128;
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, 128, 128);
+    ctx.drawImage(image, 0, 0, 128, 128);
+    const data = ctx.getImageData(0, 0, 128, 128).data;
+    let ink = 0, russet = 0, white = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+      if (a < 250) continue;
+      if (Math.abs(r - 14) <= 3 && Math.abs(g - 41) <= 3 && Math.abs(b - 67) <= 3) ink++;
+      if (Math.abs(r - 121) <= 3 && Math.abs(g - 51) <= 3 && Math.abs(b - 39) <= 3) russet++;
+      if (r > 220 && g > 220 && b > 220) white++;
+    }
+    return {
+      ink, russet, white,
+      topLeftAlpha: data[3],
+      bottomRightAlpha: data[data.length - 1],
+    };
+  });
+  expect(pixels.ink).toBeGreaterThan(500);
+  expect(pixels.russet).toBeGreaterThan(30);
+  expect(pixels.white).toBe(0);
+  expect(pixels.topLeftAlpha).toBeLessThan(30);
+  expect(pixels.bottomRightAlpha).toBeLessThan(30);
 });
