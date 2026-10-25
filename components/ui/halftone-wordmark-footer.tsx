@@ -272,12 +272,16 @@ export default function HalftoneWordmarkFooter({
       canvas.width = Math.round(w * dpr)
       canvas.height = Math.round(h * dpr)
 
-      // Set the artwork once on a 1x mask canvas.
+      // Supersample the *unchanged* official vector before reducing it to
+      // halftone coverage. A 1x mask drops thin details in the emblem center.
+      // Other wordmark modes keep their original sampling behavior.
+      const maskScale = o.lockupSrc ? 2 : 1
       const mask = document.createElement("canvas")
-      mask.width = w
-      mask.height = h
+      mask.width = w * maskScale
+      mask.height = h * maskScale
       const m = mask.getContext("2d", { willReadFrequently: true })
       if (!m) return
+      m.scale(maskScale, maskScale)
 
       const word = o.wordmark || ""
       const hasLogo = Boolean(logoImg && logoImg.complete && logoImg.naturalWidth > 0)
@@ -292,7 +296,7 @@ export default function HalftoneWordmarkFooter({
         const drawW = Math.min(w - inset * 2, availableHeight * ratio)
         const drawH = drawW / ratio
         m.drawImage(logoImg!, (w - drawW) / 2, (h - drawH) / 2, drawW, drawH)
-        const source = m.getImageData(0, 0, w, h)
+        const source = m.getImageData(0, 0, mask.width, mask.height)
         for (let i = 0; i < source.data.length; i += 4) {
           const r = source.data[i], g = source.data[i + 1], b = source.data[i + 2]
           const accent = r > g * 1.5 && r < 180 && b < 100
@@ -443,7 +447,7 @@ export default function HalftoneWordmarkFooter({
         m.fillText(word, wmX, textY)
       }
 
-      const img = m.getImageData(0, 0, w, h).data
+      const img = m.getImageData(0, 0, mask.width, mask.height).data
       const gap = o.lockupSrc && isMobile ? 3 : Math.max(3, o.dotGap)
       const cols = Math.ceil(w / gap)
       const rows = Math.ceil(h / gap)
@@ -454,9 +458,9 @@ export default function HalftoneWordmarkFooter({
           let sumRed = 0
           for (let sy = 0; sy < 3; sy++) {
             for (let sx = 0; sx < 3; sx++) {
-              const x = Math.min(w - 1, Math.floor(gx * gap + ((sx + 0.5) * gap) / 3))
-              const y = Math.min(h - 1, Math.floor(gy * gap + ((sy + 0.5) * gap) / 3))
-              const idx = (y * w + x) * 4
+              const x = Math.min(mask.width - 1, Math.floor((gx * gap + ((sx + 0.5) * gap) / 3) * maskScale))
+              const y = Math.min(mask.height - 1, Math.floor((gy * gap + ((sy + 0.5) * gap) / 3) * maskScale))
+              const idx = (y * mask.width + x) * 4
               sumAlpha += img[idx + 3]
               sumRed += img[idx]
             }
