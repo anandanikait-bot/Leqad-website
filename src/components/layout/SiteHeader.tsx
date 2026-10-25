@@ -36,7 +36,7 @@ export const SiteHeader: React.FC = () => {
     <header className="sticky top-0 z-50 w-full bg-[#FAF8F4] border-b border-[#D9DDD9]">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:bg-white focus:p-3">Skip to content</a>
       <div className="mx-auto flex h-16 w-full max-w-[1600px] min-w-0 items-center justify-between gap-4 px-4 sm:px-5 lg:px-6 2xl:px-8">
-        <Link to="/" onClick={() => setMobileMenuOpen(false)} className="focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943] rounded-md transition-opacity hover:opacity-90" aria-label="Leqad Home">
+        <Link to="/" onClick={() => setMobileMenuOpen(false)} className="shrink-0 rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0E2943]" aria-label="Leqad Home">
           <BrandLogo size="md" />
         </Link>
         {/* Underline grows from the center on hover or keyboard focus, and stays visible for the active page. */}
