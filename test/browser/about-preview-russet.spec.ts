@@ -1,72 +1,64 @@
 import { test, expect } from '@playwright/test';
 
-test('About preview renders the current navy/ivory/russet illustration, not a fake live lesson', async ({ page }) => {
+test('About illustration is a technical drawing, not a fake CAD control panel', async ({ page }) => {
   await page.goto('/about');
 
-  const preview = page.locator('#product-preview img');
-  await preview.scrollIntoViewIfNeeded();
-  await expect(preview).toHaveAttribute('src', '/assets/cad-lesson-illustration.svg');
-  await expect(preview).toHaveJSProperty('complete', true);
-  await expect(preview).toHaveJSProperty('naturalWidth', 1182);
-  await expect(preview).toHaveJSProperty('naturalHeight', 534);
+  const region = page.locator('#product-preview');
+  const illustration = region.locator('img');
+  await illustration.scrollIntoViewIfNeeded();
 
-  // Sample a rendered pixel of the actual illustration, not merely its filename.
-  const buttonPixel = await preview.evaluate(async image => {
-    const img = image as HTMLImageElement;
-    await img.decode();
-    const canvas = document.createElement('canvas');
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    const ctx = canvas.getContext('2d')!;
-    ctx.drawImage(img, 0, 0);
-    return [...ctx.getImageData(850, 390, 1, 1).data];
-  });
-  expect(buttonPixel).toEqual([121, 51, 39, 255]);
+  await expect(illustration).toHaveAttribute('src', '/assets/cad-lesson-illustration.svg');
+  await expect(illustration).toHaveJSProperty('complete', true);
+  await expect(illustration).toHaveJSProperty('naturalWidth', 780);
+  await expect(illustration).toHaveJSProperty('naturalHeight', 440);
+  await expect(illustration).toHaveAttribute('alt', /Simplified 2D CAD diagram.*marked origin/);
+  await expect(region.getByText('Illustration · 40 × 30 mm sketch', {exact:true})).toBeVisible();
+  await expect(region.getByRole('heading', {name:'Start with a rectangle.'})).toBeVisible();
+  await expect(region.getByRole('link', {name:'Try the interactive demo',exact:true})).toHaveAttribute('href','/demo');
 
-  // The image is a navigation link, not another working CAD interface.
-  await expect(page.locator('#product-preview button')).toHaveCount(0);
-  await expect(page.locator('#product-preview a[href="/demo"]')).toHaveCount(1);
-  await expect(page.locator('#product-preview').getByRole('link', { name: 'Explore Interactive Demo' })).toHaveCount(0);
-  await expect(page.getByText('Illustrated preview — select to try the real demo')).toBeVisible();
-  await expect(page.locator('#product-preview img')).toHaveAttribute(
-    'alt', /Illustration of a 40 by 30 millimeter rectangle.*pictured controls are not interactive/
-  );
+  // Image itself is not a clickable mock interface: only the real CTA navigates.
+  await expect(region.locator('figure a, figure button')).toHaveCount(0);
+  await expect(region.getByRole('link')).toHaveCount(1);
+  await expect(region.getByRole('button')).toHaveCount(0);
+  await expect(region.getByText('Draw rectangle', {exact:true})).toHaveCount(0);
+
+  const response = await page.request.get('/assets/cad-lesson-illustration.svg');
+  expect(response.ok()).toBe(true);
+  const artwork = await response.text();
+  expect(artwork).toContain('#0E2943'); // navy
+  expect(artwork).toContain('#793327'); // russet
+  expect(artwork).toContain('#EDF1F3'); // neutral engineering grid
+  expect(artwork).not.toMatch(/LEQAD TEACHING PANEL|DO THIS NEXT|<foreignObject|All steps|Restart|<button/i);
 });
 
-for (const width of [320, 375, 768, 1440]) {
-  test(`About illustration makes clear it is a preview and opens the real demo at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
+for(const width of [320,375,768,1024,1440,1920]){
+  test(`About preview stays readable and opens demo at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width,height:900});
     await page.goto('/about');
     const region = page.locator('#product-preview');
-    const screenshotLink = region.getByRole('link', {
-      name: 'Open the interactive CAD demo from this illustrated preview', exact: true
-    });
-    await screenshotLink.scrollIntoViewIfNeeded();
-    await expect(screenshotLink).toBeVisible();
-    await expect(region.getByText('Open interactive demo', { exact: true })).toBeVisible();
-    await expect(page.locator('#product-preview').getByRole('button', {
-      name: 'Start sketch', exact: true
-    })).toHaveCount(0);
-
-    // Click over the illustration, where the pictured (nonfunctional) controls appear:
-    // it opens the real lesson instead of silently doing nothing.
-    const bounds = await screenshotLink.boundingBox();
-    expect(bounds).not.toBeNull();
-    await screenshotLink.click({ position: { x: bounds!.width * 0.80, y: bounds!.height * 0.58 } });
+    const cta = region.getByRole('link',{name:'Try the interactive demo',exact:true});
+    const img = region.locator('img');
+    await cta.scrollIntoViewIfNeeded();
+    await expect(cta).toBeVisible();
+    const bounds = await Promise.all([cta.boundingBox(),img.boundingBox()]);
+    expect(bounds[0]).not.toBeNull();
+    expect(bounds[1]).not.toBeNull();
+    expect(bounds[0]!.x).toBeGreaterThanOrEqual(0);
+    expect(bounds[0]!.x+bounds[0]!.width).toBeLessThanOrEqual(width+1);
+    expect(bounds[1]!.x+bounds[1]!.width).toBeLessThanOrEqual(width+1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth+1)).toBe(true);
+    await cta.click();
     await expect(page).toHaveURL(/\/demo$/);
-    await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
+    await expect(page.getByRole('button',{name:'Start walkthrough',exact:true})).toBeVisible();
   });
 }
 
-test('the About illustration link is keyboard operable with a visible focus indicator', async ({ page }) => {
+test('About demo link has keyboard focus and activates with Enter', async ({page})=>{
   await page.goto('/about');
-  const screenshotLink = page.getByRole('link', {
-    name: 'Open the interactive CAD demo from this illustrated preview', exact: true
-  });
-  await screenshotLink.focus();
-  await expect(screenshotLink).toBeFocused();
-  await expect(screenshotLink).toHaveCSS('outline-style', 'solid');
+  const link=page.locator('#product-preview').getByRole('link',{name:'Try the interactive demo',exact:true});
+  await link.focus();
+  await expect(link).toBeFocused();
+  await expect(link).toHaveCSS('outline-style','solid');
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/demo$/);
-  await expect(page.getByRole('button', { name: 'Start walkthrough', exact: true })).toBeVisible();
 });
