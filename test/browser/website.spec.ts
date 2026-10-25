@@ -369,7 +369,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
         expect(box!.width).toBeLessThanOrEqual(width);
         expect(box!.height).toBeGreaterThanOrEqual(148);
         expect(box!.height).toBeLessThanOrEqual(346);
-        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toContain('84%');
+        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toBe('none');
       }
       if (route === '/demo' && width < 1024) {
         const panel = await page.getByText('Leqad Teaching Panel', { exact: true }).boundingBox();
