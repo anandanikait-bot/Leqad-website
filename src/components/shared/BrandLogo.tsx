@@ -15,11 +15,11 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   surface = 'light',
 }) => {
   const height = {
-    // Provide enough height for the approved symbol AND its full wordmark.
-    // No vector paths, filters, aspect ratio, or artwork are modified.
-    sm: 'h-11 sm:h-12 lg:h-[52px]',
-    md: 'h-[52px] md:h-[54px]',
-    lg: 'h-14 md:h-16',
+    // Render the untouched vector slightly larger so fine emblem details
+    // occupy more real pixels, without scaling it beyond the layout bounds.
+    sm: 'h-14 sm:h-[60px] lg:h-16',
+    md: 'h-14',
+    lg: 'h-16 md:h-[68px]',
   }[size];
   const asset = symbolOnly ? 'symbol' : 'horizontal';
   // Always render the approved lockup as ONE image: no duplicate text label,
