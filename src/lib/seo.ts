@@ -15,17 +15,17 @@ export function renderHead(pathname: string): string {
   const description = route?.description ?? 'The requested Leqad page could not be found.';
   const canonical = `${SITE_ORIGIN}${route?.path ?? '/'}`;
   // Social cards are fetched without JavaScript by messaging and link-preview bots.
-  // Homepage/general pages use the branded home hero, not the CAD lesson canvas.
-  // Give the replacement image its own URL so caches can fetch the new asset.
+  // Homepage/general pages use the existing, unmodified real homepage screenshot, not an AI-generated mockup.
+  // The copied real homepage screenshot has a separate URL to refresh cached cards.
   const isDemo = route?.page === 'demo';
   // A versioned URL prompts social-card caches to request a fresh image after the
   // switch from the old ai.studio hostname. The file remains a real PNG.
-  const image = `${SITE_ORIGIN}/assets/${isDemo ? 'cad-lesson-preview.png' : 'leqad-home-share-v1.png'}?v=20261025`;
+  const image = `${SITE_ORIGIN}/assets/${isDemo ? 'cad-lesson-preview.png' : 'leqad-home-share-v2.png'}?v=20261025`;
   const imageAlt = isDemo
     ? 'Leqad interactive CAD lesson showing a sketch and contextual teaching panel.'
-    : 'Leqad homepage: Learn CAD by building, with an interactive 3D engineering illustration.';
+    : 'Screenshot of the actual Leqad homepage with its official logo, CAD form-study visualization and guided-learning introduction.';
   const imageWidth = isDemo ? '1182' : '1440';
-  const imageHeight = isDemo ? '534' : '1000';
+  const imageHeight = isDemo ? '534' : '900';
   const tags = [
     `<title data-route-head>${escapeHtml(documentTitle)}</title>`,
     `<meta data-route-head name="description" content="${escapeHtml(description)}">`,
