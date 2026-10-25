@@ -298,11 +298,13 @@ export default function HalftoneWordmarkFooter({
       if (o.lockupSrc && hasLogo) {
         // The entire official symbol + wordmark share one source and one scale.
         const ratio = 1625 / 470 // Exact viewBox of the official horizontal lockup.
-        const inset = isMobile ? 24 : Math.max(40, w * 0.08)
-        const availableHeight = Math.max(50, h - (isMobile ? 36 : 48))
+        const inset = isMobile ? 18 : Math.max(32, Math.round(w * 0.05))
+        const availableHeight = Math.max(50, h - (isMobile ? 24 : 32))
         const drawW = Math.min(w - inset * 2, availableHeight * ratio)
         const drawH = drawW / ratio
-        m.drawImage(logoImg!, (w - drawW) / 2, (h - drawH) / 2, drawW, drawH)
+        const drawX = Math.round((w - drawW) / 2)
+        const drawY = Math.round((h - drawH) / 2)
+        m.drawImage(logoImg!, drawX, drawY, drawW, drawH)
         const source = m.getImageData(0, 0, mask.width, mask.height)
         for (let i = 0; i < source.data.length; i += 4) {
           const r = source.data[i], g = source.data[i + 1], b = source.data[i + 2]
@@ -464,15 +466,30 @@ export default function HalftoneWordmarkFooter({
           const hx = gx * gap + gap / 2
           const hy = gy * gap + gap / 2
           if (o.lockupSrc) {
-            // Use the untouched SVG as a high-resolution mask. Every occupied
-            // cell gets the same round dot; reject partial coverage instead of
-            // printing unpredictable tiny circles around curved edges.
-            const sx = Math.min(mask.width - 1, Math.floor(hx * maskScale))
-            const sy = Math.min(mask.height - 1, Math.floor(hy * maskScale))
-            const idx = (sy * mask.width + sx) * 4
-            const dotR = hwfOfficialDotRadius(img[idx + 3] / 255, gap)
-            if (dotR === 0) continue
-            tmp.push(hx, hy, 0, 0, hx, hy, dotR, img[idx] > 127 ? 1 : 0)
+            // Multi-sample the cell to determine accurate area coverage.
+            // This eliminates point-sampling aliasing, staircases, and notch artifacts
+            // on curved outlines (the circular emblem, chevron diagonals, and letter contours)
+            // while preserving strictly uniform dot sizes across all units.
+            let sumAlpha = 0
+            let sumRed = 0
+            const samples = 4
+            for (let sy = 0; sy < samples; sy++) {
+              for (let sx = 0; sx < samples; sx++) {
+                const sampleX = gx * gap + ((sx + 0.5) * gap) / samples
+                const sampleY = gy * gap + ((sy + 0.5) * gap) / samples
+                const mx = Math.min(mask.width - 1, Math.floor(sampleX * maskScale))
+                const my = Math.min(mask.height - 1, Math.floor(sampleY * maskScale))
+                const idx = (my * mask.width + mx) * 4
+                sumAlpha += img[idx + 3]
+                sumRed += img[idx]
+              }
+            }
+            const avgAlpha = sumAlpha / (samples * samples * 255)
+            const baseDotR = hwfOfficialDotRadius(avgAlpha, gap)
+            if (baseDotR === 0) continue
+            const dotR = baseDotR * 1.15
+            const isAccent = sumAlpha > 0 && (sumRed / sumAlpha) >= 0.35 ? 1 : 0
+            tmp.push(hx, hy, 0, 0, hx, hy, dotR, isAccent)
             continue
           }
           let sumAlpha = 0

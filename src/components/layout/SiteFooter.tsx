@@ -17,15 +17,15 @@ export const SiteFooter: React.FC = () => (
           loading="lazy"
           decoding="async"
         />
-        <p className="max-w-sm text-sm leading-relaxed text-[#F5EFE7]/75">
+        <p className="max-w-sm text-sm font-semibold leading-relaxed tracking-wide text-[#F5EFE7]">
           A step-by-step CAD learning project, starting with Onshape.
         </p>
       </div>
       <nav aria-label="Footer navigation" className="sm:justify-self-end">
-        <ul className="flex flex-col gap-3 text-sm sm:gap-3.5">
-          <li><Link to="/demo" className="text-[#F5EFE7]/80 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Interactive Demo</Link></li>
-          <li><Link to="/about" className="text-[#F5EFE7]/80 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">About Leqad</Link></li>
-          <li><Link to="/partners" className="text-[#F5EFE7]/80 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">For Partners</Link></li>
+        <ul className="flex flex-col gap-3 text-sm font-semibold sm:gap-3.5">
+          <li><Link to="/demo" className="text-[#F5EFE7] tracking-wide transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Interactive Demo</Link></li>
+          <li><Link to="/about" className="text-[#F5EFE7] tracking-wide transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">About Leqad</Link></li>
+          <li><Link to="/partners" className="text-[#F5EFE7] tracking-wide transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">For Partners</Link></li>
         </ul>
       </nav>
     </div>
@@ -41,18 +41,19 @@ export const SiteFooter: React.FC = () => (
         columns={[]}
         backToTop={false}
         palette={{ background: '#0E2943', ink: '#F5EFE7', warm: '#793327' }}
-        grain={0}
-        interactive={false}
+        grain={0.06}
+        interactive={true}
+        radius={110}
         dotGap={4}
         height="clamp(148px, 24vw, 346px)"
         crop={0}
       />
     </div>
 
-    <div className="px-5 pt-2 pb-4 sm:px-8 sm:pb-5">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-[#F5EFE7]/60 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:text-[11px]">
-        <span className="shrink-0 text-[#F5EFE7]/85">© 2026 Leqad</span>
-        <span className="max-w-md sm:text-right">{LEGAL_DISCLAIMER}</span>
+    <div className="px-4 sm:px-5 lg:px-6 2xl:px-8 pt-2 pb-4 sm:pb-5">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-2 font-mono text-[10px] leading-relaxed tracking-[0.06em] text-[#F5EFE7]/80 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:text-[11px]">
+        <span className="shrink-0 font-bold text-[#F5EFE7]">© 2026 Leqad</span>
+        <span className="max-w-md font-medium sm:text-right">{LEGAL_DISCLAIMER}</span>
       </div>
     </div>
   </footer>
