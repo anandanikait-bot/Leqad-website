@@ -35,13 +35,14 @@ export const SiteFooter: React.FC = () => (
       <HalftoneWordmarkFooter
         as="div"
         wordmark=""
-        lockupSrc="/assets/brand/leqad-official-horizontal-dark-v1.svg"
+        lockupSrc="/assets/brand/leqad-footer-wordmark-clean-v1.svg"
         label=""
         meta=""
         columns={[]}
         backToTop={false}
         palette={{ background: '#0E2943', ink: '#F5EFE7', warm: '#793327' }}
-        grain={0.08}
+        grain={0}
+        interactive={false}
         dotGap={4}
         height="clamp(148px, 24vw, 346px)"
         crop={0}

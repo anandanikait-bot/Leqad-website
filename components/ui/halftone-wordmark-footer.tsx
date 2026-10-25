@@ -111,6 +111,11 @@ export function hwfRadius(coverage: number, gap: number) {
   return Math.sqrt(c) * gap * 0.56
 }
 
+/** Exact round dot size for the official SVG lockup: no tiny partial edge speckles. */
+export function hwfOfficialDotRadius(alpha: number, gap: number) {
+  return alpha >= 0.6 ? Math.max(0, gap) * 0.405 : 0
+}
+
 /**
  * One step of a dot's spring back to home, plus the push from a pointer at
  * (px, py) within radius r. Returns [x, y, vx, vy]. Away from the pointer a
@@ -155,6 +160,8 @@ const HWF_CSS = `
    Do not paint it behind interactive footer content. */
 .hwf-art { position: relative; width: 100%; height: var(--hwf-art-height); overflow: hidden; isolation: isolate; }
 .hwf-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%); mask-image: linear-gradient(to bottom, #000 84%, transparent 100%); }
+/* Official lockup should remain equally clear from top to bottom, with no fade. */
+.hwf-official-lockup .hwf-art canvas { -webkit-mask-image: none; mask-image: none; }
 .hwf-top {
   position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2.3vw, 24px); padding: clamp(18px, 2.7vw, 30px) clamp(20px, 3.4vw, 44px) clamp(18px, 2.6vw, 30px);
@@ -454,6 +461,20 @@ export default function HalftoneWordmarkFooter({
       const tmp = []
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
+          const hx = gx * gap + gap / 2
+          const hy = gy * gap + gap / 2
+          if (o.lockupSrc) {
+            // Use the untouched SVG as a high-resolution mask. Every occupied
+            // cell gets the same round dot; reject partial coverage instead of
+            // printing unpredictable tiny circles around curved edges.
+            const sx = Math.min(mask.width - 1, Math.floor(hx * maskScale))
+            const sy = Math.min(mask.height - 1, Math.floor(hy * maskScale))
+            const idx = (sy * mask.width + sx) * 4
+            const dotR = hwfOfficialDotRadius(img[idx + 3] / 255, gap)
+            if (dotR === 0) continue
+            tmp.push(hx, hy, 0, 0, hx, hy, dotR, img[idx] > 127 ? 1 : 0)
+            continue
+          }
           let sumAlpha = 0
           let sumRed = 0
           for (let sy = 0; sy < 3; sy++) {
@@ -467,8 +488,6 @@ export default function HalftoneWordmarkFooter({
           }
           const cov = sumAlpha / (9 * 255)
           if (cov < 0.06) continue
-          const hx = gx * gap + gap / 2
-          const hy = gy * gap + gap / 2
           const isAccent = (sumRed / (9 * 255)) > 0.30 ? 1 : 0
           tmp.push(hx, hy, 0, 0, hx, hy, hwfRadius(cov, gap), isAccent)
         }
@@ -685,7 +704,7 @@ export default function HalftoneWordmarkFooter({
 
   return (
     <RootTag
-      className={"hwf-root " + className}
+      className={"hwf-root " + (lockupSrc ? "hwf-official-lockup " : "") + className}
       style={
         {
           "--hwf-art-height": height,

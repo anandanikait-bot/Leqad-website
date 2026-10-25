@@ -59,3 +59,32 @@ test('adaptive favicon preserves the exact approved symbol and tight tab framing
   const [x, y, w, h] = [291, 126, 452, 452];
   assert.ok(294 > x && 740 < x + w && 133 > y && 571 < y + h);
 });
+
+test('footer-only SVG keeps the approved emblem and colors while smoothing every letter', () => {
+  const original = brandSvg('horizontal-dark');
+  const footer = readFileSync(new URL('../public/assets/brand/leqad-footer-wordmark-clean-v1.svg', import.meta.url), 'utf8');
+  const extract = (source: string) => [...source.matchAll(/<path[^>]*d="([^"]+)"/g)].map(match => match[1]);
+  const officialPaths = extract(original);
+  const footerPaths = extract(footer);
+  assert.equal(officialPaths.length, 2);
+  assert.equal(footerPaths.length, 2);
+  // Both SVGs retain the same viewBox, approved color scheme, and original emblem geometry.
+  assert.equal(footerPaths[1], officialPaths[1]);
+  const officialSegments = officialPaths[0].match(/M[^M]*?Z/g)!;
+  const footerSegments = footerPaths[0].match(/M[^M]*?Z/g)!;
+  assert.equal(officialSegments.length, 14);
+  assert.equal(footerSegments.length, officialSegments.length);
+  for (const i of [0, 6, 7, 8, 9]) {
+    assert.equal(footerSegments[i], officialSegments[i], 'official emblem geometry may not change');
+  }
+  // L is aligned to one straight side, foot, and stem; all curved glyph outlines
+  // and counters use cubic Beziers, avoiding many uneven straight polygon facets.
+  assert.equal(footerSegments[5], 'M819,204 819,486 1002,486 1002,423 890,423 890,204Z');
+  for (const i of [1, 2, 3, 4, 10, 11, 12, 13]) {
+    assert.match(footerSegments[i], /C\d+/, 'rounded wordmark letter contours should use cubic curves');
+  }
+  assert.match(footer, /fill="#F5EFE7"/);
+  assert.match(footer, /fill="#793327"/);
+  assert.match(footer, /viewBox="275 120 1625 470"/);
+  assert.doesNotMatch(footer, /<image|<filter|<rect/);
+});

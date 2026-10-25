@@ -40,6 +40,8 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
   for (const path of ['/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page.locator('footer canvas')).toHaveCount(1);
+    // Official logo is never faded at the bottom or scattered on hover.
+    await expect(page.locator('footer .hwf-official-lockup canvas')).toHaveCSS('mask-image', 'none');
     await expect(page.locator('footer').getByText('LEQAD / CAD LEARNING')).toHaveCount(0);
     await expect(page.locator('footer').getByText('© 2026 Leqad', { exact: true })).toBeVisible();
     await expect(page.locator('footer').getByText('Leqad is independently developed and is not affiliated with or endorsed by Onshape.')).toBeVisible();
@@ -367,7 +369,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
         expect(box!.width).toBeLessThanOrEqual(width);
         expect(box!.height).toBeGreaterThanOrEqual(148);
         expect(box!.height).toBeLessThanOrEqual(346);
-        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toContain('84%');
+        expect(await canvas.evaluate(element => getComputedStyle(element).maskImage)).toBe('none');
       }
       if (route === '/demo' && width < 1024) {
         const panel = await page.getByText('Leqad Teaching Panel', { exact: true }).boundingBox();
