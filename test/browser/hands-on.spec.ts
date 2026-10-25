@@ -142,6 +142,16 @@ test('a mobile visitor can draw with two viewport taps', async ({ browser }) => 
     });
   });
   await page.touchscreen.tap(coords[0].x, coords[0].y);
+  // The status message changes after the first touch. The drawing transform
+  // must stay identical so a user's second finger tap lands where intended.
+  const stillProjected = await viewport.evaluate(element => {
+    const svg = element as SVGSVGElement;
+    const p = svg.createSVGPoint(); p.x = 135; p.y = -96;
+    const result = p.matrixTransform(svg.getScreenCTM()!);
+    return { x: result.x, y: result.y };
+  });
+  expect(stillProjected.x).toBeCloseTo(coords[1].x, 0);
+  expect(stillProjected.y).toBeCloseTo(coords[1].y, 0);
   await page.touchscreen.tap(coords[1].x, coords[1].y);
   await expect(page.getByLabel('Width (mm)', { exact: true })).toHaveValue('45');
   await expect(page.getByLabel('Height (mm)', { exact: true })).toHaveValue('32');

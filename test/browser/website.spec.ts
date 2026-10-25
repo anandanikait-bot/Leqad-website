@@ -283,6 +283,12 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
   }
   await page.getByRole('button', { name: 'Start Extrude' }).click();
   await expect(page.getByLabel('Extrude 1 settings')).toBeVisible();
+  const bands = await page.evaluate(() => {
+    const toolbar = document.querySelector('[role="toolbar"][aria-label="CAD tools"]')!.getBoundingClientRect();
+    const views = document.querySelector('[role="group"][aria-label="Model view"]')!.getBoundingClientRect();
+    return { toolbarBottom: toolbar.bottom, modelViewTop: views.top };
+  });
+  expect(bands.modelViewTop, 'view buttons must not overlap the CAD toolbar').toBeGreaterThanOrEqual(bands.toolbarBottom - 1);
   await page.getByRole('button', { name: 'View Top' }).click();
   await expect(page.getByTestId('solid-top-view')).toBeVisible();
   await page.getByRole('button', { name: 'View Iso (Isometric)', exact: true }).click();
