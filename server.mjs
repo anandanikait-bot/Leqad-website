@@ -8,6 +8,17 @@ export function createApp(distDir = resolve(dirname(fileURLToPath(import.meta.ur
   const routes = JSON.parse(readFileSync(resolve(root, 'routes.json'), 'utf8'));
   const app = express();
   app.disable('x-powered-by');
+  // One public origin avoids duplicate search results and stale shared links.
+  // The old Google AI Studio URL redirects only if its traffic reaches this app;
+  // Google manages the hostname's routing, which requires deployment verification.
+  const redirectHosts = new Set(['leqada.ai.studio', 'www.leqad.com']);
+  app.use((request, response, next) => {
+    if (request.method !== 'GET' && request.method !== 'HEAD') return next();
+    if (redirectHosts.has((request.hostname ?? '').toLowerCase())) {
+      return response.redirect(308, `https://leqad.com${request.originalUrl}`);
+    }
+    next();
+  });
   app.use((request, response, next) => {
     if (request.method !== 'GET' && request.method !== 'HEAD') return next();
     const alias = Object.entries(routes).find(([, file]) => request.path === `/${file}`);
