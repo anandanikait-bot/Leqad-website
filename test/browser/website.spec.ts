@@ -501,7 +501,8 @@ test('approved full Leqad wordmark stays sharp, readable and unclipped on all sc
       expect(rect!.x + rect!.width).toBeLessThanOrEqual(toggle.x - 4);
     }
     expect(rect!.y).toBeGreaterThanOrEqual(2);
-    expect(rect!.y + rect!.height).toBeLessThanOrEqual((await header.boundingBox())!.bottom - 2);
+    const headerBounds = (await header.boundingBox())!;
+    expect(rect!.y + rect!.height).toBeLessThanOrEqual(headerBounds.y + headerBounds.height - 2);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   }
 });
