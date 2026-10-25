@@ -60,7 +60,7 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg?v=20261025-2');
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg?v=20261025-3');
     await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
@@ -121,11 +121,11 @@ test('tab icon uses the approved geometry on both light and dark themes', async 
   expect(res.status()).toBe(200);
   expect(res.headers()['content-type']).toMatch(/image\/svg\+xml/);
   const source = await res.text();
-  // The address-bar preview must stay navy/russet with clear negative space
-  // on dark and light browser chrome. No recoloring of the approved logo.
-  expect(source).not.toContain('prefers-color-scheme: dark');
+  // Only the approved ink color responds to the browser color scheme;
+  // geometry, russet center and transparency are unchanged.
+  expect(source).toContain('prefers-color-scheme: dark');
   expect(source).toContain('#0E2943');
-  expect(source).not.toContain('#F5EFE7');
+  expect(source).toContain('#F5EFE7');
   expect(source).not.toContain('<rect');
   expect(source).toContain('fill="#793327"');
   expect(source).toContain('<path');
@@ -515,7 +515,7 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
     await page.goto(route);
     const icons = page.locator('head link[rel="icon"]');
     await expect(icons).toHaveCount(1);
-    await expect(icons).toHaveAttribute('href', '/favicon.svg?v=20261025-2');
+    await expect(icons).toHaveAttribute('href', '/favicon.svg?v=20261025-3');
     await expect(icons).toHaveAttribute('type', 'image/svg+xml');
     await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
       'href', '/assets/brand/leqad-favicon-180-v1.png',
@@ -528,7 +528,11 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
   // Compare actual approved logo artwork instead of the tighter viewBox.
   const newSvg = await response.text();
   const originalSvg = await symbol.text();
-  expect(newSvg.replace('viewBox="291 126 452 452"', 'viewBox="280 119 476 470"')).toBe(originalSvg);
+  const restored = newSvg
+    .replace(/<style>[\s\S]*?<\/style>\n/, '')
+    .replace('class="leqad-favicon-ink"', 'fill="#0E2943"')
+    .replace('viewBox="291 126 452 452"', 'viewBox="280 119 476 470"');
+  expect(restored).toBe(originalSvg);
 
   const pixels = await page.evaluate(async () => {
     const image = new Image();
@@ -569,7 +573,7 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
       return image;
     };
     const [now, before] = await Promise.all([
-      load('/favicon.svg?v=20261025-2'),
+      load('/favicon.svg?v=20261025-3'),
       load('/assets/brand/leqad-official-symbol-light-v1.svg'),
     ]);
     const bounds = (image: HTMLImageElement) => {
@@ -590,4 +594,52 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
   });
   expect(coverage.after.width).toBeGreaterThanOrEqual(coverage.before.width + 3);
   expect(coverage.after.height).toBeGreaterThanOrEqual(coverage.before.height + 3);
+});
+
+test('approved favicon switches only ink color in light and dark browser modes', async ({ browser }) => {
+  const render = async (scheme: 'light' | 'dark') => {
+    const context = await browser.newContext({ colorScheme: scheme });
+    const page = await context.newPage();
+    try {
+      await page.goto('/');
+      await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg?v=20261025-3');
+      return await page.evaluate(async () => {
+        const image = new Image();
+        image.src = (document.querySelector('link[rel="icon"]') as HTMLLinkElement).href;
+        await image.decode();
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 128;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(image, 0, 0, 128, 128);
+        const data = ctx.getImageData(0, 0, 128, 128).data;
+        let navy = 0, ivory = 0, russet = 0, alphaSum = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const [r, g, b, a] = [data[i], data[i + 1], data[i + 2], data[i + 3]];
+          alphaSum += a;
+          if (a < 250) continue;
+          if (Math.abs(r - 14) < 4 && Math.abs(g - 41) < 4 && Math.abs(b - 67) < 4) navy++;
+          if (Math.abs(r - 245) < 4 && Math.abs(g - 239) < 4 && Math.abs(b - 231) < 4) ivory++;
+          if (Math.abs(r - 121) < 4 && Math.abs(g - 51) < 4 && Math.abs(b - 39) < 4) russet++;
+        }
+        return {
+          navy, ivory, russet, alphaSum,
+          transparentCorners: [data[3], data[(128 * 128 - 1) * 4 + 3]],
+        };
+      });
+    } finally {
+      await context.close();
+    }
+  };
+  const light = await render('light');
+  const dark = await render('dark');
+  expect(light.navy).toBeGreaterThan(500);
+  expect(light.ivory).toBe(0);
+  expect(dark.ivory).toBeGreaterThan(500);
+  expect(dark.navy).toBe(0);
+  expect(light.russet).toBeGreaterThan(30);
+  expect(dark.russet).toBe(light.russet);
+  // No cropping, scaling or reworking of icon shape occurs between themes.
+  expect(dark.alphaSum).toBe(light.alphaSum);
+  expect(light.transparentCorners.every(alpha => alpha < 30)).toBe(true);
+  expect(dark.transparentCorners.every(alpha => alpha < 30)).toBe(true);
 });

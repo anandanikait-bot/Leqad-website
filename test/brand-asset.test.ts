@@ -38,17 +38,24 @@ test('logo presentations retain exact official paths and favicon already has dar
 });
 
 
-test('browser favicon fills more of the tab slot without altering the approved symbol', () => {
+test('adaptive favicon preserves the exact approved symbol and tight tab framing', () => {
   const original = brandSvg('symbol-light');
   const favicon = readFileSync(new URL('../public/favicon.svg', import.meta.url), 'utf8');
-  // The original vector paths, colors, transparency and metadata are
-  // preserved; only the viewport around the existing artwork is smaller.
-  assert.equal(favicon.replace('viewBox="291 126 452 452"', 'viewBox="280 119 476 470"'), original);
+
+  // Reversing ONLY the media rule and ink-class assignment recovers the
+  // approved SVG byte-for-byte (apart from the previously approved viewBox).
+  const restored = favicon
+    .replace(/<style>[\s\S]*?<\/style>\n/, '')
+    .replace('class="leqad-favicon-ink"', 'fill="#0E2943"')
+    .replace('viewBox="291 126 452 452"', 'viewBox="280 119 476 470"');
+  assert.equal(restored, original, 'approved symbol geometry, russet, and metadata unchanged');
   assert.match(favicon, /viewBox="291 126 452 452"/);
-  assert.match(favicon, /fill="#0E2943"/);
-  assert.match(favicon, /fill="#793327"/);
-  assert.doesNotMatch(favicon, /#F5EFE7|#FFFFFF|#fff\b|<rect|<image|<filter|prefers-color-scheme/);
-  // The emblem's established vector bounds remain safely inside the viewBox.
-  const [x,y,w,h] = [291,126,452,452];
+  assert.match(favicon, /\.leqad-favicon-ink \{ fill: #0E2943; \}/);
+  assert.match(favicon, /@media \(prefers-color-scheme: dark\)/);
+  assert.match(favicon, /\.leqad-favicon-ink \{ fill: #F5EFE7; \}/);
+  assert.match(favicon, /<path fill="#793327" fill-rule="evenodd"/);
+  assert.doesNotMatch(favicon, /#FFFFFF|#fff\b|<rect|<image|<filter|feColorMatrix/);
+  assert.equal((favicon.match(/<path /g) || []).length, 2);
+  const [x, y, w, h] = [291, 126, 452, 452];
   assert.ok(294 > x && 740 < x + w && 133 > y && 571 < y + h);
 });
