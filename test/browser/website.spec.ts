@@ -60,7 +60,7 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg');
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg?v=20261025-2');
     await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
@@ -515,7 +515,7 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
     await page.goto(route);
     const icons = page.locator('head link[rel="icon"]');
     await expect(icons).toHaveCount(1);
-    await expect(icons).toHaveAttribute('href', '/favicon.svg');
+    await expect(icons).toHaveAttribute('href', '/favicon.svg?v=20261025-2');
     await expect(icons).toHaveAttribute('type', 'image/svg+xml');
     await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
       'href', '/assets/brand/leqad-favicon-180-v1.png',
@@ -525,7 +525,10 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
   expect(response.status()).toBe(200);
   expect(response.headers()['content-type']).toMatch(/image\/svg\+xml/);
   const symbol = await page.request.get('/assets/brand/leqad-official-symbol-light-v1.svg');
-  expect(await response.text()).toBe(await symbol.text());
+  // Compare actual approved logo artwork instead of the tighter viewBox.
+  const newSvg = await response.text();
+  const originalSvg = await symbol.text();
+  expect(newSvg.replace('viewBox="291 126 452 452"', 'viewBox="280 119 476 470"')).toBe(originalSvg);
 
   const pixels = await page.evaluate(async () => {
     const image = new Image();
@@ -556,4 +559,35 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
   expect(pixels.white).toBe(0);
   expect(pixels.topLeftAlpha).toBeLessThan(30);
   expect(pixels.bottomRightAlpha).toBeLessThan(30);
+  // A favicon is displayed in a browser-controlled slot (often 16 px).
+  // The new viewBox should fill more of that slot, without cropping artwork.
+  const coverage = await page.evaluate(async () => {
+    const load = async (src: string) => {
+      const image = new Image();
+      image.src = src;
+      await image.decode();
+      return image;
+    };
+    const [now, before] = await Promise.all([
+      load('/favicon.svg?v=20261025-2'),
+      load('/assets/brand/leqad-official-symbol-light-v1.svg'),
+    ]);
+    const bounds = (image: HTMLImageElement) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 128;
+      const context = canvas.getContext('2d')!;
+      context.drawImage(image, 0, 0, 128, 128);
+      const alpha = context.getImageData(0, 0, 128, 128).data;
+      let minX = 128, minY = 128, maxX = -1, maxY = -1;
+      for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+        if (alpha[(y * 128 + x) * 4 + 3] < 128) continue;
+        minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+        minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+      }
+      return { width: maxX - minX + 1, height: maxY - minY + 1 };
+    };
+    return { before: bounds(before), after: bounds(now) };
+  });
+  expect(coverage.after.width).toBeGreaterThanOrEqual(coverage.before.width + 3);
+  expect(coverage.after.height).toBeGreaterThanOrEqual(coverage.before.height + 3);
 });
