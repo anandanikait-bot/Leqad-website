@@ -14,7 +14,7 @@ export const HowItWorks: React.FC = () => {
     {
       number: '02',
       title: 'Get hints when stuck',
-      description: 'See a hint or a highlighted tool when you're stuck.',
+      description: 'See a hint or a highlighted tool when you get stuck.',
       icon: HelpCircle,
     },
     {
