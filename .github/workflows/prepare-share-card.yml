@@ -1,0 +1,44 @@
+name: Prepare static Leqad share card
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/assets/leqad-home-share-v2.svg'
+      - 'scripts/generate-social-card.mjs'
+      - 'package.json'
+      - '.github/workflows/prepare-share-card.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'fix/social-card-current-brand'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh package lock after adding Resvg
+        run: npm install --package-lock-only --no-audit --no-fund
+      - name: Verify the locked install
+        run: npm ci
+      - name: Render official logo and static card
+        run: node scripts/generate-social-card.mjs
+      - name: Commit generated binary and lockfile on this PR branch
+        shell: bash
+        run: |
+          git add package-lock.json
+          git add -f public/assets/leqad-home-share-v2.png
+          if git diff --staged --quiet; then
+            echo "No generated content changed"
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "assets: lock and generate current Leqad social PNG"
+            git push origin HEAD:${{ github.head_ref }}
+          fi
