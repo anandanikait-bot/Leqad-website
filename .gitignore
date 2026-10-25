@@ -10,6 +10,3 @@ coverage/
 playwright-report/
 test-results/
 .aistudio/
-
-# Generated before Vite copies public assets into dist.
-public/assets/leqad-home-share-v2.png
