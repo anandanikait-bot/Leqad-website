@@ -17,7 +17,7 @@ test('landing contains only the hero and its CTA links', async ({ page }) => {
 });
 
 test('official horizontal brand remains prominent in unchanged 64px navbar', async ({ page }) => {
-  for (const [width, expectedHeight] of [[320, 49.28], [375, 49.28], [768, 53.76], [1024, 53.76], [1440, 53.76]] as const) {
+  for (const [width, expectedHeight] of [[320, 52], [375, 52], [768, 54], [1024, 54], [1440, 54]] as const) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/about');
     const img = page.locator('header img[alt="Leqad logo"]');
@@ -60,8 +60,8 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
-    await expect(page.locator('head link[rel="icon"]')).toHaveAttribute('type', 'image/svg+xml');
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
       await expect(page.locator('footer')).toHaveCount(0);
@@ -454,4 +454,59 @@ test('mobile navigation and native touch scrolling remain usable', async ({ brow
   await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
   await context.close();
+});
+
+
+test('approved full Leqad wordmark stays sharp, readable and unclipped on all screens', async ({ page }) => {
+  for (const width of [320, 375, 768, 1024, 1440, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const hero = page.getByRole('img', { name: 'Leqad logo' });
+    await expect(hero).toHaveAttribute('src', '/assets/brand/leqad-official-horizontal-light-v1.svg');
+    const heroBox = await hero.boundingBox();
+    expect(heroBox).not.toBeNull();
+    expect(heroBox!.height).toBeGreaterThanOrEqual(width >= 1024 ? 51 : width >= 640 ? 47 : 43);
+    expect(heroBox!.width / heroBox!.height).toBeCloseTo(1625 / 470, 2);
+    expect(heroBox!.x).toBeGreaterThanOrEqual(0);
+    expect(heroBox!.x + heroBox!.width).toBeLessThanOrEqual(width + 1);
+    await expect(hero).toHaveCSS('filter', 'none');
+    await expect(hero).toHaveCSS('mix-blend-mode', 'normal');
+    await page.goto('/about');
+    const header = page.locator('header');
+    const logo = header.getByRole('img', { name: 'Leqad logo' });
+    const rect = await logo.boundingBox();
+    expect(rect).not.toBeNull();
+    expect(rect!.height).toBeGreaterThanOrEqual(51);
+    expect(rect!.width / rect!.height).toBeCloseTo(1625 / 470, 2);
+    expect(rect!.x).toBeGreaterThanOrEqual(0);
+    expect(rect!.x + rect!.width).toBeLessThanOrEqual(width + 1);
+    await expect(header).toHaveCSS('background-color', 'rgb(250, 248, 244)');
+    await expect(logo).toHaveCSS('filter', 'none');
+    await expect(logo).toHaveCSS('mix-blend-mode', 'normal');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  }
+});
+
+test('favicon fallbacks and Apple touch icon use the existing approved assets', async ({ page }) => {
+  await page.goto('/');
+  const iconLinks = page.locator('head link[rel="icon"]');
+  await expect(iconLinks).toHaveCount(3);
+  await expect(iconLinks.nth(2)).toHaveAttribute('href', '/assets/brand/leqad-official-favicon-v1.svg');
+  await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
+    'href', '/assets/brand/leqad-favicon-180-v1.png',
+  );
+  const cases = [
+    ['/assets/brand/leqad-favicon-16-v1.png', 16],
+    ['/assets/brand/leqad-favicon-32-v1.png', 32],
+    ['/assets/brand/leqad-favicon-180-v1.png', 180],
+  ] as const;
+  for (const [path, dimension] of cases) {
+    const response = await page.request.get(path);
+    expect(response.status()).toBe(200);
+    expect(response.headers()['content-type']).toMatch(/^image\/png/);
+    const bytes = await response.body();
+    expect([...bytes.subarray(0, 8)]).toEqual([137,80,78,71,13,10,26,10]);
+    expect(bytes.readUInt32BE(16)).toBe(dimension);
+    expect(bytes.readUInt32BE(20)).toBe(dimension);
+  }
 });

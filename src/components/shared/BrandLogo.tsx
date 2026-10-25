@@ -15,8 +15,10 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   surface = 'light',
 }) => {
   const height = {
-    sm: 'h-8',
-    md: 'h-11 md:h-12',
+    // Provide enough height for the approved symbol AND its full wordmark.
+    // No vector paths, filters, aspect ratio, or artwork are modified.
+    sm: 'h-11 sm:h-12 lg:h-[52px]',
+    md: 'h-[52px] md:h-[54px]',
     lg: 'h-14 md:h-16',
   }[size];
   const asset = symbolOnly ? 'symbol' : 'horizontal';

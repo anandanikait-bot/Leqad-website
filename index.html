@@ -7,8 +7,13 @@
     <link rel="preload" href="/assets/fonts/SpaceGrotesk-variable-v1.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/assets/fonts/Manrope-variable-v1.ttf" as="font" type="font/ttf" crossorigin />
     <!--route-head-->
-    <!-- True vector brand icon; no raster embedding or blur/recolor filters. -->
+    <!-- All variants use the already-approved, unchanged emblem artwork.
+         PNG fallbacks serve older browsers; the adaptive SVG is preferred.
+         Apple devices get an existing high-resolution icon. -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/leqad-favicon-16-v1.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/leqad-favicon-32-v1.png" />
     <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/brand/leqad-official-favicon-v1.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/leqad-favicon-180-v1.png" />
   </head>
   <body class="bg-[#FAF8F4] text-[#0E2943] antialiased selection:bg-[#B74B21]/15 selection:text-[#0E2943]">
     <div id="root"></div>
