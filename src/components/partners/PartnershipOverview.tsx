@@ -19,10 +19,10 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
           For educators and CAD platform teams
         </div>
         <h1 className="max-w-4xl text-[clamp(2.35rem,4.6vw,4.5rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#0E2943]">
-          Explore CAD learning together.
+          Help us explore better ways to teach CAD.
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-[#55616B] sm:text-lg">
-          Leqad is an early learning-assistant prototype, starting with Onshape. We welcome exploratory conversations about technical fit and how guided first-sketch practice might support beginners.
+          We're looking to work with educators, robotics teams, and CAD platform teams on better ways to learn CAD. We're starting with Onshape.
         </p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <a href="#collaboration-areas" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#0E2943] underline decoration-[#793327]/50 underline-offset-4 hover:decoration-[#793327] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943]">
@@ -36,17 +36,17 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
       <aside className="flex flex-col justify-end gap-3 border-l-2 border-[#793327]/60 pl-5 lg:col-span-4 lg:mb-1 lg:self-end">
         <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#62281F]">An exploratory first step</span>
         <p className="max-w-xs text-base font-semibold leading-snug text-[#0E2943]">
-          Start with a question worth testing.
+          Start with a simple CAD task.
         </p>
         <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">
-          Discuss a learning task, check technical feasibility, and agree what useful evidence would look like.
+          Choose a beginner exercise, discuss what Leqad could support, and decide what to measure.
         </p>
       </aside>
     </section>
 
     <section id="collaboration-areas" className="scroll-mt-24 space-y-8">
       <SectionHeading
-        title="Technical fit. Useful learning evidence."
+        title="What we can test together."
       />
       <div className="grid gap-0 border-b border-[#D9DDD9] md:grid-cols-2 md:divide-x md:divide-[#D9DDD9]">
         <article className="space-y-4 py-7 md:pr-8">
@@ -54,10 +54,9 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <Cpu className="h-5 w-5 text-[#793327]" aria-hidden="true" />
             <span className="font-mono text-sm font-semibold text-[#62281F]">01</span>
           </div>
-          <h3 className="text-base font-semibold text-[#0E2943]">Technical compatibility</h3>
+          <h3 className="text-base font-semibold text-[#0E2943]">Can it work with CAD tools?</h3>
           <p className="text-sm leading-relaxed text-[#55616B]">
-            Evaluate Onshape control recognition, extension-prototype behavior, and the interfaces
-            needed for reliable guidance.
+            Explore how guided steps could work in Onshape. Live compatibility still needs testing.
           </p>
         </article>
         <article className="space-y-4 border-t border-[#D9DDD9] py-7 md:border-t-0 md:pl-8">
@@ -65,35 +64,31 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
             <School className="h-5 w-5 text-[#793327]" aria-hidden="true" />
             <span className="font-mono text-sm font-semibold text-[#62281F]">02</span>
           </div>
-          <h3 className="text-base font-semibold text-[#0E2943]">Educational evaluation</h3>
+          <h3 className="text-base font-semibold text-[#0E2943]">Can it help learners?</h3>
           <p className="text-sm leading-relaxed text-[#55616B]">
-            Compare first-sketch practice with and without guidance. Observe task completion,
-            requests for help, and how learners explain their modeling choices.
+            Compare beginner CAD practice with and without guidance. Look at completed tasks, help requests, and what learners understand.
           </p>
         </article>
       </div>
-      <p className="max-w-3xl text-sm leading-relaxed text-[#55616B]">
-        Future discussions could include licensing or distribution if technical compatibility and educational value are demonstrated.
-      </p>
     </section>
 
     <section className="space-y-7" aria-label="Possible collaboration sequence">
-      <SectionHeading title="Start with one useful question." />
+      <SectionHeading title="Start small. See what works." />
       <ol className="grid gap-6 border-b border-[#D9DDD9] py-7 sm:grid-cols-3 sm:gap-8">
         <li className="space-y-2">
           <span className="font-mono text-xs font-semibold tracking-[0.14em] text-[#62281F]">01 / DISCUSS</span>
-          <h3 className="text-lg font-semibold text-[#0E2943]">Define a learning task</h3>
-          <p className="text-sm leading-relaxed text-[#55616B]">Agree on a concrete beginner CAD exercise and what support should be evaluated.</p>
+          <h3 className="text-lg font-semibold text-[#0E2943]">Pick a CAD task</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">Choose one beginner CAD exercise to try.</p>
         </li>
         <li className="space-y-2">
           <span className="font-mono text-xs font-semibold tracking-[0.14em] text-[#62281F]">02 / CHECK</span>
-          <h3 className="text-lg font-semibold text-[#0E2943]">Test technical fit</h3>
-          <p className="text-sm leading-relaxed text-[#55616B]">Identify the supported workflow, constraints, and validation still needed.</p>
+          <h3 className="text-lg font-semibold text-[#0E2943]">Check what works</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">Decide what to test and what still needs work.</p>
         </li>
         <li className="space-y-2">
           <span className="font-mono text-xs font-semibold tracking-[0.14em] text-[#62281F]">03 / LEARN</span>
-          <h3 className="text-lg font-semibold text-[#0E2943]">Review observations</h3>
-          <p className="text-sm leading-relaxed text-[#55616B]">If an evaluation is agreed, compare observations without assuming improved outcomes.</p>
+          <h3 className="text-lg font-semibold text-[#0E2943]">Review what we learn</h3>
+          <p className="text-sm leading-relaxed text-[#55616B]">Compare what happened and decide what to improve.</p>
         </li>
       </ol>
     </section>
@@ -101,8 +96,8 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
     <details data-evaluation-disclosure className="group rounded-xl border border-[#D9DDD9] bg-white">
       <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-5 py-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E2943] [&::-webkit-details-marker]:hidden">
         <span className="space-y-1">
-          <span className="block text-base font-semibold text-[#0E2943]">Outline a possible evaluation</span>
-          <span className="block text-sm text-[#55616B]">Optional planner for a setting, group, and research question.</span>
+          <span className="block text-base font-semibold text-[#0E2943]">Plan a simple test</span>
+          <span className="block text-sm text-[#55616B]">Optional: choose a group and what to test.</span>
         </span>
         <ChevronDown className="h-5 w-5 shrink-0 text-[#55616B] transition-transform group-open:rotate-180" aria-hidden="true" />
       </summary>

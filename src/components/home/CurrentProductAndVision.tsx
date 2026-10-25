@@ -6,44 +6,28 @@ export const CurrentProductAndVision: React.FC = () => (
     <div className="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
       <SectionHeading
         eyebrow="Product status"
-        title="An early prototype, with a focused next step."
+        title="Where Leqad stands today."
       />
 
       <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
         <article className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#0E2943]">What exists today</h3>
+          <h3 className="text-xl font-semibold text-[#0E2943]">Try the demo</h3>
           <p className="text-base leading-relaxed text-[#55616B]">
-            An early browser-extension learning-assistant prototype targets Onshape.
-            The website demo is a separate eight-step simulation of sketching and extrusion,
-            including the preview shown above.
-          </p>
-          <p className="text-base leading-relaxed text-[#55616B]">
-            The simulation offers guided first-sketch practice, contextual hints, tool
-            highlighting, and explanations for key modeling decisions.
+            Try an eight-step website demo to draw a rectangle, set its size, and preview a 3D part. Get hints and explanations along the way.
           </p>
         </article>
 
         <article className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#0E2943]">What remains unverified</h3>
+          <h3 className="text-xl font-semibold text-[#0E2943]">Still in development</h3>
           <p className="text-base leading-relaxed text-[#55616B]">
-            Live Onshape compatibility remains unverified. The extension does not verify CAD
-            geometry, and the website demo is not connected to a live CAD document.
-          </p>
-          <p className="text-base leading-relaxed text-[#55616B]">
-            Generalized design understanding and learning improvements from real user
-            studies have not been demonstrated.
+            Leqad is in development as a browser extension, starting with Onshape. The interactive demo is a simulation, not a live Onshape connection. Live compatibility and learning results have not been verified.
           </p>
         </article>
 
         <article className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#0E2943]">What is planned</h3>
+          <h3 className="text-xl font-semibold text-[#0E2943]">What's next</h3>
           <p className="text-base leading-relaxed text-[#55616B]">
-            Expanded exercises, improved feedback and contextual learning, and educator
-            evaluations are planned. Delivery depends on technical validation and feedback.
-          </p>
-          <p className="text-base leading-relaxed text-[#55616B]">
-            Broader technical capabilities, including help with troubleshooting and reasoning
-            about designs, are a longer-term goal.
+            We plan to test Onshape compatibility, add more exercises, and get feedback from learners and educators.
           </p>
         </article>
       </div>
