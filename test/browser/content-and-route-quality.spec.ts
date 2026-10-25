@@ -80,12 +80,12 @@ test('lesson explains a simulated CAD process without universal or verified clai
   expect(allLessonText).not.toMatch(/Every 3D mechanical model begins with a 2D sketch/);
   await page.goto('/about');
   await expect(page.getByText('Interactive Demo Preview', { exact: true })).toBeVisible();
-  await expect(page.locator('#product-status')).toContainText('Live Onshape compatibility remains unverified');
-  await expect(page.locator('#product-status')).toContainText('separate eight-step simulation');
+  await expect(page.locator('#product-status')).toContainText('Live compatibility and learning results have not been verified');
+  await expect(page.locator('#product-status')).toContainText('eight-step website demo');
   await expect(page.locator('main')).not.toContainText(/automated|Tested|library of lessons/i);
   await page.goto('/partners');
-  await expect(page.getByRole('heading', { name: 'Technical compatibility' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Educational evaluation' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Can it work with CAD tools?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Can it help learners?' })).toBeVisible();
   await expect(page.locator('main')).not.toContainText(/automated tests|instructor workload/i);
   await expect(page.getByText('Controlled Automated Testing')).toHaveCount(0);
   await expect(page.getByText('Ribbon Recognition')).toHaveCount(0);

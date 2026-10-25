@@ -18,7 +18,7 @@ export const SiteFooter: React.FC = () => (
           decoding="async"
         />
         <p className="max-w-sm text-sm leading-relaxed text-[#F5EFE7]/75">
-          An early learning-assistant prototype for guided CAD practice.
+          A step-by-step CAD learning project, starting with Onshape.
         </p>
       </div>
       <nav aria-label="Footer navigation" className="sm:justify-self-end">

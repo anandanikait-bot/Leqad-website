@@ -32,7 +32,7 @@ export const ProductPreview: React.FC = () => (
             Start with a rectangle.
           </h3>
           <p className="max-w-md text-sm leading-relaxed text-[#55616B] sm:text-base">
-            Try an eight-step exercise: choose a plane, draw and dimension a rectangle, then preview a 3D extrusion.
+            Choose a plane, draw a rectangle, set its size, and preview a 3D shape.
           </p>
           <Link
             to="/demo"
@@ -41,9 +41,6 @@ export const ProductPreview: React.FC = () => (
             Try the interactive demo
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
-          <p className="text-xs leading-relaxed text-[#55616B]">
-            Interactive browser simulation · Separate from live CAD
-          </p>
         </div>
       </div>
     </div>

@@ -8,19 +8,19 @@ export const HowItWorks: React.FC = () => {
     {
       number: '01',
       title: 'Follow guided steps',
-      description: 'Practice a guided first-sketch exercise, one modeling action at a time.',
+      description: 'Build your first sketch, one step at a time.',
       icon: MonitorPlay,
     },
     {
       number: '02',
       title: 'Get hints when stuck',
-      description: 'Reveal a hint or highlight a supported tool when you need a pointer.',
+      description: 'See a hint or a highlighted tool when you get stuck.',
       icon: HelpCircle,
     },
     {
       number: '03',
-      title: 'Understand the reasoning',
-      description: 'Learn why reference planes, dimensions, constraints, and modeling choices matter.',
+      title: 'Learn why each step matters',
+      description: 'See why planes, dimensions, and other choices matter.',
       icon: Compass,
     },
   ];
@@ -28,9 +28,9 @@ export const HowItWorks: React.FC = () => {
     <section id="how-it-works" className="scroll-mt-16 border-y border-[#D9DDD9] bg-white py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
         <div className="lg:col-span-4">
-          <SectionHeading eyebrow="How it works" title="Practice, hints, and the reasoning behind each step." />
+          <SectionHeading eyebrow="How it works" title="Practice. Get hints. Learn why." />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-[#55616B]">
-            A first-sketch walkthrough makes the modeling decisions visible, one step at a time.
+            Try a first sketch and learn as you go.
           </p>
         </div>
         <ol className="divide-y divide-[#D9DDD9] border-y border-[#D9DDD9] lg:col-span-8">

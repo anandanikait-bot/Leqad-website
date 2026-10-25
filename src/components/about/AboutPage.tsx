@@ -26,7 +26,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
               CAD guidance, right where you design.
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-[#55616B] sm:text-lg">
-              Leqad is an independent browser-extension prototype exploring contextual CAD lessons, starting with Onshape. The goal is to help learners understand their modeling decisions as they practice.
+              Leqad is being built to help beginners learn CAD through practice, hints, and explanations. We're starting with Onshape.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <ButtonLink variant="rust" size="md" to="/demo" icon={<ArrowRight className="h-4 w-4" />}>
@@ -39,8 +39,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
           </div>
           <aside className="flex flex-col justify-end gap-3 border-l-2 border-[#793327]/60 pl-5 lg:col-span-4 lg:mb-1 lg:self-end">
             <span className="font-mono text-xs font-semibold uppercase tracking-[0.13em] text-[#62281F]">Learning by doing</span>
-            <p className="max-w-xs text-base font-semibold leading-snug text-[#0E2943]">Start with one sketch. Learn why each decision matters.</p>
-            <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">AI is making it easier than ever to create. Leqad aims to make it easier to understand what you create.</p>
+            <p className="max-w-xs text-base font-semibold leading-snug text-[#0E2943]">Start with one sketch. Learn why each step matters.</p>
+            <p className="max-w-xs text-sm leading-relaxed text-[#55616B]">Try each step, get a hint when you need it, and understand what you're building.</p>
           </aside>
         </div>
       </section>
@@ -68,12 +68,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
             Where Leqad started
           </h2>
           <p className="text-base leading-relaxed text-[#55616B] sm:text-lg">
-            Leqad grew from challenges encountered while learning and teaching CAD.
-            Its founder has experience in high-school robotics and leads and helps train newer robotics students.
+            Leqad grew out of learning CAD and helping newer students on a high-school robotics team.
           </p>
           <p className="text-base leading-relaxed text-[#55616B] sm:text-lg">
-            The mission is to make technical learning more approachable and effective,
-            so students understand what they build and become more independent with engineering tools.
+            The goal is to make CAD easier to learn, so students can understand what they build.
           </p>
         </div>
       </section>
@@ -91,11 +89,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
             </span>
 
             <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-              Interested in evaluating guided CAD learning?
+              Want to help test CAD learning?
             </h2>
 
             <p className="text-sm sm:text-base text-[#F5EFE7]/80 leading-relaxed">
-              We welcome exploratory conversations with educators and CAD platform teams about technical fit and useful learning evaluations.
+              We'd like to hear from educators and CAD teams interested in trying beginner lessons and seeing what works.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">

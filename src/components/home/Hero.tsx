@@ -82,7 +82,7 @@ export const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="max-w-[31rem] text-base leading-relaxed text-[#55616B] sm:text-lg">
-            Leqad is a browser-extension learning assistant in development, starting with Onshape. Try guided first-sketch practice in a separate website simulation.
+            Learn CAD with step-by-step guidance as you build. Leqad is in development, starting with Onshape.
           </p>
 
           {/* Buttons: Stack on mobile, inline on sm+ */}

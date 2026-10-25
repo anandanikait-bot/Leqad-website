@@ -185,7 +185,7 @@ test('About reduces decoration and avoids repeated conversion prompts', async ({
     .toHaveAttribute('data-parallax-travel', '4');
   await expect(page.getByRole('link', { name: 'Launch Interactive Demo' })).toHaveCount(0);
   await expect(page.locator('#product-preview').getByRole('link', { name: 'Try the interactive demo' })).toHaveAttribute('href', '/demo');
-  await expect(page.getByRole('heading', { name: /Interested in evaluating guided CAD learning/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Want to help test CAD learning/ })).toBeVisible();
 });
 
 test('desktop navigation underlines hovered, focused, and active pages', async ({ page }) => {
