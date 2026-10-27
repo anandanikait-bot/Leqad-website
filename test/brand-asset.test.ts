@@ -47,16 +47,21 @@ test('adaptive favicon preserves the exact approved symbol and tight tab framing
   const restored = favicon
     .replace(/<style>[\s\S]*?<\/style>\n/, '')
     .replace('class="leqad-favicon-ink"', 'fill="#0E2943"')
-    .replace('viewBox="291 126 452 452"', 'viewBox="280 119 476 470"');
+    .replace('viewBox="293 128 448 448"', 'viewBox="280 119 476 470"');
   assert.equal(restored, original, 'approved symbol geometry, russet, and metadata unchanged');
-  assert.match(favicon, /viewBox="291 126 452 452"/);
+  assert.match(favicon, /viewBox="293 128 448 448"/);
   assert.match(favicon, /\.leqad-favicon-ink \{ fill: #0E2943; \}/);
   assert.match(favicon, /@media \(prefers-color-scheme: dark\)/);
   assert.match(favicon, /\.leqad-favicon-ink \{ fill: #F5EFE7; \}/);
   assert.match(favicon, /<path fill="#793327" fill-rule="evenodd"/);
   assert.doesNotMatch(favicon, /#FFFFFF|#fff\b|<rect|<image|<filter|feColorMatrix/);
   assert.equal((favicon.match(/<path /g) || []).length, 2);
-  const [x, y, w, h] = [291, 126, 452, 452];
+  const [x, y, w, h] = [293, 128, 448, 448];
+  assert.equal(w, h, "tab icon must remain square");
+  // Within ~1 source pixel of the official circle on left/right, with
+  // 5 source pixels of breathing room above/below and no cropped contours.
+  assert.ok(x < 294 && 740 < x + w);
+  assert.ok(y < 133 && 571 < y + h);
   assert.ok(294 > x && 740 < x + w && 133 > y && 571 < y + h);
 });
 
