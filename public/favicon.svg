@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="291 126 452 452">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="293 128 448 448">
 <title>Leqad official symbol logo</title>
 <!-- Approved Leqad wordmark and emblem, digitally traced from the October 2026 approved artwork. -->
 <style>
   /* Only the official navy ink switches to official ivory on dark browser chrome.
-     Keep the russet center, path data, viewBox and transparency untouched. */
+     Keep the russet center, path geometry and transparency untouched. */
   .leqad-favicon-ink { fill: #0E2943; }
   @media (prefers-color-scheme: dark) {
     .leqad-favicon-ink { fill: #F5EFE7; }
