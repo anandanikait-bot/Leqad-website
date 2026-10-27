@@ -42,11 +42,13 @@ test('adaptive favicon preserves the exact approved symbol and tight tab framing
   const original = brandSvg('symbol-light');
   const favicon = readFileSync(new URL('../public/favicon.svg', import.meta.url), 'utf8');
 
-  // Reversing ONLY the media rule and ink-class assignment recovers the
-  // approved SVG byte-for-byte (apart from the previously approved viewBox).
+  // Undo the tab-only optical strokes and adaptive ink classes to recover
+  // the exact approved source logo, including its original SVG path geometry.
   const restored = favicon
     .replace(/<style>[\s\S]*?<\/style>\n/, '')
+    .replace(/<path class="leqad-favicon-optical"[^>]*\/>\n/, '')
     .replace('class="leqad-favicon-ink"', 'fill="#0E2943"')
+    .replace(/(<path fill="#793327" fill-rule="evenodd") stroke="#793327" stroke-width="4" stroke-linejoin="round"/, '$1')
     .replace('viewBox="293 128 448 448"', 'viewBox="280 119 476 470"');
   assert.equal(restored, original, 'approved symbol geometry, russet, and metadata unchanged');
   assert.match(favicon, /viewBox="293 128 448 448"/);
@@ -55,7 +57,15 @@ test('adaptive favicon preserves the exact approved symbol and tight tab framing
   assert.match(favicon, /\.leqad-favicon-ink \{ fill: #F5EFE7; \}/);
   assert.match(favicon, /<path fill="#793327" fill-rule="evenodd"/);
   assert.doesNotMatch(favicon, /#FFFFFF|#fff\b|<rect|<image|<filter|feColorMatrix/);
-  assert.equal((favicon.match(/<path /g) || []).length, 2);
+  assert.equal((favicon.match(/<path /g) || []).length, 3);
+  const officialInkPath = [...original.matchAll(/<path[^>]*d="([^"]+)"/g)][0]?.[1];
+  const opticalPath = favicon.match(/<path class="leqad-favicon-optical"[^>]*d="([^"]+)"/)?.[1];
+  assert.equal(opticalPath, officialInkPath?.match(/M[^M]*?Z/g)?.slice(6, 10).join(' '));
+  assert.match(favicon, /\.leqad-favicon-optical \{ stroke: #0E2943; \}/);
+  assert.match(favicon, /\.leqad-favicon-optical \{ stroke: #F5EFE7; \}/);
+  assert.match(favicon, /stroke-width="5"/);
+  assert.match(favicon, /stroke="#793327" stroke-width="4"/);
+  assert.doesNotMatch(favicon, /feGaussianBlur|<filter|opacity="/);
   const [x, y, w, h] = [293, 128, 448, 448];
   assert.equal(w, h, "tab icon must remain square");
   // Within ~1 source pixel of the official circle on left/right, with

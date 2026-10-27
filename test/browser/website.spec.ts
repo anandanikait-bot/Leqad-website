@@ -62,7 +62,7 @@ test('approved brand logo, favicon, and unique browser title across routes', asy
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
     await expect(page).toHaveTitle(titles[path]);
-    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg?v=20261026-1');
+    await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('href', '/favicon.svg?v=20261026-2');
     await expect(page.locator('head link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute('type', 'image/svg+xml');
     if (path === '/') {
       await expect(page.locator('header')).toHaveCount(0);
@@ -517,7 +517,7 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
     await page.goto(route);
     const icons = page.locator('head link[rel="icon"]');
     await expect(icons).toHaveCount(1);
-    await expect(icons).toHaveAttribute('href', '/favicon.svg?v=20261026-1');
+    await expect(icons).toHaveAttribute('href', '/favicon.svg?v=20261026-2');
     await expect(icons).toHaveAttribute('type', 'image/svg+xml');
     await expect(page.locator('head link[rel="apple-touch-icon"]')).toHaveAttribute(
       'href', '/assets/brand/leqad-favicon-180-v1.png',
@@ -527,12 +527,15 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
   expect(response.status()).toBe(200);
   expect(response.headers()['content-type']).toMatch(/image\/svg\+xml/);
   const symbol = await page.request.get('/assets/brand/leqad-official-symbol-light-v1.svg');
-  // Compare actual approved logo artwork instead of the tighter viewBox.
+  // The optically reinforced favicon can still be reduced to the exact
+  // approved emblem (both original path contours and the russet center).
   const newSvg = await response.text();
   const originalSvg = await symbol.text();
   const restored = newSvg
     .replace(/<style>[\s\S]*?<\/style>\n/, '')
+    .replace(/<path class="leqad-favicon-optical"[^>]*\/>\n/, '')
     .replace('class="leqad-favicon-ink"', 'fill="#0E2943"')
+    .replace(/(<path fill="#793327" fill-rule="evenodd") stroke="#793327" stroke-width="4" stroke-linejoin="round"/, '$1')
     .replace('viewBox="293 128 448 448"', 'viewBox="280 119 476 470"');
   expect(restored).toBe(originalSvg);
 
@@ -575,7 +578,7 @@ test('address-bar favicon is one crisp, transparent official symbol, not a white
       return image;
     };
     const [now, before] = await Promise.all([
-      load('/favicon.svg?v=20261026-1'),
+      load('/favicon.svg?v=20261026-2'),
       load('/assets/brand/leqad-official-symbol-light-v1.svg'),
     ]);
     const bounds = (image: HTMLImageElement) => {
@@ -604,7 +607,7 @@ test('approved favicon switches only ink color in light and dark browser modes',
     const page = await context.newPage();
     try {
       await page.goto('/');
-      await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg?v=20261026-1');
+      await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg?v=20261026-2');
       return await page.evaluate(async () => {
         const image = new Image();
         image.src = (document.querySelector('link[rel="icon"]') as HTMLLinkElement).href;
