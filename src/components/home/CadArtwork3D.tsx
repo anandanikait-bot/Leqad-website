@@ -311,27 +311,39 @@ export const CadArtwork3D: React.FC<CadArtwork3DProps> = ({ className = '' }) =>
       // 7. Technical Dimension Annotations (40 mm x 30 mm)
       ctx.save();
       ctx.font = '10px monospace';
-      ctx.fillStyle = '#793327';
+      const drawDimensionLabel = (text: string, x: number, y: number) => {
+        const metrics = ctx.measureText(text);
+        const padding = 2;
+        // A tight navy backing keeps ivory readable over the rotating light faces.
+        ctx.fillStyle = '#0E2943';
+        ctx.fillRect(
+          x - metrics.actualBoundingBoxLeft - padding,
+          y - metrics.actualBoundingBoxAscent - padding,
+          metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight + padding * 2,
+          metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + padding * 2
+        );
+        ctx.fillStyle = '#F5EFE7';
+        ctx.fillText(text, x, y);
+      };
 
       // Width dimension (40 mm along X edge between vertex 3 and 2)
       const p3 = projectedV[3];
       const p2 = projectedV[2];
       const midX1 = (p3.px + p2.px) * 0.5;
       const midY1 = (p3.py + p2.py) * 0.5 + 16;
-      ctx.fillText('40 mm', midX1 - 15, midY1);
+      drawDimensionLabel('40 mm', midX1 - 15, midY1);
 
       // Depth dimension (30 mm along Z edge between vertex 2 and 1)
       const p1 = projectedV[1];
       const midX2 = (p2.px + p1.px) * 0.5 + 10;
       const midY2 = (p2.py + p1.py) * 0.5 + 4;
-      ctx.fillText('30 mm', midX2, midY2);
+      drawDimensionLabel('30 mm', midX2, midY2);
 
       // Height dimension label when extruded
       if (currH > 8) {
         const midX3 = (p1.px + projectedV[5].px) * 0.5 + 24;
         const midY3 = (p1.py + projectedV[5].py) * 0.5;
-        ctx.fillStyle = '#793327';
-        ctx.fillText('22 mm [EXT]', midX3, midY3);
+        drawDimensionLabel('22 mm [EXT]', midX3, midY3);
       }
 
       // Corner datum dots

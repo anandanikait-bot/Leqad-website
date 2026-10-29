@@ -1,0 +1,242 @@
+[
+  {
+    "width": 320,
+    "route": "/",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "route": "/about",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "route": "/partners",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "route": "/demo",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 320,
+    "state": "dimension",
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-7.1.1"
+        ],
+        "description": "Ensure ARIA attributes are not prohibited for an element's role",
+        "help": "Elements must only use permitted ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-prohibited-attr?application=playwright",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "g",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute cannot be used on \"g\" elements with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<g data-testid=\"sketch-profile\" aria-label=\"Rectangle 40 by 30 millimeters\">",
+            "target": [
+              "g[data-testid=\"sketch-profile\"]"
+            ],
+            "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on \"g\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 5
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "route": "/",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "route": "/about",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "route": "/partners",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "route": "/demo",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 375,
+    "state": "dimension",
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-7.1.1"
+        ],
+        "description": "Ensure ARIA attributes are not prohibited for an element's role",
+        "help": "Elements must only use permitted ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-prohibited-attr?application=playwright",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "g",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute cannot be used on \"g\" elements with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<g data-testid=\"sketch-profile\" aria-label=\"Rectangle 40 by 30 millimeters\">",
+            "target": [
+              "g[data-testid=\"sketch-profile\"]"
+            ],
+            "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on \"g\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 8
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "route": "/",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "route": "/about",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "route": "/partners",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "route": "/demo",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "dimension",
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-7.1.1"
+        ],
+        "description": "Ensure ARIA attributes are not prohibited for an element's role",
+        "help": "Elements must only use permitted ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-prohibited-attr?application=playwright",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "g",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute cannot be used on \"g\" elements with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<g data-testid=\"sketch-profile\" aria-label=\"Rectangle 40 by 30 millimeters\">",
+            "target": [
+              "g[data-testid=\"sketch-profile\"]"
+            ],
+            "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on \"g\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ],
+    "manualReview": [
+      {
+        "id": "color-contrast",
+        "nodes": 6
+      }
+    ]
+  }
+]

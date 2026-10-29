@@ -1,0 +1,72 @@
+{
+  "initial": {
+    "cad": 183,
+    "sonar": 144,
+    "shader": 186,
+    "balance": 0,
+    "buffers": 1,
+    "deletedBuffers": 0,
+    "longTasks": [
+      72,
+      176
+    ],
+    "cls": 0.00004941936728395062
+  },
+  "visible": {
+    "cad": 58,
+    "sonar": 0,
+    "shader": 58,
+    "balance": 0,
+    "longTasks": [],
+    "cls": 0
+  },
+  "syntheticHidden": {
+    "cad": 0,
+    "sonar": 0,
+    "shader": 0,
+    "balance": 0,
+    "longTasks": [],
+    "cls": 0
+  },
+  "resumed": {
+    "cad": 59,
+    "sonar": 0,
+    "shader": 59,
+    "balance": 0,
+    "longTasks": [],
+    "cls": 0
+  },
+  "offscreen": {
+    "cad": 0,
+    "sonar": 0,
+    "shader": 0,
+    "balance": 0,
+    "longTasks": [],
+    "cls": 0
+  },
+  "reduced": {
+    "cad": 0,
+    "sonar": 0,
+    "shader": 0,
+    "balance": 0,
+    "longTasks": [],
+    "cls": 0
+  },
+  "reducedToggleChanged": true,
+  "final": {
+    "cad": 313,
+    "sonar": 144,
+    "shader": 317,
+    "balance": 0,
+    "buffers": 1,
+    "deletedBuffers": 1,
+    "longTasks": [
+      72,
+      176,
+      67,
+      73,
+      54
+    ],
+    "cls": 0.00004941936728395062
+  }
+}

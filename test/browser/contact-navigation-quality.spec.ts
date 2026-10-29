@@ -74,6 +74,25 @@ test('dialog traps keyboard focus in both directions and restores its opener', a
   await expect(opener).toBeFocused();
 });
 
+test('delayed initial dialog focus does not interrupt backward keyboard navigation', async ({ page }) => {
+  const now = new Date('2026-10-29T12:00:00Z');
+  await page.clock.install({ time: now });
+  await page.clock.pauseAt(now);
+  await page.goto('/about');
+  await page.getByRole('button', { name: 'Contact Leqad' }).click();
+  const dialog = page.getByRole('dialog');
+  const close = dialog.getByRole('button', { name: 'Close dialog' });
+  const lastAction = dialog.getByRole('button', { name: 'Send inquiry' });
+  await close.focus();
+  await page.keyboard.press('Shift+Tab');
+  await expect(lastAction).toBeFocused();
+  // Let the pending initial-focus callback run after the user's navigation.
+  await page.clock.runFor(100);
+  await expect(lastAction).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(close).toBeFocused();
+});
+
 test('clipboard unavailable uses manual recovery without a success claim', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: undefined }));
   await page.goto('/partners');
