@@ -71,6 +71,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
       // Focus first input
       const focusTimeout = window.setTimeout(() => {
+        // Do not steal focus if the visitor has already moved into the dialog.
+        if (modalRef.current?.contains(document.activeElement)) return;
         modalRef.current?.querySelector<HTMLElement>('#contact-topic')?.focus();
       }, 50);
 
