@@ -167,14 +167,14 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
       {/* CAD Application Ribbon Toolbar */}
       <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex shrink-0 min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
         {/* Left CAD Toolbar */}
-        <div className="flex min-w-0 max-w-full items-center gap-1 overflow-x-auto py-1">
+        <div className="flex w-full min-w-0 max-w-full items-center justify-between gap-1 overflow-x-auto py-1 sm:w-auto sm:justify-start">
           {/* Sketch tool (Step 3: Start Sketch) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               onTriggerAction('start-sketch');
             }}
-            className={`flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded px-2.5 py-1.5 font-medium transition-all cursor-pointer ${
+            className={`flex min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded px-1.5 py-1.5 font-medium transition-all cursor-pointer sm:flex-row sm:gap-1.5 sm:px-2.5 ${
               currentStepIndex === 2 && !isSketchActive
                 ? 'bg-[#0E2943] text-white shadow-xs'
                 : isSketchActive
@@ -189,10 +189,10 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             aria-label="Sketch tool" disabled={!canStartSketch}
           >
             <Layers className="w-3.5 h-3.5 text-[#793327]" />
-            <span className="hidden sm:inline">Sketch</span>
+            <span>Sketch</span>
           </button>
 
-          <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
+          <div className="hidden w-[1px] h-5 bg-[#D9DDD9] mx-1 sm:block" />
 
           {/* Extrude starts a distinct simulated feature preview, not a silent advance. */}
           <button
@@ -200,7 +200,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               onTriggerAction('start-extrude');
             }}
-            className={`flex min-h-11 min-w-11 items-center justify-center gap-1 rounded px-2 py-1.5 transition-all cursor-pointer ${
+            className={`flex min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded px-1.5 py-1.5 transition-all cursor-pointer sm:flex-row sm:gap-1 sm:px-2 ${
               currentStepIndex === 6
                 ? 'bg-[#0E2943] text-white'
                 : 'hover:bg-[#FAF8F4] text-[#55616B]'
@@ -213,10 +213,10 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             aria-label="Extrude 3D tool" disabled={!canExtrude}
           >
             <Box className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Extrude</span>
+            <span>Extrude</span>
           </button>
 
-          <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
+          <div className="hidden w-[1px] h-5 bg-[#D9DDD9] mx-1 sm:block" />
 
           {/* Corner Rectangle Tool (G) (Step 4: Draw Rectangle) */}
           <button
@@ -224,7 +224,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               if (canDraw) { setRectangleArmed(true); setOriginSet(false); }
             }}
-            className={`relative flex min-h-11 min-w-11 items-center justify-center rounded p-1.5 transition-all cursor-pointer ${
+            className={`relative flex min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded px-1 py-1.5 transition-all cursor-pointer sm:flex-row sm:gap-0 sm:p-1.5 ${
               currentStepIndex === 3 && !isRectangleDrawn
                 ? 'bg-[#0E2943] text-white'
                 : isRectangleDrawn
@@ -239,6 +239,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             aria-label="Corner Rectangle tool" disabled={!canDraw} aria-pressed={rectangleArmed}
           >
             <Square className="w-4 h-4" />
+            <span className="sm:hidden">Rectangle</span>
           </button>
 
           {/* Dimension Tool (D) (Step 5: Apply Dimensions) */}
@@ -247,7 +248,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
               e.stopPropagation();
               onTriggerAction('apply-dimensions');
             }}
-            className={`relative flex min-h-11 min-w-11 items-center justify-center rounded p-1.5 transition-all cursor-pointer ${
+            className={`relative flex min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded px-1 py-1.5 transition-all cursor-pointer sm:flex-row sm:gap-0 sm:p-1.5 ${
               currentStepIndex === 4 && !isDimensioned
                 ? 'bg-[#0E2943] text-white'
                 : isDimensioned
@@ -262,9 +263,10 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
             aria-label="Dimension tool" disabled={!canDimension}
           >
             <Ruler className="w-4 h-4" />
+            <span className="sm:hidden">Dimension</span>
           </button>
 
-          <div className="w-[1px] h-5 bg-[#D9DDD9] mx-1" />
+          <div className="hidden w-[1px] h-5 bg-[#D9DDD9] mx-1 sm:block" />
 
 
         </div>
