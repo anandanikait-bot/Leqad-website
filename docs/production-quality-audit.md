@@ -123,3 +123,7 @@ See the [complete performance report](screenshots/production-quality/performance
 | Cold samples per build | 24 | 24 |
 
 The reduction in deployment size is primarily unrequested reference material, not a 65% reduction in page transfer. Non-demo page transfers fall about 44.5 KB (~5%). Demo transfer grows 2,421 bytes and one request. Local timing changes are mixed: desktop demo median LCP rose from 344 to 396 ms; mobile medians remain near 1.7 seconds; CLS medians are unchanged. There is no clear overall LCP or CPU improvement. Visible homepage canvas/CTA work remains substantial in this 4× CPU lab profile; inspect physical-device responsiveness before publishing rather than reducing animation quality without evidence. No field INP claim is made.
+
+## GitHub handoff
+
+Branch `fix/website-production-quality` was pushed successfully. `gh pr create --base main --head fix/website-production-quality --body-file docs/production-quality-pr.md` failed with `Post https://api.github.com/graphql: Forbidden`. No PR was created by this session, and remote CI results could not be read. Use the [GitHub creation link](https://github.com/anandanikait-bot/Leqad-website/pull/new/fix/website-production-quality) with the [prepared description](production-quality-pr.md). Nothing was merged or deployed.
