@@ -3,7 +3,7 @@ import React from 'react';
 import { SectionHeading } from '../shared/SectionHeading';
 import { Button } from '../shared/Button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown, School, Cpu } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { InteractivePilotConfigurator } from './InteractivePilotConfigurator';
 
 interface PartnershipOverviewProps {
@@ -51,7 +51,6 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
       <div className="grid gap-0 border-b border-[#D9DDD9] md:grid-cols-2 md:divide-x md:divide-[#D9DDD9]">
         <article className="space-y-4 py-7 md:pr-8">
           <div className="flex items-center justify-between">
-            <Cpu className="h-5 w-5 text-[#793327]" aria-hidden="true" />
             <span className="font-mono text-sm font-semibold text-[#62281F]">01</span>
           </div>
           <h3 className="text-base font-semibold text-[#0E2943]">Can it work with CAD tools?</h3>
@@ -61,7 +60,6 @@ export const PartnershipOverview: React.FC<PartnershipOverviewProps> = ({ onOpen
         </article>
         <article className="space-y-4 border-t border-[#D9DDD9] py-7 md:border-t-0 md:pl-8">
           <div className="flex items-center justify-between">
-            <School className="h-5 w-5 text-[#793327]" aria-hidden="true" />
             <span className="font-mono text-sm font-semibold text-[#62281F]">02</span>
           </div>
           <h3 className="text-base font-semibold text-[#0E2943]">Can it help learners?</h3>

@@ -1,0 +1,542 @@
+[
+  {
+    "width": 375,
+    "variant": "instrument-serif",
+    "index": 0,
+    "text": "building, not just watching.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "24px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 20,
+      "y": 216.21875,
+      "width": 226.5625,
+      "height": 29.265625
+    },
+    "textBounds": {
+      "x": 20,
+      "y": 215.21875,
+      "width": 226.5625,
+      "height": 31
+    },
+    "parent": {
+      "x": 20,
+      "y": 180.859375,
+      "width": 335,
+      "height": 100
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 375,
+    "variant": "instrument-serif",
+    "index": 1,
+    "text": "designing with guidance.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "24px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 20,
+      "y": 216.21875,
+      "width": 206.53125,
+      "height": 29.265625
+    },
+    "textBounds": {
+      "x": 20,
+      "y": 215.21875,
+      "width": 206.53125,
+      "height": 31
+    },
+    "parent": {
+      "x": 20,
+      "y": 180.859375,
+      "width": 335,
+      "height": 100
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 375,
+    "variant": "instrument-serif",
+    "index": 2,
+    "text": "understanding every step.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "24px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 20,
+      "y": 216.21875,
+      "width": 210.421875,
+      "height": 29.265625
+    },
+    "textBounds": {
+      "x": 20,
+      "y": 215.21875,
+      "width": 210.421875,
+      "height": 31
+    },
+    "parent": {
+      "x": 20,
+      "y": 180.859375,
+      "width": 335,
+      "height": 100
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 375,
+    "variant": "space-grotesk",
+    "index": 0,
+    "text": "building, not just watching.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "24px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 20,
+      "y": 216.21875,
+      "width": 303.484375,
+      "height": 29.265625
+    },
+    "textBounds": {
+      "x": 20,
+      "y": 215.21875,
+      "width": 303.484375,
+      "height": 31
+    },
+    "parent": {
+      "x": 20,
+      "y": 180.859375,
+      "width": 335,
+      "height": 100
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 375,
+    "variant": "space-grotesk",
+    "index": 1,
+    "text": "designing with guidance.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "24px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 20,
+      "y": 216.21875,
+      "width": 281.078125,
+      "height": 29.265625
+    },
+    "textBounds": {
+      "x": 20,
+      "y": 215.21875,
+      "width": 281.078125,
+      "height": 31
+    },
+    "parent": {
+      "x": 20,
+      "y": 180.859375,
+      "width": 335,
+      "height": 100
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 375,
+    "variant": "space-grotesk",
+    "index": 2,
+    "text": "understanding every step.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "24px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 20,
+      "y": 216.21875,
+      "width": 294.78125,
+      "height": 29.265625
+    },
+    "textBounds": {
+      "x": 20,
+      "y": 215.21875,
+      "width": 294.78125,
+      "height": 31
+    },
+    "parent": {
+      "x": 20,
+      "y": 180.859375,
+      "width": 335,
+      "height": 100
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 768,
+    "variant": "instrument-serif",
+    "index": 0,
+    "text": "building, not just watching.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "30px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 32,
+      "y": 230.5625,
+      "width": 283.203125,
+      "height": 36.59375
+    },
+    "textBounds": {
+      "x": 32,
+      "y": 228.5625,
+      "width": 283.203125,
+      "height": 39
+    },
+    "parent": {
+      "x": 32,
+      "y": 192.859375,
+      "width": 704,
+      "height": 112
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 768,
+    "variant": "instrument-serif",
+    "index": 1,
+    "text": "designing with guidance.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "30px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 32,
+      "y": 230.5625,
+      "width": 258.15625,
+      "height": 36.59375
+    },
+    "textBounds": {
+      "x": 32,
+      "y": 228.5625,
+      "width": 258.15625,
+      "height": 39
+    },
+    "parent": {
+      "x": 32,
+      "y": 192.859375,
+      "width": 704,
+      "height": 112
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 768,
+    "variant": "instrument-serif",
+    "index": 2,
+    "text": "understanding every step.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "30px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 32,
+      "y": 230.5625,
+      "width": 263.015625,
+      "height": 36.59375
+    },
+    "textBounds": {
+      "x": 32,
+      "y": 228.5625,
+      "width": 263.015625,
+      "height": 39
+    },
+    "parent": {
+      "x": 32,
+      "y": 192.859375,
+      "width": 704,
+      "height": 112
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 768,
+    "variant": "space-grotesk",
+    "index": 0,
+    "text": "building, not just watching.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "30px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 32,
+      "y": 230.5625,
+      "width": 379.359375,
+      "height": 36.59375
+    },
+    "textBounds": {
+      "x": 32,
+      "y": 228.5625,
+      "width": 379.359375,
+      "height": 39
+    },
+    "parent": {
+      "x": 32,
+      "y": 192.859375,
+      "width": 704,
+      "height": 112
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 768,
+    "variant": "space-grotesk",
+    "index": 1,
+    "text": "designing with guidance.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "30px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 32,
+      "y": 230.5625,
+      "width": 351.34375,
+      "height": 36.59375
+    },
+    "textBounds": {
+      "x": 32,
+      "y": 228.5625,
+      "width": 351.34375,
+      "height": 39
+    },
+    "parent": {
+      "x": 32,
+      "y": 192.859375,
+      "width": 704,
+      "height": 112
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 768,
+    "variant": "space-grotesk",
+    "index": 2,
+    "text": "understanding every step.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "30px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 32,
+      "y": 230.5625,
+      "width": 368.46875,
+      "height": 36.59375
+    },
+    "textBounds": {
+      "x": 32,
+      "y": 228.5625,
+      "width": 368.46875,
+      "height": 39
+    },
+    "parent": {
+      "x": 32,
+      "y": 192.859375,
+      "width": 704,
+      "height": 112
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 1440,
+    "variant": "instrument-serif",
+    "index": 0,
+    "text": "building, not just watching.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "42px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 120,
+      "y": 431.59375,
+      "width": 396.484375,
+      "height": 51.234375
+    },
+    "textBounds": {
+      "x": 120,
+      "y": 429.59375,
+      "width": 396.484375,
+      "height": 55
+    },
+    "parent": {
+      "x": 120,
+      "y": 387.21875,
+      "width": 568,
+      "height": 140
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 1440,
+    "variant": "instrument-serif",
+    "index": 1,
+    "text": "designing with guidance.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "42px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 120,
+      "y": 431.59375,
+      "width": 361.421875,
+      "height": 51.234375
+    },
+    "textBounds": {
+      "x": 120,
+      "y": 429.59375,
+      "width": 361.421875,
+      "height": 55
+    },
+    "parent": {
+      "x": 120,
+      "y": 387.21875,
+      "width": 568,
+      "height": 140
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 1440,
+    "variant": "instrument-serif",
+    "index": 2,
+    "text": "understanding every step.",
+    "font": "\"Instrument Serif\", Georgia, serif",
+    "fontSize": "42px",
+    "fontStyle": "italic",
+    "fontWeight": "400",
+    "element": {
+      "x": 120,
+      "y": 431.59375,
+      "width": 368.21875,
+      "height": 51.234375
+    },
+    "textBounds": {
+      "x": 120,
+      "y": 429.59375,
+      "width": 368.21875,
+      "height": 55
+    },
+    "parent": {
+      "x": 120,
+      "y": 387.21875,
+      "width": 568,
+      "height": 140
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 1440,
+    "variant": "space-grotesk",
+    "index": 0,
+    "text": "building, not just watching.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "42px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 120,
+      "y": 431.59375,
+      "width": 531.09375,
+      "height": 51.234375
+    },
+    "textBounds": {
+      "x": 120,
+      "y": 430.59375,
+      "width": 531.09375,
+      "height": 53
+    },
+    "parent": {
+      "x": 120,
+      "y": 387.21875,
+      "width": 568,
+      "height": 140
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 1440,
+    "variant": "space-grotesk",
+    "index": 1,
+    "text": "designing with guidance.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "42px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 120,
+      "y": 431.59375,
+      "width": 491.890625,
+      "height": 51.234375
+    },
+    "textBounds": {
+      "x": 120,
+      "y": 430.59375,
+      "width": 491.890625,
+      "height": 53
+    },
+    "parent": {
+      "x": 120,
+      "y": 387.21875,
+      "width": 568,
+      "height": 140
+    },
+    "clipped": false,
+    "documentOverflow": false
+  },
+  {
+    "width": 1440,
+    "variant": "space-grotesk",
+    "index": 2,
+    "text": "understanding every step.",
+    "font": "\"Space Grotesk\"",
+    "fontSize": "42px",
+    "fontStyle": "normal",
+    "fontWeight": "500",
+    "element": {
+      "x": 120,
+      "y": 431.59375,
+      "width": 515.859375,
+      "height": 51.234375
+    },
+    "textBounds": {
+      "x": 120,
+      "y": 430.59375,
+      "width": 515.859375,
+      "height": 53
+    },
+    "parent": {
+      "x": 120,
+      "y": 387.21875,
+      "width": 568,
+      "height": 140
+    },
+    "clipped": false,
+    "documentOverflow": false
+  }
+]

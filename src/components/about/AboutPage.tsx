@@ -84,10 +84,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenContact }) => {
           <div aria-hidden="true" data-parallax-travel="4" data-parallax-mobile-travel="2" data-parallax-direction="-1" className="absolute -inset-6 opacity-[0.02] bg-[radial-gradient(circle,#ffffff_1px,transparent_1.5px)] bg-[size:56px_56px] pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl space-y-4">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#F5EFE7]/75 font-medium">
-              Collaboration
-            </span>
-
             <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
               Want to help test CAD learning?
             </h2>
