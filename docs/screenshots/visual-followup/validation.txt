@@ -1,0 +1,154 @@
+
+INSTALL
+
+added 270 packages in 5s
+
+TYPES
+
+> react-example@0.0.0 typecheck
+> tsc --noEmit
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+LINT
+
+> react-example@0.0.0 lint
+> eslint . --max-warnings 0
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+UNIT
+
+> react-example@0.0.0 test
+> tsx --test test/*.test.ts
+
+✔ official artwork is vector and transparent with exact brand palette (2.22998ms)
+✔ logo presentations retain exact official paths and favicon already has dark/light variants (0.940616ms)
+✔ adaptive favicon preserves the exact approved symbol and tight tab framing (0.398672ms)
+✔ footer-only SVG keeps the approved emblem and colors while smoothing every letter (0.874238ms)
+✔ website palette uses approved navy, ivory, and Hay’s Russet (1.124869ms)
+✔ active website sources do not restore the legacy orange UI or unrelated status hues (11.545083ms)
+✔ global theme retains the official colors and consistent russet CTA (0.486933ms)
+✔ official SVG halftone uses uniformly sized, rounded dots with no partial-edge speckles (6.475139ms)
+✔ social preview uses identical bytes to the existing approved homepage screenshot (1.729556ms)
+▶ Lesson Data & Curriculum Alignment (Fix #4, Fix #5, Fix #6)
+  ✔ Contains exactly 8 approved steps in the correct sequence (0.674561ms)
+  ✔ Semantic action IDs are properly mapped to distinct operations (0.272424ms)
+  ✔ Consistent 40 mm x 30 mm rectangle dimensions across lesson descriptions (0.186927ms)
+  ✔ Top plane correctly refers to XY datum (Fix #6) (0.131765ms)
+✔ Lesson Data & Curriculum Alignment (Fix #4, Fix #5, Fix #6) (2.351159ms)
+▶ Demo State Machine & Separation of Navigation from Action Completion (Fix #2, Fix #3, Fix #8)
+  ✔ Jumping directly to Step 8 does NOT mark Steps 1-7 as completed (0.86293ms)
+  ✔ Visiting a step marks it visited, not completed (0.26335ms)
+  ✔ Sketch is not prematurely accepted when opening Step 6 (Fix #3) (0.22898ms)
+  ✔ Extrude preview is distinct from a committed solid (0.196341ms)
+  ✔ Reset returns all state to fresh initial state (Fix #8) (0.206326ms)
+✔ Demo State Machine & Separation of Navigation from Action Completion (Fix #2, Fix #3, Fix #8) (2.300623ms)
+▶ Legal & Educational Disclaimers (Fix #7, Fix #12)
+  ✔ Legal disclaimer states independent standing (0.206556ms)
+  ✔ Demo disclaimer states illustration without live CAD inspection (0.082232ms)
+✔ Legal & Educational Disclaimers (Fix #7, Fix #12) (0.396749ms)
+✔ plate vertices preserve edited sketch dimensions and extrusion depth in one closed model (2.185413ms)
+✔ Top, Front and Right views show the actual model proportions (2.473651ms)
+✔ isometric transition begins on the same planar profile and stays finite at limits (0.613851ms)
+▶ Platform identity and simulation boundaries
+  ✔ Legal disclaimer names the target platform without implying affiliation (0.693098ms)
+  ✔ Demo verification disclaimer clarifies simulation without real CAD inspection (0.149272ms)
+  ✔ Hash route resolver correctly maps route names (0.309389ms)
+  ✔ Inquiry draft note structure conforms to draft-only helper (0.210112ms)
+✔ Platform identity and simulation boundaries (2.563855ms)
+✔ production serves route-specific HTML, canonical redirects, and real missing-page statuses (88.487859ms)
+✔ known legacy hash URLs are replaced by their clean destinations (0.915088ms)
+✔ each public route has unique crawlable metadata and a route-specific browser title (1.888313ms)
+✔ homepage social image is branded and distinct from the interactive demo (0.303621ms)
+✔ unknown routes are excluded from indexing (1.135285ms)
+✔ leqad.com is the single canonical public origin in head and crawler resources (0.542726ms)
+ℹ tests 33
+ℹ suites 4
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1104.163132
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+BUILD
+
+> react-example@0.0.0 build
+> vite build && tsx scripts/prerender.ts && node scripts/clean-production.mjs
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 1706 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                     1.23 kB │ gzip:   0.66 kB
+dist/assets/instrument-serif-latin-ext-400-italic-D7-lnxEk.woff    10.50 kB
+dist/assets/instrument-serif-latin-ext-400-italic-C9HzH3YL.woff2   12.38 kB
+dist/assets/ibm-plex-mono-latin-400-normal-CvHOgSBP.woff           13.14 kB
+dist/assets/ibm-plex-mono-latin-500-normal-CB9ihrfo.woff           13.15 kB
+dist/assets/ibm-plex-mono-latin-600-normal-DWFSQ4vo.woff           13.20 kB
+dist/assets/ibm-plex-mono-latin-700-normal-CNHXzs6v.woff           13.21 kB
+dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2          14.70 kB
+dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2          14.88 kB
+dist/assets/ibm-plex-mono-latin-700-normal-7sUh57Bg.woff2          14.90 kB
+dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2          15.62 kB
+dist/assets/instrument-serif-latin-400-italic-u__WvvIK.woff        19.26 kB
+dist/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2       22.12 kB
+dist/assets/index--lgV0l-m.css                                     56.72 kB │ gzip:  10.99 kB
+dist/assets/DemoPage-BWCRMqwr.js                                   46.58 kB │ gzip:  12.81 kB
+dist/assets/index-BTFZ5q_3.js                                     381.73 kB │ gzip: 118.61 kB
+
+✓ built in 454ms
+vite v8.3.5 building ssr environment for production...
+transforming...
+✓ 34 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/.prerender/entry-server.js  219.51 kB │ gzip: 51.86 kB
+
+[33m[INEFFECTIVE_DYNAMIC_IMPORT] [0msrc/components/demo/DemoPage.tsx is dynamically imported by src/App.tsx but also statically imported by src/entry-server.tsx, dynamic import will not move module into another chunk.
+
+✓ built in 53ms
+Prerendered / → index.html
+Prerendered /demo → demo/index.html
+Prerendered /about → about/index.html
+Prerendered /partners → partners/index.html
+Prerendered /404 → 404.html
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+BROWSER
+
+> react-example@0.0.0 test:browser
+> playwright test --output=/tmp/leqad-visual-tests
+
+
+Running 179 tests using 2 workers
+(node:218280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:218279) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+················································································
+················································································
+···················
+  179 passed (3.4m)
+
+AXE
+12 scans; 0 violations

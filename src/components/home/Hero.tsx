@@ -69,10 +69,10 @@ export const Hero: React.FC = () => {
             <div className="flex min-h-[6.25rem] items-center justify-start sm:min-h-[7rem] lg:min-h-[8.75rem]">
               <span
                 aria-hidden="true"
-                className={`font-serif hero-rotating-phrase italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight motion-reduce:transition-none transition-all duration-400 ease-out inline-block ${
+                className={`font-serif hero-rotating-phrase italic text-2xl sm:text-3xl lg:text-[42px] text-[#0E2943] leading-snug tracking-tight motion-reduce:transition-none transition-[opacity,transform] duration-400 ease-out inline-block ${
                   isTransitioning
-                    ? 'opacity-0 blur-md translate-y-2'
-                    : 'opacity-100 blur-none translate-y-0'
+                    ? 'opacity-0 translate-y-2'
+                    : 'opacity-100 translate-y-0'
                 }`}
               >
                 {CYCLING_PHRASES[phraseIndex]}

@@ -163,7 +163,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
   // events available to Lenis while pointer events still drive sketching.
   // Reserve data-lenis-prevent for scrollable overlays such as dialogs.
   return (
-    <div className="relative flex h-[clamp(420px,62svh,520px)] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] shadow-sm select-none sm:h-[clamp(460px,63svh,560px)] lg:h-[clamp(480px,64svh,600px)]">
+    <div className="relative flex h-[clamp(420px,62svh,520px)] w-full min-w-0 flex-col overflow-hidden rounded-xl border border-[#D9DDD9] bg-[#EDF1F3] select-none sm:h-[clamp(460px,63svh,560px)] lg:h-[clamp(480px,64svh,600px)]">
       {/* CAD Application Ribbon Toolbar */}
       <div role="toolbar" aria-label="CAD tools" className="[&_button:disabled]:opacity-35 [&_button:disabled]:cursor-not-allowed z-20 flex shrink-0 min-h-11 min-w-0 flex-wrap items-center justify-between gap-2 border-b border-[#D9DDD9] bg-white px-2 py-1.5 text-xs text-[#0E2943] sm:px-3">
         {/* Left CAD Toolbar */}
