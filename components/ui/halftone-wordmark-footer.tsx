@@ -246,7 +246,8 @@ export default function HalftoneWordmarkFooter({
     let px = -1e5
     let py = -1e5
     let raf = 0
-    let visible = true
+    let intersecting = true
+    let visible = !document.hidden
     let awake = true
     let ring = { x: 0, y: 0, t: -1 }
     // Flat arrays: x, y, vx, vy, hx, hy, r, isAccent per dot.
@@ -674,7 +675,8 @@ export default function HalftoneWordmarkFooter({
     })
     ro.observe(art)
     const io = new IntersectionObserver((entries) => {
-      visible = entries[0] ? entries[0].isIntersecting : true
+      intersecting = entries[0] ? entries[0].isIntersecting : true
+      visible = intersecting && !document.hidden
       if (visible) wake()
     })
     io.observe(art)
@@ -685,8 +687,8 @@ export default function HalftoneWordmarkFooter({
         if (raf) cancelAnimationFrame(raf)
         raf = 0
       } else {
-        visible = true
-        wake()
+        visible = intersecting
+        if (visible) wake()
       }
     }
     document.addEventListener("visibilitychange", onVisibilityChange)

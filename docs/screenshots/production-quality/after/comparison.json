@@ -1,0 +1,3253 @@
+{
+  "note": "Medians and observed ranges from three serial local cold navigations per route/profile. Range overlap is descriptive, not a statistical significance test. There are no field INP measurements.",
+  "rows": [
+    {
+      "route": "/",
+      "profile": "desktop",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 268,
+            "median": 364,
+            "max": 444,
+            "samples": [
+              268,
+              364,
+              444
+            ]
+          },
+          "after": {
+            "min": 284,
+            "median": 336,
+            "max": 372,
+            "samples": [
+              336,
+              284,
+              372
+            ]
+          },
+          "medianChange": -28,
+          "medianChangePercent": -7.692307692307687,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0,
+            "median": 0.000054910408093278464,
+            "max": 0.000054910408093278464,
+            "samples": [
+              0.000054910408093278464,
+              0,
+              0.000054910408093278464
+            ]
+          },
+          "after": {
+            "min": 0.000054910408093278464,
+            "median": 0.000054910408093278464,
+            "max": 0.000054910408093278464,
+            "samples": [
+              0.000054910408093278464,
+              0.000054910408093278464,
+              0.000054910408093278464
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 5266.218,
+            "median": 5274.893999999999,
+            "max": 5338.505999999999,
+            "samples": [
+              5266.218,
+              5274.893999999999,
+              5338.505999999999
+            ]
+          },
+          "after": {
+            "min": 5177.088000000001,
+            "median": 5217.96,
+            "max": 5238.436,
+            "samples": [
+              5217.96,
+              5177.088000000001,
+              5238.436
+            ]
+          },
+          "medianChange": -56.93399999999929,
+          "medianChangePercent": -1.079339224636544,
+          "observedRangesOverlap": false
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 4,
+            "median": 6,
+            "max": 7,
+            "samples": [
+              7,
+              4,
+              6
+            ]
+          },
+          "after": {
+            "min": 4,
+            "median": 4,
+            "max": 5,
+            "samples": [
+              5,
+              4,
+              4
+            ]
+          },
+          "medianChange": -2,
+          "medianChangePercent": -33.333333333333336,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 452,
+            "median": 584,
+            "max": 596,
+            "samples": [
+              596,
+              452,
+              584
+            ]
+          },
+          "after": {
+            "min": 391,
+            "median": 411,
+            "max": 422,
+            "samples": [
+              411,
+              391,
+              422
+            ]
+          },
+          "medianChange": -173,
+          "medianChangePercent": -29.62328767123288,
+          "observedRangesOverlap": false
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 246,
+            "median": 252,
+            "max": 284,
+            "samples": [
+              246,
+              252,
+              284
+            ]
+          },
+          "after": {
+            "min": 161,
+            "median": 191,
+            "max": 222,
+            "samples": [
+              161,
+              191,
+              222
+            ]
+          },
+          "medianChange": -61,
+          "medianChangePercent": -24.20634920634921,
+          "observedRangesOverlap": false
+        },
+        "requests": {
+          "before": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "after": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 875934,
+            "median": 875934,
+            "max": 875934,
+            "samples": [
+              875934,
+              875934,
+              875934
+            ]
+          },
+          "after": {
+            "min": 831421,
+            "median": 831421,
+            "max": 831421,
+            "samples": [
+              831421,
+              831421,
+              831421
+            ]
+          },
+          "medianChange": -44513,
+          "medianChangePercent": -5.081775567565594,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 863716,
+            "median": 863716,
+            "max": 863716,
+            "samples": [
+              863716,
+              863716,
+              863716
+            ]
+          },
+          "after": {
+            "min": 819177,
+            "median": 819177,
+            "max": 819177,
+            "samples": [
+              819177,
+              819177,
+              819177
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.156671868993978,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 860716,
+            "median": 860716,
+            "max": 860716,
+            "samples": [
+              860716,
+              860716,
+              860716
+            ]
+          },
+          "after": {
+            "min": 816177,
+            "median": 816177,
+            "max": 816177,
+            "samples": [
+              816177,
+              816177,
+              816177
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.174645295312274,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 383291,
+            "median": 383291,
+            "max": 383291,
+            "samples": [
+              383291,
+              383291,
+              383291
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.419865614957635,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 383280,
+            "median": 383280,
+            "max": 383280,
+            "samples": [
+              383280,
+              383280,
+              383280
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.420133500364603,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 348.0999999642372,
+            "median": 358.9000000357628,
+            "max": 435.80000001192093,
+            "samples": [
+              358.9000000357628,
+              348.0999999642372,
+              435.80000001192093
+            ]
+          },
+          "after": {
+            "min": 272,
+            "median": 304.7000000476837,
+            "max": 362.69999998807907,
+            "samples": [
+              304.7000000476837,
+              272,
+              362.69999998807907
+            ]
+          },
+          "medianChange": -54.19999998807907,
+          "medianChangePercent": -15.101699632955778,
+          "observedRangesOverlap": true
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 258.39999997615814,
+            "median": 295.60000002384186,
+            "max": 352.30000001192093,
+            "samples": [
+              352.30000001192093,
+              258.39999997615814,
+              295.60000002384186
+            ]
+          },
+          "after": {
+            "min": 169.80000001192093,
+            "median": 202.5,
+            "max": 234.10000002384186,
+            "samples": [
+              202.5,
+              169.80000001192093,
+              234.10000002384186
+            ]
+          },
+          "medianChange": -93.10000002384186,
+          "medianChangePercent": -31.495263875620026,
+          "observedRangesOverlap": false
+        }
+      }
+    },
+    {
+      "route": "/demo",
+      "profile": "desktop",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 320,
+            "median": 344,
+            "max": 392,
+            "samples": [
+              344,
+              320,
+              392
+            ]
+          },
+          "after": {
+            "min": 396,
+            "median": 396,
+            "max": 484,
+            "samples": [
+              396,
+              484,
+              396
+            ]
+          },
+          "medianChange": 52,
+          "medianChangePercent": 15.116279069767447,
+          "observedRangesOverlap": false
+        },
+        "cls": {
+          "before": {
+            "min": 0,
+            "median": 0,
+            "max": 0,
+            "samples": [
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "min": 0,
+            "median": 0,
+            "max": 0,
+            "samples": [
+              0,
+              0,
+              0
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": null,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 1506.5110000000002,
+            "median": 1516.201,
+            "max": 1596.552,
+            "samples": [
+              1596.552,
+              1516.201,
+              1506.5110000000002
+            ]
+          },
+          "after": {
+            "min": 1546.1180000000002,
+            "median": 1546.609,
+            "max": 1731.851,
+            "samples": [
+              1546.609,
+              1546.1180000000002,
+              1731.851
+            ]
+          },
+          "medianChange": 30.4079999999999,
+          "medianChangePercent": 2.0055388434646826,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 6,
+            "median": 6,
+            "max": 8,
+            "samples": [
+              6,
+              6,
+              8
+            ]
+          },
+          "after": {
+            "min": 6,
+            "median": 8,
+            "max": 8,
+            "samples": [
+              8,
+              6,
+              8
+            ]
+          },
+          "medianChange": 2,
+          "medianChangePercent": 33.33333333333333,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 928,
+            "median": 949,
+            "max": 1096,
+            "samples": [
+              928,
+              949,
+              1096
+            ]
+          },
+          "after": {
+            "min": 939,
+            "median": 1057,
+            "max": 1140,
+            "samples": [
+              1057,
+              939,
+              1140
+            ]
+          },
+          "medianChange": 108,
+          "medianChangePercent": 11.380400421496306,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 628,
+            "median": 649,
+            "max": 696,
+            "samples": [
+              628,
+              649,
+              696
+            ]
+          },
+          "after": {
+            "min": 639,
+            "median": 657,
+            "max": 740,
+            "samples": [
+              657,
+              639,
+              740
+            ]
+          },
+          "medianChange": 8,
+          "medianChangePercent": 1.2326656394453073,
+          "observedRangesOverlap": true
+        },
+        "requests": {
+          "before": {
+            "min": 12,
+            "median": 12,
+            "max": 12,
+            "samples": [
+              12,
+              12,
+              12
+            ]
+          },
+          "after": {
+            "min": 13,
+            "median": 13,
+            "max": 13,
+            "samples": [
+              13,
+              13,
+              13
+            ]
+          },
+          "medianChange": 1,
+          "medianChangePercent": 8.333333333333325,
+          "observedRangesOverlap": false
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 888151,
+            "median": 888151,
+            "max": 888151,
+            "samples": [
+              888151,
+              888151,
+              888151
+            ]
+          },
+          "after": {
+            "min": 890572,
+            "median": 890572,
+            "max": 890572,
+            "samples": [
+              890572,
+              890572,
+              890572
+            ]
+          },
+          "medianChange": 2421,
+          "medianChangePercent": 0.27258878276328335,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 859916,
+            "median": 859916,
+            "max": 859916,
+            "samples": [
+              859916,
+              859916,
+              859916
+            ]
+          },
+          "after": {
+            "min": 862284,
+            "median": 862284,
+            "max": 862284,
+            "samples": [
+              862284,
+              862284,
+              862284
+            ]
+          },
+          "medianChange": 2368,
+          "medianChangePercent": 0.2753757343740615,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 856616,
+            "median": 856616,
+            "max": 856616,
+            "samples": [
+              856616,
+              856616,
+              856616
+            ]
+          },
+          "after": {
+            "min": 858684,
+            "median": 858684,
+            "max": 858684,
+            "samples": [
+              858684,
+              858684,
+              858684
+            ]
+          },
+          "medianChange": 2068,
+          "medianChangePercent": 0.24141505645469685,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 430207,
+            "median": 430207,
+            "max": 430207,
+            "samples": [
+              430207,
+              430207,
+              430207
+            ]
+          },
+          "medianChange": 2332,
+          "medianChangePercent": 0.5450189891907709,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 430187,
+            "median": 430187,
+            "max": 430187,
+            "samples": [
+              430187,
+              430187,
+              430187
+            ]
+          },
+          "medianChange": 2323,
+          "medianChangePercent": 0.5429295290092284,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 429587,
+            "median": 429587,
+            "max": 429587,
+            "samples": [
+              429587,
+              429587,
+              429587
+            ]
+          },
+          "medianChange": 2023,
+          "medianChangePercent": 0.4731455407845475,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 429587,
+            "median": 429587,
+            "max": 429587,
+            "samples": [
+              429587,
+              429587,
+              429587
+            ]
+          },
+          "medianChange": 2023,
+          "medianChangePercent": 0.4731455407845475,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 384.39999997615814,
+            "median": 430.30000001192093,
+            "max": 480.19999998807907,
+            "samples": [
+              480.19999998807907,
+              430.30000001192093,
+              384.39999997615814
+            ]
+          },
+          "after": {
+            "min": 378,
+            "median": 392.10000002384186,
+            "max": 469.5,
+            "samples": [
+              392.10000002384186,
+              469.5,
+              378
+            ]
+          },
+          "medianChange": -38.19999998807907,
+          "medianChangePercent": -8.877527303514011,
+          "observedRangesOverlap": true
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 282,
+            "median": 423.19999998807907,
+            "max": 445.5,
+            "samples": [
+              445.5,
+              423.19999998807907,
+              282
+            ]
+          },
+          "after": {
+            "min": 221.0999999642372,
+            "median": 239.19999998807907,
+            "max": 406.19999998807907,
+            "samples": [
+              239.19999998807907,
+              406.19999998807907,
+              221.0999999642372
+            ]
+          },
+          "medianChange": -184,
+          "medianChangePercent": -43.47826087078994,
+          "observedRangesOverlap": true
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "desktop",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 300,
+            "median": 312,
+            "max": 400,
+            "samples": [
+              400,
+              312,
+              300
+            ]
+          },
+          "after": {
+            "min": 276,
+            "median": 276,
+            "max": 360,
+            "samples": [
+              276,
+              360,
+              276
+            ]
+          },
+          "medianChange": -36,
+          "medianChangePercent": -11.538461538461542,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0,
+            "median": 0,
+            "max": 0,
+            "samples": [
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "min": 0,
+            "median": 0,
+            "max": 0,
+            "samples": [
+              0,
+              0,
+              0
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": null,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 1532.7710000000002,
+            "median": 1596.382,
+            "max": 1643.14,
+            "samples": [
+              1643.14,
+              1532.7710000000002,
+              1596.382
+            ]
+          },
+          "after": {
+            "min": 1419.608,
+            "median": 1579.0059999999999,
+            "max": 1645.4030000000002,
+            "samples": [
+              1419.608,
+              1579.0059999999999,
+              1645.4030000000002
+            ]
+          },
+          "medianChange": -17.376000000000204,
+          "medianChangePercent": -1.0884612830763696,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 6,
+            "median": 6,
+            "max": 8,
+            "samples": [
+              8,
+              6,
+              6
+            ]
+          },
+          "after": {
+            "min": 6,
+            "median": 6,
+            "max": 8,
+            "samples": [
+              6,
+              8,
+              6
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 889,
+            "median": 976,
+            "max": 1158,
+            "samples": [
+              1158,
+              889,
+              976
+            ]
+          },
+          "after": {
+            "min": 864,
+            "median": 992,
+            "max": 1043,
+            "samples": [
+              864,
+              1043,
+              992
+            ]
+          },
+          "medianChange": 16,
+          "medianChangePercent": 1.6393442622950838,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 589,
+            "median": 676,
+            "max": 758,
+            "samples": [
+              758,
+              589,
+              676
+            ]
+          },
+          "after": {
+            "min": 564,
+            "median": 643,
+            "max": 692,
+            "samples": [
+              564,
+              643,
+              692
+            ]
+          },
+          "medianChange": -33,
+          "medianChangePercent": -4.8816568047337245,
+          "observedRangesOverlap": true
+        },
+        "requests": {
+          "before": {
+            "min": 12,
+            "median": 12,
+            "max": 12,
+            "samples": [
+              12,
+              12,
+              12
+            ]
+          },
+          "after": {
+            "min": 12,
+            "median": 12,
+            "max": 12,
+            "samples": [
+              12,
+              12,
+              12
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 875622,
+            "median": 875622,
+            "max": 875622,
+            "samples": [
+              875622,
+              875622,
+              875622
+            ]
+          },
+          "after": {
+            "min": 831108,
+            "median": 831108,
+            "max": 831108,
+            "samples": [
+              831108,
+              831108,
+              831108
+            ]
+          },
+          "medianChange": -44514,
+          "medianChangePercent": -5.083700500901078,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 848448,
+            "median": 848448,
+            "max": 848448,
+            "samples": [
+              848448,
+              848448,
+              848448
+            ]
+          },
+          "after": {
+            "min": 803909,
+            "median": 803909,
+            "max": 803909,
+            "samples": [
+              803909,
+              803909,
+              803909
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.249467262578255,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 845148,
+            "median": 845148,
+            "max": 845148,
+            "samples": [
+              845148,
+              845148,
+              845148
+            ]
+          },
+          "after": {
+            "min": 800609,
+            "median": 800609,
+            "max": 800609,
+            "samples": [
+              800609,
+              800609,
+              800609
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.269964550587591,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 383291,
+            "median": 383291,
+            "max": 383291,
+            "samples": [
+              383291,
+              383291,
+              383291
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.419865614957635,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 383280,
+            "median": 383280,
+            "max": 383280,
+            "samples": [
+              383280,
+              383280,
+              383280
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.420133500364603,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 391.19999998807907,
+            "median": 478.19999998807907,
+            "max": 529.7000000476837,
+            "samples": [
+              391.19999998807907,
+              529.7000000476837,
+              478.19999998807907
+            ]
+          },
+          "after": {
+            "min": 449.69999998807907,
+            "median": 465.69999998807907,
+            "max": 492.80000001192093,
+            "samples": [
+              492.80000001192093,
+              465.69999998807907,
+              449.69999998807907
+            ]
+          },
+          "medianChange": -12.5,
+          "medianChangePercent": -2.613969050671605,
+          "observedRangesOverlap": true
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 239.60000002384186,
+            "median": 399.5,
+            "max": 432.5,
+            "samples": [
+              239.60000002384186,
+              399.5,
+              432.5
+            ]
+          },
+          "after": {
+            "min": 199.39999997615814,
+            "median": 341.30000001192093,
+            "max": 399.89999997615814,
+            "samples": [
+              341.30000001192093,
+              199.39999997615814,
+              399.89999997615814
+            ]
+          },
+          "medianChange": -58.19999998807907,
+          "medianChangePercent": -14.568210259844571,
+          "observedRangesOverlap": true
+        }
+      }
+    },
+    {
+      "route": "/partners",
+      "profile": "desktop",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 152,
+            "median": 280,
+            "max": 300,
+            "samples": [
+              300,
+              152,
+              280
+            ]
+          },
+          "after": {
+            "min": 276,
+            "median": 276,
+            "max": 368,
+            "samples": [
+              276,
+              368,
+              276
+            ]
+          },
+          "medianChange": -4,
+          "medianChangePercent": -1.4285714285714235,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0,
+            "median": 0,
+            "max": 0,
+            "samples": [
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "min": 0,
+            "median": 0,
+            "max": 0,
+            "samples": [
+              0,
+              0,
+              0
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": null,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 1380.915,
+            "median": 1480.82,
+            "max": 1783.223,
+            "samples": [
+              1783.223,
+              1480.82,
+              1380.915
+            ]
+          },
+          "after": {
+            "min": 1450.475,
+            "median": 1536.122,
+            "max": 1634.9840000000002,
+            "samples": [
+              1450.475,
+              1634.9840000000002,
+              1536.122
+            ]
+          },
+          "medianChange": 55.302000000000135,
+          "medianChangePercent": 3.7345524776812855,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 6,
+            "median": 8,
+            "max": 8,
+            "samples": [
+              8,
+              8,
+              6
+            ]
+          },
+          "after": {
+            "min": 6,
+            "median": 7,
+            "max": 8,
+            "samples": [
+              7,
+              8,
+              6
+            ]
+          },
+          "medianChange": -1,
+          "medianChangePercent": -12.5,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 852,
+            "median": 1104,
+            "max": 1197,
+            "samples": [
+              1197,
+              1104,
+              852
+            ]
+          },
+          "after": {
+            "min": 880,
+            "median": 944,
+            "max": 1147,
+            "samples": [
+              880,
+              1147,
+              944
+            ]
+          },
+          "medianChange": -160,
+          "medianChangePercent": -14.492753623188403,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 552,
+            "median": 704,
+            "max": 797,
+            "samples": [
+              797,
+              704,
+              552
+            ]
+          },
+          "after": {
+            "min": 530,
+            "median": 644,
+            "max": 747,
+            "samples": [
+              530,
+              747,
+              644
+            ]
+          },
+          "medianChange": -60,
+          "medianChangePercent": -8.52272727272727,
+          "observedRangesOverlap": true
+        },
+        "requests": {
+          "before": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "after": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 874411,
+            "median": 874411,
+            "max": 874411,
+            "samples": [
+              874411,
+              874411,
+              874411
+            ]
+          },
+          "after": {
+            "min": 829896,
+            "median": 829896,
+            "max": 829896,
+            "samples": [
+              829896,
+              829896,
+              829896
+            ]
+          },
+          "medianChange": -44515,
+          "medianChangePercent": -5.090855444407715,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 844908,
+            "median": 844908,
+            "max": 844908,
+            "samples": [
+              844908,
+              844908,
+              844908
+            ]
+          },
+          "after": {
+            "min": 800369,
+            "median": 800369,
+            "max": 800369,
+            "samples": [
+              800369,
+              800369,
+              800369
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.27146150823522,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 841908,
+            "median": 841908,
+            "max": 841908,
+            "samples": [
+              841908,
+              841908,
+              841908
+            ]
+          },
+          "after": {
+            "min": 797369,
+            "median": 797369,
+            "max": 797369,
+            "samples": [
+              797369,
+              797369,
+              797369
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.290245490006029,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 383291,
+            "median": 383291,
+            "max": 383291,
+            "samples": [
+              383291,
+              383291,
+              383291
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.419865614957635,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 383280,
+            "median": 383280,
+            "max": 383280,
+            "samples": [
+              383280,
+              383280,
+              383280
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.420133500364603,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 335.5,
+            "median": 382.60000002384186,
+            "max": 463.30000001192093,
+            "samples": [
+              463.30000001192093,
+              335.5,
+              382.60000002384186
+            ]
+          },
+          "after": {
+            "min": 355.80000001192093,
+            "median": 398.89999997615814,
+            "max": 415.19999998807907,
+            "samples": [
+              398.89999997615814,
+              355.80000001192093,
+              415.19999998807907
+            ]
+          },
+          "medianChange": 16.299999952316284,
+          "medianChangePercent": 4.260324085546396,
+          "observedRangesOverlap": true
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 256.89999997615814,
+            "median": 356.60000002384186,
+            "max": 404.4000000357628,
+            "samples": [
+              404.4000000357628,
+              256.89999997615814,
+              356.60000002384186
+            ]
+          },
+          "after": {
+            "min": 251.89999997615814,
+            "median": 356,
+            "max": 384.30000001192093,
+            "samples": [
+              356,
+              251.89999997615814,
+              384.30000001192093
+            ]
+          },
+          "medianChange": -0.6000000238418579,
+          "medianChangePercent": -0.1682557554127162,
+          "observedRangesOverlap": true
+        }
+      }
+    },
+    {
+      "route": "/",
+      "profile": "mobile",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 1676,
+            "median": 1676,
+            "max": 1708,
+            "samples": [
+              1676,
+              1708,
+              1676
+            ]
+          },
+          "after": {
+            "min": 1704,
+            "median": 1708,
+            "max": 1764,
+            "samples": [
+              1708,
+              1704,
+              1764
+            ]
+          },
+          "medianChange": 32,
+          "medianChangePercent": 1.9093078758949833,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0.00030438625558609826,
+            "median": 0.00030438625558609826,
+            "max": 0.00030438625558609826,
+            "samples": [
+              0.00030438625558609826,
+              0.00030438625558609826,
+              0.00030438625558609826
+            ]
+          },
+          "after": {
+            "min": 0.00030438625558609826,
+            "median": 0.00030438625558609826,
+            "max": 0.00030438625558609826,
+            "samples": [
+              0.00030438625558609826,
+              0.00030438625558609826,
+              0.00030438625558609826
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 5647.282999999999,
+            "median": 5705.054999999999,
+            "max": 5928.513,
+            "samples": [
+              5705.054999999999,
+              5647.282999999999,
+              5928.513
+            ]
+          },
+          "after": {
+            "min": 5576.032999999999,
+            "median": 5791.685,
+            "max": 5936.4619999999995,
+            "samples": [
+              5576.032999999999,
+              5791.685,
+              5936.4619999999995
+            ]
+          },
+          "medianChange": 86.63000000000102,
+          "medianChangePercent": 1.5184779112559221,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 4,
+            "median": 4,
+            "max": 4,
+            "samples": [
+              4,
+              4,
+              4
+            ]
+          },
+          "after": {
+            "min": 4,
+            "median": 4,
+            "max": 4,
+            "samples": [
+              4,
+              4,
+              4
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 370,
+            "median": 374,
+            "max": 447,
+            "samples": [
+              370,
+              374,
+              447
+            ]
+          },
+          "after": {
+            "min": 359,
+            "median": 373,
+            "max": 390,
+            "samples": [
+              390,
+              359,
+              373
+            ]
+          },
+          "medianChange": -1,
+          "medianChangePercent": -0.2673796791443861,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 170,
+            "median": 174,
+            "max": 247,
+            "samples": [
+              170,
+              174,
+              247
+            ]
+          },
+          "after": {
+            "min": 159,
+            "median": 173,
+            "max": 190,
+            "samples": [
+              190,
+              159,
+              173
+            ]
+          },
+          "medianChange": -1,
+          "medianChangePercent": -0.5747126436781658,
+          "observedRangesOverlap": true
+        },
+        "requests": {
+          "before": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "after": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 875934,
+            "median": 875934,
+            "max": 875934,
+            "samples": [
+              875934,
+              875934,
+              875934
+            ]
+          },
+          "after": {
+            "min": 831421,
+            "median": 831421,
+            "max": 831421,
+            "samples": [
+              831421,
+              831421,
+              831421
+            ]
+          },
+          "medianChange": -44513,
+          "medianChangePercent": -5.081775567565594,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 863716,
+            "median": 863716,
+            "max": 863716,
+            "samples": [
+              863716,
+              863716,
+              863716
+            ]
+          },
+          "after": {
+            "min": 819177,
+            "median": 819177,
+            "max": 819177,
+            "samples": [
+              819177,
+              819177,
+              819177
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.156671868993978,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 860716,
+            "median": 860716,
+            "max": 860716,
+            "samples": [
+              860716,
+              860716,
+              860716
+            ]
+          },
+          "after": {
+            "min": 816177,
+            "median": 816177,
+            "max": 816177,
+            "samples": [
+              816177,
+              816177,
+              816177
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.174645295312274,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 383291,
+            "median": 383291,
+            "max": 383291,
+            "samples": [
+              383291,
+              383291,
+              383291
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.419865614957635,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 383280,
+            "median": 383280,
+            "max": 383280,
+            "samples": [
+              383280,
+              383280,
+              383280
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.420133500364603,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 4805.200000047684,
+            "median": 4825.599999964237,
+            "max": 4848.299999952316,
+            "samples": [
+              4825.599999964237,
+              4805.200000047684,
+              4848.299999952316
+            ]
+          },
+          "after": {
+            "min": 4571.399999976158,
+            "median": 4595,
+            "max": 4602.300000011921,
+            "samples": [
+              4571.399999976158,
+              4602.300000011921,
+              4595
+            ]
+          },
+          "medianChange": -230.5999999642372,
+          "medianChangePercent": -4.778680370647093,
+          "observedRangesOverlap": false
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 4795.800000011921,
+            "median": 4814.099999964237,
+            "max": 4837.599999964237,
+            "samples": [
+              4814.099999964237,
+              4795.800000011921,
+              4837.599999964237
+            ]
+          },
+          "after": {
+            "min": 4561.899999976158,
+            "median": 4582.600000023842,
+            "max": 4594,
+            "samples": [
+              4561.899999976158,
+              4594,
+              4582.600000023842
+            ]
+          },
+          "medianChange": -231.49999994039536,
+          "medianChangePercent": -4.808790842361299,
+          "observedRangesOverlap": false
+        }
+      }
+    },
+    {
+      "route": "/demo",
+      "profile": "mobile",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 1728,
+            "median": 1732,
+            "max": 1740,
+            "samples": [
+              1732,
+              1740,
+              1728
+            ]
+          },
+          "after": {
+            "min": 1692,
+            "median": 1752,
+            "max": 1752,
+            "samples": [
+              1752,
+              1752,
+              1692
+            ]
+          },
+          "medianChange": 20,
+          "medianChangePercent": 1.1547344110854452,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0.00003815442386831276,
+            "median": 0.00003815442386831276,
+            "max": 0.00003815442386831276,
+            "samples": [
+              0.00003815442386831276,
+              0.00003815442386831276,
+              0.00003815442386831276
+            ]
+          },
+          "after": {
+            "min": 0.00003815442386831276,
+            "median": 0.00003815442386831276,
+            "max": 0.00003815442386831276,
+            "samples": [
+              0.00003815442386831276,
+              0.00003815442386831276,
+              0.00003815442386831276
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 1142.287,
+            "median": 1146.898,
+            "max": 1181.729,
+            "samples": [
+              1181.729,
+              1146.898,
+              1142.287
+            ]
+          },
+          "after": {
+            "min": 1110.792,
+            "median": 1135.162,
+            "max": 1217.652,
+            "samples": [
+              1217.652,
+              1135.162,
+              1110.792
+            ]
+          },
+          "medianChange": -11.735999999999876,
+          "medianChangePercent": -1.0232819309127672,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 4,
+            "median": 4,
+            "max": 4,
+            "samples": [
+              4,
+              4,
+              4
+            ]
+          },
+          "after": {
+            "min": 4,
+            "median": 4,
+            "max": 5,
+            "samples": [
+              4,
+              4,
+              5
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 417,
+            "median": 440,
+            "max": 446,
+            "samples": [
+              446,
+              440,
+              417
+            ]
+          },
+          "after": {
+            "min": 354,
+            "median": 414,
+            "max": 431,
+            "samples": [
+              414,
+              354,
+              431
+            ]
+          },
+          "medianChange": -26,
+          "medianChangePercent": -5.909090909090908,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 217,
+            "median": 240,
+            "max": 246,
+            "samples": [
+              246,
+              240,
+              217
+            ]
+          },
+          "after": {
+            "min": 154,
+            "median": 181,
+            "max": 214,
+            "samples": [
+              214,
+              154,
+              181
+            ]
+          },
+          "medianChange": -59,
+          "medianChangePercent": -24.583333333333336,
+          "observedRangesOverlap": false
+        },
+        "requests": {
+          "before": {
+            "min": 12,
+            "median": 12,
+            "max": 12,
+            "samples": [
+              12,
+              12,
+              12
+            ]
+          },
+          "after": {
+            "min": 13,
+            "median": 13,
+            "max": 13,
+            "samples": [
+              13,
+              13,
+              13
+            ]
+          },
+          "medianChange": 1,
+          "medianChangePercent": 8.333333333333325,
+          "observedRangesOverlap": false
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 888151,
+            "median": 888151,
+            "max": 888151,
+            "samples": [
+              888151,
+              888151,
+              888151
+            ]
+          },
+          "after": {
+            "min": 890572,
+            "median": 890572,
+            "max": 890572,
+            "samples": [
+              890572,
+              890572,
+              890572
+            ]
+          },
+          "medianChange": 2421,
+          "medianChangePercent": 0.27258878276328335,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 859916,
+            "median": 859916,
+            "max": 859916,
+            "samples": [
+              859916,
+              859916,
+              859916
+            ]
+          },
+          "after": {
+            "min": 862284,
+            "median": 862284,
+            "max": 862284,
+            "samples": [
+              862284,
+              862284,
+              862284
+            ]
+          },
+          "medianChange": 2368,
+          "medianChangePercent": 0.2753757343740615,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 856616,
+            "median": 856616,
+            "max": 856616,
+            "samples": [
+              856616,
+              856616,
+              856616
+            ]
+          },
+          "after": {
+            "min": 858684,
+            "median": 858684,
+            "max": 858684,
+            "samples": [
+              858684,
+              858684,
+              858684
+            ]
+          },
+          "medianChange": 2068,
+          "medianChangePercent": 0.24141505645469685,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 430207,
+            "median": 430207,
+            "max": 430207,
+            "samples": [
+              430207,
+              430207,
+              430207
+            ]
+          },
+          "medianChange": 2332,
+          "medianChangePercent": 0.5450189891907709,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 430187,
+            "median": 430187,
+            "max": 430187,
+            "samples": [
+              430187,
+              430187,
+              430187
+            ]
+          },
+          "medianChange": 2323,
+          "medianChangePercent": 0.5429295290092284,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 429587,
+            "median": 429587,
+            "max": 429587,
+            "samples": [
+              429587,
+              429587,
+              429587
+            ]
+          },
+          "medianChange": 2023,
+          "medianChangePercent": 0.4731455407845475,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 429587,
+            "median": 429587,
+            "max": 429587,
+            "samples": [
+              429587,
+              429587,
+              429587
+            ]
+          },
+          "medianChange": 2023,
+          "medianChangePercent": 0.4731455407845475,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 4765.5,
+            "median": 4781.599999964237,
+            "max": 4788.5,
+            "samples": [
+              4781.599999964237,
+              4765.5,
+              4788.5
+            ]
+          },
+          "after": {
+            "min": 4526.600000023842,
+            "median": 4545.5,
+            "max": 4573.800000011921,
+            "samples": [
+              4573.800000011921,
+              4545.5,
+              4526.600000023842
+            ]
+          },
+          "medianChange": -236.0999999642372,
+          "medianChangePercent": -4.937677764053938,
+          "observedRangesOverlap": false
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 4759.199999988079,
+            "median": 4774.099999964237,
+            "max": 4781.099999964237,
+            "samples": [
+              4774.099999964237,
+              4759.199999988079,
+              4781.099999964237
+            ]
+          },
+          "after": {
+            "min": 4520.300000011921,
+            "median": 4539.299999952316,
+            "max": 4566.699999988079,
+            "samples": [
+              4566.699999988079,
+              4539.299999952316,
+              4520.300000011921
+            ]
+          },
+          "medianChange": -234.80000001192093,
+          "medianChangePercent": -4.918204478617538,
+          "observedRangesOverlap": false
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "profile": "mobile",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 1716,
+            "median": 1720,
+            "max": 1736,
+            "samples": [
+              1736,
+              1720,
+              1716
+            ]
+          },
+          "after": {
+            "min": 1716,
+            "median": 1720,
+            "max": 1748,
+            "samples": [
+              1748,
+              1716,
+              1720
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0.00032392921810699593,
+            "median": 0.00032392921810699593,
+            "max": 0.00032392921810699593,
+            "samples": [
+              0.00032392921810699593,
+              0.00032392921810699593,
+              0.00032392921810699593
+            ]
+          },
+          "after": {
+            "min": 0.00032392921810699593,
+            "median": 0.00032392921810699593,
+            "max": 0.00032392921810699593,
+            "samples": [
+              0.00032392921810699593,
+              0.00032392921810699593,
+              0.00032392921810699593
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 1121.226,
+            "median": 1214.013,
+            "max": 1320.365,
+            "samples": [
+              1320.365,
+              1121.226,
+              1214.013
+            ]
+          },
+          "after": {
+            "min": 1137.955,
+            "median": 1198.1390000000001,
+            "max": 1222.896,
+            "samples": [
+              1198.1390000000001,
+              1222.896,
+              1137.955
+            ]
+          },
+          "medianChange": -15.873999999999796,
+          "medianChangePercent": -1.307564251783122,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 4,
+            "median": 4,
+            "max": 5,
+            "samples": [
+              5,
+              4,
+              4
+            ]
+          },
+          "after": {
+            "min": 4,
+            "median": 4,
+            "max": 4,
+            "samples": [
+              4,
+              4,
+              4
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 380,
+            "median": 466,
+            "max": 556,
+            "samples": [
+              556,
+              380,
+              466
+            ]
+          },
+          "after": {
+            "min": 453,
+            "median": 456,
+            "max": 476,
+            "samples": [
+              456,
+              476,
+              453
+            ]
+          },
+          "medianChange": -10,
+          "medianChangePercent": -2.145922746781115,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 180,
+            "median": 266,
+            "max": 306,
+            "samples": [
+              306,
+              180,
+              266
+            ]
+          },
+          "after": {
+            "min": 253,
+            "median": 256,
+            "max": 276,
+            "samples": [
+              256,
+              276,
+              253
+            ]
+          },
+          "medianChange": -10,
+          "medianChangePercent": -3.759398496240607,
+          "observedRangesOverlap": true
+        },
+        "requests": {
+          "before": {
+            "min": 12,
+            "median": 12,
+            "max": 12,
+            "samples": [
+              12,
+              12,
+              12
+            ]
+          },
+          "after": {
+            "min": 12,
+            "median": 12,
+            "max": 12,
+            "samples": [
+              12,
+              12,
+              12
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 875622,
+            "median": 875622,
+            "max": 875622,
+            "samples": [
+              875622,
+              875622,
+              875622
+            ]
+          },
+          "after": {
+            "min": 831108,
+            "median": 831108,
+            "max": 831108,
+            "samples": [
+              831108,
+              831108,
+              831108
+            ]
+          },
+          "medianChange": -44514,
+          "medianChangePercent": -5.083700500901078,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 848448,
+            "median": 848448,
+            "max": 848448,
+            "samples": [
+              848448,
+              848448,
+              848448
+            ]
+          },
+          "after": {
+            "min": 803909,
+            "median": 803909,
+            "max": 803909,
+            "samples": [
+              803909,
+              803909,
+              803909
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.249467262578255,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 845148,
+            "median": 845148,
+            "max": 845148,
+            "samples": [
+              845148,
+              845148,
+              845148
+            ]
+          },
+          "after": {
+            "min": 800609,
+            "median": 800609,
+            "max": 800609,
+            "samples": [
+              800609,
+              800609,
+              800609
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.269964550587591,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 383291,
+            "median": 383291,
+            "max": 383291,
+            "samples": [
+              383291,
+              383291,
+              383291
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.419865614957635,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 383280,
+            "median": 383280,
+            "max": 383280,
+            "samples": [
+              383280,
+              383280,
+              383280
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.420133500364603,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 4707.100000023842,
+            "median": 4719.400000035763,
+            "max": 4768.300000011921,
+            "samples": [
+              4768.300000011921,
+              4707.100000023842,
+              4719.400000035763
+            ]
+          },
+          "after": {
+            "min": 4493.200000047684,
+            "median": 4514,
+            "max": 4517.300000011921,
+            "samples": [
+              4514,
+              4493.200000047684,
+              4517.300000011921
+            ]
+          },
+          "medianChange": -205.4000000357628,
+          "medianChangePercent": -4.352248167864692,
+          "observedRangesOverlap": false
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 4701.600000023842,
+            "median": 4711.200000047684,
+            "max": 4754.100000023842,
+            "samples": [
+              4754.100000023842,
+              4701.600000023842,
+              4711.200000047684
+            ]
+          },
+          "after": {
+            "min": 4486.100000023842,
+            "median": 4506.899999976158,
+            "max": 4510.400000035763,
+            "samples": [
+              4506.899999976158,
+              4486.100000023842,
+              4510.400000035763
+            ]
+          },
+          "medianChange": -204.30000007152557,
+          "medianChangePercent": -4.336474784968958,
+          "observedRangesOverlap": false
+        }
+      }
+    },
+    {
+      "route": "/partners",
+      "profile": "mobile",
+      "metrics": {
+        "lcpMs": {
+          "before": {
+            "min": 1688,
+            "median": 1700,
+            "max": 1712,
+            "samples": [
+              1712,
+              1688,
+              1700
+            ]
+          },
+          "after": {
+            "min": 1684,
+            "median": 1696,
+            "max": 1720,
+            "samples": [
+              1684,
+              1720,
+              1696
+            ]
+          },
+          "medianChange": -4,
+          "medianChangePercent": -0.23529411764705577,
+          "observedRangesOverlap": true
+        },
+        "cls": {
+          "before": {
+            "min": 0.012344944855967077,
+            "median": 0.012344944855967077,
+            "max": 0.012344944855967077,
+            "samples": [
+              0.012344944855967077,
+              0.012344944855967077,
+              0.012344944855967077
+            ]
+          },
+          "after": {
+            "min": 0.012344944855967077,
+            "median": 0.012344944855967077,
+            "max": 0.012344944855967077,
+            "samples": [
+              0.012344944855967077,
+              0.012344944855967077,
+              0.012344944855967077
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "taskDurationMs": {
+          "before": {
+            "min": 1102.268,
+            "median": 1120.6900000000003,
+            "max": 1252.488,
+            "samples": [
+              1252.488,
+              1120.6900000000003,
+              1102.268
+            ]
+          },
+          "after": {
+            "min": 1078.856,
+            "median": 1125.523,
+            "max": 1440.074,
+            "samples": [
+              1078.856,
+              1440.074,
+              1125.523
+            ]
+          },
+          "medianChange": 4.832999999999629,
+          "medianChangePercent": 0.4312521749993081,
+          "observedRangesOverlap": true
+        },
+        "longTaskCount": {
+          "before": {
+            "min": 4,
+            "median": 4,
+            "max": 4,
+            "samples": [
+              4,
+              4,
+              4
+            ]
+          },
+          "after": {
+            "min": 4,
+            "median": 4,
+            "max": 5,
+            "samples": [
+              4,
+              5,
+              4
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "longTaskDurationMs": {
+          "before": {
+            "min": 418,
+            "median": 447,
+            "max": 488,
+            "samples": [
+              488,
+              447,
+              418
+            ]
+          },
+          "after": {
+            "min": 414,
+            "median": 431,
+            "max": 598,
+            "samples": [
+              414,
+              598,
+              431
+            ]
+          },
+          "medianChange": -16,
+          "medianChangePercent": -3.579418344519014,
+          "observedRangesOverlap": true
+        },
+        "totalBlockingTimeMs": {
+          "before": {
+            "min": 218,
+            "median": 247,
+            "max": 288,
+            "samples": [
+              288,
+              247,
+              218
+            ]
+          },
+          "after": {
+            "min": 214,
+            "median": 231,
+            "max": 348,
+            "samples": [
+              214,
+              348,
+              231
+            ]
+          },
+          "medianChange": -16,
+          "medianChangePercent": -6.477732793522262,
+          "observedRangesOverlap": true
+        },
+        "requests": {
+          "before": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "after": {
+            "min": 11,
+            "median": 11,
+            "max": 11,
+            "samples": [
+              11,
+              11,
+              11
+            ]
+          },
+          "medianChange": 0,
+          "medianChangePercent": 0,
+          "observedRangesOverlap": true
+        },
+        "wireTransferBytes": {
+          "before": {
+            "min": 874411,
+            "median": 874411,
+            "max": 874411,
+            "samples": [
+              874411,
+              874411,
+              874411
+            ]
+          },
+          "after": {
+            "min": 829896,
+            "median": 829896,
+            "max": 829896,
+            "samples": [
+              829896,
+              829896,
+              829896
+            ]
+          },
+          "medianChange": -44515,
+          "medianChangePercent": -5.090855444407715,
+          "observedRangesOverlap": false
+        },
+        "resourceTransferBytes": {
+          "before": {
+            "min": 844908,
+            "median": 844908,
+            "max": 844908,
+            "samples": [
+              844908,
+              844908,
+              844908
+            ]
+          },
+          "after": {
+            "min": 800369,
+            "median": 800369,
+            "max": 800369,
+            "samples": [
+              800369,
+              800369,
+              800369
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.27146150823522,
+          "observedRangesOverlap": false
+        },
+        "resourceEncodedBodyBytes": {
+          "before": {
+            "min": 841908,
+            "median": 841908,
+            "max": 841908,
+            "samples": [
+              841908,
+              841908,
+              841908
+            ]
+          },
+          "after": {
+            "min": 797369,
+            "median": 797369,
+            "max": 797369,
+            "samples": [
+              797369,
+              797369,
+              797369
+            ]
+          },
+          "medianChange": -44539,
+          "medianChangePercent": -5.290245490006029,
+          "observedRangesOverlap": false
+        },
+        "javascriptWireTransferBytes": {
+          "before": {
+            "min": 427875,
+            "median": 427875,
+            "max": 427875,
+            "samples": [
+              427875,
+              427875,
+              427875
+            ]
+          },
+          "after": {
+            "min": 383291,
+            "median": 383291,
+            "max": 383291,
+            "samples": [
+              383291,
+              383291,
+              383291
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.419865614957635,
+          "observedRangesOverlap": false
+        },
+        "javascriptTransferBytes": {
+          "before": {
+            "min": 427864,
+            "median": 427864,
+            "max": 427864,
+            "samples": [
+              427864,
+              427864,
+              427864
+            ]
+          },
+          "after": {
+            "min": 383280,
+            "median": 383280,
+            "max": 383280,
+            "samples": [
+              383280,
+              383280,
+              383280
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.420133500364603,
+          "observedRangesOverlap": false
+        },
+        "javascriptEncodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "javascriptDecodedBodyBytes": {
+          "before": {
+            "min": 427564,
+            "median": 427564,
+            "max": 427564,
+            "samples": [
+              427564,
+              427564,
+              427564
+            ]
+          },
+          "after": {
+            "min": 382980,
+            "median": 382980,
+            "max": 382980,
+            "samples": [
+              382980,
+              382980,
+              382980
+            ]
+          },
+          "medianChange": -44584,
+          "medianChangePercent": -10.427444780196648,
+          "observedRangesOverlap": false
+        },
+        "loadEventEndMs": {
+          "before": {
+            "min": 4704.899999976158,
+            "median": 4713.099999964237,
+            "max": 4723.200000047684,
+            "samples": [
+              4723.200000047684,
+              4704.899999976158,
+              4713.099999964237
+            ]
+          },
+          "after": {
+            "min": 4464,
+            "median": 4473,
+            "max": 4505.599999964237,
+            "samples": [
+              4464,
+              4505.599999964237,
+              4473
+            ]
+          },
+          "medianChange": -240.0999999642372,
+          "medianChangePercent": -5.094311598863999,
+          "observedRangesOverlap": false
+        },
+        "domContentLoadedEventEndMs": {
+          "before": {
+            "min": 4698.699999988079,
+            "median": 4704.5,
+            "max": 4715.900000035763,
+            "samples": [
+              4715.900000035763,
+              4698.699999988079,
+              4704.5
+            ]
+          },
+          "after": {
+            "min": 4457.900000035763,
+            "median": 4467.899999976158,
+            "max": 4497.799999952316,
+            "samples": [
+              4457.900000035763,
+              4497.799999952316,
+              4467.899999976158
+            ]
+          },
+          "medianChange": -236.60000002384186,
+          "medianChangePercent": -5.029227336036602,
+          "observedRangesOverlap": false
+        }
+      }
+    }
+  ]
+}

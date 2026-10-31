@@ -23,7 +23,7 @@ test('each public route has unique crawlable metadata and a route-specific brows
   assert.deepEqual(PUBLIC_ROUTES.map(route => route.path), ['/', '/demo', '/about', '/partners']);
   for (const route of PUBLIC_ROUTES) {
     const head = renderHead(route.path);
-    assert.ok(head.includes(`<title data-route-head>${route.title}</title>`));
+    assert.equal(head.match(/<title data-route-head>(.*?)<\/title>/)?.[1].replaceAll('&amp;', '&'), route.title);
     assert.ok(head.includes(`href="https://leqad.com${route.path === '/' ? '/' : route.path}"`));
     assert.match(head, /property="og:url"/);
     const isDemo = route.path === '/demo';
