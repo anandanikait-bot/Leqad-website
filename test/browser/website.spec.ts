@@ -54,10 +54,10 @@ test('only Demo, About and Partners have the halftone Leqad footer', async ({ pa
 
 test('approved brand logo, favicon, and unique browser title across routes', async ({ page }) => {
   const titles: Record<string, string> = {
-    '/': 'Leqad',
-    '/demo': 'Leqad Demo',
-    '/about': 'About Leqad',
-    '/partners': 'Leqad Partners',
+    '/': 'Leqad — Learn CAD by Building',
+    '/demo': 'Interactive CAD Walkthrough — Leqad',
+    '/about': 'About Leqad — Guided CAD Education',
+    '/partners': 'For Partners & Educators — Leqad',
   };
   for (const path of ['/', '/demo', '/about', '/partners']) {
     await page.goto(path);
@@ -303,10 +303,10 @@ test('CAD feature preview has responsive view and depth controls', async ({ page
 
 test('prerendered public content and metadata work with JavaScript disabled', async ({ browser }) => {
   const titles: Record<string, string> = {
-    '/': 'Leqad',
-    '/demo': 'Leqad Demo',
-    '/about': 'About Leqad',
-    '/partners': 'Leqad Partners',
+    '/': 'Leqad — Learn CAD by Building',
+    '/demo': 'Interactive CAD Walkthrough — Leqad',
+    '/about': 'About Leqad — Guided CAD Education',
+    '/partners': 'For Partners & Educators — Leqad',
   };
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

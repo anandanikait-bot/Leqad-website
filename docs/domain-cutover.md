@@ -38,11 +38,11 @@ Do not claim a DNS redirect or new Cloud Run deployment was completed by changes
 
 The old published metadata referenced `https://leqada.ai.studio/assets/leqad-home-share-v1.png`. Because the official address is now `leqad.com`, link-preview crawlers can fail to fetch the image from the old hostname and render a blank card, even if the Leqad page title appears.
 
-The new server-rendered Open Graph and Twitter tags use `https://leqad.com/assets/leqad-home-share-v1.png?v=20261025` (with the existing static PNG), correct `og:image:width`/`height` (1440×1000), HTTPS secure URL and image/png MIME type. The version parameter asks caches to re-fetch the image without changing its contents.
+The new server-rendered Open Graph and Twitter tags use `https://leqad.com/assets/leqad-home-share-v2.png?v=20261025` (with the existing static PNG), correct `og:image:width`/`height` (1440×900), HTTPS secure URL and image/png MIME type. The version parameter asks caches to re-fetch the image without changing its contents.
 
 **Verify production rather than assuming GitHub deployment**:
 - View *page source* (not DevTools's dynamically mutated DOM) at `https://leqad.com/`. Confirm `og:image`, `og:image:secure_url`, `og:url` and canonical URLs use `leqad.com`.
-- Open `https://leqad.com/assets/leqad-home-share-v1.png?v=20261025` in a private browser window. It must return a visible PNG, not an HTML fallback, 403, or 404.
+- Open `https://leqad.com/assets/leqad-home-share-v2.png?v=20261025` in a private browser window. It must return a visible PNG, not an HTML fallback, 403, or 404.
 - Inspect the image HTTP response for `200` and `Content-Type: image/png`, without authentication.
 - Ask the messaging platform to re-scrape the domain or reshare the URL. Some platforms cache previews of the page URL itself; a query-string variant such as `https://leqad.com/?share=20261025` may refresh them, but the canonical URL remains `https://leqad.com/`.
 - Bots may be blocked by hosting/network policy even when your browser works. An actual crawler fetch is required to confirm the preview on each platform.

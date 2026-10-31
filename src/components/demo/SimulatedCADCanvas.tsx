@@ -526,7 +526,7 @@ export const SimulatedCADCanvas: React.FC<SimulatedCADCanvasProps> = ({
           {canDraw && rectangleArmed && originSet && <rect role="img" aria-label="Rectangle drawing preview" x="0" y={-rectanglePreview.height * 3} width={rectanglePreview.width * 3} height={rectanglePreview.height * 3} fill="rgba(121, 51, 39,.06)" stroke="#793327" strokeWidth="1.5" strokeDasharray="4 3" pointerEvents="none" />}
           {/* Drawing is driven by editable sketch dimensions. */}
           {isRectangleDrawn && !isExtruding && (
-            <g data-testid="sketch-profile" aria-label={`Rectangle ${widthMm} by ${heightMm} millimeters`}>
+            <g data-testid="sketch-profile" role="img" aria-label={`Rectangle ${widthMm} by ${heightMm} millimeters`}>
               {isSketchAccepted && (
                 <rect x="0" y={-heightUnits} width={widthUnits} height={heightUnits}
                   fill="rgba(14, 41, 67, 0.15)" stroke="none" />
